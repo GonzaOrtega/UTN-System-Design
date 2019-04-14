@@ -15,6 +15,8 @@ public class Probando {
 	    armanio.agregarRopasLocas();
 	    System.out.println((armanio.prendas.stream().map(x->x.tipo.categoria)).collect(Collectors.toList()));
 	    System.out.println();
+	    System.out.println((armanio.devolverAtuendos().stream().map(x->x.stream().map(y->y.tipo.categoria).collect(Collectors.toList()))).collect(Collectors.toList()));
+
 	  }
 	}
 

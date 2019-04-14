@@ -16,13 +16,13 @@ public class Usuario {
 		alias = unAlias;
 	}
 
-	public  Set<HashSet<Prenda>> pedirAtuendo() {
+	/*public  Set<HashSet<Prenda>> pedirAtuendo() {
 		return guardarropas
 				.stream()
 				.map(guardarrropa->guardarrropa.devolverAtuendos())
 				.flatMap(guardarropa->guardarropa.stream())
 				.collect(Collectors.toSet());
-	}
+	}*/
 	
 	
 	/*

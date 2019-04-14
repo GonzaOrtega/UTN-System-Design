@@ -14,7 +14,7 @@ public class ProbandoAgain{
 	    Usuario juan = new Usuario(198,"JFQ8");
 	    juan.agregarGuardarropa(armario);
 	    juan.agregarGuardarropa(otroArmario);
-	    System.out.println(juan.pedirAtuendo());
+	  //  System.out.println(juan.pedirAtuendo());
 	    
 	  }
 }
