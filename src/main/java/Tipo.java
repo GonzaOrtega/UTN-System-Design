@@ -2,6 +2,10 @@ public class Tipo {
 	enum Categoria{
 		SUPERIOR,CALZADO,INFERIOR,ACCESORIO
 	}
-	private String nombre;
+	public String nombre;
 	Categoria categoria;
+	public  Tipo(String stri, Categoria cate) {
+		nombre = stri;
+		categoria = cate;
+	}
 }

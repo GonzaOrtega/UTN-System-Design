@@ -1,25 +1,5 @@
 public class Prenda {
 	
-	public enum Color{
-		AMARILLO,
-		VERDE,
-		NARANJA,
-		AZUL,
-		VIOLETA,
-		ROSA,
-		LILA;
-		// Etc.
-	}
-	
-	public enum Material{
-		ALGODON,
-		LYCRA,
-		GABARDINA,
-		LINO,
-		FRANELA;
-		// Etc.
-	}
-	
 	Color colorPrimario;
 	Color colorSecundario;
 	Tipo tipo;
