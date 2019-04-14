@@ -8,7 +8,7 @@ public class Probando {
 	  public static void main(String[] args)
 	  {
 	    Usuario juan = new Usuario(198,"JFQ8");
-	    juan.crearGuardarropa();
+	    //juan.crearGuardarropa(); //ya no esta mas este comando
 	    System.out.println(juan.guardarropas);
 	    System.out.println("---------");
 	    Guardarropa armanio = new Guardarropa();
