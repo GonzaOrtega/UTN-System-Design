@@ -10,7 +10,7 @@ public class Probando {
 	    Usuario juan = new Usuario(198,"JFQ8");
 	    //juan.crearGuardarropa(); //ya no esta mas este comando
 	    System.out.println(juan.guardarropas);
-	    System.out.println("---------");
+	    System.out.println("-----//----");
 	    Guardarropa armanio = new Guardarropa();
 	    armanio.agregarRopasLocas();
 	    System.out.println((armanio.prendas.stream().map(x->x.tipo.categoria)).collect(Collectors.toList()));

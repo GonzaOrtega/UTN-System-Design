@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,8 +8,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 public class Guardarropa {
-	
-	//HashSet<Prenda> prendas = new HashSet<Prenda>();
 	Set<Prenda> prendas = new HashSet<Prenda>();
 	
 	public void agregarPrenda(Prenda unaPrenda){
@@ -23,13 +21,10 @@ public class Guardarropa {
 		this.agregarPrenda(new Prenda(Color.AZUL,Color.VERDE, new Tipo(Categoria.CALZADO), Material.ALGODON));
 		this.agregarPrenda(new Prenda(Color.AZUL,Color.VERDE, new Tipo(Categoria.ACCESORIO), Material.ALGODON));	
 		this.agregarPrenda(new Prenda(Color.VIOLETA,Color.AZUL, new Tipo(Categoria.SUPERIOR), Material.ALGODON));
-		this.agregarPrenda(new Prenda(Color.VIOLETA,Color.AZUL, new Tipo(Categoria.SUPERIOR), Material.ALGODON));
+		this.agregarPrenda(new Prenda(Color.VIOLETA,Color.AZUL, new Tipo(Categoria.INFERIOR), Material.ALGODON));
 	}
 		
 	public Set<Set<Prenda>> devolverAtuendos(){
-		//esto esta hardcodeado lo de abajo esta mal xd 
-		//Set<Set<Prenda>> atuendos = Sets.combinations(ImmutableSet.of(this.prendas.get(0),this.prendas.get(1),
-		//		this.prendas.get(2),this.prendas.get(3),this.prendas.get(4)), 4);
 		Set<Set<Prenda>> atuendos = Sets.combinations(prendas, 4);
 		 
 		//Aca tiene todas las combinaciones y se encarga de devolver solo las validas
