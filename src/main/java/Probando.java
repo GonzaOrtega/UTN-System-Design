@@ -1,3 +1,4 @@
+
 //YA SE QUE ESTO ES HORRIBLE PERO GUENO HABIA QUE APURAR EL TRAMITE DESPUES
 //AVERIGUO COMO ES PARA ARMAR LOS TEST
 import java.util.stream.*;
@@ -8,14 +9,13 @@ public class Probando {
 	  public static void main(String[] args)
 	  {
 	    Usuario juan = new Usuario(198,"JFQ8");
-	    //juan.crearGuardarropa(); //ya no esta mas este comando
 	    System.out.println(juan.guardarropas);
 	    System.out.println("-----//----");
 	    Guardarropa armanio = new Guardarropa();
 	    armanio.agregarRopasLocas();
-	    System.out.println((armanio.prendas.stream().map(x->x.tipo.categoria)).collect(Collectors.toList()));
+	    System.out.println((armanio.prendas.stream().map(x->x.tipo.prenda.categoria)).collect(Collectors.toList()));
 	    System.out.println();
-	    System.out.println((armanio.devolverAtuendos().stream().map(x->x.stream().map(y->y.tipo.categoria).collect(Collectors.toList()))).collect(Collectors.toList()));
+	    System.out.println((armanio.devolverAtuendos().stream().map(x->x.stream().map(y->y.tipo.prenda.categoria).collect(Collectors.toList()))).collect(Collectors.toList()));
 
 	  }
 	}

@@ -1,10 +1,7 @@
-
-import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 public class Guardarropa {
@@ -13,29 +10,29 @@ public class Guardarropa {
 	public void agregarPrenda(Prenda unaPrenda){
 		prendas.add(unaPrenda);
 	}
-
 	
-	public void agregarRopasLocas() {//para testear simplemente
-		this.agregarPrenda(new Prenda(Color.ROSA,Color.VERDE, new Tipo(Categoria.SUPERIOR), Material.ALGODON));
-		this.agregarPrenda(new Prenda(Color.ROSA,Color.AZUL, new Tipo(Categoria.INFERIOR), Material.ALGODON));
-		this.agregarPrenda(new Prenda(Color.AZUL,Color.VERDE, new Tipo(Categoria.CALZADO), Material.ALGODON));
-		this.agregarPrenda(new Prenda(Color.AZUL,Color.VERDE, new Tipo(Categoria.ACCESORIO), Material.ALGODON));	
-		this.agregarPrenda(new Prenda(Color.VIOLETA,Color.AZUL, new Tipo(Categoria.SUPERIOR), Material.ALGODON));
-		this.agregarPrenda(new Prenda(Color.VIOLETA,Color.AZUL, new Tipo(Categoria.INFERIOR), Material.ALGODON));
-	}
-		
 	public Set<Set<Prenda>> devolverAtuendos(){
 		Set<Set<Prenda>> atuendos = Sets.combinations(prendas, 4);
 		 
 		//Aca tiene todas las combinaciones y se encarga de devolver solo las validas
 		 atuendos = atuendos.stream().filter(x->this.todosDistintos(x)).collect(Collectors.toSet());
 		 return atuendos;
+	} 
+	
+	public void agregarRopasLocas() {//para testear simplemente
+		this.agregarPrenda(new Prenda(Color.ROSA,Color.VERDE, new Tipo(TipoPrenda.CamisaMangaCorta), Material.ALGODON));
+		this.agregarPrenda(new Prenda(Color.ROSA,Color.AZUL, new Tipo(TipoPrenda.Pantalon), Material.ALGODON));
+		this.agregarPrenda(new Prenda(Color.AZUL,Color.VERDE, new Tipo(TipoPrenda.Zapatos), Material.ALGODON));
+		this.agregarPrenda(new Prenda(Color.AZUL,Color.VERDE, new Tipo(TipoPrenda.Gorro), Material.ALGODON));	
+		this.agregarPrenda(new Prenda(Color.VIOLETA,Color.AZUL, new Tipo(TipoPrenda.CamisaMangaCorta), Material.ALGODON));
+		this.agregarPrenda(new Prenda(Color.VIOLETA,Color.AZUL, new Tipo(TipoPrenda.Zapatillas), Material.ALGODON));
 	}
+	
 	private boolean todosDistintos(Set<Prenda> lista) {
-		boolean a = lista.stream().map(y->y.tipo.categoria).collect(Collectors.toSet()).contains(Categoria.SUPERIOR);
-		boolean b = lista.stream().map(z->z.tipo.categoria).collect(Collectors.toSet()).contains(Categoria.INFERIOR);
-		boolean c = lista.stream().map(y->y.tipo.categoria).collect(Collectors.toSet()).contains(Categoria.CALZADO);
-		boolean d = lista.stream().map(y->y.tipo.categoria).collect(Collectors.toSet()).contains(Categoria.ACCESORIO);
+		boolean a = lista.stream().map(y->y.tipo.prenda.categoria).collect(Collectors.toSet()).contains(Categoria.SUPERIOR);
+		boolean b = lista.stream().map(z->z.tipo.prenda.categoria).collect(Collectors.toSet()).contains(Categoria.INFERIOR);
+		boolean c = lista.stream().map(y->y.tipo.prenda.categoria).collect(Collectors.toSet()).contains(Categoria.CALZADO);
+		boolean d = lista.stream().map(y->y.tipo.prenda.categoria).collect(Collectors.toSet()).contains(Categoria.ACCESORIO);
 		
 		return a && b && c && d;
 	}

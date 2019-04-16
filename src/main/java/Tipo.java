@@ -1,7 +1,9 @@
 public class Tipo {
-	Categoria categoria;
+
+	TipoPrenda prenda;
 	
-	public  Tipo(Categoria cate) {
-		categoria = cate;
+	public Tipo(TipoPrenda prenda) {
+		this.prenda=prenda;
 	}
+	
 }
