@@ -1,5 +1,5 @@
 # TPA — Grupo nro. 8 (jm)
-#Dominio
+## Dominio
 
 Comenzaremos definiendo que un atuendo es una combinación de prendas que tiene sentido usar juntas. Algunos ejemplos de atuendos podrían ser:
 tus anteojos de sol favoritos, una remera de mangas cortas azul, el pantalón que te regaló tu mamá y una zapatillas converse.
@@ -15,7 +15,7 @@ Las personas pueden acceder a sus prendas a través de un guardarropas, no puede
 
 Por último, un usuario deberá ser capaz de solicitarle a QuéMePongo distintos atuendos sugeridos para ponerse a partir de la ropa que posee en sus guardarropas.
 
-#Requerimientos detallados
+## Requerimientos detallados
 
 Para esta entrega se deberán satisfacer los siguientes requerimientos: 
 
