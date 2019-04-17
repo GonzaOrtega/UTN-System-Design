@@ -29,8 +29,10 @@ public class Usuario {
 		this.guardarropas.add(unGuardarropa);
 	}
 	
-	public void cargarPrenda(Guardarropa unGuardarropa,Color colorPri,Color colorSec,TipoPrenda type,Material telita) {
-		Prenda unaPrenda = new Prenda(colorPri,colorSec,type,telita);
+	public void cargarPrenda(Guardarropa unGuardarropa,Prenda unaPrenda) {
+		if(unaPrenda.yaSeCargoLaPrendaSegun(this)) {
+			throw new YaSeEncuentraCargadaException("WARNING: la prenda ingresada ya se encuentra cargada");
+		}
 		unGuardarropa.agregarPrenda(unaPrenda);
 	}
 	
