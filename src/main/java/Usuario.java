@@ -35,5 +35,17 @@ public class Usuario {
 		}
 		unGuardarropa.agregarPrenda(unaPrenda);
 	}
+
+	public HashSet<Guardarropa> getGuardarropas() {
+		return guardarropas;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
 	
 }
