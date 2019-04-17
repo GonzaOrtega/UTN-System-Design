@@ -31,5 +31,17 @@ public class PrimeraEntrega {
 		juan.cargarPrenda(armario,camisaRosa);
 		juan.cargarPrenda(armario,camisaRosa);
 	}
+	
+	@Test (expected = YaSeEncuentraCargadaException.class)
+	public void no_se_pueden_compartir_prendas_entre_guardarropas()  {
+		Usuario juan = new Usuario(198,"JFQ8");
+		Guardarropa armario = new Guardarropa();
+	    Guardarropa otroArmario = new Guardarropa();
+	    juan.agregarGuardarropa(armario);
+	    juan.agregarGuardarropa(otroArmario);
+	    Prenda camisaRosa = new Prenda(Color.ROSA,Color.VERDE, TipoPrenda.CamisaMangaLarga, Material.ALGODON);
+		juan.cargarPrenda(armario,camisaRosa);
+		juan.cargarPrenda(otroArmario,camisaRosa);
+	}
 
 }
