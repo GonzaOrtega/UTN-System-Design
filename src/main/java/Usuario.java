@@ -16,27 +16,20 @@ public class Usuario {
 		alias = unAlias;
 	}
 
-	/*public  Set<HashSet<Prenda>> pedirAtuendo() {
+	public  Set<Set<Prenda>> pedirAtuendo() {
 		return guardarropas
 				.stream()
 				.map(guardarrropa->guardarrropa.devolverAtuendos())
 				.flatMap(guardarropa->guardarropa.stream())
 				.collect(Collectors.toSet());
-	}*/
-	
-	
-	/*
-	public void crearGuardarropa() {
-		Guardarropa unGuardarropa = new Guardarropa();
-		guardarropas.add(unGuardarropa);
 	}
-	*/
+	
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
 		this.guardarropas.add(unGuardarropa);
 	}
 	
-	public void cargarPrenda(Guardarropa unGuardarropa,Color colorPri,Color colorSec,Tipo type,Material telita) {
+	public void cargarPrenda(Guardarropa unGuardarropa,Color colorPri,Color colorSec,TipoPrenda type,Material telita) {
 		Prenda unaPrenda = new Prenda(colorPri,colorSec,type,telita);
 		unGuardarropa.agregarPrenda(unaPrenda);
 	}

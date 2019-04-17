@@ -2,21 +2,15 @@ public class Prenda {
 	
 	Color colorPrimario;
 	Color colorSecundario;
-	Tipo tipo;
+	TipoPrenda tipo;
 	Material tela;
 
 	
-	public Prenda(Color unColorP,Color unColorS, Tipo unTipo, Material unaTela){
-		//this.validarParametros(unColorP,unTipo,unaTela);
+	public Prenda(Color unColorP,Color unColorS, TipoPrenda unTipo, Material unaTela){
 		colorPrimario=unColorP;
 		colorSecundario=unColorS;
 		tipo=unTipo;
 		tela=unaTela;
 	}
-	
-	public void validarParametros(Color c,Tipo t, Material m){
-		// Comportamiento..
-	}
-	
-	
+
 }
