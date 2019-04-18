@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.HashSet;
 
@@ -34,18 +32,6 @@ public class Usuario {
 			throw new YaSeEncuentraCargadaException("WARNING: la prenda ingresada ya se encuentra cargada");
 		}
 		unGuardarropa.agregarPrenda(unaPrenda);
-	}
-
-	public HashSet<Guardarropa> getGuardarropas() {
-		return guardarropas;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public String getAlias() {
-		return alias;
 	}
 	
 }
