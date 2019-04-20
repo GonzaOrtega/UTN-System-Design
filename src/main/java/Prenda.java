@@ -10,6 +10,4 @@ public class Prenda {
 	public boolean yaSeCargoLaPrendaSegun(Usuario unUsuario) {
 		return unUsuario.guardarropas.stream().anyMatch(guardarropa->guardarropa.prendas.contains(this));
 	}
-	
-
 }

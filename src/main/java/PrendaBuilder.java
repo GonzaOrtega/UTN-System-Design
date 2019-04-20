@@ -29,6 +29,9 @@ public class PrendaBuilder{
 	}
 	
 	public PrendaBuilder conTela(Material tela){
+		if(prenda.tipo == null) {
+			throw new MaterialNoPermitidoException("WARNING: debe definir primero el tipo.");
+		}
 		if(prenda.tipo.materialesProhibidos.contains(tela)) {
 			throw new MaterialNoPermitidoException("WARNING: el material " + tela + " no es valido para el tipo de prenda ingresado.");
 		}
