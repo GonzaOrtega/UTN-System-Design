@@ -26,5 +26,9 @@ public class Guardarropa {
 		
 		return a && b && c && d;
 	}
+	
+	public int cantidadDePrendasGuardadas() {
+		return this.prendas.size();
+	}
 
 }
