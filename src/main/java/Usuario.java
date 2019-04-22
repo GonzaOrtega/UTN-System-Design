@@ -33,5 +33,20 @@ public class Usuario {
 		}
 		unGuardarropa.agregarPrenda(unaPrenda);
 	}
+
+	
+
+	public int getId() {	
+		return this.id;
+	}
+
+	public String getAlias() {
+		return this.alias;
+	}
+
+	public HashSet<Guardarropa> getGuardarropas() {
+		return this.guardarropas;
+	}
+	
 	
 }

@@ -15,6 +15,21 @@ public class UsuarioTest {
 		juan.agregarGuardarropa(armario);
 	}
 	
+	@Test
+	public void testUsuarioId() {
+		assertEquals(juan.getId(), 198);
+	}
+	
+	@Test
+	public void testUsuarioAlias() {
+		assertEquals(juan.getAlias(), "JFQ8");
+	}
+
+	@Test
+	public void testCargarPrenda() {
+		assertEquals(juan.getGuardarropas().size(), 1);
+	}	
+	
 	@Test (expected = YaSeEncuentraCargadaException.class)
 	public void test_no_se_pueden_cargar_prendas_ya_cargadas()  {
 //		Usuario juan = new Usuario(198,"JFQ8");
