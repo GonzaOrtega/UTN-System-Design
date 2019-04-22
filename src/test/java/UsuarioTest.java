@@ -7,26 +7,12 @@ public class UsuarioTest {
 
 	Usuario juan = new Usuario(198,"JFQ8");
 	Guardarropa armario = new Guardarropa();
-	Prenda camisaRosa = new Prenda(Color.ROSA,Color.VERDE, TipoPrenda.CamisaMangaLarga, Material.ALGODON);
+	PrendaBuilder builderCamisaRosa = new PrendaBuilder().conColorPrimario(Color.ROSA).conColorSecundario(Color.VERDE).conTipo(TipoPrenda.CamisaMangaLarga).conTela(Material.ALGODON);
+	Prenda camisaRosa = builderCamisaRosa.crearPrenda();
 	
 	@Before
 	public void setUp() throws Exception {
 		juan.agregarGuardarropa(armario);
-	}
-	
-	@Test
-	public void testUsuarioId() {
-		assertEquals(juan.getId(), 198);
-	}
-	
-	@Test
-	public void testUsuarioAlias() {
-		assertEquals(juan.getAlias(), "JFQ8");
-	}
-
-	@Test
-	public void testCargarPrenda() {
-		assertEquals(juan.getGuardarropas().size(), 1);
 	}
 	
 	@Test (expected = YaSeEncuentraCargadaException.class)

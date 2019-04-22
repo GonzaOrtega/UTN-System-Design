@@ -6,7 +6,23 @@ public enum Color{
 		AZUL,
 		VIOLETA,
 		ROSA,
-		LILA;
+		LILA,
+		FUCSIA,
+		MOSTAZA,
+		TURQUISA,
+		OCRE,
+		MAGENTA,
+		GRIS,
+		NEGRO,
+		BLANCO,
+		BEIGE,
+		SALMON,
+		GRANATE,
+		LAVANDA,
+		MALVA,
+		PURPURA,
+		CIRULA,
+		MELOCOTON;
 		// Etc.
 	}
 
