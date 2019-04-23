@@ -20,10 +20,17 @@ Por último, un usuario deberá ser capaz de solicitarle a QuéMePongo distintos
 Para esta entrega se deberán satisfacer los siguientes requerimientos: 
 
 1 - Creación de prendas, las cuales deben ser válidas, según al menos las siguientes reglas:
+
     a) debe saberse qué tipo de prenda es (remera de mangas cortas, short, zapatos de tacón, etc)
+    
     b) debe saberse a qué categoría pertenece, la cual debe ser consistente con el tipo de prenda y la parte del cuerpo donde se utiliza o su función (parte superior, parte inferior, calzado y accesorios).
+    
     c) debe ser de un tipo de tela, que debe ser consistente con el tipo de prenda: por ejemplo, no tiene sentido tener una campera de seda o una remera de cuero. 
+    
     d) debe ser de un color primario asociado, y opcionalmente uno secundario y diferente del anterior
+    
 2 - Generar sugerencias de atuendos válidas, implementando un algoritmo que genere todas las combinaciones posibles de ropa. 
+
 3 - Creación de múltiples usuarios, cada uno con distintas prendas y guardarropas
+
 4 - Obtener sugerencias desde varios guardarropas, sin mezclar prendas entre un guardarropa y otro. Es decir, las prendas no se comparten entre los guardarropas.
