@@ -1,5 +1,8 @@
 import static org.junit.Assert.*;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +19,12 @@ public class UsuarioTest {
 
 	@Before
 	public void setUp(){
+		armario.agregarPrenda(camisaCorta);
+		armario.agregarPrenda(zapatos);
+		armario.agregarPrenda(gorra);
+		armario.agregarPrenda(camisaLarga);
+		armario.agregarPrenda(ojotas);
+//		armario.agregarPrenda(jean);
 		juan.agregarGuardarropa(armario);
 	}
 
@@ -36,15 +45,15 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void siJuanAgregaUnJeanASusPrendasTendraSeis(){
+	public void siSeAgregaUnJeanASusPrendasHabraSeis(){
 		armario.agregarPrenda(jean);
 		assertEquals(armario.cantidadDePrendasGuardadas(), 6);
 	}
 	
 	@Test
-	public void siJuanAgregaUnJeanSuArmarioDeberiaDevolverleCuatroAtuendos() {
+	public void siJuanAgregaUnJeanSuArmarioDeberiaDevolverleSeisAtuendos() {
 		juan.cargarPrenda(armario, jean);
-		assertEquals(armario.devolverAtuendos().size(), 4);
+		assertEquals(juan.getGuardarropas().stream().collect(Collectors.toCollection(ArrayList::new)).get(0).cantidadDePrendasGuardadas(), 6);
 	}
 
 
