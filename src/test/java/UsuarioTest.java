@@ -1,8 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +7,8 @@ public class UsuarioTest {
 
 	Usuario juan = new Usuario(198,"JFQ8");
 	Guardarropa armario = new Guardarropa();
+	Guardarropa otroArmario = new Guardarropa();
+
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
@@ -17,15 +16,15 @@ public class UsuarioTest {
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 
+	
 	@Before
 	public void setUp(){
-		armario.agregarPrenda(camisaCorta);
-		armario.agregarPrenda(zapatos);
-		armario.agregarPrenda(gorra);
-		armario.agregarPrenda(camisaLarga);
-		armario.agregarPrenda(ojotas);
-//		armario.agregarPrenda(jean);
 		juan.agregarGuardarropa(armario);
+		juan.cargarPrenda(armario, camisaCorta);
+		juan.cargarPrenda(armario, zapatos);
+		juan.cargarPrenda(armario, gorra);
+		juan.cargarPrenda(armario, camisaLarga);
+		juan.cargarPrenda(armario, ojotas);
 	}
 
 	@Test
@@ -51,9 +50,14 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void siJuanAgregaUnJeanSuArmarioDeberiaDevolverleSeisAtuendos() {
+	public void siJuanCargaUnJeanASuArmarioDeberiaTenerCuatroAtuendos() {
 		juan.cargarPrenda(armario, jean);
-		assertEquals(juan.getGuardarropas().stream().collect(Collectors.toCollection(ArrayList::new)).get(0).cantidadDePrendasGuardadas(), 6);
+		assertEquals(armario.devolverAtuendos().size(), 4);	
+	}
+	
+	@Test(expected = NoSePuedeAgregarPrendasEnGuardarropasAjenos.class)
+	public void juanNoPuedeCargarPrendasEnGuardarropasAjenos() {
+		juan.cargarPrenda(otroArmario, jean);
 	}
 
 

@@ -1,4 +1,3 @@
-
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.HashSet;
@@ -28,22 +27,19 @@ public class Usuario {
 	}
 	
 	public void cargarPrenda(Guardarropa unGuardarropa,Prenda unaPrenda) {
+		if(!this.guardarropaCargado(unGuardarropa)) {
+			throw new  NoSePuedeAgregarPrendasEnGuardarropasAjenos("WARNING: no se puede agregar prendas al guardarropa ya que es de su propiedad.");
+		}
 		if(unaPrenda.yaSeCargoLaPrendaSegun(this)) {
 			throw new YaSeEncuentraCargadaException("WARNING: la prenda ingresada ya se encuentra cargada");
 		}
 		unGuardarropa.agregarPrenda(unaPrenda);
 	}
 
+	public boolean guardarropaCargado(Guardarropa unGuardarropa) {
+		return guardarropas.contains(unGuardarropa);
+	}
 	
-
-	public int getId() {	
-		return this.id;
-	}
-
-	public String getAlias() {
-		return this.alias;
-	}
-
 	public HashSet<Guardarropa> getGuardarropas() {
 		return this.guardarropas;
 	}

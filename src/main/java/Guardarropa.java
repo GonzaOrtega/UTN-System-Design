@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 public class Guardarropa {
@@ -12,7 +13,9 @@ public class Guardarropa {
 	}
 	
 	public Set<Set<Prenda>> devolverAtuendos(){
-		Set<Set<Prenda>> atuendos = Sets.combinations(prendas, 4);
+		Set<Set<Prenda>> atuendos = new HashSet<Set<Prenda>>();
+		if(prendas.size()<4) return atuendos;
+		atuendos = Sets.combinations(prendas, 4);
 		//Aca tiene todas las combinaciones y se encarga de devolver solo las validas
 		 atuendos = atuendos.stream().filter(x->this.todosDistintos(x)).collect(Collectors.toSet());
 		 return atuendos;
