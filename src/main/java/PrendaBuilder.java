@@ -14,33 +14,33 @@ public class PrendaBuilder{
 	}
 	
 	public PrendaBuilder conColorPrimario(Color colorPrimario){
-		this.prenda.colorPrimario=colorPrimario;
+		prenda.setColorPrimario(colorPrimario);
 		return this;
 	}
 	
 	public PrendaBuilder conColorSecundario(Color colorSecundario){
-		this.prenda.colorSecundario=colorSecundario;
+		prenda.setColorSecundario(colorSecundario);
 		return this;
 	}
 	
 	public PrendaBuilder conTipo(TipoPrenda tipo){
-		this.prenda.tipo=tipo;
+		prenda.setTipo(tipo);
 		return this;
 	}
 	
 	public PrendaBuilder conTela(Material tela){
-		if(prenda.tipo == null) {
+		if(prenda.getTipo() == null) {
 			throw new TieneParametrosNulosException("WARNING: debe definir primero el tipo.");
 		}
-		if(!prenda.tipo.materialesPermitidos.contains(tela)) {
+		if(!prenda.getTipo().materialesPermitidos.contains(tela)) {
 			throw new MaterialNoPermitidoException("WARNING: el material " + tela + " no es valido para el tipo de prenda ingresado.");
 		}
-		this.prenda.tela=tela;
+		this.prenda.setTela(tela);
 		return this;
 	}
 	
 	public boolean tieneAlgunParametroNulo(){
-		List parametros = new ArrayList(Arrays.asList(prenda.tela,prenda.colorPrimario,prenda.tipo));
+		List parametros = new ArrayList(Arrays.asList(prenda.getTela(),prenda.getColorPrimario(),prenda.getTipo()));
 		return parametros.stream().anyMatch(parametro -> parametro == null);
 	}
 

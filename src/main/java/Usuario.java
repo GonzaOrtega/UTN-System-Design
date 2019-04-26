@@ -5,39 +5,31 @@ import java.util.HashSet;
 public class Usuario {
 	
 	public HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
-	private int id;
-	private String alias;
- 	
-	public Usuario(int unId,String unAlias) {
-		id = unId;
-		alias = unAlias;
-	}
 
-	public  Set<Set<Prenda>> pedirAtuendo() {
-		return guardarropas
-				.stream()
-				.map(guardarrropa->guardarrropa.devolverAtuendos())
-				.flatMap(guardarropa->guardarropa.stream())
-				.collect(Collectors.toSet());
+	public  Set<Set<Prenda>> pedirAtuendos() {
+		Set<Set<Prenda>> atuendos = guardarropas
+									.stream()
+									.map(guardarrropa->guardarrropa.pedirAtuendos())
+									.flatMap(guardarropa->guardarropa.stream())
+									.collect(Collectors.toSet());
+		if (atuendos.size()==0) {
+			throw new NoHayAtuendosDisponiblesException("WARNING: falta ingresar prendas en los guardarropas para obtener posibles atuendos");
+		}
+		return atuendos;
 	}
-	
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
 		this.guardarropas.add(unGuardarropa);
 	}
 	
 	public void cargarPrenda(Guardarropa unGuardarropa,Prenda unaPrenda) {
-		if(!this.guardarropaCargado(unGuardarropa)) {
-			throw new  NoSePuedeAgregarPrendasEnGuardarropasAjenos("WARNING: no se puede agregar prendas al guardarropa ya que es de su propiedad.");
-		}
-		if(unaPrenda.yaSeCargoLaPrendaSegun(this)) {
+		if(this.yaSeCargoLaPrenda(unaPrenda)) {
 			throw new YaSeEncuentraCargadaException("WARNING: la prenda ingresada ya se encuentra cargada");
 		}
-		unGuardarropa.agregarPrenda(unaPrenda);
+		unGuardarropa.cargarPrenda(unaPrenda);
 	}
-
-	public boolean guardarropaCargado(Guardarropa unGuardarropa) {
-		return guardarropas.contains(unGuardarropa);
+	public boolean yaSeCargoLaPrenda(Prenda unaPrenda) {
+		return guardarropas.stream().anyMatch(guardarropa->guardarropa.prendas.contains(unaPrenda));
 	}
 	
 	public HashSet<Guardarropa> getGuardarropas() {

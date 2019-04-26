@@ -1,11 +1,13 @@
 import static org.junit.Assert.*;
 
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class UsuarioTest {
 
-	Usuario juan = new Usuario(198,"JFQ8");
+	Usuario juan = new Usuario();
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
 
@@ -45,19 +47,38 @@ public class UsuarioTest {
 	
 	@Test
 	public void siSeAgregaUnJeanASusPrendasHabraSeis(){
-		armario.agregarPrenda(jean);
+		armario.cargarPrenda(jean);
 		assertEquals(armario.cantidadDePrendasGuardadas(), 6);
 	}
 	
 	@Test
 	public void siJuanCargaUnJeanASuArmarioDeberiaTenerCuatroAtuendos() {
 		juan.cargarPrenda(armario, jean);
-		assertEquals(armario.devolverAtuendos().size(), 4);	
+		assertEquals(armario.pedirAtuendos().size(), 4);	
 	}
-	
-	@Test(expected = NoSePuedeAgregarPrendasEnGuardarropasAjenos.class)
-	public void juanNoPuedeCargarPrendasEnGuardarropasAjenos() {
-		juan.cargarPrenda(otroArmario, jean);
+	@Test
+	public void losAtuendosTienenUnoDeCadaTipo() {
+	juan.cargarPrenda(armario, jean);
+	assertTrue(armario
+		.pedirAtuendos()
+		.stream()
+		.allMatch(atuendo->this.atuendoTieneCategoria(atuendo, Categoria.SUPERIOR) 
+				&& this.atuendoTieneCategoria(atuendo, Categoria.INFERIOR) 
+				&&this.atuendoTieneCategoria(atuendo, Categoria.ACCESORIO) 
+				&&this.atuendoTieneCategoria(atuendo, Categoria.CALZADO)));
+	}
+	public boolean atuendoTieneCategoria(Set<Prenda> unAtuendo, Categoria unaCategoria){
+		return unAtuendo
+				.stream()
+				.anyMatch(prenda->this.prendaDeCategoria(prenda,unaCategoria));
+	}
+	public boolean prendaDeCategoria(Prenda unaPrenda,Categoria categoria) {
+		return unaPrenda.getTipo().categoria == categoria;
+	}
+	@Test (expected = NoHayAtuendosDisponiblesException.class)
+	public void siLaraPideUnAtuendoPeroNoTienePrendasSuficientesLanzaExcepcion(){
+		Usuario lara = new Usuario();
+		lara.pedirAtuendos();
 	}
 
 

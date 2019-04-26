@@ -16,12 +16,17 @@ public class PrendaTest {
 	@Test
 	public void resultaValidoLaCreacionDePrendasSinColorSecundario(){
 		Prenda remeraRosa = new PrendaBuilder().conColorPrimario(Color.ROSA).conTipo(TipoPrenda.Remera).conTela(Material.ALGODON).crearPrenda();
-		assertEquals(remeraRosa.colorSecundario,null);
+		assertEquals(remeraRosa.getColorSecundario(),null);
 	}
 	
 	@Test (expected = TieneParametrosNulosException.class)
 	public void noSePuedeAsignarLaTelaSinSaberElTipo(){
 		new PrendaBuilder().conColorPrimario(Color.ROSA).conTela(Material.ALGODON).conTipo(TipoPrenda.Remera).crearPrenda();
+	}
+	@Test 
+	public void crearPrendaConAtributosNoNulos() {
+		Prenda remeraRosa = new PrendaBuilder().conColorPrimario(Color.ROSA).conTipo(TipoPrenda.Remera).conTela(Material.ALGODON).crearPrenda();
+		assertTrue((remeraRosa.getColorPrimario()!=null) &&(remeraRosa.getTipo()!=null)&&(remeraRosa.getTela()!=null));
 	}
 	
 }
