@@ -7,10 +7,10 @@ import org.junit.Test;
 
 public class UsuarioTest {
 
+	Sugeridor sugeridor = new Sugeridor();
 	Usuario juan = new Usuario();
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
-
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
@@ -78,7 +78,7 @@ public class UsuarioTest {
 	@Test (expected = NoHayAtuendosDisponiblesException.class)
 	public void siLaraPideUnAtuendoPeroNoTienePrendasSuficientesLanzaExcepcion(){
 		Usuario lara = new Usuario();
-		lara.pedirAtuendos();
+		sugeridor.sugerirPrendasPara(lara);
 	}
 
 

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 public class GuardarropaTest {
 
+	Sugeridor sugeridor = new Sugeridor();
 	Usuario juan = new Usuario();
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
@@ -50,7 +51,7 @@ public class GuardarropaTest {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta));
 		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
 		juan.cargarPrenda(armario, jean);
-		assertEquals(juan.pedirAtuendos(),atuendosEsperados);
+		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
 	}
 	
 	

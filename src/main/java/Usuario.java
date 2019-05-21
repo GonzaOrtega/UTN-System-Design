@@ -5,18 +5,6 @@ import java.util.HashSet;
 public class Usuario {
 	
 	public HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
-
-	public  Set<Set<Prenda>> pedirAtuendos() {
-		Set<Set<Prenda>> atuendos = guardarropas
-									.stream()
-									.map(guardarrropa->guardarrropa.pedirAtuendos())
-									.flatMap(guardarropa->guardarropa.stream())
-									.collect(Collectors.toSet());
-		if (atuendos.size()==0) {
-			throw new NoHayAtuendosDisponiblesException("WARNING: falta ingresar prendas en los guardarropas para obtener posibles atuendos");
-		}
-		return atuendos;
-	}
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
 		this.guardarropas.add(unGuardarropa);
