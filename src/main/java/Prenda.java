@@ -4,6 +4,7 @@ public class Prenda {
 	private Color colorSecundario;
 	private TipoPrenda tipo;
 	private Material tela;
+	private Foto foto;
 	
 	//Get y set de todos los atributos
 	public Color getColorPrimario() {
@@ -29,6 +30,12 @@ public class Prenda {
 	}
 	public void setTela(Material tela) {
 		this.tela = tela;
+	}
+	public Foto getFoto() {
+		return foto;
+	}
+	public void setFoto(Foto foto) {
+		this.foto = foto;
 	}
 	
 }

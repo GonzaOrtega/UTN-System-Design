@@ -39,6 +39,11 @@ public class PrendaBuilder{
 		return this;
 	}
 	
+	public PrendaBuilder conFoto(Foto foto){
+		prenda.setFoto(foto);
+		return this;
+	}
+	
 	public boolean tieneAlgunParametroNulo(){
 		List parametros = new ArrayList(Arrays.asList(prenda.getTela(),prenda.getColorPrimario(),prenda.getTipo()));
 		return parametros.stream().anyMatch(parametro -> parametro == null);
