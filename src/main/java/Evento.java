@@ -22,6 +22,15 @@ public class Evento {
 		int dias=(int) ((fecha.getTime()-fechaActualDate.getTime())/86400000);
 		return dias<=limiteDeProximidad;
 	}
+	public Date getFecha() {
+		return fecha;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public Guardarropa getGuardarropas() {
+		return guardarropas;
+	}
 	public Date PasarAFormatoAdecuado(String fecha) {
 		try {
 		SimpleDateFormat formato = new SimpleDateFormat(this.getFotmatoDeFecha());
