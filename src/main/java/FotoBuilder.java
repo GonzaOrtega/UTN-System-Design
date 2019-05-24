@@ -8,7 +8,8 @@ public class FotoBuilder {
 	
 	public Foto crearFoto() {
 		try {
-	        foto.setImagen(ImageIO.read(foto.getRuta()));
+			BufferedImage imagen = ImageIO.read(foto.getRuta());
+	        foto.setImagen(imagen);
 	        foto.normalizarImagen();
 		}
 		catch(IOException e){
