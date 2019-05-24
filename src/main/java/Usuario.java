@@ -3,7 +3,12 @@ import java.util.stream.Collectors;
 import java.util.HashSet;
 
 public class Usuario {
-	
+	private TipoUsuario tipo;
+	int  maximoDePrendas;
+	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
+		this.tipo = tipo;
+		this.maximoDePrendas = maximoDePrendas;
+	}
 	public HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
@@ -14,6 +19,9 @@ public class Usuario {
 		if(this.yaSeCargoLaPrenda(unaPrenda)) {
 			throw new YaSeEncuentraCargadaException("WARNING: la prenda ingresada ya se encuentra cargada");
 		}
+		if(tipo == TipoUsuario.GRATUITO && unGuardarropa.prendas.size() >= maximoDePrendas) {
+			throw new SeExcedioElLimiteDeCapacidadDelGuardarropaException("WARNNING: el guardarropa ya contiene el límite de su capacidad");
+		}
 		unGuardarropa.cargarPrenda(unaPrenda);
 	}
 	public boolean yaSeCargoLaPrenda(Prenda unaPrenda) {
@@ -22,6 +30,9 @@ public class Usuario {
 	
 	public HashSet<Guardarropa> getGuardarropas() {
 		return this.guardarropas;
+	}
+	public TipoUsuario getTipo() {
+		return tipo;
 	}
 	
 	

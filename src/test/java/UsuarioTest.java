@@ -8,7 +8,7 @@ import org.junit.Test;
 public class UsuarioTest {
 
 	Sugeridor sugeridor = new Sugeridor();
-	Usuario juan = new Usuario();
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
@@ -77,9 +77,21 @@ public class UsuarioTest {
 	}
 	@Test (expected = NoHayAtuendosDisponiblesException.class)
 	public void siLaraPideUnAtuendoPeroNoTienePrendasSuficientesLanzaExcepcion(){
-		Usuario lara = new Usuario();
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
 		sugeridor.sugerirPrendasPara(lara);
 	}
-
-
+	@Test(expected = SeExcedioElLimiteDeCapacidadDelGuardarropaException.class)
+	public void siSeIntentaCargarMasCantidadDePrendasDeLaPermitidaLanzaException(){
+		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1);
+		lara.agregarGuardarropa(otroArmario);
+		lara.cargarPrenda(otroArmario, camisaCorta);
+		lara.cargarPrenda(otroArmario, zapatos);
+	}
+	@Test 
+	public void siUnUsuarioGratuitoNoSePasaDeLaCantidadPermitidaPuedeCargarPrenda(){
+		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1);
+		lara.agregarGuardarropa(otroArmario);
+		lara.cargarPrenda(otroArmario, camisaCorta);
+		assertTrue(otroArmario.prendas.size() == 1);
+	}
 }

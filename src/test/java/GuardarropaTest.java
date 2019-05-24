@@ -10,7 +10,7 @@ import org.junit.Test;
 public class GuardarropaTest {
 
 	Sugeridor sugeridor = new Sugeridor();
-	Usuario juan = new Usuario();
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
