@@ -49,9 +49,17 @@ public class GuardarropaTest {
 	
 	@Test
 	public void siJuanSolicitaSusAtuendosSeObtendraUnoSoloConDistintasPrendas() {
+		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta));
+		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
+		juan.cargarPrenda(armario, jean);
+		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
+	}
+	@Test
+	public void siJuanSolicitaSusAtuendosSeObtendraUnoSoloConDistintasPrendasAhoraConFrio() {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta,camperaGucci));
 		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
 		juan.cargarPrenda(armario, jean);
+		armario.setTemp(10);
 		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
 	}
 	

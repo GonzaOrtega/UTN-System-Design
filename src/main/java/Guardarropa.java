@@ -50,5 +50,8 @@ public class Guardarropa {
 	public int cantidadDePrendasGuardadas() {
 		return this.prendas.size();
 	}
+	public void setTemp(int grados) {
+		this.temperatura = grados;
+	}
 
 }
