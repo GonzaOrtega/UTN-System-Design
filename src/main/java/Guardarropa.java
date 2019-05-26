@@ -14,8 +14,8 @@ public class Guardarropa {
 	
 	public Set<Set<Prenda>> pedirAtuendos(){
 		Set<Set<Prenda>> atuendos = new HashSet<Set<Prenda>>();
-		if(prendas.size()<4) return atuendos;
-		atuendos = Sets.combinations(prendas, 4);
+		if(prendas.size()<5) return atuendos;
+		atuendos = Sets.combinations(prendas, 5);
 		//Aca tiene todas las combinaciones y se encarga de devolver solo las validas
 		 atuendos = atuendos.stream().filter(atuendo->this.contienePrendasDeTodasLasCategorias(atuendo)).collect(Collectors.toSet());
 		 return atuendos;
@@ -27,9 +27,10 @@ public class Guardarropa {
 	
 	private boolean contienePrendasDeTodasLasCategorias(Set<Prenda> atuendo) {
 		return this.contienePrendasDeCategoria(atuendo, Categoria.SUPERIOR)
-				&&this.contienePrendasDeCategoria(atuendo, Categoria.INFERIOR)
-				&&this.contienePrendasDeCategoria(atuendo, Categoria.ACCESORIO)
-				&& this.contienePrendasDeCategoria(atuendo, Categoria.CALZADO);
+				&& this.contienePrendasDeCategoria(atuendo, Categoria.INFERIOR)
+				&& this.contienePrendasDeCategoria(atuendo, Categoria.ACCESORIO)
+				&& this.contienePrendasDeCategoria(atuendo, Categoria.CALZADO)
+				&& this.contienePrendasDeCategoria(atuendo, Categoria.ABRIGO);
 	}
 	
 	public int cantidadDePrendasGuardadas() {

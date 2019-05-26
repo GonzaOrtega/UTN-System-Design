@@ -17,7 +17,7 @@ public class GuardarropaTest {
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
-	
+	Prenda camperaGucci = new PrendaBuilder().conTipo(TipoPrenda.Campera).conTela(Material.ALGODON).conColorPrimario(Color.NEGRO).crearPrenda();
 	
 	@Before
 	public void setUp(){
@@ -26,6 +26,7 @@ public class GuardarropaTest {
 		juan.cargarPrenda(armario, camisaCorta);
 		juan.cargarPrenda(armario,zapatos);
 		juan.cargarPrenda(armario,gorra);
+		juan.cargarPrenda(armario,camperaGucci);
 	}
 
 
@@ -48,7 +49,7 @@ public class GuardarropaTest {
 	
 	@Test
 	public void siJuanSolicitaSusAtuendosSeObtendraUnoSoloConDistintasPrendas() {
-		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta));
+		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta,camperaGucci));
 		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
 		juan.cargarPrenda(armario, jean);
 		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
