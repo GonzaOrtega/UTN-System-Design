@@ -2,7 +2,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.google.common.collect.ImmutableSet;
+//import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 public class Guardarropa {
@@ -22,18 +22,10 @@ public class Guardarropa {
 	} 
 	
 	private boolean contienePrendasDeCategoria(Set<Prenda> atuendo, Categoria unaCategoria) {
-		//return atuendo.stream().map(prenda->prenda.getTipo().categoria).collect(Collectors.toSet()).contains(categoria);
 		return atuendo.stream().anyMatch(prenda->prenda.getTipo().categoria == unaCategoria);
 	}
 	
 	private boolean contienePrendasDeTodasLasCategorias(Set<Prenda> atuendo) {
-		/*
-		boolean contieneTipoSuperior = this.contienePrendasDeCategoria(atuendo, Categoria.SUPERIOR) ;
-		boolean contieneTipoInferior = this.contienePrendasDeCategoria(atuendo, Categoria.INFERIOR);
-		boolean contieneTipoCalzado =  this.contienePrendasDeCategoria(atuendo, Categoria.CALZADO);
-		boolean contieneTipoAccesorio = this.contienePrendasDeCategoria(atuendo, Categoria.ACCESORIO);
-		return contieneTipoSuperior && contieneTipoInferior && contieneTipoCalzado && contieneTipoAccesorio;
-		*/
 		return this.contienePrendasDeCategoria(atuendo, Categoria.SUPERIOR)
 				&&this.contienePrendasDeCategoria(atuendo, Categoria.INFERIOR)
 				&&this.contienePrendasDeCategoria(atuendo, Categoria.ACCESORIO)

@@ -6,12 +6,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class JobsEventos implements Runnable {
-	/*public void ejecutate() {
-		DateFormat formato = new SimpleDateFormat(Evento.getFotmatoDeFecha());
-		String fechaActual = formato.format(new Date());
-		RepositorioEventos.getInstance().proximos(fechaActual).forEach(evento->evento.sugerir());
-	}*/
-
 	@Override
 	public void run() {
 		DateFormat formato = new SimpleDateFormat(Evento.getFotmatoDeFecha());
@@ -24,6 +18,6 @@ public class JobsEventos implements Runnable {
         Runnable codigoAEjecutar = new JobsEventos();
         int retrasoInicial = 0;
         int periodo = 1;
-        scheduler.scheduleAtFixedRate(codigoAEjecutar, retrasoInicial, periodo, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(codigoAEjecutar, retrasoInicial, periodo, TimeUnit.DAYS);//cambiar a TimeUnit.SECONDS para testear
     }
 }

@@ -1,20 +1,14 @@
 import static org.junit.Assert.*;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.junit.Test;
 public class EventoTest {
 	@Test
 	public void ProximidadEntreFechasDiferentesCercanasDevuelveVerdadero() {
-		Evento evento = new Evento("24-05-2019");
+		Evento evento = new Evento("24-05-2019", new Usuario(TipoUsuario.GRATUITO,0));
 		assertTrue(evento.esProximo("17-05-2019"));		
 	}
 	@Test
 	public void ProximidadEntreFechasDiferentesLajanasDevuelveFalso() {
-		Evento evento = new Evento("24-05-2019");
+		Evento evento = new Evento("24-05-2019",new Usuario(TipoUsuario.GRATUITO,0));
 		assertFalse(evento.esProximo("16-05-2019"));		
 	}
 	//Es Solo para ver como funcionaria cuando se pregunta por la fecha actual
@@ -29,6 +23,6 @@ public class EventoTest {
 	}*/
 	@Test(expected= FechaIncorrectaException.class)
 	public void instanciacionIncorrectaDelEvento(){
-		Evento evento = new Evento("hola");
+		new Evento("hola",new Usuario(TipoUsuario.GRATUITO,0));
 	}
 }

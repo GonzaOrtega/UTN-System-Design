@@ -1,10 +1,9 @@
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.HashSet;
 
 public class Usuario {
 	private TipoUsuario tipo;
-	int  maximoDePrendas;
+	private int  maximoDePrendas;
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
 		this.tipo = tipo;
 		this.maximoDePrendas = maximoDePrendas;
@@ -12,6 +11,8 @@ public class Usuario {
 	public HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
+		//No estoy segura si se deberia testear.
+		this.validacionSegunTipoUsuario(unGuardarropa.prendas.size()-1); 
 		this.guardarropas.add(unGuardarropa);
 	}
 	
@@ -19,9 +20,7 @@ public class Usuario {
 		if(this.yaSeCargoLaPrenda(unaPrenda)) {
 			throw new YaSeEncuentraCargadaException("WARNING: la prenda ingresada ya se encuentra cargada");
 		}
-		if(tipo == TipoUsuario.GRATUITO && unGuardarropa.prendas.size() >= maximoDePrendas) {
-			throw new SeExcedioElLimiteDeCapacidadDelGuardarropaException("WARNNING: el guardarropa ya contiene el límite de su capacidad");
-		}
+		this.validacionSegunTipoUsuario(unGuardarropa.prendas.size());		
 		unGuardarropa.cargarPrenda(unaPrenda);
 	}
 	public boolean yaSeCargoLaPrenda(Prenda unaPrenda) {
@@ -34,6 +33,13 @@ public class Usuario {
 	public TipoUsuario getTipo() {
 		return tipo;
 	}
-	
-	
+	//Recibe las nuevas sugerencias
+	public Set<Set<Prenda>> haySugerenciasNuevas(Set<Set<Prenda>> atuendos){
+		return atuendos;
+	}
+	public void validacionSegunTipoUsuario(int cantidadDePrendasDelGuardarropas) {
+		if(tipo == TipoUsuario.GRATUITO && cantidadDePrendasDelGuardarropas >= maximoDePrendas) {
+			throw new SeExcedioElLimiteDeCapacidadDelGuardarropaException("WARNNING: el guardarropa ya contiene el límite de su capacidad");
+		}
+	}
 }
