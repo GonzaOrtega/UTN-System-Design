@@ -6,15 +6,13 @@ import java.io.IOException;
 public class FotoBuilder {
 	Foto foto = new Foto();
 	
-	public Foto crearFoto() {
-		try {
+	public Foto crearFoto() throws IOException {
 			BufferedImage imagen = ImageIO.read(foto.getRuta());
+			if(imagen == null) {
+				throw new IOException("ERROR: no se encuentra el archivo.");
+			}
 	        foto.setImagen(imagen);
 	        foto.normalizarImagen();
-		}
-		catch(IOException e){
-            System.out.println("ERROR:" + e.getMessage());
-		}
 		return foto;
 	}
 	

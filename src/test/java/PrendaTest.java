@@ -1,8 +1,11 @@
 import static org.junit.Assert.*;
+
+import java.io.IOException;
+
 import org.junit.Test;
 
 public class PrendaTest {
-
+	
 	@Test (expected = TieneParametrosNulosException.class)
 	public void noSePuedeCrearPrendasConParametrosNulos() {
 		new PrendaBuilder().conTipo(TipoPrenda.Calza).crearPrenda();
@@ -27,6 +30,18 @@ public class PrendaTest {
 	public void crearPrendaConAtributosNoNulos() {
 		Prenda remeraRosa = new PrendaBuilder().conColorPrimario(Color.ROSA).conTipo(TipoPrenda.Remera).conTela(Material.ALGODON).crearPrenda();
 		assertTrue((remeraRosa.getColorPrimario()!=null) &&(remeraRosa.getTipo()!=null)&&(remeraRosa.getTela()!=null));
+	}
+	
+	@Test
+	public void crearUnaPrendaConFoto() throws IOException {
+		Foto imagenDeRemeraNegra = new FotoBuilder().ruta("src/test/java/remeranegra.jpg").crearFoto();
+		Prenda remeraNegra = new PrendaBuilder().conColorPrimario(Color.NEGRO).conTipo(TipoPrenda.Remera).conTela(Material.ALGODON).conFoto(imagenDeRemeraNegra).crearPrenda();
+		assertEquals(remeraNegra.getFoto(),imagenDeRemeraNegra);
+	}
+	
+	@Test (expected = IOException.class)
+	public void noSePodranCrearFotosSiNoSeLeeCorrectamenteElArchivo() throws IOException {
+		Foto imagenRemeraRosa = new FotoBuilder().ruta("remerarosa.jpg").crearFoto();
 	}
 	
 }

@@ -30,7 +30,7 @@ public class Foto {
 		BufferedImage imagenNormalizada = null;
         Graphics2D graphics2D = null;
 		
-		if(imagen.getHeight()>imagen.getWidth()){
+		if(imagen.getHeight()>=imagen.getWidth()){
 			int anchoNormalizado = normalizarSegun(imagen.getHeight(),imagen.getWidth());
 			imagenNormalizada = new BufferedImage(anchoNormalizado,500,imagen.getType());
 			graphics2D = imagenNormalizada.createGraphics();
