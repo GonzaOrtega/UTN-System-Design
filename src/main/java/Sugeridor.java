@@ -2,6 +2,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Sugeridor {
+	
+	private ProveedorClima proveedorClima;
+	
 	public  static Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario){
 		Set<Set<Prenda>> atuendos = unUsuario
 									.guardarropas
