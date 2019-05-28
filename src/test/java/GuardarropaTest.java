@@ -12,7 +12,8 @@ import org.junit.Test;
 public class GuardarropaTest {
 
 	OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();
-	ProveedorClima APIDeMentiritas = new MockAPI();
+	ProveedorClima APIDeMentiritas = new MockAPI(21);
+	ProveedorClima APIDeMentiritasDeInvierno = new MockAPI(10);
 	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
 	Guardarropa armario = new Guardarropa();
@@ -56,13 +57,14 @@ public class GuardarropaTest {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta));
 		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
 		juan.cargarPrenda(armario, jean);
-		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
+		assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas),atuendosEsperados);
 	}
 	@Test
 	public void siJuanSolicitaSusAtuendosSeObtendraUnoSoloConDistintasPrendasAhoraConFrio() {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta,camperaGucci));
 		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
 		juan.cargarPrenda(armario, jean);
+		sugeridor.setProveedorDeClima(APIDeMentiritasDeInvierno);
 		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
 	}
 	

@@ -2,13 +2,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Sugeridor {
-	
+	private ProveedorClima proveedorDeClima;
 	public Sugeridor(ProveedorClima proveedor) {
 		proveedorDeClima=proveedor;
 	}
-	
-	private ProveedorClima proveedorDeClima;
-	
+		
+	public void setProveedorDeClima(ProveedorClima proveedorDeClima) {
+		this.proveedorDeClima = proveedorDeClima;
+	}
+
 	public Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario){
 		Set<Set<Prenda>> atuendos = unUsuario
 									.guardarropas

@@ -8,7 +8,7 @@ import org.junit.Test;
 public class UsuarioTest {
 
 	ProveedorClima weatherAPI = new OpenWeatherMapAPI();
-	ProveedorClima APIDeMentiritas = new MockAPI();
+	ProveedorClima APIDeMentiritas = new MockAPI(21);
 	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	Guardarropa armario = new Guardarropa();
@@ -56,7 +56,7 @@ public class UsuarioTest {
 	@Test
 	public void siJuanCargaUnJeanASuArmarioDeberiaTenerCuatroAtuendos() {
 		juan.cargarPrenda(armario, jean);
-		assertEquals(sugeridor.sugerirPrendasPara(juan).size(), 4);	
+		assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas).size(), 4);	
 	}
 	@Test
 	public void losAtuendosTienenUnoDeCadaTipo() {
