@@ -23,7 +23,7 @@ public class OpenWeatherMapAPI implements ProveedorClima{
     	try{
         	Response<ClimaOpenweathermap> response = call.execute();
         	ClimaOpenweathermap user = response.body();
-        	return user.getTemperatura();
+        	return user.getTemperatura()-273;
 
     	}
     	catch (Exception ex){
