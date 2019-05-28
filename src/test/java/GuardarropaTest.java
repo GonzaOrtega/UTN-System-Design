@@ -11,10 +11,11 @@ import org.junit.Test;
 
 public class GuardarropaTest {
 
+	MetaWeatherAPI weatherAPI2 = new MetaWeatherAPI();
 	OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();
 	ProveedorClima APIDeMentiritas = new MockAPI(21);
 	ProveedorClima APIDeMentiritasDeInvierno = new MockAPI(10);
-	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
+	Sugeridor sugeridor = new Sugeridor(weatherAPI2);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
