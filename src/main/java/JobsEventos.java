@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class JobsEventos implements Runnable {
+public class JobsEventos implements Runnable{
 	@Override
 	public void run() {
 		DateFormat formato = new SimpleDateFormat(Evento.getFotmatoDeFecha());
