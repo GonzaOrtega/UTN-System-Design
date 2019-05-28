@@ -1,7 +1,5 @@
 import static org.junit.Assert.*;
 
-import static org.mockito.Mockito.*;
-
 import java.util.Set;
 
 import org.junit.Before;
@@ -9,11 +7,12 @@ import org.junit.Test;
 
 public class UsuarioTest {
 
-	OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();
-	Sugeridor sugeridor = new Sugeridor();
+	ProveedorClima weatherAPI = new OpenWeatherMapAPI();
+	ProveedorClima APIDeMentiritas = new MockAPI();
+	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
-	Guardarropa armario = new Guardarropa(weatherAPI);
-	Guardarropa otroArmario = new Guardarropa(weatherAPI);
+	Guardarropa armario = new Guardarropa();
+	Guardarropa otroArmario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
@@ -57,14 +56,13 @@ public class UsuarioTest {
 	@Test
 	public void siJuanCargaUnJeanASuArmarioDeberiaTenerCuatroAtuendos() {
 		juan.cargarPrenda(armario, jean);
-		armario.setTemp(25);  // Otra vez, cuidado con la temperatura
-		assertEquals(armario.pedirAtuendos().size(), 4);	
+		assertEquals(sugeridor.sugerirPrendasPara(juan).size(), 4);	
 	}
 	@Test
 	public void losAtuendosTienenUnoDeCadaTipo() {
 	juan.cargarPrenda(armario, jean);
 	assertTrue(armario
-		.pedirAtuendos()
+		.pedirAtuendosSegun(APIDeMentiritas)
 		.stream()
 		.allMatch(atuendo->this.atuendoTieneCategoria(atuendo, Categoria.SUPERIOR) 
 				&& this.atuendoTieneCategoria(atuendo, Categoria.INFERIOR) 
@@ -82,7 +80,7 @@ public class UsuarioTest {
 	@Test (expected = NoHayAtuendosDisponiblesException.class)
 	public void siLaraPideUnAtuendoPeroNoTienePrendasSuficientesLanzaExcepcion(){
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
-		Sugeridor.sugerirPrendasPara(lara);
+		sugeridor.sugerirPrendasPara(lara);
 	}
 	@Test(expected = SeExcedioElLimiteDeCapacidadDelGuardarropaException.class)
 	public void siSeIntentaCargarMasCantidadDePrendasDeLaPermitidaLanzaException(){

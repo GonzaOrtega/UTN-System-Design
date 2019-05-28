@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+//import static org.mockito.Mockito.*;
 
 public class OpenWeatherMapAPITest {
 
@@ -18,9 +18,5 @@ public class OpenWeatherMapAPITest {
 		weatherAPI = new OpenWeatherMapAPI();
 	}
 
-	@Test
-	public void testTemperaturaOk() {
-		assertNotEquals(weatherAPI.getErrorApi(), weatherAPI.temperatura());
-	}
 
 }

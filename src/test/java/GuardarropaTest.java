@@ -7,15 +7,16 @@ import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+//import static org.mockito.Mockito.*;
 
 public class GuardarropaTest {
 
 	OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();
-	Sugeridor sugeridor = new Sugeridor();
+	ProveedorClima APIDeMentiritas = new MockAPI();
+	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
-	Guardarropa armario = new Guardarropa(weatherAPI);
-	Guardarropa otroArmario = new Guardarropa(weatherAPI);
+	Guardarropa armario = new Guardarropa();
+	Guardarropa otroArmario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
@@ -40,7 +41,7 @@ public class GuardarropaTest {
 
 	@Test
 	public void elArmarioNoDebeDevolverAtuendosSiNoTieneUnaPrendaPorCadaCategoria() {
-		assertTrue(armario.pedirAtuendos().isEmpty());
+		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas).isEmpty());
 	}
 	
 	@Test (expected = YaSeEncuentraCargadaException.class)
@@ -55,7 +56,6 @@ public class GuardarropaTest {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta));
 		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
 		juan.cargarPrenda(armario, jean);
-		armario.setTemp(25);  // Problema con la temperatura
 		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
 	}
 	@Test
@@ -63,7 +63,6 @@ public class GuardarropaTest {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta,camperaGucci));
 		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
 		juan.cargarPrenda(armario, jean);
-		armario.setTemp(10);
 		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
 	}
 	

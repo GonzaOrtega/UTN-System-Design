@@ -11,6 +11,7 @@ public class EventoTest {
 		Evento evento = new Evento("24-05-2019",new Usuario(TipoUsuario.GRATUITO,0));
 		assertFalse(evento.esProximo("16-05-2019"));		
 	}
+	
 	//Es Solo para ver como funcionaria cuando se pregunta por la fecha actual
 	/*
 	@Test
@@ -21,6 +22,7 @@ public class EventoTest {
 		int a = evento.esProximo(formato.format(fechaActual));
 		assertTrue(a==1);		
 	}*/
+	
 	@Test(expected= FechaIncorrectaException.class)
 	public void instanciacionIncorrectaDelEvento(){
 		new Evento("hola",new Usuario(TipoUsuario.GRATUITO,0));

@@ -1,35 +1,23 @@
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-//import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 public class Guardarropa {
 	Set<Prenda> prendas = new HashSet<Prenda>();
-	public double temperatura;
-	
-	public Guardarropa(ProveedorClima proveedorClima) {
-		super();
-		this.temperatura = this.getTemperatura(proveedorClima);
-	}
 
 	public void cargarPrenda(Prenda unaPrenda){
 		prendas.add(unaPrenda);
 	}
 	
-	public Set<Set<Prenda>> pedirAtuendos(){
+	public Set<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor){
 		Set<Set<Prenda>> atuendos = new HashSet<Set<Prenda>>();
-		if(prendas.size()< cantidadPrendasSegunTemp(temperatura)) 
+		if(prendas.size()< cantidadPrendasSegunTemp(proveedor.temperatura())) 
 			return atuendos;
-		atuendos = Sets.combinations(prendas, (int) cantidadPrendasSegunTemp(temperatura));
+		atuendos = Sets.combinations(prendas,(int) cantidadPrendasSegunTemp(proveedor.temperatura()));
 		//Aca tiene todas las combinaciones y se encarga de devolver solo las validas
 		 atuendos = atuendos.stream().filter(atuendo->this.contienePrendasDeTodasLasCategorias(atuendo)).collect(Collectors.toSet());
 		 return atuendos;
-	}
-	
-	private double getTemperatura(ProveedorClima proveedorClima) {
-		return proveedorClima.temperatura();
 	}
 	
 	private double cantidadPrendasSegunTemp(double temperatura) {
@@ -60,9 +48,6 @@ public class Guardarropa {
 	
 	public int cantidadDePrendasGuardadas() {
 		return this.prendas.size();
-	}
-	public void setTemp(int grados) {
-		this.temperatura = grados;
 	}
 
 }

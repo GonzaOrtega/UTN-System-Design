@@ -3,11 +3,17 @@ import java.util.stream.Collectors;
 
 public class Sugeridor {
 	
-	public  static Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario){
+	public Sugeridor(ProveedorClima proveedor) {
+		proveedorDeClima=proveedor;
+	}
+	
+	private ProveedorClima proveedorDeClima;
+	
+	public Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario){
 		Set<Set<Prenda>> atuendos = unUsuario
 									.guardarropas
 									.stream()
-									.map(guardarrropa->guardarrropa.pedirAtuendos())
+									.map(guardarrropa->guardarrropa.pedirAtuendosSegun(proveedorDeClima))
 									.flatMap(guardarropa->guardarropa.stream())
 									.collect(Collectors.toSet());
 		if (atuendos.isEmpty())
