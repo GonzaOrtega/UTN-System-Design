@@ -1,12 +1,19 @@
 import java.util.Date;
 import java.util.Set;
 
-public class SugerenciaParaEvento {
-	Set<Set<Prenda>> atuendo;
+public class Sugerencia {
+	private Set<Prenda> atuendo;
+	private boolean aceptado;
+	
+	public Sugerencia(Set<Prenda> unAtuendo, boolean estado) {
+		atuendo=unAtuendo;
+		aceptado=estado;
+	}
+	/*
 	Evento evento;
 	Evaluacion evaluacion;
 	
-	public SugerenciaParaEvento(Set<Set<Prenda>> atuendo, Evento evento, Evaluacion evaluacion) {
+	public Sugerencia(Set<Set<Prenda>> atuendo, Evento evento, Evaluacion evaluacion) {
 		this.atuendo = atuendo;
 		this.evento = evento;
 		this.evaluacion = evaluacion;
@@ -26,7 +33,7 @@ public class SugerenciaParaEvento {
 	}
 	public Guardarropa getGuardarropas() {
 		return this.evento.getGuardarropas();
-	}	
+	}	*/
 	
 	
 }

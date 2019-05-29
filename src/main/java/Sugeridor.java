@@ -13,7 +13,7 @@ public class Sugeridor {
 
 	public Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario){
 		Set<Set<Prenda>> atuendos = unUsuario
-									.guardarropas
+									.getGuardarropas()
 									.stream()
 									.map(guardarrropa->guardarrropa.pedirAtuendosSegun(proveedorDeClima))
 									.flatMap(guardarropa->guardarropa.stream())

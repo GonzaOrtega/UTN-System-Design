@@ -6,9 +6,7 @@ import api.RequestServiceMetaWeather;
 
 public class MetaWeatherAPI implements ProveedorClima {
 
-	@Override
 	public double temperatura() {
-		// TODO Auto-generated method stub
 		
 		RequestServiceMetaWeather requester = new RequestServiceMetaWeather();
 

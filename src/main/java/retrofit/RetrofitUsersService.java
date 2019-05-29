@@ -1,4 +1,4 @@
-package api;
+package retrofit;
 
 import openweathermap.ClimaOpenweathermap;
 import retrofit2.Call;
