@@ -5,7 +5,8 @@ public class Usuario {
 	private TipoUsuario tipo;
 	private int  maximoDePrendas;
 	private HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
-
+	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
+	private Sugerencia ultimaSugerencia = null;
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
 		this.tipo = tipo;
 		this.maximoDePrendas = maximoDePrendas;
@@ -37,6 +38,24 @@ public class Usuario {
 		return tipo;
 	}
 	//Recibe las nuevas sugerencias
+	public void hayNuevasSugerencias(Sugerencia sugerenciaNueva){
+		sugerencias.add(sugerenciaNueva);
+	}
+	
+	public void clasificarUnaSugerencia(Sugerencia sugerencia, TipoSugerencias tipo) {
+		if (!sugerencias.contains(sugerencia)){
+			throw new NoPoseeLaSugerenciaException("WARNING: No posee la sugerencia que se esta intentando clasificar");
+		}	 
+			ultimaSugerencia =sugerencia;
+			sugerencia.setEstado(tipo);
+	}
+	public void deshacerUltimaOperacionDeSugerencia() {
+		if (ultimaSugerencia != null) ultimaSugerencia
+										.setEstado(TipoSugerencias.PENDIENTE);
+	}
+	public Set<Sugerencia> getSugerencias() {
+		return sugerencias;
+	}
 
 	public void validacionSegunTipoUsuario(int cantidadDePrendasDelGuardarropas) {
 		if(tipo == TipoUsuario.GRATUITO && cantidadDePrendasDelGuardarropas >= maximoDePrendas) {

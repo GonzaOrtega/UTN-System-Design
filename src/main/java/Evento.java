@@ -1,15 +1,13 @@
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Evento {
 	private Date fecha;
 	private Usuario usuario;
 	private Sugeridor sugeridor;
-	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
 	
 	//int contador=0;// usado solo de forma provisoria para el JobsEventosTest
 	
@@ -22,24 +20,9 @@ public class Evento {
 	
 	public void sugerir() {
 		Set<Set<Prenda>> atuendos = sugeridor.sugerirPrendasPara(usuario);
-		atuendos.stream().forEach(atuendo->
-											{boolean respuesta;
-											this.mostrarPorPantalla(atuendo);
-											respuesta=this.solicitarRespuesta();
-											sugerencias.add(new Sugerencia(atuendo,respuesta));}
-								 );
+		atuendos.forEach(atuendo->usuario.hayNuevasSugerencias(new Sugerencia(atuendo,this)));
 		//Implementar para que le llegue notificacion al usuario de que tiene nuevos atuendos
 		//contador++;//Usado en forma provisoria para el JobsEventosTest
-	}
-	
-	
-	public void mostrarPorPantalla(Set<Prenda> atuendo) {
-		System.out.println("¿Acepta la siguiente sugerencia?"+atuendo);
-	}
-	
-	public boolean solicitarRespuesta(){
-		Scanner S=new Scanner(System.in);
-		return S.nextBoolean();
 	}
 	
 	public boolean esProximo(String fechaActual) {
@@ -56,7 +39,6 @@ public class Evento {
 		return usuario;
 	}
 
-	
 	public Date PasarAFormatoAdecuado(String fecha) {
 		try {
 		SimpleDateFormat formato = new SimpleDateFormat(Evento.getFotmatoDeFecha());
