@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import exceptions.*;
 
 public class FotoBuilder {
 	Foto foto = new Foto();

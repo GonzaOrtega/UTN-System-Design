@@ -1,4 +1,3 @@
-
 public class MockAPI implements ProveedorClima{	
 	private double temperatura;
 	
@@ -6,7 +5,6 @@ public class MockAPI implements ProveedorClima{
 		temperatura = temp;
 	}
 	
-
 	public double obtenerTemp() {return temperatura;}
 	
 	public double temperatura() { return this.obtenerTemp(); }

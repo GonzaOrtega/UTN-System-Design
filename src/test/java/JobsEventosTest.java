@@ -1,9 +1,10 @@
 import static org.junit.Assert.assertTrue;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.junit.Test;
+import exceptions.*;
+
 
 public class JobsEventosTest {
 	//Test provisorio para asegurarse de que JobsEventos funciona para probarlo hay que

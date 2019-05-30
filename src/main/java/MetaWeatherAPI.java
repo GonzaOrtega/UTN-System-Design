@@ -1,8 +1,9 @@
 import com.sun.jersey.api.client.ClientResponse;
 
-import api.ClimaMetaWeather;
-import api.JsonFactory;
-import api.RequestServiceMetaWeather;
+import climaMetaWeather.ClimaMetaWeather;
+import climaMetaWeather.JsonFactory;
+import climaMetaWeather.RequestServiceMetaWeather;
+import exceptions.*;
 
 public class MetaWeatherAPI implements ProveedorClima {
 

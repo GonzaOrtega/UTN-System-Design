@@ -1,11 +1,11 @@
 import static org.junit.Assert.*;
-
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import exceptions.YaSeEncuentraCargadaException;
+import exceptions.*;
 
 //import static org.mockito.Mockito.*;
 

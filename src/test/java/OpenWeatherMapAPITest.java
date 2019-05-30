@@ -1,13 +1,5 @@
-import static org.junit.Assert.*;
-
-import openweathermap.*;
-
-import java.util.List;
-
 import org.junit.Before;
-import org.junit.Test;
-
-//import static org.mockito.Mockito.*;
+import exceptions.*;
 
 public class OpenWeatherMapAPITest {
 

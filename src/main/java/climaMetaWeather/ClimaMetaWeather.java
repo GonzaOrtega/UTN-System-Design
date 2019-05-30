@@ -1,4 +1,4 @@
-package api;
+package climaMetaWeather;
 
 import java.util.List;
 

@@ -10,6 +10,7 @@ import javax.ws.rs.BadRequestException;
 import openweathermap.ClimaOpenweathermap;
 import retrofit.ResponseUser;
 import retrofit.RetrofitUsersService;
+import exceptions.*;
 
 public class OpenWeatherMapAPI implements ProveedorClima{	
 

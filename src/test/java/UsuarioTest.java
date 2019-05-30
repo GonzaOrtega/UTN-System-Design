@@ -1,9 +1,13 @@
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
 import java.util.Set;
-
 import org.junit.Before;
 import org.junit.Test;
+import exceptions.NoHayAtuendosDisponiblesException;
+import exceptions.SeExcedioElLimiteDeCapacidadDelGuardarropaException;
+import exceptions.YaSeEncuentraCargadaException;
+import exceptions.*;
 
 public class UsuarioTest {
 
@@ -19,7 +23,7 @@ public class UsuarioTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
-
+	Evento eventoLoco = new Evento("16-02-2019", juan,sugeridor);
 	
 	@Before
 	public void setUp(){
@@ -69,14 +73,17 @@ public class UsuarioTest {
 				&&this.atuendoTieneCategoria(atuendo, Categoria.ACCESORIO) 
 				&&this.atuendoTieneCategoria(atuendo, Categoria.CALZADO)));
 	}
+	
 	public boolean atuendoTieneCategoria(Set<Prenda> unAtuendo, Categoria unaCategoria){
 		return unAtuendo
 				.stream()
 				.anyMatch(prenda->this.prendaDeCategoria(prenda,unaCategoria));
 	}
+	
 	public boolean prendaDeCategoria(Prenda unaPrenda,Categoria categoria) {
 		return unaPrenda.getTipo().categoria == categoria;
 	}
+	
 	@Test (expected = NoHayAtuendosDisponiblesException.class)
 	public void siLaraPideUnAtuendoPeroNoTienePrendasSuficientesLanzaExcepcion(){
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
@@ -96,4 +103,20 @@ public class UsuarioTest {
 		lara.cargarPrenda(otroArmario, camisaCorta);
 		assertTrue(otroArmario.prendas.size() == 1);
 	}
+	
+	@Test
+	public void siUnUsuarioClasificaUnaSugerenciaYLuegoLoDeshaceQuedaPendiente() {
+		Set<Prenda> atuendo = new HashSet<Prenda>();
+		atuendo.add(jean);
+		atuendo.add(camisaCorta);
+		atuendo.add(gorra);
+		atuendo.add(zapatos);
+		Sugerencia sugerencia = new Sugerencia(atuendo,eventoLoco);
+		juan.agregarSugerencia(sugerencia);
+		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
+		juan.deshacerUltimaOperacionDeSugerencia();
+		assertEquals(sugerencia.getEstado(),TipoSugerencias.PENDIENTE);
+	}
+	
+
 }

@@ -1,5 +1,6 @@
 import java.util.Set;
 import java.util.HashSet;
+import exceptions.*;
 
 public class Usuario {
 	private TipoUsuario tipo;
@@ -7,13 +8,13 @@ public class Usuario {
 	private HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
 	private Sugerencia ultimaSugerencia = null;
+	
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
 		this.tipo = tipo;
 		this.maximoDePrendas = maximoDePrendas;
 	}
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
-		//No estoy segura si se deberia testear.
 		this.validacionSegunTipoUsuario(unGuardarropa.prendas.size()-1); 
 		this.guardarropas.add(unGuardarropa);
 	}
@@ -37,8 +38,9 @@ public class Usuario {
 	public TipoUsuario getTipo() {
 		return tipo;
 	}
+	
 	//Recibe las nuevas sugerencias
-	public void hayNuevasSugerencias(Sugerencia sugerenciaNueva){
+	public void agregarSugerencia(Sugerencia sugerenciaNueva){
 		sugerencias.add(sugerenciaNueva);
 	}
 	
@@ -49,10 +51,12 @@ public class Usuario {
 			ultimaSugerencia =sugerencia;
 			sugerencia.setEstado(tipo);
 	}
+	
 	public void deshacerUltimaOperacionDeSugerencia() {
 		if (ultimaSugerencia != null) ultimaSugerencia
 										.setEstado(TipoSugerencias.PENDIENTE);
 	}
+	
 	public Set<Sugerencia> getSugerencias() {
 		return sugerencias;
 	}
