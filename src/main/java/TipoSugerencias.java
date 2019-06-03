@@ -1,4 +1,5 @@
 
+
 public enum TipoSugerencias {
 	ACEPTADA,
 	RECHAZADA,

@@ -1,3 +1,4 @@
+
 public enum Color{
 		ROJO,
 		AMARILLO,

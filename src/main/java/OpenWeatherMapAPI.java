@@ -2,13 +2,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.io.IOException;
-
-import javax.ws.rs.BadRequestException;
-
 import openweathermap.ClimaOpenweathermap;
-import retrofit.ResponseUser;
 import retrofit.RetrofitUsersService;
 import exceptions.*;
 
@@ -16,15 +10,6 @@ public class OpenWeatherMapAPI implements ProveedorClima{
 
 	private int COUNTRY_ID = 3433955;
 	private String APP_ID = "840f5cd8488cbd8d00decbd2bb8cd6a0";
-    private Response<ClimaOpenweathermap> respuesta;
-	
-	public void setRespuesta(Response<ClimaOpenweathermap> respuesta) {
-		this.respuesta = respuesta;
-	}
-
-	public Response<ClimaOpenweathermap> getRespuesta() {
-		return respuesta;
-	}
 
 	Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://api.openweathermap.org/data/2.5/")
@@ -32,15 +17,19 @@ public class OpenWeatherMapAPI implements ProveedorClima{
             .build();
 
     RetrofitUsersService service = retrofit.create(RetrofitUsersService.class);
+    Call<ClimaOpenweathermap> call = service.getTemperatura(APP_ID, COUNTRY_ID);
+
     
-	public void obtenerTemperaturaDesdeAPI() throws IOException {
-		 Call<ClimaOpenweathermap> call = service.getTemperatura(APP_ID, COUNTRY_ID);
-		 this.setRespuesta(call.execute());
-	}
-    
-	public double temperatura() {
-		ClimaOpenweathermap clima = this.getRespuesta().body();
-        return clima.getTemperatura()-273;
-    }   
+    public double temperatura() {
+    	try{
+        	Response<ClimaOpenweathermap> response = call.execute();
+        	ClimaOpenweathermap user = response.body();
+        	return user.getTemperatura();
+
+    	}
+    	catch (Exception ex){
+    		throw new ErrorConAPIException(ex.getMessage());
+    	}
+    }
 
 }
