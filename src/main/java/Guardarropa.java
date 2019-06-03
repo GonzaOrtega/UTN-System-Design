@@ -16,7 +16,6 @@ public class Guardarropa {
 		if(prendas.size()< cantidadPrendasSegunTemp(proveedor.temperatura())) 
 			return atuendos;
 		atuendos = Sets.combinations(prendas,(int) cantidadPrendasSegunTemp(proveedor.temperatura()));
-		//Aca tiene todas las combinaciones y se encarga de devolver solo las validas
 		 atuendos = atuendos.stream().filter(atuendo->this.contienePrendasDeTodasLasCategorias(atuendo)).collect(Collectors.toSet());
 		 return atuendos;
 	}
