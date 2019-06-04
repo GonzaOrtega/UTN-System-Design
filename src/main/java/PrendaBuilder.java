@@ -52,13 +52,9 @@ public class PrendaBuilder{
 		prenda.setNivelAbrigo(nivelAbrigo);
 		return this;
 	}
-	public PrendaBuilder esBase(boolean es) {
-		prenda.setEsBase(es);
-		return this;
-	}
 	
 	public boolean tieneAlgunParametroNulo(){ //HAY QUE MODIFICAR Y AGREGAR LA BASE Y ABRIGO ACA
-		List parametros = new ArrayList(Arrays.asList(prenda.getTela(),prenda.getColorPrimario(),prenda.getTipo()));
+		List parametros = new ArrayList(Arrays.asList(prenda.getTela(),prenda.getColorPrimario(),prenda.getTipo(),prenda.getNivelAbrigo()));
 		return parametros.stream().anyMatch(parametro -> parametro == null);
 	}
 

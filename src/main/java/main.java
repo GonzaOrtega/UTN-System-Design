@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class main {
 	public static void main(String args[]) {
-		System.out.println("Hola Mundo!");
+/*		System.out.println("Hola Mundo!");
 		MetaWeatherAPI weatherAPI2 = new MetaWeatherAPI();
 		OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();
 		ProveedorClima APIDeMentiritas = new MockAPI(21);
@@ -52,6 +52,6 @@ public class main {
 		//	System.out.println(foo.get(i));
 			System.out.println(foo.get(i).stream().map(prenda->prenda.getTipo().categoria).collect(Collectors.toList()));
 		}
-		
+		*/
 	}
 }

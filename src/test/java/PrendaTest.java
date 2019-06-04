@@ -37,7 +37,7 @@ public class PrendaTest {
 	@Test
 	public void crearUnaPrendaConFoto() throws IOException {
 		Foto imagenDeRemeraNegra = new FotoBuilder().ruta("src/test/java/remeranegra.jpg").crearFoto();
-		Prenda remeraNegra = new PrendaBuilder().conColorPrimario(Color.NEGRO).conTipo(TipoPrenda.Remera).conTela(Material.ALGODON).conFoto(imagenDeRemeraNegra).crearPrenda();
+		Prenda remeraNegra = new PrendaBuilder().conColorPrimario(Color.NEGRO).conTipo(TipoPrenda.Remera).conTela(Material.ALGODON).conFoto(imagenDeRemeraNegra).conAbrigo(0).crearPrenda();
 		assertEquals(remeraNegra.getFoto(),imagenDeRemeraNegra);
 	}
 	
@@ -45,5 +45,8 @@ public class PrendaTest {
 	public void noSePodranCrearFotosSiNoSeLeeCorrectamenteElArchivo() throws IOException {
 		Foto imagenRemeraRosa = new FotoBuilder().ruta("remerarosa.jpg").crearFoto();
 	}
-	
+	@Test (expected = TieneParametrosNulosException.class)
+	public void noSePodranCrearPrendasSinNivelAbrigo() {
+		new PrendaBuilder().conColorPrimario(Color.ROSA).conTela(Material.ALGODON).conTipo(TipoPrenda.Remera).crearPrenda();
+}
 }

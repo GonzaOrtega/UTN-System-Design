@@ -6,7 +6,6 @@ public class Prenda {
 	private Material tela;
 	private Foto foto;
 	private int nivelAbrigo;
-	private boolean esBase;
 	
 	//Get y set de todos los atributos
 	
@@ -17,10 +16,15 @@ public class Prenda {
 		this.nivelAbrigo = nivelAbrigo;
 	}
 	public boolean getEsBase() {
-		return esBase;
+		return this.esBase(this.getTipo()); 
 	}
-	public void setEsBase(boolean esBase) {
-		this.esBase = esBase;
+	private boolean esBase(TipoPrenda prenda) {
+		boolean aux = prenda == TipoPrenda.Remera 
+				|| prenda == TipoPrenda.RemeraMangaCorta 
+				|| prenda == TipoPrenda.RemeraMangaLarga
+				|| prenda == TipoPrenda.CamisaMangaCorta
+				|| prenda == TipoPrenda.CamisaMangaLarga;		
+		return aux;
 	}
 	
 	public Color getColorPrimario() {

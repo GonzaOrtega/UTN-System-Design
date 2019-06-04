@@ -19,11 +19,11 @@ public class GuardarropaTest {
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
-	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
-	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
-	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
-	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
-	Prenda camperaGucci = new PrendaBuilder().conTipo(TipoPrenda.Campera).conTela(Material.ALGODON).conColorPrimario(Color.NEGRO).crearPrenda();
+	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).conAbrigo(0).crearPrenda();
+	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).conAbrigo(0).crearPrenda();
+	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).conAbrigo(0).crearPrenda();
+	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(0).crearPrenda();
+	Prenda camperaGucci = new PrendaBuilder().conTipo(TipoPrenda.Campera).conTela(Material.ALGODON).conColorPrimario(Color.NEGRO).conAbrigo(2).crearPrenda();
 	
 	@Before
 	public void setUp(){
@@ -54,22 +54,24 @@ public class GuardarropaTest {
 	}
 	
 	@Test
-	public void siJuanSolicitaSusAtuendosSeObtendraUnoSoloConDistintasPrendas() {
+	public void siJuanSolicitaSusAtuendosSeObtendranDosConOSinAccesorio() {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta));
-		camisaCorta.setEsBase(true);//esto hay que cambiar despues
-		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
+		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,zapatos,camisaCorta));
+//		camisaCorta.setEsBase(true);//esto hay que cambiar despues
 		juan.cargarPrenda(armario, jean);
-		assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas),atuendosEsperados);
-	}//este test hay que modificar porque cambio el requerimiento
-	/*
+		//assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas),atuendosEsperados);
+		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas).contains(atuendo)
+				&& armario.pedirAtuendosSegun(APIDeMentiritas).contains(atuendo2));
+	}
+/*	
 	@Test
-	public void siJuanSolicitaSusAtuendosSeObtendraUnoSoloConDistintasPrendasAhoraConFrio() {
+	public void siJuanSolicitaSusAtuendosSeObtendranDosDistintos() {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta,camperaGucci));
 		HashSet<HashSet<Prenda>> atuendosEsperados = new HashSet<HashSet<Prenda>>(Arrays.asList(atuendo));
 		juan.cargarPrenda(armario, jean);
 		sugeridor.setProveedorDeClima(APIDeMentiritasDeInvierno);
 		assertEquals(sugeridor.sugerirPrendasPara(juan),atuendosEsperados);
-	}//este test no va mas*/
-	
+	}
+	*/
 	
 }
