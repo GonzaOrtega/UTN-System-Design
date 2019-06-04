@@ -2,10 +2,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import exceptions.*;
 
 public class FotoBuilder {
 	Foto foto = new Foto();
+	Normalizador normalizador;
 	
 	public Foto crearFoto() throws IOException {
 			BufferedImage imagen = ImageIO.read(foto.getRuta());
@@ -13,10 +13,10 @@ public class FotoBuilder {
 				throw new IOException("ERROR: no se encuentra el archivo.");
 			}
 	        foto.setImagen(imagen);
-	        foto.normalizarImagen();
-		return foto;
+	        normalizador.normalizarImagen(foto);
+	     return foto;
 	}
-	
+		
 	public FotoBuilder ruta(String ruta) {
 		File fotoRuta = new File(ruta);
 		foto.setRuta(fotoRuta);

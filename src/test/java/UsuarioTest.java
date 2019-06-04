@@ -1,5 +1,4 @@
 import static org.junit.Assert.*;
-
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Before;
@@ -118,5 +117,4 @@ public class UsuarioTest {
 		assertEquals(sugerencia.getEstado(),TipoSugerencias.PENDIENTE);
 	}
 	
-
 }

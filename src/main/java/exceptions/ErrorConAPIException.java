@@ -5,10 +5,7 @@ import javax.ws.rs.core.Response;
 import openweathermap.ClimaOpenweathermap;
 
 public class ErrorConAPIException extends BadRequestException{
-
-	public ErrorConAPIException(String mensaje ,retrofit2.Response<ClimaOpenweathermap> response){
-		super();
+	public ErrorConAPIException(String msg) {
+		super(msg);
 	}
-	
-	
 }
