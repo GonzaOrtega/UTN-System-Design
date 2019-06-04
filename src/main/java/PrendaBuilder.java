@@ -47,8 +47,17 @@ public class PrendaBuilder{
 		prenda.setFoto(foto);
 		return this;
 	}
+	//Agregue esto
+	public PrendaBuilder conAbrigo(int nivelAbrigo) {
+		prenda.setNivelAbrigo(nivelAbrigo);
+		return this;
+	}
+	public PrendaBuilder esBase(boolean es) {
+		prenda.setEsBase(es);
+		return this;
+	}
 	
-	public boolean tieneAlgunParametroNulo(){
+	public boolean tieneAlgunParametroNulo(){ //HAY QUE MODIFICAR Y AGREGAR LA BASE Y ABRIGO ACA
 		List parametros = new ArrayList(Arrays.asList(prenda.getTela(),prenda.getColorPrimario(),prenda.getTipo()));
 		return parametros.stream().anyMatch(parametro -> parametro == null);
 	}

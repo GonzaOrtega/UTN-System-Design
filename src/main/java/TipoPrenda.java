@@ -61,7 +61,7 @@ public enum TipoPrenda{
 		Sombrero		(Categoria.ACCESORIO,
 						Arrays.asList(Material.RAYON,Material.LANA)
 						),
-		Campera			(Categoria.ABRIGO,
+		Campera			(Categoria.SUPERIOR,
 						Arrays.asList(Material.ALGODON,Material.LANA,Material.NYLON)
 						);
 		//Etc.
