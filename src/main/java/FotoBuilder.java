@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class FotoBuilder {
 	Foto foto = new Foto();
-	Normalizador normalizador;
+	Normalizador normalizador= new NormalizadorDePrueba();
 	
 	public Foto crearFoto() throws IOException {
 			BufferedImage imagen = ImageIO.read(foto.getRuta());

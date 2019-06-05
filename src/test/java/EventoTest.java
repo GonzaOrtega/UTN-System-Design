@@ -1,10 +1,7 @@
 import static org.junit.Assert.*;
-
+import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
-
-import exceptions.FechaIncorrectaException;
-import exceptions.*;
 
 public class EventoTest {
 	
@@ -18,8 +15,8 @@ public class EventoTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).conAbrigo(0).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).conAbrigo(0).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(0).crearPrenda();
-	Evento eventoLoco = new Evento("16-02-2019", juan,sugeridor);
-	
+	Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor);//la fecha es:"16-02-2019"
+
 	@Before
 	public void setUp(){
 		juan.agregarGuardarropa(armario);
@@ -33,13 +30,13 @@ public class EventoTest {
 	
 	@Test
 	public void ProximidadEntreFechasDiferentesCercanasDevuelveVerdadero() {
-		Evento evento = new Evento("24-05-2019", new Usuario(TipoUsuario.GRATUITO,0),sugeridor);
-		assertTrue(evento.esProximo("17-05-2019"));		
+		Evento evento = new Evento(new Date(119,4,24), new Usuario(TipoUsuario.GRATUITO,0),sugeridor);//"24-05-2019"
+		assertTrue(evento.esProximo(new Date(119,4,17)));	//"17-05-2019"	
 	}
 	@Test
 	public void ProximidadEntreFechasDiferentesLajanasDevuelveFalso() {
-		Evento evento = new Evento("24-05-2019",new Usuario(TipoUsuario.GRATUITO,0),sugeridor);
-		assertFalse(evento.esProximo("16-05-2019"));		
+		Evento evento = new Evento(new Date(119,4,24),new Usuario(TipoUsuario.GRATUITO,0),sugeridor);
+		assertFalse(evento.esProximo(new Date(119,4,16)));	//	"16-05-2019"
 	}
 	
 	//Es Solo para ver como funcionaria cuando se pregunta por la fecha actual
@@ -52,11 +49,6 @@ public class EventoTest {
 		int a = evento.esProximo(formato.format(fechaActual));
 		assertTrue(a==1);		
 	}*/
-	
-	@Test(expected= FechaIncorrectaException.class)
-	public void instanciacionIncorrectaDelEvento(){
-		new Evento("hola",new Usuario(TipoUsuario.GRATUITO,0),sugeridor);
-	}
 	
 	@Test 
 	public void siUnEventoPideSugerenciasParaJuanElMismoTendra4Sugerencias(){

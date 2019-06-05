@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class  RepositorioEventos {
 		this.eventos.add(evento);
 	}
 	
-	public Set<Evento> proximos(String fecha) {
+	public Set<Evento> proximos(Date fecha) {
 		return this.eventos.stream().filter(evento->evento.esProximo(fecha)).collect(Collectors.toSet());
 	}
 	

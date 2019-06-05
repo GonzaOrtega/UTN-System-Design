@@ -1,9 +1,5 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
-import exceptions.*;
-import exceptions.FechaIncorrectaException;
 
 public class Evento {
 	private Date fecha;
@@ -12,8 +8,8 @@ public class Evento {
 	static int limiteDeProximidad = 7;
 	//int contador=0;// usado solo de forma provisoria para el JobsEventosTest
 	
-	public Evento(String unaFecha, Usuario unUsuario,Sugeridor unSugeridor) {
-			this.fecha = this.PasarAFormatoAdecuado(unaFecha);
+	public Evento(Date unaFecha, Usuario unUsuario,Sugeridor unSugeridor) {
+			this.fecha=unaFecha;
 			this.usuario = unUsuario;
 			this.sugeridor=unSugeridor;
 	}
@@ -25,9 +21,9 @@ public class Evento {
 		//contador++;//Usado en forma provisoria para el JobsEventosTest
 	}
 	
-	public boolean esProximo(String fechaActual) {
-		Date fechaActualDate = this.PasarAFormatoAdecuado(fechaActual);
-		int dias=(int) ((fecha.getTime()-fechaActualDate.getTime())/86400000);
+	public boolean esProximo(Date fechaActual) {
+		//Date fechaActualDate = this.PasarAFormatoAdecuado(fechaActual);
+		int dias=(int) ((fecha.getTime()-fechaActual.getTime())/(1000*60*60*24));
 		return dias<=limiteDeProximidad;
 	}
 	
@@ -37,18 +33,5 @@ public class Evento {
 	
 	public Usuario getUsuario() {
 		return usuario;
-	}
-
-	public Date PasarAFormatoAdecuado(String fecha) {
-		try {
-		SimpleDateFormat formato = new SimpleDateFormat(Evento.getFotmatoDeFecha());
-		return formato.parse(fecha);
-		}catch(ParseException exception) {
-			throw new FechaIncorrectaException("WARNING: La fecha no coincide con el formato: "+Evento.getFotmatoDeFecha());
-		}
-	}
-	
-	public static String getFotmatoDeFecha() {
-		return "dd-MM-yyyy";
 	}
 }

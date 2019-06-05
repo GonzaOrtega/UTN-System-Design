@@ -1,17 +1,12 @@
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import exceptions.*;
 
 public class JobsEventos implements Runnable{
 	@Override
 	public void run() {
-		DateFormat formato = new SimpleDateFormat(Evento.getFotmatoDeFecha());
-		String fechaActual = formato.format(new Date());
-		RepositorioEventos.getInstance().proximos(fechaActual).forEach(evento->evento.sugerir());
+		RepositorioEventos.getInstance().proximos(new Date()).forEach(evento->evento.sugerir());
 		
 	}
 	public static void main() {
