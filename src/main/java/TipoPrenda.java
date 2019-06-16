@@ -47,6 +47,9 @@ public enum TipoPrenda{
 		Ojotas			(Categoria.CALZADO,
 						Arrays.asList(Material.CUERO,Material.POLIESTER,Material.CAUCHO)
 						),
+		Botas			(Categoria.CALZADO,
+						Arrays.asList(Material.CUERO,Material.POLIESTER,Material.CAUCHO)
+						),
 		Zapatillas		(Categoria.CALZADO,
 						Arrays.asList(Material.NYLON,Material.LONA,Material.CUERO)
 						),
@@ -61,6 +64,12 @@ public enum TipoPrenda{
 						),
 		Sombrero		(Categoria.ACCESORIO,
 						Arrays.asList(Material.RAYON,Material.LANA)
+						),
+		Tapado			(Categoria.SUPERIOR,
+						Arrays.asList(Material.RAYON,Material.LANA)
+						),
+		Buzo			(Categoria.SUPERIOR,
+						Arrays.asList(Material.ALGODON,Material.LANA,Material.NYLON)
 						),
 		Campera			(Categoria.SUPERIOR,
 						Arrays.asList(Material.ALGODON,Material.LANA,Material.NYLON)

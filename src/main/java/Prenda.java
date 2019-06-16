@@ -26,6 +26,24 @@ public class Prenda {
 				|| prenda == TipoPrenda.CamisaMangaLarga;		
 		return aux;
 	}
+	public boolean esDeVerano() {
+		return this.tipo == TipoPrenda.Ojotas
+				||this.tipo == TipoPrenda.Short
+				||this.tipo == TipoPrenda.PolleraCorta
+				||this.tipo == TipoPrenda.Bermuda;
+		
+	}
+	/*public boolean getEsAbrigo() {
+		
+	}
+	public int posicion() {
+		if(this.getEsBase())
+			return 0;
+		if(this.getEsAbrigo())
+			return 1;
+		else
+			return 2;
+	}*/
 	
 	public Color getColorPrimario() {
 		return colorPrimario;

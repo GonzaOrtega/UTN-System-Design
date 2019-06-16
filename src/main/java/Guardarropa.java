@@ -15,29 +15,13 @@ public class Guardarropa {
 	public void cargarPrenda(Prenda unaPrenda){
 		prendas.add(unaPrenda);
 	}
-	
-	//public Set<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor){
 	public ArrayList<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor){
-
-		/*Set<Set<Prenda>> atuendos = new HashSet<Set<Prenda>>();
-		if(prendas.size() < 4) 
-			return atuendos;
-		atuendos = Sets.combinations(prendas,4);
-		atuendos = atuendos.stream().filter(atuendo->this.contienePrendasDeTodasLasCategorias(atuendo)).collect(Collectors.toSet());
-		return atuendos;
-		//Aca tiene todas las combinaciones y se encarga de devolver solo las validas
-		 System.out.println(atuendos);*/
-		 //--------------------esto de abajo es nuevo
-		
 		Set<Set<Prenda>> elAux = new HashSet<Set<Prenda>>();
-		elAux = this.parteNoSuperior();
+		elAux = this.parteNoSuperior(proveedor); //esto esta asi por un tema de Set y List
 		ArrayList<Set<Prenda>> atuendosInferior = new ArrayList<Set<Prenda>>(elAux);
-//		System.out.println("Ultimo cambio:");
 //		System.out.println(atuendosInferior);
-		
 		Set<Set<Prenda>> atuendoSup = parteSuperior(proveedor);
 		ArrayList<Set<Prenda>> listaAtuSuperior = new ArrayList<Set<Prenda>>(atuendoSup);
-//		System.out.println("Ultimo cambio 2:");
 //		System.out.println(listaAtuSuperior);
 		ArrayList<Set<Prenda>> listaReturn = new ArrayList<Set<Prenda>>();
 		for (int i=0;i<atuendosInferior.size();i++)
@@ -52,30 +36,19 @@ public class Guardarropa {
 				listaReturn.add(atuInf);
 			}
 		}
-		 
-/*		 for( Iterator<Set<Prenda>> it = atuendoSup.iterator(); it.hasNext();) { 
-			    HashSet<Prenda> x = (HashSet<Prenda>)it.next();
-			   atr = atuendos.stream().map(atu->atu.addAll(x)).collect(Collectors.toSet());
-			    System.out.println(atr);
-		 }*/
-		 
-		 
 		 return listaReturn;
 	}
-	
-
-	
 	
 	
 	private Set<Prenda> noSuperior(){
 		return prendas.stream().filter(p->p.getTipo().categoria != 
 				Categoria.SUPERIOR).collect(Collectors.toSet());
 	}
-	private Set<Set<Prenda>> parteNoSuperior(){
+	private Set<Set<Prenda>> parteNoSuperior(ProveedorClima clima){
 		Set<Prenda> partesInferiores = this.noSuperior();
 		Set<Set<Prenda>> powerSetInferiores = Sets.powerSet(partesInferiores); 
 		powerSetInferiores = powerSetInferiores.stream()
-				.filter(at->this.parteInferiorValida(at))
+				.filter(at->this.parteInferiorValida(at, clima))
 				.collect(Collectors.toSet());
 		return powerSetInferiores;
 	}
@@ -97,11 +70,16 @@ public class Guardarropa {
 	}
 	private boolean parteSuperiorValida(Set<Prenda> ps, ProveedorClima clima) {
 		Set<Prenda> aux = ps.stream().filter(prenda->prenda.getEsBase()).collect(Collectors.toSet());
-		boolean a = aux.size() == 1;
+		boolean soloUnaPrendaBase = aux.size() == 1;
 		int aux2 = ps.stream().mapToInt(prenda -> prenda.getNivelAbrigo()).sum();
-	//	boolean b = this.EstaEnRango(aux2,clima);
-	//	return a && b; //YA SE QUE GASTON ODIA ESTO PERO BUENO SOY ASI -FRAN
-		return a;
+		boolean abrigaBien = this.EstaEnRango(aux2,clima);
+		//nuevo para que no devuelva dos camperas o dos buzos
+		boolean soloUnaCampera = ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Campera).collect(Collectors.toSet()).size()<2;
+		boolean soloUnTapado = ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Tapado).collect(Collectors.toSet()).size()<2;
+		boolean soloUnBuzo= ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Buzo).collect(Collectors.toSet()).size()<2;
+
+		return soloUnaPrendaBase && abrigaBien
+				&& soloUnaCampera && soloUnTapado && soloUnBuzo;
 	}
 	private boolean EstaEnRango(int nivelAbrigo,ProveedorClima clima) {
 		int nf =this.nivelFrio(clima.temperatura());
@@ -110,12 +88,24 @@ public class Guardarropa {
 		//Esto tenemos que charlarlo todos jeje
 	}
 	
-	private boolean parteInferiorValida(Set<Prenda> ps) {
+	private boolean parteInferiorValida(Set<Prenda> ps,ProveedorClima clima) {
 		return this.contienePrendasDeCategoria(ps, Categoria.INFERIOR)
-				&& this.contienePrendasDeCategoria(ps, Categoria.CALZADO);
+				&& this.contienePrendasDeCategoria(ps, Categoria.CALZADO)
+				&& this.abrigaCorrectamenteInferior(ps,clima);
+	}
+	private boolean abrigaCorrectamenteInferior(Set<Prenda> prenInf,ProveedorClima clima) {
+		double temp = clima.temperatura();
+		boolean tienePrenasVeraniegas = prenInf.stream().filter(pre->pre.esDeVerano()).collect(Collectors.toSet()).size()>0;
+		return !(temp < 19 && tienePrenasVeraniegas);
 	}
 	private boolean contienePrendasDeCategoria(Set<Prenda> atuendo, Categoria unaCategoria) {
-		return atuendo.stream().anyMatch(prenda->prenda.getTipo().categoria == unaCategoria);
+		Set<Prenda> aux;
+		if (unaCategoria != Categoria.INFERIOR)
+			return atuendo.stream().anyMatch(prenda->prenda.getTipo().categoria == unaCategoria); 
+		
+		aux = atuendo.stream().filter(prenda->prenda.getTipo().
+				categoria == unaCategoria).collect(Collectors.toSet());
+		return aux.size() == 1;//esto se traduce en que solo hay una prenda
 	}
 	
 	private boolean contienePrendasDeTodasLasCategorias(Set<Prenda> atuendo) {
@@ -128,11 +118,13 @@ public class Guardarropa {
 		return this.prendas.size();
 	}
 	private int nivelFrio(double temperatura) {
-		if (temperatura < 0)
-			return 6;
-		if (temperatura < 10)
+		if (temperatura < 1)
+			return 5;
+		if (temperatura < 9)
 			return 4;
-		if (temperatura < 15)
+		if (temperatura < 13)
+			return 3;
+		if (temperatura < 17)
 			return 2;
 		if (temperatura < 20)
 			return 1; //irias con remera manga larga/corta

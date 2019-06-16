@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class main {
-	public static void main(String args[]) {
-/*		System.out.println("Hola Mundo!");
+/*	public static void main(String args[]) {
+		System.out.println("Hola Mundo!");
 		MetaWeatherAPI weatherAPI2 = new MetaWeatherAPI();
 		OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();
 		ProveedorClima APIDeMentiritas = new MockAPI(21);
@@ -20,16 +20,13 @@ public class main {
 		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
 		Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 		Prenda camperaGucci = new PrendaBuilder().conTipo(TipoPrenda.Campera).conTela(Material.ALGODON).conColorPrimario(Color.NEGRO).crearPrenda();
-		Prenda buzo = new PrendaBuilder().conTipo(TipoPrenda.Campera).conTela(Material.ALGODON).conColorPrimario(Color.VERDE).crearPrenda();
+		Prenda buzo = new PrendaBuilder().conTipo(TipoPrenda.Buzo).conTela(Material.ALGODON).conColorPrimario(Color.VERDE).crearPrenda();
 		Prenda camisaCorta2 = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 		Prenda camisaCorta3 = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
-		camisaCorta.setEsBase(true);
+		Prenda camperaGucci2 = new PrendaBuilder().conTipo(TipoPrenda.Campera).conTela(Material.ALGODON).conColorPrimario(Color.NEGRO).crearPrenda();
 		camisaCorta.setNivelAbrigo(0);
-		camisaCorta2.setEsBase(true);
-		camisaCorta3.setEsBase(true);
-		camperaGucci.setEsBase(false);
-		buzo.setEsBase(false);
 		camperaGucci.setNivelAbrigo(3);
+		camperaGucci2.setNivelAbrigo(3);
 		buzo.setNivelAbrigo(0);
 		
 		
@@ -40,7 +37,7 @@ public class main {
 		juan.cargarPrenda(armario,camperaGucci);
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario, buzo);
-	//	juan.cargarPrenda(armario, camisaCorta2);
+		juan.cargarPrenda(armario, camperaGucci2);
 	//	juan.cargarPrenda(armario, camisaCorta3);
 
 
@@ -52,6 +49,6 @@ public class main {
 		//	System.out.println(foo.get(i));
 			System.out.println(foo.get(i).stream().map(prenda->prenda.getTipo().categoria).collect(Collectors.toList()));
 		}
-		*/
-	}
+		
+	}*/
 }
