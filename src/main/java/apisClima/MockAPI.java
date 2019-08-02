@@ -1,3 +1,4 @@
+package apisClima;
 public class MockAPI implements ProveedorClima{	
 	private double temperatura;
 	

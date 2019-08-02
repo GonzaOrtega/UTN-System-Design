@@ -1,3 +1,4 @@
+package enums;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,8 +77,8 @@ public enum TipoPrenda{
 						);
 		//Etc.
 
-		Categoria categoria;
-		List <Material> materialesPermitidos;
+		public Categoria categoria;
+		public List <Material> materialesPermitidos;
 		TipoPrenda(Categoria categoria, List<Material> materiales){
 			this.categoria=categoria;
 			this.materialesPermitidos=materiales;

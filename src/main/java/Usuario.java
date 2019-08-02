@@ -1,4 +1,8 @@
 import java.util.Set;
+
+import enums.TipoSugerencias;
+import enums.TipoUsuario;
+
 import java.util.HashSet;
 import exceptions.*;
 
@@ -8,12 +12,14 @@ public class Usuario {
 	private HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
 	private Sugerencia ultimaSugerencia = null;
+	private Set<MedioDeNotifiacion> medios = new HashSet<MedioDeNotifiacion>();
+	
 	
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
 		this.tipo = tipo;
 		this.maximoDePrendas = maximoDePrendas;
 	}
-	
+		
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
 		this.validacionSegunTipoUsuario(unGuardarropa.prendas.size()-1); 
 		this.guardarropas.add(unGuardarropa);
@@ -66,5 +72,9 @@ public class Usuario {
 			throw new SeExcedioElLimiteDeCapacidadDelGuardarropaException("WARNNING: el guardarropa ya contiene el l�mite de su capacidad");
 		}
 	}
-
+	
+	public void notificarSugerenciasNuevas() {
+		this.medios.stream().forEach(medio->medio.notificarNuevasSugerencias());	
+	}
+	
 }

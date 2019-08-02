@@ -1,6 +1,4 @@
-package retrofit;
-
-import openweathermap.ClimaOpenweathermap;
+package openweathermap;
 
 public class ResponseUser {
     public ClimaOpenweathermap data;

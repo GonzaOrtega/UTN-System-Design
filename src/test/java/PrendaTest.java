@@ -2,6 +2,9 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import org.junit.Test;
 
+import enums.Color;
+import enums.Material;
+import enums.TipoPrenda;
 import exceptions.*;
 import exceptions.MaterialNoPermitidoException;
 import exceptions.TieneParametrosNulosException;

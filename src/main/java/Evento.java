@@ -17,7 +17,7 @@ public class Evento {
 	public void sugerir() {
 		Set<Set<Prenda>> atuendos = sugeridor.sugerirPrendasPara(usuario);
 		atuendos.forEach(atuendo->usuario.agregarSugerencia(new Sugerencia(atuendo,this)));
-		//Implementar para que le llegue notificacion al usuario de que tiene nuevos atuendos
+		usuario.notificarSugerenciasNuevas();
 		//contador++;//Usado en forma provisoria para el JobsEventosTest
 	}
 	

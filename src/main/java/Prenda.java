@@ -1,3 +1,7 @@
+import enums.Color;
+import enums.Material;
+import enums.TipoPrenda;
+
 public class Prenda {
 	
 	private Color colorPrimario;

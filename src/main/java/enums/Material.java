@@ -1,3 +1,4 @@
+package enums;
 
 public enum Material {
 		ALGODON, LYCRA, LINO, FRANELA, LANA, CUERO, MICROFIBRA, SEDA,

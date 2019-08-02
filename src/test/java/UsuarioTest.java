@@ -5,6 +5,16 @@ import java.util.HashSet;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
+
+import apisClima.MockAPI;
+import apisClima.OpenWeatherMapAPI;
+import apisClima.ProveedorClima;
+import enums.Categoria;
+import enums.Color;
+import enums.Material;
+import enums.TipoPrenda;
+import enums.TipoSugerencias;
+import enums.TipoUsuario;
 import exceptions.NoHayAtuendosDisponiblesException;
 import exceptions.SeExcedioElLimiteDeCapacidadDelGuardarropaException;
 import exceptions.YaSeEncuentraCargadaException;

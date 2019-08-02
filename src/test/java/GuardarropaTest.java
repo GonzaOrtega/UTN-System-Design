@@ -4,6 +4,14 @@ import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 
+import apisClima.MetaWeatherAPI;
+import apisClima.MockAPI;
+import apisClima.OpenWeatherMapAPI;
+import apisClima.ProveedorClima;
+import enums.Color;
+import enums.Material;
+import enums.TipoPrenda;
+import enums.TipoUsuario;
 import exceptions.YaSeEncuentraCargadaException;
 import exceptions.*;
 

@@ -7,7 +7,12 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import apisClima.ProveedorClima;
+import enums.Categoria;
+import enums.TipoPrenda;
 import exceptions.*;
+import enums.*;
 
 public class Guardarropa {
 	Set<Prenda> prendas = new HashSet<Prenda>();

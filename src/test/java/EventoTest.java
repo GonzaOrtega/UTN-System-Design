@@ -3,6 +3,13 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import apisClima.MockAPI;
+import apisClima.ProveedorClima;
+import enums.Color;
+import enums.Material;
+import enums.TipoPrenda;
+import enums.TipoUsuario;
+
 public class EventoTest {
 	
 	ProveedorClima APIDeMentiritas = new MockAPI(21);

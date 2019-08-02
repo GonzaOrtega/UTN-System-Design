@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import exceptions.MaterialNoPermitidoException;
-import exceptions.TieneParametrosNulosException;
 import exceptions.*;
+import enums.*;
+
 
 public class PrendaBuilder{
 	

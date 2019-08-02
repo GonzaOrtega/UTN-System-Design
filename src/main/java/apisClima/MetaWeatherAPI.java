@@ -1,3 +1,4 @@
+package apisClima;
 import com.sun.jersey.api.client.ClientResponse;
 
 import climaMetaWeather.ClimaMetaWeather;

@@ -1,5 +1,6 @@
 import java.util.Set;
 
+import enums.TipoSugerencias;
 import exceptions.*;
 
 public class Sugerencia {

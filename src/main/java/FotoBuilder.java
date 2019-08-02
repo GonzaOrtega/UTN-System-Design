@@ -1,4 +1,10 @@
+
 import javax.imageio.ImageIO;
+
+//import Foto;
+//import Normalizador;
+//import NormalizadorDePrueba;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

@@ -1,9 +1,10 @@
+package apisClima;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import openweathermap.ClimaOpenweathermap;
-import retrofit.RetrofitUsersService;
+import openweathermap.RetrofitUsersService;
 import exceptions.*;
 
 public class OpenWeatherMapAPI implements ProveedorClima{	
