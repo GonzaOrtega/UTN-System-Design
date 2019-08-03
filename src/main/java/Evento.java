@@ -5,13 +5,14 @@ public class Evento {
 	private Date fecha;
 	private Usuario usuario;
 	private Sugeridor sugeridor;
-	static int limiteDeProximidad = 7;
+	private FrecuenciaDeEvento frecuencia;
 	//int contador=0;// usado solo de forma provisoria para el JobsEventosTest
 	
-	public Evento(Date unaFecha, Usuario unUsuario,Sugeridor unSugeridor) {
+	public Evento(Date unaFecha, Usuario unUsuario,Sugeridor unSugeridor, FrecuenciaDeEvento unaFrecuencia) {
 			this.fecha=unaFecha;
 			this.usuario = unUsuario;
 			this.sugeridor=unSugeridor;
+			this.frecuencia = unaFrecuencia;
 	}
 	
 	public void sugerir() {
@@ -22,9 +23,7 @@ public class Evento {
 	}
 	
 	public boolean esProximo(Date fechaActual) {
-		//Date fechaActualDate = this.PasarAFormatoAdecuado(fechaActual);
-		int dias=(int) ((fecha.getTime()-fechaActual.getTime())/(1000*60*60*24));
-		return dias<=limiteDeProximidad;
+		return frecuencia.esProximo(this.fecha, fechaActual);
 	}
 	
 	public Date getFecha() {

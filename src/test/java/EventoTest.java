@@ -22,7 +22,7 @@ public class EventoTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).conAbrigo(0).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).conAbrigo(0).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(0).crearPrenda();
-	Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor);//la fecha es:"16-02-2019"
+	Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor,new FrecuenciaUnicaVez());//la fecha es:"16-02-2019"
 
 	@Before
 	public void setUp(){
@@ -37,12 +37,12 @@ public class EventoTest {
 	
 	@Test
 	public void ProximidadEntreFechasDiferentesCercanasDevuelveVerdadero() {
-		Evento evento = new Evento(new Date(119,4,24), new Usuario(TipoUsuario.GRATUITO,0),sugeridor);//"24-05-2019"
+		Evento evento = new Evento(new Date(119,4,24), new Usuario(TipoUsuario.GRATUITO,0),sugeridor,new FrecuenciaUnicaVez());//"24-05-2019"
 		assertTrue(evento.esProximo(new Date(119,4,17)));	//"17-05-2019"	
 	}
 	@Test
 	public void ProximidadEntreFechasDiferentesLajanasDevuelveFalso() {
-		Evento evento = new Evento(new Date(119,4,24),new Usuario(TipoUsuario.GRATUITO,0),sugeridor);
+		Evento evento = new Evento(new Date(119,4,24),new Usuario(TipoUsuario.GRATUITO,0),sugeridor, new FrecuenciaUnicaVez());
 		assertFalse(evento.esProximo(new Date(119,4,16)));	//	"16-05-2019"
 	}
 	
@@ -62,5 +62,38 @@ public class EventoTest {
 		eventoLoco.sugerir();
 		assertEquals(juan.getSugerencias().size(),12); //Revisar esto que me parece raro
 	}
-	
+	@Test 
+	public void CrearEventoDiarioCuandoFaltenOchoHorasTieneQueSerProximo(){//independientemente del mes año etc
+		Evento unEvento = new Evento(new Date(119,1,16,0,0,0), juan,sugeridor,new FrecuenciaDiaria());
+		assertTrue(unEvento.esProximo(new Date(119,2,15,23,0,0)));
+		assertTrue(unEvento.esProximo(new Date(118,1,15,23,0,0)));
+		assertTrue(unEvento.esProximo(new Date(119,1,23,23,0,0)));
+		assertFalse(unEvento.esProximo(new Date(119,1,16,1,0,0)));
+		assertTrue(unEvento.esProximo(new Date(119,1,16,16,0,0)));
+	}
+	@Test 
+	public void CrearEventoSemanalCuandoFaltenDosDiasTieneQueSerProximo(){//independientemente del mes año etc
+		Evento unEvento = new Evento(new Date(119,1,16), juan,sugeridor,new FrecuenciaSemanal());
+		assertTrue(unEvento.esProximo(new Date(119,2,16)));
+		assertTrue(unEvento.esProximo(new Date(118,1,16)));
+		assertTrue(unEvento.esProximo(new Date(119,1,23)));
+		assertTrue(unEvento.esProximo(new Date(119,1,14)));
+		assertFalse(unEvento.esProximo(new Date(119,1,18)));
+	}
+	@Test 
+	public void CrearEventoMesualCuandoFaltenCincoDiasTieneQueSerProximo(){
+		Evento unEvento = new Evento(new Date(119,1,16), juan,sugeridor,new FrecuenciaMensual());
+		assertTrue(unEvento.esProximo(new Date(119,2,16)));
+		assertTrue(unEvento.esProximo(new Date(118,1,16)));
+		assertTrue(unEvento.esProximo(new Date(119,1,11)));
+		assertFalse(unEvento.esProximo(new Date(119,1,18)));
+	}
+	@Test 
+	public void CrearEventoAnualCuandoFaltenTreintaDiasTieneQueSerProximo(){
+		Evento unEvento = new Evento(new Date(119,1,16), juan,sugeridor,new FrecuenciaAnual());
+		assertTrue(unEvento.esProximo(new Date(118,1,16)));
+		assertTrue(unEvento.esProximo(new Date(119,0,28)));
+		assertTrue(unEvento.esProximo(new Date(125,1,11)));
+		assertFalse(unEvento.esProximo(new Date(119,1,18)));
+	}
 }
