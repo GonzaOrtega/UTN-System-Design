@@ -18,11 +18,12 @@ public class OpenWeatherMapAPI implements ProveedorClima{
             .build();
 
     RetrofitUsersService service = retrofit.create(RetrofitUsersService.class);
-    Call<ClimaOpenweathermap> call = service.getTemperatura(APP_ID, COUNTRY_ID);
-
+    //Call<ClimaOpenweathermap> call = service.getTemperatura(APP_ID, COUNTRY_ID);
+    Call<ClimaOpenweathermap> call ;
     
     public double temperatura() {
     	try{
+    		call=service.getTemperatura(APP_ID, COUNTRY_ID);
         	Response<ClimaOpenweathermap> response = call.execute();
         	ClimaOpenweathermap user = response.body();
         	return user.getTemperatura();
@@ -33,4 +34,46 @@ public class OpenWeatherMapAPI implements ProveedorClima{
     	}
     }
 
+    public double velocidadViento() {
+    	try{
+    		call=service.getWind(APP_ID, COUNTRY_ID);
+        	Response<ClimaOpenweathermap> response = call.execute();
+        	ClimaOpenweathermap user = response.body();
+        	return user.getWind()*3.6;
+
+    	}
+    	catch (Exception ex){
+    		throw new ErrorConAPIException(ex.getMessage());
+    	}
+    }
+    
+    public double ID() {
+    	try{
+    		call=service.getID(APP_ID, COUNTRY_ID);
+        	Response<ClimaOpenweathermap> response = call.execute();
+        	ClimaOpenweathermap user = response.body();
+        	return user.getID();
+
+    	}
+    	catch (Exception ex){
+    		throw new ErrorConAPIException(ex.getMessage());
+    	}
+    }
+    
+    public boolean lluviasFuertes() {
+    	return this.ID()>=502 && this.ID()<=504 && this.ID()==202;
+    }
+    
+    public boolean alertaDeCalor() {
+    	return this.temperatura()>=35;
+    }
+    
+    public boolean vientosFuertes() {
+    	return this.velocidadViento()>62;
+    }
+    
+    public boolean alertaDeFrio() {
+    	return this.temperatura()<=5;
+    }
+    
 }

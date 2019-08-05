@@ -1,10 +1,7 @@
 package exceptions;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Response;
 
-import openweathermap.ClimaOpenweathermap;
 
-public class ErrorConAPIException extends BadRequestException{
+public class ErrorConAPIException extends RuntimeException{
 	public ErrorConAPIException(String msg) {
 		super(msg);
 	}

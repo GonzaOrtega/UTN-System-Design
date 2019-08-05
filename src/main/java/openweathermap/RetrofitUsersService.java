@@ -12,4 +12,14 @@ public interface RetrofitUsersService {
     		@Query("appid") String appid,
     		@Query("id") int id);
    
+    @GET("weather")
+    Call<ClimaOpenweathermap> getWind(
+    		@Query("appid") String appid,
+    		@Query("id") int id);
+    
+    @GET("weather")
+    Call<ClimaOpenweathermap> getID(
+    		@Query("appid") String appid,
+    		@Query("id") int id);
+    		
 }
