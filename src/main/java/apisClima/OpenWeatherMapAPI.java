@@ -18,7 +18,6 @@ public class OpenWeatherMapAPI implements ProveedorClima{
             .build();
 
     RetrofitUsersService service = retrofit.create(RetrofitUsersService.class);
-    //Call<ClimaOpenweathermap> call = service.getTemperatura(APP_ID, COUNTRY_ID);
     Call<ClimaOpenweathermap> call ;
     
     public double temperatura() {
@@ -63,15 +62,7 @@ public class OpenWeatherMapAPI implements ProveedorClima{
     public boolean lluviasFuertes() {
     	return this.ID()>=502 && this.ID()<=504 && this.ID()==202;
     }
-    
-    public boolean alertaDeCalor() {
-    	return this.temperatura()>=35;
-    }
-    
-    public boolean vientosFuertes() {
-    	return this.velocidadViento()>62;
-    }
-    
+        
     public boolean alertaDeFrio() {
     	return this.temperatura()<=5;
     }
