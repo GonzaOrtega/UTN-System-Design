@@ -53,7 +53,10 @@ public class Usuario {
 	public void clasificarUnaSugerencia(Sugerencia sugerencia, TipoSugerencias tipo) {
 		if (!sugerencias.contains(sugerencia)){
 			throw new NoPoseeLaSugerenciaException("WARNING: No posee la sugerencia que se esta intentando clasificar");
-		}	 
+		}
+		if(tipo.equals(TipoSugerencias.ACEPTADA)) {
+			sugerencia.getAtuendo().forEach(prenda -> prenda.setUsada(true));
+		}
 			ultimaSugerencia =sugerencia;
 			sugerencia.setEstado(tipo);
 	}

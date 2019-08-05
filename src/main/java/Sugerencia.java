@@ -21,5 +21,9 @@ public class Sugerencia {
 	public void setEstado(TipoSugerencias estado) {
 		this.estado = estado;
 	}
-	
+
+	public Set<Prenda> getAtuendo() {
+		return atuendo;
+	}
+
 }

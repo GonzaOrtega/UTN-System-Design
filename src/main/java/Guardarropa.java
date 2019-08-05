@@ -20,6 +20,7 @@ public class Guardarropa {
 	public void cargarPrenda(Prenda unaPrenda){
 		prendas.add(unaPrenda);
 	}
+	
 	public ArrayList<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor){
 		Set<Set<Prenda>> elAux = new HashSet<Set<Prenda>>();
 		elAux = this.parteNoSuperior(proveedor); //esto esta asi por un tema de Set y List
@@ -46,7 +47,7 @@ public class Guardarropa {
 	
 	
 	private Set<Prenda> noSuperior(){
-		return prendas.stream().filter(p->p.getTipo().categoria != 
+		return this.prendasNoUsadas().stream().filter(p->p.getTipo().categoria != 
 				Categoria.SUPERIOR).collect(Collectors.toSet());
 	}
 	private Set<Set<Prenda>> parteNoSuperior(ProveedorClima clima){
@@ -69,7 +70,7 @@ public class Guardarropa {
 		
 	}
 	private Set<Prenda> soloSuperior(){
-		Set<Prenda> ret = prendas.stream().filter(p->p.getTipo().categoria == 
+		Set<Prenda> ret = this.prendasNoUsadas().stream().filter(p->p.getTipo().categoria == 
 				Categoria.SUPERIOR).collect(Collectors.toSet());
 		return ret;
 	}
@@ -135,6 +136,10 @@ public class Guardarropa {
 			return 1; //irias con remera manga larga/corta
 		else
 			return -1;//irias solo con remera manga corta porque esta abriga 0
+	}
+	
+	public Set<Prenda> prendasNoUsadas(){
+		return prendas.stream().filter(prenda -> !prenda.isUsada()).collect(Collectors.toSet());
 	}
 
 }

@@ -10,11 +10,18 @@ public class Prenda {
 	private Material tela;
 	private Foto foto;
 	private int nivelAbrigo;
+	private boolean usada = false;
 	
 	//Get y set de todos los atributos
 	
 	public int getNivelAbrigo() {
 		return nivelAbrigo;
+	}
+	public boolean isUsada() {
+		return usada;
+	}
+	public void setUsada(boolean usada) {
+		this.usada = usada;
 	}
 	public void setNivelAbrigo(int nivelAbrigo) {
 		this.nivelAbrigo = nivelAbrigo;
