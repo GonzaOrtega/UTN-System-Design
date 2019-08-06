@@ -3,6 +3,8 @@ import static org.junit.Assert.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,9 +33,11 @@ public class UsuarioTest {
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
+	Prenda sombrero= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
+	Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
 	Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
 	
 	@Before
@@ -69,10 +73,11 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void siJuanCargaUnJeanASuArmarioDeberiaTenerCuatroAtuendos() {
+	public void siJuanCargaUnJeanASuArmarioDeberiaTenerDoceAtuendos() {
 		juan.cargarPrenda(armario, jean);
 		assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas).size(), 12);	
 	}
+	
 	@Test
 	public void losAtuendosTienenUnoDeCadaTipo() {
 	juan.cargarPrenda(armario, jean);
@@ -99,6 +104,7 @@ public class UsuarioTest {
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
 		sugeridor.sugerirPrendasPara(lara);
 	}
+	
 	@Test(expected = SeExcedioElLimiteDeCapacidadDelGuardarropaException.class)
 	public void siSeIntentaCargarMasCantidadDePrendasDeLaPermitidaLanzaException(){
 		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1);
@@ -106,6 +112,7 @@ public class UsuarioTest {
 		lara.cargarPrenda(otroArmario, camisaCorta);
 		lara.cargarPrenda(otroArmario, zapatos);
 	}
+	
 	@Test 
 	public void siUnUsuarioGratuitoNoSePasaDeLaCantidadPermitidaPuedeCargarPrenda(){
 		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1);
@@ -126,6 +133,53 @@ public class UsuarioTest {
 		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
 		juan.deshacerUltimaOperacionDeSugerencia();
 		assertEquals(sugerencia.getEstado(),TipoSugerencias.PENDIENTE);
+	}
+	
+	@Test
+	public void dosUsuariosCompartenUnGuardarropa() {
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		lara.agregarGuardarropa(armario);
+		assertEquals(lara.getGuardarropas(), juan.getGuardarropas());
+	}
+	
+	@Test
+	public void dosUsuariosCompartenUnGuardarropaYTienenSuficienteRopaParaHacerLosAtuendos() {
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		lara.agregarGuardarropa(armario);
+		lara.cargarPrenda(armario, pantalon);
+		lara.cargarPrenda(armario, sombrero);
+		
+		Set<Prenda> atuendo = new HashSet<Prenda>();
+		atuendo.add(jean);
+		atuendo.add(camisaCorta);
+		atuendo.add(gorra);
+		atuendo.add(zapatos);
+		
+		Sugerencia sugerencia = new Sugerencia(atuendo,eventoLoco);
+		juan.agregarSugerencia(sugerencia);
+		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
+		
+		Set<Set<Prenda>> atuendosDeLara = sugeridor.sugerirPrendasPara(lara);
+		
+		assertFalse(atuendosDeLara.contains(atuendo));
+	}
+	
+	@Test (expected = NoHayAtuendosDisponiblesException.class)
+	public void unoDeLosUsuariosConGuardarropaCompartidoNoPuedeEjecutarSusAtuendosPorFaltaDeRopa() {
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		lara.agregarGuardarropa(armario);
+		
+		Set<Prenda> atuendo = new HashSet<Prenda>();
+		atuendo.add(jean);
+		atuendo.add(camisaCorta);
+		atuendo.add(gorra);
+		atuendo.add(zapatos);
+		Sugerencia sugerencia = new Sugerencia(atuendo,eventoLoco);
+		juan.agregarSugerencia(sugerencia);
+		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
+		
+		sugeridor.sugerirPrendasPara(lara);
+		
 	}
 	
 }
