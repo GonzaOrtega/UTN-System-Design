@@ -4,8 +4,9 @@ public class FrecuenciaSemanal implements FrecuenciaDeEvento{
 	private int limiteDeProximidad = 2;
 	
 	public boolean esProximo(LocalDateTime fechaEvento, LocalDateTime fechaActual) {
-		int dias=fechaEvento.getDayOfMonth()-fechaActual.getDayOfMonth();
-		if (fechaEvento.getDayOfMonth()<fechaActual.getDayOfMonth()){ 
+		Duration duracion = Duration.between(fechaActual,fechaEvento);
+		long dias= duracion.toDays()%7;
+		if (dias<0){ 
 			dias+=7;
 		};
 		return dias<=limiteDeProximidad;

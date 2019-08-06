@@ -89,12 +89,13 @@ public class EventoTest {
 	@Test 
 	public void CrearEventoSemanalCuandoFaltenDosDiasTieneQueSerProximo(){//independientemente del mes a�o etc
 		LocalDateTime _20190213 = LocalDateTime.of(2019, Month.FEBRUARY, 13, 23, 0);
+		LocalDateTime _20190807 = LocalDateTime.of(2019, Month.AUGUST, 7, 23, 0);
 		LocalDateTime _20180116 = LocalDateTime.of(2018, Month.JANUARY,16,23,0);
 		LocalDateTime _20190123 = LocalDateTime.of(2019, Month.JANUARY,23,23,0);
 		LocalDateTime _20190114 = LocalDateTime.of(2019, Month.JANUARY,14,1,0);
 		LocalDateTime _20190118 = LocalDateTime.of(2019, Month.JANUARY,18,16,0);
-		//System.out.println(_20190213.getLong(_20190213.getDayOfWeek()));
 		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20190213));
+		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20190807));
 		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20180116));
 		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20190123));
 		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20190114));
