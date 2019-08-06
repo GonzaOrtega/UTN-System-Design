@@ -3,17 +3,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
-
-import apisClima.MetaWeatherAPI;
-import apisClima.MockAPI;
-import apisClima.OpenWeatherMapAPI;
-import apisClima.ProveedorClima;
-import enums.Color;
-import enums.Material;
-import enums.TipoPrenda;
-import enums.TipoUsuario;
-import exceptions.YaSeEncuentraCargadaException;
-import exceptions.*;
+import domain.apisClima.*;
+import domain.enums.*;
+import domain.exceptions.*;
+import domain.*;
 
 //import static org.mockito.Mockito.*;
 

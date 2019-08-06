@@ -1,9 +1,12 @@
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import apisClima.*;
-import enums.*;
-import frecuenciasDeEventos.*;
+import domain.apisClima.*;
+import domain.enums.*;
+import domain.exceptions.*;
+import domain.frecuenciasDeEventos.*;
+import domain.*;
+
 import java.time.*;
 
 public class EventoTest {

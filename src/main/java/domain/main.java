@@ -1,18 +1,27 @@
-import static org.junit.Assert.assertTrue;
+package domain;
 import java.time.*;
-import org.junit.Test;
-import domain.frecuenciasDeEventos.*;
+import java.util.Date;
 import domain.apisClima.*;
 import domain.enums.*;
+import domain.frecuenciasDeEventos.*;
 
-public class JobsEventosTest {/*
-	//Test provisorio para asegurarse de que JobsEventos funciona para probarlo hay que
-	//sacar el comentario el codigo a continuacion sacar el comentario en contador que esta
-	//en evento y cambia TimeUnit.DAYS a TimeUnit.SECONDS en JobsEventos
-	@Test
-	public void prueba() {
+
+public class main {
+	public static void main(String args[]) {
+		System.out.println("Hola :)");
 		ProveedorClima metaWeather = new MetaWeatherAPI();
-		Sugeridor sugeridor = new Sugeridor(metaWeather);
+		ProveedorClima openWeatherMap = new OpenWeatherMapAPI();
+		ProveedorClima mock = new MockAPI(13,23,true);
+		/*System.out.println("OpenWeatherMap:");
+		System.out.println("Lluvias fuertes: "+openWeatherMap.lluviasFuertes());
+		System.out.println("Velocidad viento: "+openWeatherMap.velocidadViento());
+		System.out.println("¿Vientos fuertes?:"+openWeatherMap.vientosFuertes());
+		System.out.println("MetaWeather:");
+		System.out.println("Lluvias fuertes: "+metaWeather.lluviasFuertes());
+		System.out.println("Velocidad viento: "+metaWeather.velocidadViento());
+		System.out.println("¿Vientos fuertes?:"+metaWeather.vientosFuertes());*/
+		System.out.println("--------------------");
+		Sugeridor sugeridor = new Sugeridor(mock);
 		Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
 		Guardarropa armario = new Guardarropa();
 		Guardarropa otroArmario = new Guardarropa();
@@ -37,15 +46,23 @@ public class JobsEventosTest {/*
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario, buzo);
 		juan.cargarPrenda(armario, camperaGucci2);
-		LocalDateTime fechaActual = LocalDateTime.now();
-		Evento evento = new Evento(LocalDateTime.of(LocalDate.of(2019,Month.AUGUST,13),LocalTime.now()),sugeridor, new FrecuenciaUnicaVez());
-		JobsUsuarios jobs= new JobsUsuarios();	
-		juan.agendarEvento(evento);
+		Usuario karen = new Usuario(TipoUsuario.PREMIUM,0);
+		LocalDateTime _20190812= LocalDateTime.of(2019, 8, 12,0,0);
+		LocalDateTime fechaActual = LocalDateTime.of(LocalDate.now(), LocalTime.now());
+		Evento evento = new Evento(_20190812,sugeridor,new FrecuenciaUnicaVez());
 		
-		assertTrue(evento.contador() ==0);
-		assertTrue(evento.esProximo(fechaActual));
-		jobs.run();
-		System.out.println(evento.contador());
-		//assertTrue(RepositorioDeUsuarios.getInstance().eventos().size()==1); 
-	}*/
+		juan.agendarEvento(evento);
+		karen.agendarEvento(evento);
+		RepositorioDeUsuarios.getInstance().agregar(juan);
+		System.out.println("¿Es proximo? "+evento.esProximo(fechaActual));
+
+		System.out.println("Job ejecutandose..");
+		JobsUsuarios job = new JobsUsuarios();
+		job.run();
+		System.out.println("Job finalizado.");
+
+
+		System.out.println("--------------------");
+		System.out.println("Adio'");
+	}
 }
