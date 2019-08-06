@@ -2,6 +2,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.time.*;
 
 public class  RepositorioEventos {
 	
@@ -21,7 +22,7 @@ public class  RepositorioEventos {
 		this.eventos.add(evento);
 	}
 	
-	public Set<Evento> proximos(Date fecha) {
+	public Set<Evento> proximos(LocalDateTime fecha) {
 		return this.eventos.stream().filter(evento->evento.esProximo(fecha)).collect(Collectors.toSet());
 	}
 	

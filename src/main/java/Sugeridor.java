@@ -1,18 +1,21 @@
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import apisClima.ProveedorClima;
 import exceptions.NoHayAtuendosDisponiblesException;
-import exceptions.*;
 
 public class Sugeridor {
-	private ProveedorClima proveedorDeClima;
+	private  ProveedorClima proveedorDeClima;
+	
 	public Sugeridor(ProveedorClima proveedor) {
 		proveedorDeClima=proveedor;
 	}
-		
-	public void setProveedorDeClima(ProveedorClima proveedorDeClima) {
+	
+	public void proveedorDeClima(ProveedorClima proveedorDeClima) {
 		this.proveedorDeClima = proveedorDeClima;
+	}
+	
+	public ProveedorClima proveedorDeClima() {
+		return this.proveedorDeClima();
 	}
 
 	public Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario){

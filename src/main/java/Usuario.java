@@ -1,8 +1,8 @@
 import java.util.Set;
-
+import java.util.stream.Collectors;
+import java.time.*;
 import enums.TipoSugerencias;
 import enums.TipoUsuario;
-
 import java.util.HashSet;
 import exceptions.*;
 
@@ -13,13 +13,22 @@ public class Usuario {
 	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
 	private Sugerencia ultimaSugerencia = null;
 	private Set<MedioDeNotifiacion> medios = new HashSet<MedioDeNotifiacion>();
-	
+	private Set<Evento> eventos = new HashSet<Evento>();
 	
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
 		this.tipo = tipo;
 		this.maximoDePrendas = maximoDePrendas;
+		//RepositorioDeUsuarios.getInstance().agregar(this);
 	}
-		
+	
+	
+	public Set<Evento> eventos() { return eventos; }
+
+
+	public Set<Evento> eventosProximos(LocalDateTime fecha) {
+		return this.eventos().stream().filter(evento->evento.esProximo(fecha)).collect(Collectors.toSet());
+	}
+	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
 		this.validacionSegunTipoUsuario(unGuardarropa.prendas.size()-1); 
 		this.guardarropas.add(unGuardarropa);
@@ -77,7 +86,11 @@ public class Usuario {
 	}
 	
 	public void notificarSugerenciasNuevas() {
-		this.medios.stream().forEach(medio->medio.notificarNuevasSugerencias());	
+		this.medios.stream().forEach(medio->medio.notificarNuevasSugerencias());
+		System.out.println("NUEVAS SUGERENCIAS!!!");
 	}
 	
+	public void agendarEvento(Evento unEvento) {
+		this.eventos.add(unEvento);
+	}
 }

@@ -1,5 +1,4 @@
 import static org.junit.Assert.*;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,19 +6,9 @@ import java.util.stream.Collectors;
 import java.util.*;
 import org.junit.Before;
 import org.junit.Test;
-
-import apisClima.MockAPI;
-import apisClima.OpenWeatherMapAPI;
-import apisClima.ProveedorClima;
-import enums.Categoria;
-import enums.Color;
-import enums.Material;
-import enums.TipoPrenda;
-import enums.TipoSugerencias;
-import enums.TipoUsuario;
-import exceptions.NoHayAtuendosDisponiblesException;
-import exceptions.SeExcedioElLimiteDeCapacidadDelGuardarropaException;
-import exceptions.YaSeEncuentraCargadaException;
+import apisClima.*;
+import frecuenciasDeEventos.*;
+import enums.*;
 import exceptions.*;
 
 public class UsuarioTest {
@@ -37,8 +26,13 @@ public class UsuarioTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
+<<<<<<< HEAD
 	Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
 	Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
+=======
+	Evento eventoLoco = new Evento(new Date(119,1,16),sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
+	//Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
+>>>>>>> Subo implementacion de frecuencias con LocalDateTime
 	
 	@Before
 	public void setUp(){

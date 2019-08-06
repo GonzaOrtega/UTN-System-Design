@@ -1,17 +1,12 @@
 import static org.junit.Assert.*;
-import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
-
-import apisClima.MockAPI;
-import apisClima.ProveedorClima;
-import enums.Color;
-import enums.Material;
-import enums.TipoPrenda;
-import enums.TipoUsuario;
+import apisClima.*;
+import enums.*;
+import frecuenciasDeEventos.*;
+import java.time.*;
 
 public class EventoTest {
-	
 	ProveedorClima APIDeMentiritas = new MockAPI(21);
 	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
@@ -22,7 +17,12 @@ public class EventoTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).conAbrigo(0).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).conAbrigo(0).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(0).crearPrenda();
-	Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor,new FrecuenciaUnicaVez());//la fecha es:"16-02-2019"
+	Evento eventoLoco = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.FEBRUARY, 16),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez());//la fecha es:"16-02-2019"
+	Evento eventoConFrecuenciaUnica = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez());//"24-05-2019"
+	Evento eventoConFrecuenciaDiaria = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaDiaria());//"16-01-2019"
+	Evento eventoConFrecuenciaSemanal = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaSemanal());//"16-01-2019"
+	Evento eventoConFrecuenciaMensual = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaMensual());//"16-01-2019"
+	Evento eventoConFrecuenciaAnual = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.FEBRUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaAnual());//"16-01-2019"
 
 	@Before
 	public void setUp(){
@@ -37,13 +37,23 @@ public class EventoTest {
 	
 	@Test
 	public void ProximidadEntreFechasDiferentesCercanasDevuelveVerdadero() {
-		Evento evento = new Evento(new Date(119,4,24), new Usuario(TipoUsuario.GRATUITO,0),sugeridor,new FrecuenciaUnicaVez());//"24-05-2019"
-		assertTrue(evento.esProximo(new Date(119,4,17)));	//"17-05-2019"	
+		assertTrue(
+				eventoConFrecuenciaUnica.esProximo(
+						LocalDateTime.of(
+								LocalDate.of(2019, Month.MAY, 17),
+								LocalTime.now())
+						)
+				);
 	}
+	
 	@Test
 	public void ProximidadEntreFechasDiferentesLajanasDevuelveFalso() {
-		Evento evento = new Evento(new Date(119,4,24),new Usuario(TipoUsuario.GRATUITO,0),sugeridor, new FrecuenciaUnicaVez());
-		assertFalse(evento.esProximo(new Date(119,4,16)));	//	"16-05-2019"
+		assertFalse(eventoConFrecuenciaUnica.esProximo(
+						LocalDateTime.of(
+								LocalDate.of(2019, Month.MAY, 16),
+								LocalTime.now())
+						)
+				);
 	}
 	
 	//Es Solo para ver como funcionaria cuando se pregunta por la fecha actual
@@ -56,44 +66,65 @@ public class EventoTest {
 		int a = evento.esProximo(formato.format(fechaActual));
 		assertTrue(a==1);		
 	}*/
-	
+
 	@Test 
-	public void siUnEventoPideSugerenciasParaJuanElMismoTendra4Sugerencias(){
-		eventoLoco.sugerir();
+	public void siUnEventoPideSugerenciasParaJuanElMismoTendra12Sugerencias(){
+		eventoLoco.sugerir(juan);
 		assertEquals(juan.getSugerencias().size(),12); //Revisar esto que me parece raro
 	}
+	
 	@Test 
-	public void CrearEventoDiarioCuandoFaltenOchoHorasTieneQueSerProximo(){//independientemente del mes año etc
-		Evento unEvento = new Evento(new Date(119,1,16,0,0,0), juan,sugeridor,new FrecuenciaDiaria());
-		assertTrue(unEvento.esProximo(new Date(119,2,15,23,0,0)));
-		assertTrue(unEvento.esProximo(new Date(118,1,15,23,0,0)));
-		assertTrue(unEvento.esProximo(new Date(119,1,23,23,0,0)));
-		assertFalse(unEvento.esProximo(new Date(119,1,16,1,0,0)));
-		assertTrue(unEvento.esProximo(new Date(119,1,16,16,0,0)));
+	public void CrearEventoDiarioCuandoFaltenOchoHorasTieneQueSerProximo(){//independientemente del mes aï¿½o etc
+		LocalDateTime _20190215 = LocalDateTime.of(2019, Month.FEBRUARY, 15, 23, 0);
+		LocalDateTime _20180115 = LocalDateTime.of(2018, Month.JANUARY,15,23,0);
+		LocalDateTime _20190123 = LocalDateTime.of(2019, Month.JANUARY,23,23,0);
+		LocalDateTime _20190116 = LocalDateTime.of(2019, Month.JANUARY,16,1,0);
+		LocalDateTime _20190116bis = LocalDateTime.of(2019, Month.JANUARY,16,16,0);
+
+		assertTrue(eventoConFrecuenciaDiaria.esProximo(_20190215));
+		assertTrue(eventoConFrecuenciaDiaria.esProximo(_20180115)); // 23hs
+		assertTrue(eventoConFrecuenciaDiaria.esProximo(_20190123)); // 23hs
+		assertFalse(eventoConFrecuenciaDiaria.esProximo(_20190116)); // 1hs
+		assertTrue(eventoConFrecuenciaDiaria.esProximo(_20190116bis)); // 16hs
 	}
+	
 	@Test 
-	public void CrearEventoSemanalCuandoFaltenDosDiasTieneQueSerProximo(){//independientemente del mes año etc
-		Evento unEvento = new Evento(new Date(119,1,16), juan,sugeridor,new FrecuenciaSemanal());
-		assertTrue(unEvento.esProximo(new Date(119,2,16)));
-		assertTrue(unEvento.esProximo(new Date(118,1,16)));
-		assertTrue(unEvento.esProximo(new Date(119,1,23)));
-		assertTrue(unEvento.esProximo(new Date(119,1,14)));
-		assertFalse(unEvento.esProximo(new Date(119,1,18)));
+	public void CrearEventoSemanalCuandoFaltenDosDiasTieneQueSerProximo(){//independientemente del mes aï¿½o etc
+		LocalDateTime _20190216 = LocalDateTime.of(2019, Month.FEBRUARY, 16, 23, 0);
+		LocalDateTime _20180116 = LocalDateTime.of(2018, Month.JANUARY,16,23,0);
+		LocalDateTime _20190123 = LocalDateTime.of(2019, Month.JANUARY,23,23,0);
+		LocalDateTime _20190114 = LocalDateTime.of(2019, Month.JANUARY,14,1,0);
+		LocalDateTime _20190118 = LocalDateTime.of(2019, Month.JANUARY,18,16,0);
+		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20190216));
+		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20180116));
+		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20190123));
+		assertTrue(eventoConFrecuenciaSemanal.esProximo(_20190114));
+		assertFalse(eventoConFrecuenciaSemanal.esProximo(_20190118));
 	}
 	@Test 
 	public void CrearEventoMesualCuandoFaltenCincoDiasTieneQueSerProximo(){
-		Evento unEvento = new Evento(new Date(119,1,16), juan,sugeridor,new FrecuenciaMensual());
-		assertTrue(unEvento.esProximo(new Date(119,2,16)));
-		assertTrue(unEvento.esProximo(new Date(118,1,16)));
-		assertTrue(unEvento.esProximo(new Date(119,1,11)));
-		assertFalse(unEvento.esProximo(new Date(119,1,18)));
+		LocalDateTime _20190216 = LocalDateTime.of(2019, Month.FEBRUARY, 16, 23, 0);
+		LocalDateTime _20180116 = LocalDateTime.of(2018, Month.JANUARY,16,23,0);
+		LocalDateTime _20190111 = LocalDateTime.of(2019, Month.JANUARY,11,1,0);
+		LocalDateTime _20190118 = LocalDateTime.of(2019, Month.JANUARY,18,16,0);
+	
+		assertTrue(eventoConFrecuenciaMensual.esProximo(_20190216));
+		assertTrue(eventoConFrecuenciaMensual.esProximo(_20180116));
+		assertTrue(eventoConFrecuenciaMensual.esProximo(_20190111));
+		assertFalse(eventoConFrecuenciaMensual.esProximo(_20190118));
 	}
+	
 	@Test 
 	public void CrearEventoAnualCuandoFaltenTreintaDiasTieneQueSerProximo(){
-		Evento unEvento = new Evento(new Date(119,1,16), juan,sugeridor,new FrecuenciaAnual());
-		assertTrue(unEvento.esProximo(new Date(118,1,16)));
-		assertTrue(unEvento.esProximo(new Date(119,0,28)));
-		assertTrue(unEvento.esProximo(new Date(125,1,11)));
-		assertFalse(unEvento.esProximo(new Date(119,1,18)));
+		LocalDateTime _20180216 = LocalDateTime.of(2018, Month.FEBRUARY,16,23,0);
+		LocalDateTime _20190128 = LocalDateTime.of(2019, Month.JANUARY,28,23,0);
+		LocalDateTime _20250211 = LocalDateTime.of(2025, Month.FEBRUARY,11,1,0);
+		LocalDateTime _20190118 = LocalDateTime.of(2019, Month.FEBRUARY,18,16,0);
+
+		assertTrue(eventoConFrecuenciaAnual.esProximo(_20180216));
+		assertTrue(eventoConFrecuenciaAnual.esProximo(_20190128));
+		assertTrue(eventoConFrecuenciaAnual.esProximo(_20250211));
+		assertFalse(eventoConFrecuenciaAnual.esProximo(_20190118));
 	}
+	
 }
