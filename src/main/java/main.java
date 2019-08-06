@@ -1,7 +1,5 @@
 import java.time.*;
 import java.util.Date;
-
-
 import apisClima.*;
 import enums.*;
 import frecuenciasDeEventos.*;

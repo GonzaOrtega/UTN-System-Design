@@ -3,6 +3,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +13,7 @@ import apisClima.*;
 import frecuenciasDeEventos.*;
 import enums.*;
 import exceptions.*;
+import java.time.*;
 
 public class UsuarioTest {
 
@@ -26,13 +30,9 @@ public class UsuarioTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
-<<<<<<< HEAD
 	Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
-	Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
-=======
-	Evento eventoLoco = new Evento(new Date(119,1,16),sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
+	Evento eventoConFrecuenciaUnica = new Evento(LocalDateTime.of(LocalDate.of(2019,Month.FEBRUARY,16),LocalTime.now()),sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
 	//Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
->>>>>>> Subo implementacion de frecuencias con LocalDateTime
 	
 	@Before
 	public void setUp(){
@@ -122,7 +122,7 @@ public class UsuarioTest {
 		atuendo.add(camisaCorta);
 		atuendo.add(gorra);
 		atuendo.add(zapatos);
-		Sugerencia sugerencia = new Sugerencia(atuendo,eventoLoco);
+		Sugerencia sugerencia = new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 		juan.agregarSugerencia(sugerencia);
 		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
 		juan.deshacerUltimaOperacionDeSugerencia();
@@ -149,7 +149,7 @@ public class UsuarioTest {
 		atuendo.add(gorra);
 		atuendo.add(zapatos);
 		
-		Sugerencia sugerencia = new Sugerencia(atuendo,eventoLoco);
+		Sugerencia sugerencia = new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 		juan.agregarSugerencia(sugerencia);
 		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
 		
@@ -168,7 +168,7 @@ public class UsuarioTest {
 		atuendo.add(camisaCorta);
 		atuendo.add(gorra);
 		atuendo.add(zapatos);
-		Sugerencia sugerencia = new Sugerencia(atuendo,eventoLoco);
+		Sugerencia sugerencia = new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 		juan.agregarSugerencia(sugerencia);
 		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
 		
