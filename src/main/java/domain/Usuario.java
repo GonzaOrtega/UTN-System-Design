@@ -19,7 +19,7 @@ public class Usuario {
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
 		this.tipo = tipo;
 		this.maximoDePrendas = maximoDePrendas;
-		//RepositorioDeUsuarios.getInstance().agregar(this);
+		RepositorioDeUsuarios.getInstance().agregar(this);
 	}
 	
 	
