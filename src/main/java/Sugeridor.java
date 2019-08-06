@@ -15,7 +15,7 @@ public class Sugeridor {
 	}
 	
 	public ProveedorClima proveedorDeClima() {
-		return this.proveedorDeClima();
+		return proveedorDeClima;
 	}
 
 	public Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario){

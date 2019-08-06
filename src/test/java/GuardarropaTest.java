@@ -21,8 +21,8 @@ public class GuardarropaTest {
 
 	MetaWeatherAPI weatherAPI2 = new MetaWeatherAPI();
 	OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();
-	ProveedorClima APIDeMentiritas = new MockAPI(21);
-	ProveedorClima APIDeMentiritasDeInvierno = new MockAPI(10);
+	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
+	ProveedorClima APIDeMentiritasDeInvierno = new MockAPI(10,23,false);
 	Sugeridor sugeridor = new Sugeridor(weatherAPI2);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
 	Guardarropa armario = new Guardarropa();

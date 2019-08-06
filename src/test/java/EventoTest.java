@@ -7,7 +7,7 @@ import frecuenciasDeEventos.*;
 import java.time.*;
 
 public class EventoTest {
-	ProveedorClima APIDeMentiritas = new MockAPI(21);
+	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	Guardarropa armario = new Guardarropa();

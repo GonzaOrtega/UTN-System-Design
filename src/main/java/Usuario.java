@@ -29,6 +29,13 @@ public class Usuario {
 		return this.eventos().stream().filter(evento->evento.esProximo(fecha)).collect(Collectors.toSet());
 	}
 	
+	public Set<Evento> eventosProximosConAlertaMeterologica(LocalDateTime fecha){
+		return this.eventosProximos(fecha)
+										.stream()
+										.filter(evento -> evento.alertaMeterologica())
+										.collect(Collectors.toSet());
+	}
+	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
 		this.validacionSegunTipoUsuario(unGuardarropa.prendas.size()-1); 
 		this.guardarropas.add(unGuardarropa);
@@ -88,6 +95,11 @@ public class Usuario {
 	public void notificarSugerenciasNuevas() {
 		this.medios.stream().forEach(medio->medio.notificarNuevasSugerencias());
 		System.out.println("NUEVAS SUGERENCIAS!!!");
+	}
+	
+	public void notificarAlertaMeterologica() {
+		this.medios.stream().forEach(medio->medio.notificarAlertaMeterologica());
+		System.out.println("ALERTA METEROLOGICA!!!");
 	}
 	
 	public void agendarEvento(Evento unEvento) {

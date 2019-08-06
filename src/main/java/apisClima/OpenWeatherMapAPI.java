@@ -63,8 +63,6 @@ public class OpenWeatherMapAPI implements ProveedorClima{
     	return this.ID()>=502 && this.ID()<=504 && this.ID()==202;
     }
         
-    public boolean alertaDeFrio() {
-    	return this.temperatura()<=5;
-    }
+
     
 }

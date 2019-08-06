@@ -9,6 +9,7 @@ public class main {
 		System.out.println("Hola :)");
 		ProveedorClima metaWeather = new MetaWeatherAPI();
 		ProveedorClima openWeatherMap = new OpenWeatherMapAPI();
+		ProveedorClima mock = new MockAPI(13,23,true);
 		/*System.out.println("OpenWeatherMap:");
 		System.out.println("Lluvias fuertes: "+openWeatherMap.lluviasFuertes());
 		System.out.println("Velocidad viento: "+openWeatherMap.velocidadViento());
@@ -18,7 +19,7 @@ public class main {
 		System.out.println("Velocidad viento: "+metaWeather.velocidadViento());
 		System.out.println("¿Vientos fuertes?:"+metaWeather.vientosFuertes());*/
 		System.out.println("--------------------");
-		Sugeridor sugeridor = new Sugeridor(metaWeather);
+		Sugeridor sugeridor = new Sugeridor(mock);
 		Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
 		Guardarropa armario = new Guardarropa();
 		Guardarropa otroArmario = new Guardarropa();
@@ -54,12 +55,10 @@ public class main {
 		System.out.println("¿Es proximo? "+evento.esProximo(fechaActual));
 
 		System.out.println("Job ejecutandose..");
-		JobsEventos job = new JobsEventos();
+		JobsUsuarios job = new JobsUsuarios();
 		job.run();
 		System.out.println("Job finalizado.");
 
-		Date fechaPrueba = new Date(119,1,16,23,0,0);
-		System.out.println(fechaPrueba.getYear());
 
 		System.out.println("--------------------");
 		System.out.println("Adio'");

@@ -4,13 +4,15 @@ public class MockAPI implements ProveedorClima{
 	private double velocidadViento;
 	private boolean lluviasFuertes;
 	
+	public MockAPI(double temp,double vel,boolean lluvias){
+		temperatura=temp;
+		velocidadViento=vel;
+		lluviasFuertes=lluvias;
+	}
+	
 	//Setters
 	public void velocidadViento(double velocidadViento) {
 		this.velocidadViento = velocidadViento;
-	}
-
-	public MockAPI(double temp) {
-		temperatura = temp;
 	}
 	
 	public void setLluviasFuertes(boolean lluviasFuertes) {
