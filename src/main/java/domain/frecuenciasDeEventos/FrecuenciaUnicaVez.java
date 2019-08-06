@@ -6,8 +6,9 @@ public class FrecuenciaUnicaVez implements FrecuenciaDeEvento{
 	static int limiteDeProximidad = 7;
 	
 	public boolean esProximo(LocalDateTime fechaEvento, LocalDateTime fechaActual) {
-		int dias = fechaEvento.getDayOfYear()-fechaActual.getDayOfYear();
-		return dias<=limiteDeProximidad && dias>=0;
+		Duration duracion = Duration.between(fechaActual,fechaEvento);
+		System.out.println(duracion.toDays());
+		return duracion.toDays()<=limiteDeProximidad && duracion.toDays()>=0;
 	}
 }
 
