@@ -58,6 +58,7 @@ public class main {
 		System.out.println("Job finalizado.");
 		
 		System.out.println("--------------------");
+		// java -Djava.system.class.loader=com.uqbar.apo.APOClassLoader << Correr en el VM/Terminal
 		System.out.println("Adio'");
 	}
 }
