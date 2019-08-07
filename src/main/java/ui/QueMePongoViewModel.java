@@ -1,6 +1,6 @@
 package ui;
 import domain.*;
-
+import scala.Product;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.windows.*;
@@ -11,8 +11,8 @@ import java.time.*;
 @Observable
 public class QueMePongoViewModel{
 	private QueMePongoModel model;
-	private LocalDateTime fecha;
-	private LocalDateTime otraFecha;
+	private LocalDate fecha;
+	private LocalDate otraFecha;
 
 	
   	public QueMePongoViewModel(QueMePongoModel unModel) {
@@ -29,30 +29,34 @@ public class QueMePongoViewModel{
 		this.model = model;
 	}
 	
-	public LocalDateTime getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(LocalDateTime fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
-	public LocalDateTime getOtraFecha() {
+	public LocalDate getOtraFecha() {
 		return otraFecha;
 	}
 
-	public void setOtraFecha(LocalDateTime otraFecha) {
+	public void setOtraFecha(LocalDate otraFecha) {
 		this.otraFecha = otraFecha;
 	}
 
-	/*public void listarEventos() {
-		model.eventos().forEach(e -> new Label(mainPanel).bindEnabledToProperty("evento"));
-	}*/
-	
-	public void listarEn(Panel mainPanel) {
-		new Label(mainPanel).setText("HOLA MANOLA");
-
+	public void listarEventos() {
 	}
+	/*
+	public void listarEn(Panel mainPanel) {
+		
+		
+		List<Product> eventos = new List<Producto>(mainPanel);
+		lstProducts.bindItemsToProperty("products");
+		lstProducts.bindValueToProperty("selectedProduct");
+		lstProducts.setWidth(220);
+		lstProducts.setHeight(220);
+	}*/
   	
 
 }

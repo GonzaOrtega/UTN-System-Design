@@ -2,8 +2,12 @@ package domain;
 import java.time.*;
 import java.util.Date;
 import java.util.Set;
+
+import org.uqbar.commons.model.annotations.Observable;
+
 import domain.frecuenciasDeEventos.*;
 
+@Observable
 public class Evento {
 	private LocalDateTime fecha;
 	private Sugeridor sugeridor;
