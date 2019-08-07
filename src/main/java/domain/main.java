@@ -35,7 +35,7 @@ public class main {
 		juan.cargarPrenda(armario, camperaGucci2);
 		LocalDateTime _20190812= LocalDateTime.of(2019, 8, 12,0,0);
 		LocalDateTime fechaActual = LocalDateTime.of(LocalDate.now(), LocalTime.now());
-		Evento evento = new Evento(_20190812,sugeridor,new FrecuenciaUnicaVez());
+	//	Evento evento = new Evento(_20190812,sugeridor,new FrecuenciaUnicaVez());
 		
 		System.out.println("--------------------");
 
@@ -50,8 +50,8 @@ public class main {
 		
 		System.out.println("--------------------");
 		
-		juan.agendarEvento(evento);
-		System.out.println("¿Es proximo? "+evento.esProximo(fechaActual));
+		//juan.agendarEvento(evento);
+		//System.out.println("¿Es proximo? "+evento.esProximo(fechaActual));
 		System.out.println("Job ejecutandose..");
 		JobsUsuarios job = new JobsUsuarios();
 		job.run();

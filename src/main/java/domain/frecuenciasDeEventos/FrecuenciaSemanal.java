@@ -1,7 +1,12 @@
 package domain.frecuenciasDeEventos;
 import java.time.*;
+
+import domain.enums.TipoFrecuencia;
 public class FrecuenciaSemanal implements FrecuenciaDeEvento{
 	private int limiteDeProximidad = 2;
+	
+	public TipoFrecuencia getFrecuencia() {return TipoFrecuencia.Semanal;}
+
 	
 	public boolean esProximo(LocalDateTime fechaEvento, LocalDateTime fechaActual) {
 		
