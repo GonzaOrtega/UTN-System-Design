@@ -22,7 +22,7 @@ public class Sugeridor {
 		Set<Set<Prenda>> atuendos = unUsuario
 									.getGuardarropas()
 									.stream()
-									.map(guardarrropa->guardarrropa.pedirAtuendosSegun(proveedorDeClima))
+									.map(guardarrropa->guardarrropa.pedirAtuendosSegun(proveedorDeClima,unUsuario))
 									.flatMap(guardarropa->guardarropa.stream())
 									.collect(Collectors.toSet());
 		if (atuendos.isEmpty())

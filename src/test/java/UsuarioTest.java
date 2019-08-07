@@ -69,14 +69,14 @@ public class UsuarioTest {
 	@Test
 	public void siJuanCargaUnJeanASuArmarioDeberiaTenerDoceAtuendos() {
 		juan.cargarPrenda(armario, jean);
-		assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas).size(), 12);	
+		assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas,juan).size(), 12);	
 	}
 	
 	@Test
 	public void losAtuendosTienenUnoDeCadaTipo() {
 	juan.cargarPrenda(armario, jean);
 	assertTrue(armario
-		.pedirAtuendosSegun(APIDeMentiritas)
+		.pedirAtuendosSegun(APIDeMentiritas,juan)
 		.stream()
 		.allMatch(atuendo->this.atuendoTieneCategoria(atuendo, Categoria.SUPERIOR) 
 				&& this.atuendoTieneCategoria(atuendo, Categoria.INFERIOR)  

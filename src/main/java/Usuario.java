@@ -1,10 +1,14 @@
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.*;
 import enums.TipoSugerencias;
 import enums.TipoUsuario;
 import java.util.HashSet;
 import exceptions.*;
+import enums.Categoria;
+import enums.TipoSensaciones;
 
 public class Usuario {
 	private TipoUsuario tipo;
@@ -14,6 +18,7 @@ public class Usuario {
 	private Sugerencia ultimaSugerencia = null;
 	private Set<MedioDeNotifiacion> medios = new HashSet<MedioDeNotifiacion>();
 	private Set<Evento> eventos = new HashSet<Evento>();
+	private ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
 	
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
 		this.tipo = tipo;
@@ -55,6 +60,9 @@ public class Usuario {
 	
 	public HashSet<Guardarropa> getGuardarropas() {
 		return this.guardarropas;
+	}
+	public ArrayList<Calificacion> getCalificaciones(){
+		return this.calificaciones;
 	}
 	
 	public TipoUsuario getTipo() {
@@ -104,5 +112,8 @@ public class Usuario {
 	
 	public void agendarEvento(Evento unEvento) {
 		this.eventos.add(unEvento);
+	}
+	public void calificar(Categoria parteCuerpo,TipoSensaciones sensacion) {
+		this.calificaciones.add(new Calificacion(parteCuerpo,sensacion));
 	}
 }
