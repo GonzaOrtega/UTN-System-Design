@@ -10,8 +10,8 @@ public class FrecuenciaUnicaVez implements FrecuenciaDeEvento{
 	}
 	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin,LocalDateTime fechaEvento ) {
 		long diasEntreComienzoEvento =(Duration.between(fechaComienzo,fechaEvento)).toDays();
-		long diasEntreEventoFin =(Duration.between(fechaEvento,fechaFin)).toDays();
-		return diasEntreComienzoEvento>0 && diasEntreEventoFin<0;
+		long diasEntreEventoFin =(Duration.between(fechaComienzo,fechaFin)).toDays();
+		return diasEntreComienzoEvento<=diasEntreEventoFin;
 		
 	}
 	

@@ -10,6 +10,7 @@ import org.uqbar.commons.model.annotations.Observable;
 
 import domain.apisClima.MockAPI;
 import domain.apisClima.ProveedorClima;
+import domain.enums.TipoUsuario;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 
 @Observable
@@ -19,10 +20,13 @@ public class QueMePongoModel {
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	private Evento evento = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez());
-	private Evento p = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY,23),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez());
+	private Evento eventodos = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY,23),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez());
 	private Set<Evento> eventos= new HashSet<Evento>();
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	public QueMePongoModel() {
-		eventos .add(evento);
+		juan.agendarEvento(evento);
+		juan.agendarEvento(eventodos);
+		RepositorioDeUsuarios.getInstance().agregar(juan);
 	};
 	public int getFechaInicio() {
 		return fechaInicio;
@@ -49,15 +53,19 @@ public class QueMePongoModel {
 	}
 
 	public LocalDateTime fecha(int fechaEnNro) {
-		return LocalDateTime.of(fechaEnNro/10000,(fechaEnNro%10000)/100,fechaEnNro/1000000,0,0,0);
+		return LocalDateTime.of(fechaEnNro/10000,(fechaEnNro%10000)/100,(fechaEnNro%10000)%100,0,0,0);
 	}
 	public void listarEventos() {
-		/*eventos= RepositorioDeUsuarios.getInstance()
+		eventos= RepositorioDeUsuarios.getInstance()
 					.eventos()
 					.stream()
 					.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
-					.collect(Collectors.toSet());*/
-		eventos.add(p);
+					.collect(Collectors.toSet());
+		System.out.println(this.fecha(fechaInicio));
+		System.out.println(this.fecha(fechaFin));
+		System.out.println(fechaFin);
+		System.out.println(this.fecha(fechaFin));
+		System.out.println(eventos.size());
 	}
 	
 }
