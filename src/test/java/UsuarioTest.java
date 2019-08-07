@@ -1,18 +1,13 @@
 import static org.junit.Assert.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
+import java.util.stream.*;
+import java.time.*;
 import java.util.*;
-import org.junit.Before;
-import org.junit.Test;
-import apisClima.*;
-import frecuenciasDeEventos.*;
-import enums.*;
-import exceptions.*;
+import org.junit.*;
+import domain.apisClima.*;
+import domain.frecuenciasDeEventos.*;
+import domain.enums.*;
+import domain.exceptions.*;
+import domain.*;
 import java.time.*;
 
 public class UsuarioTest {
@@ -112,7 +107,7 @@ public class UsuarioTest {
 		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1);
 		lara.agregarGuardarropa(otroArmario);
 		lara.cargarPrenda(otroArmario, camisaCorta);
-		assertTrue(otroArmario.prendas.size() == 1);
+		assertTrue(otroArmario.prendas().size() == 1);
 	}
 	
 	@Test

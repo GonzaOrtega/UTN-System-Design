@@ -3,19 +3,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
-
-import apisClima.MetaWeatherAPI;
-import apisClima.MockAPI;
-import apisClima.OpenWeatherMapAPI;
-import apisClima.ProveedorClima;
-import enums.Categoria;
-import enums.Color;
-import enums.Material;
-import enums.TipoPrenda;
-import enums.TipoSensaciones;
-import enums.TipoUsuario;
-import exceptions.YaSeEncuentraCargadaException;
-import exceptions.*;
+import enums.*; //Esto habria que cambiarlo!
+import domain.apisClima.*;
+import domain.enums.*;
+import domain.exceptions.*;
+import domain.*;
 
 //import static org.mockito.Mockito.*;
 
