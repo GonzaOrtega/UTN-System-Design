@@ -8,5 +8,12 @@ public class FrecuenciaUnicaVez implements FrecuenciaDeEvento{
 		Duration duracion = Duration.between(fechaActual,fechaEvento);
 		return duracion.toDays()<=limiteDeProximidad && duracion.toDays()>=0;
 	}
+	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin,LocalDateTime fechaEvento ) {
+		long diasEntreComienzoEvento =(Duration.between(fechaComienzo,fechaEvento)).toDays();
+		long diasEntreEventoFin =(Duration.between(fechaEvento,fechaFin)).toDays();
+		return diasEntreComienzoEvento>0 && diasEntreEventoFin<0;
+		
+	}
+	
 }
 

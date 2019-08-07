@@ -6,6 +6,8 @@ import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.windows.*;
 import org.uqbar.commons.model.annotations.Observable;
 import java.time.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Observable
@@ -45,7 +47,10 @@ public class QueMePongoViewModel{
 		this.otraFecha = otraFecha;
 	}
 
-	public void listarEventos() {
+	public Set<Evento> listarEventos(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
+		return RepositorioDeUsuarios.getInstance().
+					eventos().stream().filter(evento->evento.sucedeEntreEstasfechas(fechaComienzo,fechaFin)).collect(Collectors.toSet());
+		
 	}
 	/*
 	public void listarEn(Panel mainPanel) {

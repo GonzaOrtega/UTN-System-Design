@@ -1,5 +1,9 @@
 package ui;
 import domain.*;
+import domain.apisClima.MockAPI;
+import domain.apisClima.ProveedorClima;
+import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
+
 import java.awt.Color;
 //import org.eclipse.swt.widgets.Table;
 import org.uqbar.arena.layout.*;
@@ -29,9 +33,7 @@ public class QueMePongoView extends MainWindow<QueMePongoModel> {
 			Table<Evento> tabla = new Table<Evento>(mainPanel, Evento.class);
 			new Column<Evento>(tabla).setTitle("Fecha").setFixedSize(150).bindContentsToProperty("fecha");
 			new Column<Evento>(tabla).setTitle("Titulo").setFixedSize(300).alignCenter().bindContentsToProperty("titulo");
-			new Column<Evento>(tabla).setTitle("Â¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("proximo");
-
-
+			new Column<Evento>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("proximo");
 	  }
 	  
 	  public String fecha(String unaFecha) {
