@@ -1,9 +1,10 @@
 package ui;
 import domain.*;
 import java.awt.Color;
-import org.uqbar.arena.widgets.Label;
-import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.windows.MainWindow;
+import org.uqbar.arena.layout.*;
+import org.uqbar.arena.widgets.*;
+import org.uqbar.arena.windows.*;
+import java.time.*;
 
 public class QueMePongoView extends MainWindow<QueMePongoViewModel> {
 
@@ -12,8 +13,17 @@ public class QueMePongoView extends MainWindow<QueMePongoViewModel> {
 	  }
 
 	  public void createContents(Panel mainPanel){
-			new Label(mainPanel).setText("Que Me Pongo").setBackground(Color.ORANGE);
+			//mainPanel.setLayout(new HorizontalLayout());
+		  	this.setTitle("Que Me Pongo");
+			new Label(mainPanel).setText("¡Bienvenido a Que Me Pongo!");
+			Panel panelHorizontal= new Panel(mainPanel).setLayout(new HorizontalLayout());
+			new Label(panelHorizontal).setText("Ingrese una fecha:");
+			new TextBox(panelHorizontal).setWidth(100).bindValueToProperty("fecha");
+			new Label(panelHorizontal).setText("Ingrese otra fecha:");
+			new TextBox(panelHorizontal).setWidth(100).bindValueToProperty("otraFecha");
+			new Button(mainPanel).onClick(()-> new Label(mainPanel).setText("FUNCIONA"));
 	  }
+	  
 	  
 	  public static void main(String[] args) {
 		    new QueMePongoView().startApplication();
