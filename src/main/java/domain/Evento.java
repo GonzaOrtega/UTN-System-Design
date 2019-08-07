@@ -35,8 +35,8 @@ public class Evento {
 	public LocalDateTime getFecha() {
 		return fecha;
 	}
-	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo,LocalDateTime fechaFin, LocalDateTime fechaEvento) {
-		return frecuencia.sucedeEntreEstasfechas(fechaComienzo,fechaFin);
+	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo,LocalDateTime fechaFin) {
+		return frecuencia.sucedeEntreEstasfechas(fechaComienzo,fechaFin,this.fecha);
 	}
 	
 }
