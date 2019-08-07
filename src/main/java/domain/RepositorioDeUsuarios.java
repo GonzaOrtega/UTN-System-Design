@@ -16,15 +16,13 @@ public class RepositorioDeUsuarios {
 	//****************** INICIALIZACION PARA PRUEBA DE ARENA ************************************
 	
 	public void init(){
-		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 		ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 		Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
-		Evento e1= new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Ir a comprar ropa");
-		Evento e2= new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY,23),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Ir a pasear el perro");
-		Evento e3 = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.AUGUST, 1),LocalTime.now()),sugeridor,new FrecuenciaDiaria(),"Ir a cenar");//"24-05-2019"
-		juan.agendarEvento(e1);
-		juan.agendarEvento(e2);
-		juan.agendarEvento(e3);
+		Evento evento = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Ir a cenar");
+		Evento eventodos = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY,23),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Ir a pasear al perro");
+		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
+		juan.agendarEvento(evento);
+		juan.agendarEvento(eventodos);
 	}
 	
 	//*******************************************************************************************

@@ -35,6 +35,8 @@ public class QueMePongoModel {
 
 	public void setEventos(Set<Evento> eventos) { this.eventos = eventos; }
 
+	// ***********************************
+	
 	public LocalDateTime fecha(int fechaEnNro) {
 		return LocalDateTime.of(LocalDate.of(fechaEnNro/10000,(fechaEnNro%10000)/100,(fechaEnNro%10000)%100),LocalTime.of(0,0,0));
 	}
@@ -45,12 +47,16 @@ public class QueMePongoModel {
 	}
 	
 	public void listarEventos() {
-		this.eventos= RepositorioDeUsuarios.getInstance()
+		RepositorioDeUsuarios.getInstance().init();
+
+		this.eventos = RepositorioDeUsuarios.getInstance()
 				.eventos()
 				.stream()
 				.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
 				.collect(Collectors.toSet());
-		
+		System.out.println("Fecha inicio: "+this.fecha(fechaInicio));
+		System.out.println("Fecha fin: "+this.fecha(fechaFin));
+		System.out.println(this.eventos.size());
 	}
 	
 }

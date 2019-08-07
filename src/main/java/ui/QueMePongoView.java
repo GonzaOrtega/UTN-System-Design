@@ -20,7 +20,7 @@ public class QueMePongoView extends MainWindow<QueMePongoModel> {
 	  }
 
 	  public void createContents(Panel mainPanel){
-		  	this.setTitle("Que Me Pongo1");
+		  	this.setTitle("Que Me Pongo");
 			new Label(mainPanel).setText("¡Bienvenido a Que Me Pongo!");
 			new Label(mainPanel).setText("Ingrese dos fechas (AAAA,MM,DD) para buscar los eventos que se encuentran entre las mismsas");
 			mainPanel.setLayout(new VerticalLayout());
@@ -32,10 +32,10 @@ public class QueMePongoView extends MainWindow<QueMePongoModel> {
 			new Button(mainPanel).setCaption("Obtener eventos").onClick(()->this.getModelObject().listarEventos());
 			Table<Evento> tabla = new Table<Evento>(mainPanel, Evento.class);
 			tabla.bindItemsToProperty("eventos");
-			//new Column<Evento>(tabla).setTitle("Evento").bindItemsToProperty("eventos");
 			new Column<Evento>(tabla).setTitle("Fecha").setFixedSize(150).bindContentsToProperty("fecha");
-			new Column<Evento>(tabla).setTitle("Frecuencia").setFixedSize(300).bindContentsToProperty("frecuencia");
-			//new Column<Evento>(tabla).setTitle("Sugerencias listas?").setFixedSize(100).bindContentsToProperty("proximo");
+			new Column<Evento>(tabla).setTitle("Frecuencia").setFixedSize(150).bindContentsToProperty("frecuencia");
+			new Column<Evento>(tabla).setTitle("Descripcion").setFixedSize(300).bindContentsToProperty("descripcion");
+			new Column<Evento>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("sugerenciasListas");
 	  }
 	  
 	  public String fecha(String unaFecha) {

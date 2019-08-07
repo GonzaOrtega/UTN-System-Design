@@ -13,6 +13,7 @@ public class Evento {
 	private Sugeridor sugeridor;
 	private FrecuenciaDeEvento frecuencia;
 	private String descripcion;
+	private SugerenciasListas estadoSugerencias;
 	//private int contador=0;// usado solo de forma provisoria para el JobsEventosTest
 	
 	public Evento(LocalDateTime unaFecha,Sugeridor unSugeridor, FrecuenciaDeEvento unaFrecuencia, String unaDescripcion) {
@@ -22,10 +23,25 @@ public class Evento {
 		this.descripcion= unaDescripcion;
 	}
 
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	public void sugerir(Usuario usuario) {
 		Set<Set<Prenda>> atuendos = sugeridor.sugerirPrendasPara(usuario);
 		atuendos.forEach(atuendo->usuario.agregarSugerencia(new Sugerencia(atuendo,this)));
 		//this.setContador(contador+1);//Usado en forma provisoria para el JobsEventosTest
+	}
+	
+	public SugerenciasListas getSugerenciasListas() {
+		if(this.esProximo(LocalDateTime.now()))
+			return SugerenciasListas.YES;
+		else return SugerenciasListas.NO;
+		
 	}
 	
 	public boolean esProximo(LocalDateTime fechaActual) {
@@ -34,13 +50,14 @@ public class Evento {
 	
 	public boolean alertaMeterologica() {return sugeridor.proveedorDeClima().alertaMeterologica();}
 	
+	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo,LocalDateTime fechaFin) {
+		return frecuencia.sucedeEntreEstasfechas(fechaComienzo,fechaFin,fecha);
+	}
+	
 	public LocalDate getFecha() {
 		return LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDayOfMonth());
 	}
-	
-	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo,LocalDateTime fechaFin) {
-		return frecuencia.sucedeEntreEstasfechas(fechaComienzo,fechaFin,this.fecha);
-	}
+
 	
 	public TipoFrecuencia getFrecuencia() {
 		return frecuencia.getFrecuencia();
