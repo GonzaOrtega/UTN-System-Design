@@ -1,15 +1,14 @@
 package ui;
-import domain.*;
+import domain.*;/*
 import domain.apisClima.MockAPI;
 import domain.apisClima.ProveedorClima;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
-
-import java.awt.Color;
+import java.awt.Color;*/
 //import org.eclipse.swt.widgets.Table;
 import org.uqbar.arena.layout.*;
 import org.uqbar.arena.widgets.*;
 import org.uqbar.arena.windows.*;
-import java.time.*;
+//import java.time.*;
 import org.uqbar.arena.widgets.tables.*;
 //import org.uqbar.arena.widgets.tables.Table;
 
@@ -25,23 +24,25 @@ public class QueMePongoView extends MainWindow<QueMePongoModel> {
 			new Label(mainPanel).setText("Ingrese dos fechas (AAAA,MM,DD) para buscar los eventos que se encuentran entre las mismsas");
 			mainPanel.setLayout(new VerticalLayout());
 			Panel panelHorizontal= new Panel(mainPanel).setLayout(new HorizontalLayout());
-			new Label(panelHorizontal).setText("Ingrese una fecha:");
-			new NumericField(panelHorizontal).setWidth(100).bindValueToProperty("fecha");
-			new Label(panelHorizontal).setText("Ingrese otra fecha:");
-			new NumericField(panelHorizontal).setWidth(100).bindValueToProperty("otraFecha");
-			new Button(mainPanel).setCaption("Obtener eventos");
+			new Label(panelHorizontal).setText("Ingrese una fecha inicial con formato yyyymmdd:");
+			new NumericField(panelHorizontal).setWidth(100).bindValueToProperty("fechaInicio");
+			new Label(panelHorizontal).setText("Ingrese otra fecha final con formato yyyymmdd:");
+			new NumericField(panelHorizontal).setWidth(100).bindValueToProperty("fechaFin");
+			new Button(mainPanel).setCaption("Obtener eventos").onClick(()-> getModelObject().listarEventos());
 			Table<Evento> tabla = new Table<Evento>(mainPanel, Evento.class);
+			tabla.bindItemsToProperty("eventos");
 			new Column<Evento>(tabla).setTitle("Fecha").setFixedSize(150).bindContentsToProperty("fecha");
-			new Column<Evento>(tabla).setTitle("Titulo").setFixedSize(300).alignCenter().bindContentsToProperty("titulo");
-			new Column<Evento>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("proximo");
+			//new Column<Evento>(tabla).setTitle("Titulo").setFixedSize(300).alignCenter().bindContentsToProperty("titulo");
+			//new Column<Evento>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("proximo");
+			//new Column<Evento>(tabla).setTitle("Repeticion").setFixedSize(100).bindContentsToProperty("frecuencia");
 	  }
 	  
-	  public String fecha(String unaFecha) {
+	  /*public String fecha(String unaFecha) {
 		  int anio = Integer.parseInt(unaFecha)/10000;
 		  int mes = (Integer.parseInt(unaFecha)%10000)/100;
 		  int dia = (Integer.parseInt(unaFecha)%1000000);
 		  return LocalDate.of(anio, mes, dia).toString();
-	  }
+	  }*/
 	  
 	  public static void main(String[] args) {
 		    new QueMePongoView().startApplication();

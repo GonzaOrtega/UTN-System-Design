@@ -1,29 +1,33 @@
 package domain;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.uqbar.commons.model.annotations.Observable;
 
 @Observable
 public class QueMePongoModel {
-	private int fecha;
-	private int otraFecha;
+	private int fechaInicio;
+	private int fechaFin;
 	private Set<Evento> eventos;
-	
-	public int getFecha() {
+	private String fecha = "hola";
+	public String getFecha() {
 		return fecha;
 	}
-
-	public void setFecha(int fecha) {
-		this.fecha = fecha;
+	public int getFechaInicio() {
+		return fechaInicio;
 	}
 
-	public int getOtraFecha() {
-		return otraFecha;
+	public void setFechaInicio(int fecha) {
+		this.fechaInicio = fecha;
 	}
 
-	public void setOtraFecha(int otraFecha) {
-		this.otraFecha = otraFecha;
+	public int getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(int fecha) {
+		this.fechaFin = fecha;
 	}
 
 	public Set<Evento> eventos(){
@@ -38,8 +42,15 @@ public class QueMePongoModel {
 		this.eventos = eventos;
 	}
 
-	public LocalDate fecha(int fechaEnNro) {
-		return LocalDate.of(fechaEnNro/10000,(fechaEnNro%10000)/100,fechaEnNro/1000000);
+	public LocalDateTime fecha(int fechaEnNro) {
+		return LocalDateTime.of(fechaEnNro/10000,(fechaEnNro%10000)/100,fechaEnNro/1000000,0,0,0);
+	}
+	public void listarEventos() {
+		eventos= RepositorioDeUsuarios.getInstance()
+					.eventos()
+					.stream()
+					.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
+					.collect(Collectors.toSet());
 	}
 	
 }
