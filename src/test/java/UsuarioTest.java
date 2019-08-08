@@ -157,9 +157,7 @@ public class UsuarioTest {
 	 
 	@Test
 	public void dosUsuariosCompartenUnGuardarropaYTienenSuficienteRopaParaHacerLosAtuendos() {
-
 		juan.cargarPrenda(armario, jean);
-		
 		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan);
 		
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
@@ -178,19 +176,28 @@ public class UsuarioTest {
 	
 	@Test (expected = NoHayAtuendosDisponiblesException.class)
 	public void unoDeLosUsuariosConGuardarropaCompartidoNoPuedeEjecutarSusAtuendosPorFaltaDeRopa() {
+		juan.cargarPrenda(armario, jean);
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
 		lara.agregarGuardarropa(armario);
 		
-		Set<Prenda> atuendo = new HashSet<Prenda>();
-		atuendo.add(jean);
-		atuendo.add(camisaCorta);
-		atuendo.add(gorra);
-		atuendo.add(zapatos);
-		Sugerencia sugerencia = new Sugerencia(atuendo,eventoConFrecuenciaUnica);
-		juan.agregarSugerencia(sugerencia);
-		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
+		this.sugerirMasAceptarTodasLasSugerencias(juan);
 		
 		sugeridor.sugerirPrendasPara(lara);
+		
+	}
+	
+	@Test
+	public void siNoSeAceptanLasSugerenciasConGuardarropaCompartidoSeGeneranLasMismasSugerencias() {
+		juan.cargarPrenda(armario, jean);
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		lara.agregarGuardarropa(armario);
+		
+		eventoConFrecuenciaUnica.sugerir(juan);
+		Set<Set<Prenda>> atuendosDeJuan = juan.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
+		eventoConFrecuenciaUnica.sugerir(lara);
+		Set<Set<Prenda>> atuendosDeLara = lara.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
+		
+		assertTrue(atuendosDeJuan.equals(atuendosDeLara));
 		
 	}
 	

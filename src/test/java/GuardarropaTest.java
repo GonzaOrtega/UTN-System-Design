@@ -113,5 +113,10 @@ public class GuardarropaTest {
 				&& !armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo3));
 	}
 	
+	@Test
+	public void seAgregaUnGuardarropaADosUsuarios() {
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		lara.agregarGuardarropa(armario);
+	}
 	
 }
