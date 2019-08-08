@@ -38,10 +38,14 @@ public class Evento {
 	}
 	
 	public SugerenciasListas getSugerenciasListas() {
-		if(this.esProximo(LocalDateTime.now()))
+		if(this.esProximo(LocalDateTime.now()) || this.yaSucedio())
 			return SugerenciasListas.YES;
 		else return SugerenciasListas.NO;
 		
+	}
+	
+	public boolean yaSucedio(){
+		return LocalDateTime.now().isAfter(fecha);
 	}
 	
 	public boolean esProximo(LocalDateTime fechaActual) {
@@ -55,7 +59,7 @@ public class Evento {
 	}
 	
 	public LocalDate getFecha() {
-		return LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDayOfMonth());
+		return fecha.toLocalDate();
 	}
 
 	

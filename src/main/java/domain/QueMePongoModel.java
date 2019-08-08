@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import org.uqbar.commons.model.annotations.Observable;
+import org.uqbar.commons.model.exceptions.UserException;
 
 @Observable
 public class QueMePongoModel {
@@ -20,7 +20,7 @@ public class QueMePongoModel {
 	}
 
 	public void setFechaInicio(int fechaInicio) {
-		this.fechaInicio = fechaInicio;
+			this.fechaInicio=fechaInicio;
 	}
 
 	public int getFechaFin() {
@@ -28,7 +28,7 @@ public class QueMePongoModel {
 	}
 
 	public void setFechaFin(int fechaFinal) {
-		this.fechaFin = fechaFinal;
+			this.fechaFin = fechaFinal;
 	}
 
 	public Set<Evento> getEventos() { return eventos; }
@@ -41,22 +41,23 @@ public class QueMePongoModel {
 		return LocalDateTime.of(LocalDate.of(fechaEnNro/10000,(fechaEnNro%10000)/100,(fechaEnNro%10000)%100),LocalTime.of(0,0,0));
 	}
 	
-	public void listarEventosPrueba(){
-		RepositorioDeUsuarios.getInstance().init();
-		this.eventos = RepositorioDeUsuarios.getInstance().eventos();
+	public void validar() {
+		if(Integer.toString(fechaFin).length()>8 || Integer.toString(fechaInicio).length()>8)
+			throw new UserException("ERROR: Ingrese una fecha valida.");
+		if(fechaFin<fechaInicio)
+			throw new UserException("ERROR: Ingrese correctamente las fechas.");
 	}
 	
+	
 	public void listarEventos() {
-		RepositorioDeUsuarios.getInstance().init();
+		this.validar();
 
 		this.eventos = RepositorioDeUsuarios.getInstance()
 				.eventos()
 				.stream()
 				.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
 				.collect(Collectors.toSet());
-		System.out.println("Fecha inicio: "+this.fecha(fechaInicio));
-		System.out.println("Fecha fin: "+this.fecha(fechaFin));
-		System.out.println(this.eventos.size());
+		
 	}
 	
 }

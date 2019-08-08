@@ -9,7 +9,7 @@ public class JobsUsuarios implements Runnable{
 	public void run() {
 		LocalDateTime fechaActual = LocalDateTime.now();
 		RepositorioDeUsuarios.getInstance().obtenerSugerenciasDeEventosProximosA(fechaActual);
-		RepositorioDeUsuarios.getInstance().notificarAlertaMeterologica(fechaActual);
+		RepositorioDeUsuarios.getInstance().notificarAlertaMeterologica();
 	}
 	public static void main() {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();

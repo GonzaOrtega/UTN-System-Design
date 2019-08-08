@@ -23,9 +23,7 @@ public class Usuario {
 		RepositorioDeUsuarios.getInstance().agregar(this);
 	}
 	
-	
 	public Set<Evento> eventos() { return eventos; }
-
 
 	public Set<Evento> eventosProximos(LocalDateTime fecha) {
 		return this.eventos().stream().filter(evento->evento.esProximo(fecha)).collect(Collectors.toSet());
@@ -99,12 +97,10 @@ public class Usuario {
 	
 	public void notificarSugerenciasNuevas() {
 		this.medios.stream().forEach(medio->medio.notificarNuevasSugerencias());
-		System.out.println("NUEVAS SUGERENCIAS!!!");
 	}
 	
 	public void notificarAlertaMeterologica() {
 		this.medios.stream().forEach(medio->medio.notificarAlertaMeterologica());
-		System.out.println("ALERTA METEROLOGICA!!!");
 	}
 	
 	public void agendarEvento(Evento unEvento) {
