@@ -1,4 +1,4 @@
-package domain;
+﻿package domain;
 
 import java.util.*;
 import java.time.*;
@@ -36,7 +36,7 @@ public class Usuario {
 	}
 	
 	public Set<Evento> eventosConAlertasMeterologicasPara(LocalDateTime fecha){
-		return this.eventos().stream().filter(evento->evento.alertaMeterologicaPara(fecha)).collect(Collectors.toSet());
+		return this.eventos().stream().filter(evento->evento.alertaMeterologicaPara(fecha) && this.tengoSugerenciaDeEsteEvento(evento) ).collect(Collectors.toSet());
 	}
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
