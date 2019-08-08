@@ -12,6 +12,7 @@ public class QueMePongoModel {
 	private int fechaInicio;
 	private int fechaFin;
 	private Set<Evento> eventos = new HashSet<Evento>();
+	private String messageError;
 	
 	// Getters y setters
 
@@ -30,6 +31,11 @@ public class QueMePongoModel {
 	public void setFechaFin(int fechaFinal) {
 			this.fechaFin = fechaFinal;
 	}
+	
+	
+	public String getMessageError() {
+		return messageError;
+	}
 
 	public Set<Evento> getEventos() { return eventos; }
 
@@ -43,7 +49,8 @@ public class QueMePongoModel {
 	
 	public void validar() {
 		if(Integer.toString(fechaFin).length()>8 || Integer.toString(fechaInicio).length()>8)
-			throw new UserException("ERROR: Ingrese una fecha valida.");
+			this.messageError = "AADISOJDASIODASJ";
+//			throw new UserException("ERROR: Ingrese una fecha valida.");
 		if(fechaFin<fechaInicio)
 			throw new UserException("ERROR: Ingrese correctamente las fechas.");
 	}

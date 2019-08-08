@@ -28,6 +28,7 @@ public class QueMePongoView extends MainWindow<QueMePongoModel> {
 			new Column<Evento>(tabla).setTitle("Frecuencia").setFixedSize(150).bindContentsToProperty("frecuencia");
 			new Column<Evento>(tabla).setTitle("Descripcion").setFixedSize(300).bindContentsToProperty("descripcion");
 			new Column<Evento>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("sugerenciasListas");
+			new Label(mainPanel).bindValueToProperty("messageError");
 	  }
 	  
 
