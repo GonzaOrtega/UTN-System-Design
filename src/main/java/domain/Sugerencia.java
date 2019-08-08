@@ -9,7 +9,7 @@ public class Sugerencia {
 	
 	public Sugerencia(Set<Prenda> unAtuendo, Evento evento) {
 		atuendo=unAtuendo;
-		this.estado=estado;
+		this.evento=evento;
 	}
 	
 	public TipoSugerencias getEstado() {

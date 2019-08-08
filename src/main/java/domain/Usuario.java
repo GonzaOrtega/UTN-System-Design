@@ -32,7 +32,7 @@ public class Usuario {
 	}
 	
 	public boolean tengoSugerenciaDeEsteEvento(Evento evento) {
-		return sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento()==evento);
+		return sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento));
 	}
 	
 	public Set<Evento> eventosConAlertasMeterologicasPara(LocalDateTime fecha){
