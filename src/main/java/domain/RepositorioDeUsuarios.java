@@ -45,18 +45,12 @@ public class RepositorioDeUsuarios {
 								);
 	}
 	
-	public Set<Usuario> usuariosConEventosConAlertarMeterologicas() {
-		return this.usuarios().stream().filter(
-					usuario-> usuario.eventos()
-									 .stream()
-									 .anyMatch(evento->evento.alertaMeterologica()))
-									   .collect(Collectors.toSet());
-	}
-	
-	public void notificarAlertaMeterologica() {		
-		this.usuariosConEventosConAlertarMeterologicas()
-							.stream()
-							.forEach(usuario->usuario.notificarAlertaMeterologica());
+	public void notificarAlertaMeterologicaDeEventosSugeridosPara(LocalDateTime dia) {
+		this.usuarios.stream().forEach(usuario->{
+			usuario.eventosConAlertasMeterologicasPara(dia)
+								.stream()
+								.forEach(evento -> usuario.notificarAlertaMeterologicaDe(evento));
+		});
 	}
 	
 }

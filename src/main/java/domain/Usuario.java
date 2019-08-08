@@ -25,19 +25,18 @@ public class Usuario {
 	
 	public Set<Evento> eventos() { return eventos; }
 
+	
 	public Set<Evento> eventosProximos(LocalDateTime fecha) {
 		
 		return this.eventos().stream().filter(evento->evento.esProximo(fecha)&& !this.tengoSugerenciaDeEsteEvento(evento)).collect(Collectors.toSet());
 	}
+	
 	public boolean tengoSugerenciaDeEsteEvento(Evento evento) {
 		return sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento()==evento);
 	}
 	
-	public Set<Evento> eventosProximosConAlertaMeterologica(LocalDateTime fecha){
-		return this.eventosProximos(fecha)
-										.stream()
-										.filter(evento -> evento.alertaMeterologica())
-										.collect(Collectors.toSet());
+	public Set<Evento> eventosConAlertasMeterologicasPara(LocalDateTime fecha){
+		return this.eventos().stream().filter(evento->evento.alertaMeterologicaPara(fecha)).collect(Collectors.toSet());
 	}
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
@@ -60,6 +59,7 @@ public class Usuario {
 	public HashSet<Guardarropa> getGuardarropas() {
 		return this.guardarropas;
 	}
+	
 	public ArrayList<Calificacion> getCalificaciones(){
 		return this.calificaciones;
 	}
@@ -100,16 +100,17 @@ public class Usuario {
 	}
 	
 	public void notificarSugerenciasNuevas() {
-		this.medios.stream().forEach(medio->medio.notificarNuevasSugerencias());
+		this.medios.stream().forEach(medio->medio.notificarNuevasSugerencias(this));
 	}
 	
-	public void notificarAlertaMeterologica() {
-		this.medios.stream().forEach(medio->medio.notificarAlertaMeterologica());
+	public void notificarAlertaMeterologicaDe(Evento unEvento) {
+		this.medios.stream().forEach(medio->medio.notificarAlertaMeterologica(unEvento,this));
 	}
 	
 	public void agendarEvento(Evento unEvento) {
 		this.eventos.add(unEvento);
 	}
+	
 	public void calificar(Categoria parteCuerpo,TipoSensaciones sensacion) {
 		this.calificaciones.add(new Calificacion(parteCuerpo,sensacion));
 	}
