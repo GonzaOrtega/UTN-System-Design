@@ -20,12 +20,12 @@ public class EventoTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).conAbrigo(0).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).conAbrigo(0).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(0).crearPrenda();
-	Evento eventoLoco = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.FEBRUARY, 16),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez());//la fecha es:"16-02-2019"
-	Evento eventoConFrecuenciaUnica = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez());//"24-05-2019"
-	Evento eventoConFrecuenciaDiaria = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaDiaria());//"16-01-2019"
-	Evento eventoConFrecuenciaSemanal = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaSemanal());//"16-01-2019"
-	Evento eventoConFrecuenciaMensual = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaMensual());//"16-01-2019"
-	Evento eventoConFrecuenciaAnual = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.FEBRUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaAnual());//"16-01-2019"
+	Evento eventoLoco = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.FEBRUARY, 16),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Sin descripcion");//la fecha es:"16-02-2019"
+	Evento eventoConFrecuenciaUnica = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Sin descripcion");//"24-05-2019"
+	Evento eventoConFrecuenciaDiaria = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaDiaria(),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaSemanal = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaSemanal(),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaMensual = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaMensual(),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaAnual = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.FEBRUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaAnual(),"Sin descripcion");//"16-01-2019"
 
 	@Before
 	public void setUp(){

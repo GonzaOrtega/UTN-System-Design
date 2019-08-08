@@ -32,7 +32,7 @@ public class UsuarioTest {
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
-	Evento eventoConFrecuenciaUnica = new Evento(LocalDateTime.of(LocalDate.of(2019,Month.FEBRUARY,16),LocalTime.now()),sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
+	Evento eventoConFrecuenciaUnica = new Evento(LocalDateTime.of(LocalDate.of(2019,Month.FEBRUARY,16),LocalTime.now()),sugeridor, new FrecuenciaUnicaVez(),"Sin descripcion");//Fecha "16-02-2019"
 	//Evento eventoLoco = new Evento(new Date(119,1,16), juan,sugeridor, new FrecuenciaUnicaVez());//Fecha "16-02-2019"
 	
 	@Before

@@ -3,17 +3,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
-import enums.*; //Esto habria que cambiarlo!
 import domain.apisClima.*;
 import domain.enums.*;
 import domain.exceptions.*;
 import domain.*;
-
-//import static org.mockito.Mockito.*;
-
 public class GuardarropaTest {
-
-//	MetaWeatherAPI weatherAPI2 = new MetaWeatherAPI();
 	OpenWeatherMapAPI weatherAPI = new OpenWeatherMapAPI();
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	ProveedorClima APIDeMentiritasDeInvierno = new MockAPI(10,19,false);
@@ -66,7 +60,6 @@ public class GuardarropaTest {
 		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,zapatos,camisaCorta));
 //		camisaCorta.setEsBase(true);//esto hay que cambiar despues
 		juan.cargarPrenda(armario, jean);
-		//assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas),atuendosEsperados);
 		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo)
 				&& armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo2));
 	}
@@ -79,9 +72,6 @@ public class GuardarropaTest {
 
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario,ojotas);
-		//assertEquals(armario.EstaEnRango(0,APIDeMentiritas,juan,Categoria.CALZADO),true);
-		//assertEquals(armario.calificacionUsuario(juan,Categoria.CALZADO),1);
-
 		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo)
 				&& !armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo2));
 	}
@@ -91,8 +81,6 @@ public class GuardarropaTest {
 		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
 		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
 		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
-		//assertEquals(armario.EstaEnRango(0,APIDeMentiritas,juan,Categoria.CALZADO),true);
-		//assertEquals(armario.calificacionUsuario(juan,Categoria.CALZADO),4);
 		assertEquals(juan.getCalificaciones().size(),4);
 
 	}

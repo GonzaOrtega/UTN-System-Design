@@ -3,9 +3,29 @@ import java.util.*;
 import java.time.*;
 import java.util.stream.*;
 
+import domain.apisClima.MockAPI;
+import domain.apisClima.ProveedorClima;
+import domain.enums.TipoUsuario;
+import domain.frecuenciasDeEventos.FrecuenciaDiaria;
+import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
+
 public class RepositorioDeUsuarios {
 	private Set<Usuario> usuarios = new HashSet<Usuario>();
 	private RepositorioDeUsuarios(){};
+	
+	//****************** INICIALIZACION PARA PRUEBA DE ARENA ************************************
+	
+	public void init(){
+		ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
+		Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
+		Evento evento = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Ir a cenar");
+		Evento eventodos = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY,23),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Ir a pasear al perro");
+		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
+		juan.agendarEvento(evento);
+		juan.agendarEvento(eventodos);
+	}
+	
+	//*******************************************************************************************
 	
 	private static class RepositorioDeUsuariosHolder{
 		private static final RepositorioDeUsuarios INSTANCE = new RepositorioDeUsuarios();
