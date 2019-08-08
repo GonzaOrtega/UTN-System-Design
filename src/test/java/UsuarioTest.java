@@ -3,8 +3,12 @@ import java.util.stream.*;
 import java.time.*;
 import java.util.*;
 import org.junit.*;
+
+import com.google.common.collect.Sets;
+
 import domain.apisClima.*;
 import domain.frecuenciasDeEventos.*;
+import net.sf.oval.constraint.AssertTrue;
 import domain.enums.*;
 import domain.exceptions.*;
 import domain.*;
@@ -20,9 +24,11 @@ public class UsuarioTest {
 	Guardarropa otroArmario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
+	Prenda zapatillas = new PrendaBuilder().conTipo(TipoPrenda.Zapatillas).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
 	Prenda sombrero= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
+	Prenda camisaDeLara = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
@@ -131,26 +137,43 @@ public class UsuarioTest {
 		assertEquals(lara.getGuardarropas(), juan.getGuardarropas());
 	}
 	
+//	public boolean interseccionAMano(ArrayList<Set<Prenda>> atuendo1, ArrayList<Set<Prenda>> atuendo2) {
+//		boolean hayInterseccion = false;
+//		int i=0, j=0;
+////		for(i =0; i < atuendo1.size();i++) {
+//			for(j=0; j< atuendo2.size();j++) {
+//				hayInterseccion = atuendo1.contains(atuendo2.get(j));
+//			}
+////		}
+//		
+//		return hayInterseccion;
+//	}
+	
+	public Set<Set<Prenda>> sugerirMasAceptarTodasLasSugerencias(Usuario usuario) {
+		eventoConFrecuenciaUnica.sugerir(usuario);
+		usuario.getSugerencias().stream().forEach(sugerencia -> usuario.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA));
+		return usuario.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
+	}
+	 
 	@Test
 	public void dosUsuariosCompartenUnGuardarropaYTienenSuficienteRopaParaHacerLosAtuendos() {
+
+		juan.cargarPrenda(armario, jean);
+		
+		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan);
+		
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
 		lara.agregarGuardarropa(armario);
+		
 		lara.cargarPrenda(armario, pantalon);
+		lara.cargarPrenda(armario, camisaDeLara);
 		lara.cargarPrenda(armario, sombrero);
+		lara.cargarPrenda(armario, zapatillas);
 		
-		Set<Prenda> atuendo = new HashSet<Prenda>();
-		atuendo.add(jean);
-		atuendo.add(camisaCorta);
-		atuendo.add(gorra);
-		atuendo.add(zapatos);
-		
-		Sugerencia sugerencia = new Sugerencia(atuendo,eventoConFrecuenciaUnica);
-		juan.agregarSugerencia(sugerencia);
-		juan.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA);
-		
-		Set<Set<Prenda>> atuendosDeLara = sugeridor.sugerirPrendasPara(lara);
-		
-		assertFalse(atuendosDeLara.contains(atuendo));
+		eventoConFrecuenciaUnica.sugerir(lara);
+		Set<Set<Prenda>> atuendosDeLara = lara.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
+
+		assertFalse(atuendosDeLara.containsAll(atuendosDeJuan));
 	}
 	
 	@Test (expected = NoHayAtuendosDisponiblesException.class)
