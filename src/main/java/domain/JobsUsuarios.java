@@ -16,6 +16,6 @@ public class JobsUsuarios implements Runnable{
         Runnable codigoAEjecutar = new JobsUsuarios();
         int retrasoInicial = 0;
         int periodo = 1;
-        scheduler.scheduleAtFixedRate(codigoAEjecutar, retrasoInicial, periodo, TimeUnit.DAYS);//cambiar a TimeUnit.SECONDS para testear
+        scheduler.scheduleAtFixedRate(codigoAEjecutar, retrasoInicial, periodo, TimeUnit.HOURS);//cambiar a TimeUnit.SECONDS para testear
     }
 }

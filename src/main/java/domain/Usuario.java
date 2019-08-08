@@ -26,7 +26,11 @@ public class Usuario {
 	public Set<Evento> eventos() { return eventos; }
 
 	public Set<Evento> eventosProximos(LocalDateTime fecha) {
-		return this.eventos().stream().filter(evento->evento.esProximo(fecha)).collect(Collectors.toSet());
+		
+		return this.eventos().stream().filter(evento->evento.esProximo(fecha)&& !this.tengoSugerenciaDeEsteEvento(evento)).collect(Collectors.toSet());
+	}
+	public boolean tengoSugerenciaDeEsteEvento(Evento evento) {
+		return sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento()==evento);
 	}
 	
 	public Set<Evento> eventosProximosConAlertaMeterologica(LocalDateTime fecha){

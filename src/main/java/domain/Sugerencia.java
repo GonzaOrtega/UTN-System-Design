@@ -1,14 +1,11 @@
 package domain;
 import java.util.Set;
-
 import domain.enums.TipoSugerencias;
-import domain.exceptions.*;
 
 public class Sugerencia {
 	private Set<Prenda> atuendo;
 	private TipoSugerencias estado= TipoSugerencias.PENDIENTE;
 	private Evento evento;
-	//private String comentario= null;
 	
 	public Sugerencia(Set<Prenda> unAtuendo, Evento evento) {
 		atuendo=unAtuendo;
@@ -26,5 +23,9 @@ public class Sugerencia {
 	public Set<Prenda> getAtuendo() {
 		return atuendo;
 	}
+
+	public Evento getEvento() {
+		return evento;
+	}	
 
 }
