@@ -25,8 +25,7 @@ public class FrecuenciaSemanal implements FrecuenciaDeEvento{
 	
 	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
 		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDeLaSemana,fechaComienzo.getDayOfWeek().getValue());
-		long diasEntreComienzoFin =this.diferenciaEntreDosDias(fechaFin.getDayOfWeek().getValue(),fechaComienzo.getDayOfWeek().getValue());
-		return diasEntreComienzoEvento<=diasEntreComienzoFin;
+		return fechaComienzo.plusDays(diasEntreComienzoEvento).isBefore(fechaFin) || fechaComienzo.plusDays(diasEntreComienzoEvento).isEqual(fechaFin);
 	}
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDeLaSemana,fechaComienzo.getDayOfWeek().getValue());

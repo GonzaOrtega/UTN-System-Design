@@ -21,9 +21,9 @@ public class FrecuenciaDiaria implements FrecuenciaDeEvento{
 		return horas;
 	}
 	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
-		int horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosHoras(hora,fechaComienzo.getHour());
-		int horasEntreComienzoFin =this.diferenciaEnHorasEntreDosHoras(fechaFin.getHour(),fechaComienzo.getHour());
-		return horasEntreComienzoEvento<=horasEntreComienzoFin;
+		long horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosHoras(hora,fechaComienzo.getHour());
+		
+		return fechaComienzo.plusHours(horasEntreComienzoEvento).isBefore(fechaFin) || fechaComienzo.plusHours(horasEntreComienzoEvento).isEqual(fechaFin);
 	}
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		int horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosHoras(hora,fechaComienzo.getHour());

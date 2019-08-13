@@ -26,7 +26,7 @@ public class QueMePongoModel {
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Evento eventoConFrecuenciaUnica = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,5,24),"Sin descripcion");//"24-05-2019"
-	Evento eventoConFrecuenciaDiaria = new Evento(sugeridor,new FrecuenciaDiaria(0),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaDiaria = new Evento(sugeridor,new FrecuenciaDiaria(8),"Sin descripcion");//"16-01-2019"
 	Evento eventoConFrecuenciaSemanal = new Evento(sugeridor,new FrecuenciaSemanal(3),"Sin descripcion");//"16-01-2019" MIERCOLES
 	Evento eventoConFrecuenciaMensual = new Evento(sugeridor,new FrecuenciaMensual(16),"Sin descripcion");//"16-01-2019"
 	Evento eventoConFrecuenciaAnual = new Evento(sugeridor,new FrecuenciaAnual(2,16),"Sin descripcion");//"16-01-2019"
