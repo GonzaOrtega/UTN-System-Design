@@ -1,9 +1,7 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
 
 import org.junit.Before;
@@ -30,8 +28,8 @@ public class AlertasMeterologicasTest {
 	Prenda pantalonAbrigo = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(3).crearPrenda();
 	Prenda buzo =  new PrendaBuilder().conTipo(TipoPrenda.Buzo).conTela(Material.ALGODON).conColorPrimario(Color.ROSA).conColorSecundario(Color.AMARILLO).conAbrigo(2).crearPrenda();
 	LocalDateTime fechaActual = LocalDateTime.of(2019,Month.MAY,17, 0,0);
-	Evento eventoProximo = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Sin descripcion");//"24-05-2019"
-	Evento eventoNoProximo = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.SEPTEMBER, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Sin descripcion");//"24-05-2019"
+	Evento eventoProximo = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,5,24),"Sin descripcion");//"24-05-2019"
+	Evento eventoNoProximo = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,9,24),"Sin descripcion");//"24-05-2019"
 
 	@Before
 	public void setUp(){

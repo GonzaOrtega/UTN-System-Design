@@ -9,15 +9,14 @@ import domain.frecuenciasDeEventos.*;
 
 @Observable
 public class Evento {
-	private LocalDateTime fecha;
 	private Sugeridor sugeridor;
 	private FrecuenciaDeEvento frecuencia;
 	private String descripcion;
 	private SugerenciasListas estadoSugerencias;
+	private LocalDateTime fechaInicio;
 	//private int contador=0;// usado solo de forma provisoria para el JobsEventosTest
 	
-	public Evento(LocalDateTime unaFecha,Sugeridor unSugeridor, FrecuenciaDeEvento unaFrecuencia, String unaDescripcion) {
-		this.fecha=unaFecha;
+	public Evento(Sugeridor unSugeridor, FrecuenciaDeEvento unaFrecuencia, String unaDescripcion) {
 		this.sugeridor=unSugeridor;
 		this.frecuencia = unaFrecuencia;
 		this.descripcion= unaDescripcion;
@@ -36,30 +35,30 @@ public class Evento {
 		atuendos.forEach(atuendo->usuario.agregarSugerencia(new Sugerencia(atuendo,this)));
 		//this.setContador(contador+1);//Usado en forma provisoria para el JobsEventosTest
 	}
-	
 	public SugerenciasListas getSugerenciasListas() {
 		if(this.esProximo(LocalDateTime.now()) || this.yaSucedio())
 			return SugerenciasListas.YES;
 		else return SugerenciasListas.NO;
 		
 	}
-	
 	public boolean yaSucedio(){
-		return LocalDateTime.now().isAfter(fecha);
+		return LocalDateTime.now().isAfter(this.getFecha());
 	}
 	
 	public boolean esProximo(LocalDateTime fechaActual) {
-		return frecuencia.esProximo(this.fecha, fechaActual);
+		return frecuencia.esProximo(fechaActual);
 	}
 	
 	public boolean alertaMeterologicaPara(LocalDateTime fecha) {return sugeridor.proveedorDeClima().alertaMeterologica() && this.esProximo(fecha); }
 	
 	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo,LocalDateTime fechaFin) {
-		return frecuencia.sucedeEntreEstasfechas(fechaComienzo,fechaFin,fecha);
+		return frecuencia.sucedeEntreEstasFechas(fechaComienzo,fechaFin);
 	}
-	
-	public LocalDate getFecha() {
-		return fecha.toLocalDate();
+	public void setFecha(LocalDateTime fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	public LocalDateTime getFecha() {
+		return frecuencia.cualEsLaFechaProxima(fechaInicio);
 	}
 
 	

@@ -3,10 +3,8 @@ import org.junit.Before;
 import org.junit.Test;
 import domain.apisClima.*;
 import domain.enums.*;
-import domain.exceptions.*;
 import domain.frecuenciasDeEventos.*;
 import domain.*;
-
 import java.time.*;
 
 public class EventoTest {
@@ -20,12 +18,12 @@ public class EventoTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).conAbrigo(0).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).conAbrigo(0).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(0).crearPrenda();
-	Evento eventoLoco = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.FEBRUARY, 16),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Sin descripcion");//la fecha es:"16-02-2019"
-	Evento eventoConFrecuenciaUnica = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Sin descripcion");//"24-05-2019"
-	Evento eventoConFrecuenciaDiaria = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaDiaria(),"Sin descripcion");//"16-01-2019"
-	Evento eventoConFrecuenciaSemanal = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaSemanal(),"Sin descripcion");//"16-01-2019"
-	Evento eventoConFrecuenciaMensual = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.JANUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaMensual(),"Sin descripcion");//"16-01-2019"
-	Evento eventoConFrecuenciaAnual = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.FEBRUARY, 16),LocalTime.of(0, 0)),sugeridor,new FrecuenciaAnual(),"Sin descripcion");//"16-01-2019"
+	Evento eventoLoco = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//la fecha es:"16-02-2019"
+	Evento eventoConFrecuenciaUnica = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,5,24),"Sin descripcion");//"24-05-2019"
+	Evento eventoConFrecuenciaDiaria = new Evento(sugeridor,new FrecuenciaDiaria(0),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaSemanal = new Evento(sugeridor,new FrecuenciaSemanal(3),"Sin descripcion");//"16-01-2019" MIERCOLES
+	Evento eventoConFrecuenciaMensual = new Evento(sugeridor,new FrecuenciaMensual(16),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaAnual = new Evento(sugeridor,new FrecuenciaAnual(2,16),"Sin descripcion");//"16-01-2019"
 
 	@Before
 	public void setUp(){
@@ -51,12 +49,7 @@ public class EventoTest {
 	
 	@Test
 	public void ProximidadEntreFechasDiferentesLajanasDevuelveFalso() {
-		assertFalse(eventoConFrecuenciaUnica.esProximo(
-						LocalDateTime.of(
-								LocalDate.of(2019, Month.MAY, 16),
-								LocalTime.now())
-						)
-				);
+		assertFalse(eventoConFrecuenciaUnica.esProximo(LocalDateTime.of(2019, Month.MAY, 16,0,0,0)));
 		assertFalse(eventoConFrecuenciaUnica.esProximo(
 				LocalDateTime.of(
 						LocalDate.of(2018, Month.MAY, 24),
@@ -88,7 +81,7 @@ public class EventoTest {
 	
 	@Test 
 	public void CrearEventoSemanalCuandoFaltenDosDiasTieneQueSerProximo(){//independientemente del mes a�o etc
-		LocalDateTime _20190213 = LocalDateTime.of(2019, Month.FEBRUARY, 13, 23, 0);
+		LocalDateTime _20190213 = LocalDateTime.of(2019, Month.FEBRUARY, 13,0, 0, 0);//MIERCOLES
 		LocalDateTime _20190807 = LocalDateTime.of(2019, Month.AUGUST, 7, 23, 0);
 		LocalDateTime _20180116 = LocalDateTime.of(2018, Month.JANUARY,16,23,0);
 		LocalDateTime _20190123 = LocalDateTime.of(2019, Month.JANUARY,23,23,0);
@@ -116,10 +109,10 @@ public class EventoTest {
 	
 	@Test 
 	public void CrearEventoAnualCuandoFaltenTreintaDiasTieneQueSerProximo(){
-		LocalDateTime _20180216 = LocalDateTime.of(2018, Month.FEBRUARY,16,23,0);
-		LocalDateTime _20190128 = LocalDateTime.of(2019, Month.JANUARY,28,23,0);
-		LocalDateTime _20250211 = LocalDateTime.of(2025, Month.FEBRUARY,11,1,0);
-		LocalDateTime _20190118 = LocalDateTime.of(2019, Month.FEBRUARY,18,16,0);
+		LocalDateTime _20180216 = LocalDateTime.of(2018, Month.FEBRUARY,16,0,0,0);
+		LocalDateTime _20190128 = LocalDateTime.of(2019, Month.JANUARY,28,0,0,0);
+		LocalDateTime _20250211 = LocalDateTime.of(2025, Month.FEBRUARY,11,0,0,0);
+		LocalDateTime _20190118 = LocalDateTime.of(2019, Month.FEBRUARY,18,0,0,0);
 
 		assertTrue(eventoConFrecuenciaAnual.esProximo(_20180216));
 		assertTrue(eventoConFrecuenciaAnual.esProximo(_20190128));

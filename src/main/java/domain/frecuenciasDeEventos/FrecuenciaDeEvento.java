@@ -4,6 +4,7 @@ import domain.enums.*;
 
 public interface FrecuenciaDeEvento {
 	public TipoFrecuencia getFrecuencia();
-	public boolean esProximo(LocalDateTime fechaEvento, LocalDateTime fechaActual);
-	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin,LocalDateTime fechaEvento);
+	public boolean esProximo(LocalDateTime fechaActual);
+	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin);
+	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo);
 }

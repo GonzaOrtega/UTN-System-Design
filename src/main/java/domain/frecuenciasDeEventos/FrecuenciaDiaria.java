@@ -4,23 +4,29 @@ import java.time.*;
 import domain.enums.TipoFrecuencia;
 public class FrecuenciaDiaria implements FrecuenciaDeEvento{
 	private int limiteDeProximidad = 8;
-	
+	int hora;
+	public FrecuenciaDiaria(int hora) {
+		this.hora=hora;
+	}
 	public TipoFrecuencia getFrecuencia() {return TipoFrecuencia.Diario;}
 	
-	public boolean esProximo(LocalDateTime fechaEvento, LocalDateTime fechaActual) {
-		return this.diferenciaEnHorasEntreDosFechas(fechaEvento, fechaActual)<=limiteDeProximidad;
+	public boolean esProximo(LocalDateTime fechaActual) {
+		return this.diferenciaEnHorasEntreDosHoras(hora,fechaActual.getHour())<=limiteDeProximidad;
 	}
-	public int diferenciaEnHorasEntreDosFechas(LocalDateTime fechaEvento, LocalDateTime fechaActual) {
-		int horas= fechaEvento.getHour()-fechaActual.getHour();
-		if (fechaEvento.getHour()<fechaActual.getHour()){ 
+	public int diferenciaEnHorasEntreDosHoras(int horaFinal, int horaComienzo) {
+		int horas= horaFinal-horaComienzo;
+		if (horaFinal<horaComienzo){ 
 			horas+=24;
 		};
 		return horas;
 	}
-	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin,LocalDateTime fechaEvento ) {
-		int horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosFechas(fechaEvento,fechaComienzo);
-		int horasEntreComienzoFin =this.diferenciaEnHorasEntreDosFechas(fechaFin,fechaComienzo);
+	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
+		int horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosHoras(hora,fechaComienzo.getHour());
+		int horasEntreComienzoFin =this.diferenciaEnHorasEntreDosHoras(fechaFin.getHour(),fechaComienzo.getHour());
 		return horasEntreComienzoEvento<=horasEntreComienzoFin;
-		
+	}
+	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
+		int horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosHoras(hora,fechaComienzo.getHour());
+		return fechaComienzo.plusHours(horasEntreComienzoEvento);
 	}
 }

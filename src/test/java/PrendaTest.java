@@ -43,7 +43,7 @@ public class PrendaTest {
 	
 	@Test (expected = IOException.class)
 	public void noSePodranCrearFotosSiNoSeLeeCorrectamenteElArchivo() throws IOException {
-		Foto imagenRemeraRosa = new FotoBuilder().ruta("remerarosa.jpg").crearFoto();
+		new FotoBuilder().ruta("remerarosa.jpg").crearFoto();
 	}
 	@Test (expected = TieneParametrosNulosException.class)
 	public void noSePodranCrearPrendasSinNivelAbrigo() {

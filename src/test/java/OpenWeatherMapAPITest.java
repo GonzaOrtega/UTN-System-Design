@@ -1,6 +1,5 @@
 import org.junit.Before;
 import domain.apisClima.OpenWeatherMapAPI;
-import domain.exceptions.*;
 
 public class OpenWeatherMapAPITest {
 

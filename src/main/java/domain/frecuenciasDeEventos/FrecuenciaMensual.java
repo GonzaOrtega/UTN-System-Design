@@ -5,26 +5,29 @@ import domain.enums.TipoFrecuencia;
 
 public class FrecuenciaMensual implements FrecuenciaDeEvento{
 	private int limiteDeProximidad = 5;
-	
-	public TipoFrecuencia getFrecuencia() {return TipoFrecuencia.Mensual;}
-
-	
-	public boolean esProximo(LocalDateTime fechaEvento, LocalDateTime fechaActual) {
-		
-		return this.diferenciaEnDiasEntreDosFechas(fechaEvento,fechaActual)<=limiteDeProximidad;
+	int diaDelMes;
+	public FrecuenciaMensual(int dia) {
+		this.diaDelMes = dia;
 	}
-	public long diferenciaEnDiasEntreDosFechas(LocalDateTime fechaFin,LocalDateTime fechaComienzo) {
-		int dias= fechaFin.getDayOfMonth()-fechaComienzo.getDayOfMonth();
-		if (fechaFin.getDayOfMonth()<fechaComienzo.getDayOfMonth()){ 
+	public TipoFrecuencia getFrecuencia() {return TipoFrecuencia.Mensual;}
+	public boolean esProximo(LocalDateTime fechaActual) {
+		return this.diferenciaEntreDosDias(diaDelMes,fechaActual.getDayOfMonth())<=limiteDeProximidad;
+	}
+	public long diferenciaEntreDosDias(int diaFin,int diaComienzo) {
+		int dias= diaFin-diaComienzo;
+		if (diaFin<diaComienzo){ 
 			dias+=30 ;
 		};
 		return dias;
 	}
 	
-	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin,LocalDateTime fechaEvento ) {
-		long diasEntreComienzoEvento =this.diferenciaEnDiasEntreDosFechas(fechaEvento,fechaComienzo);
-		long diasEntreComienzoFin =this.diferenciaEnDiasEntreDosFechas(fechaFin,fechaComienzo);
-		return diasEntreComienzoEvento<=diasEntreComienzoFin;
-		
+	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
+		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDelMes,fechaComienzo.getDayOfMonth());
+		long diasEntreComienzoFin =this.diferenciaEntreDosDias(fechaFin.getDayOfMonth(),fechaComienzo.getDayOfMonth());
+		return diasEntreComienzoEvento<=diasEntreComienzoFin;		
+	}
+	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
+		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDelMes,fechaComienzo.getDayOfMonth());
+		return fechaComienzo.plusDays(diasEntreComienzoEvento);
 	}
 }

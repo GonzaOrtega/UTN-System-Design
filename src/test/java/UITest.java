@@ -1,8 +1,3 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-
 import org.junit.Before;
 import org.junit.Test;
 import domain.*;
@@ -17,8 +12,8 @@ public class UITest {
 	QueMePongoModel model = new QueMePongoModel();
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
-	Evento evento = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.MAY, 24),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Ir a cenar");
-	Evento evento2 = new Evento(LocalDateTime.of(LocalDate.of(2019, Month.AUGUST, 1),LocalTime.now()),sugeridor,new FrecuenciaUnicaVez(),"Ir a cenar");
+	Evento evento = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,5,24),"Ir a cenar");
+	Evento evento2 = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,8,1),"Ir a cenar");
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	
 	@Before
