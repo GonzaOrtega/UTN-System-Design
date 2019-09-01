@@ -44,13 +44,12 @@ public class RepositorioDeUsuarios {
 									})
 								);
 	}
-	
-	public void notificarAlertaMeterologicaDeEventosSugeridosPara(LocalDateTime dia) {
-		this.usuarios.stream().forEach(usuario->{
-			usuario.eventosConAlertasMeterologicasPara(dia)
-								.stream()
-								.forEach(evento -> usuario.notificarAlertaMeterologicaDe(evento));
-		});
+
+	public void notificarAUsuariosAfectadosPorCambioDeClima() {
+		this.usuarios.stream().forEach(usuario->
+			usuario.eventosConCambioDeClima().stream()
+											 .forEach(evento -> usuario.notificarAlertaMeterologicaDe(evento))
+			);
 	}
 	
 }

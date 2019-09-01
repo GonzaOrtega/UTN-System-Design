@@ -8,8 +8,9 @@ public class JobsUsuarios implements Runnable{
 	@Override
 	public void run() {
 		LocalDateTime fechaActual = LocalDateTime.now();
+		RepositorioDeUsuarios.getInstance().notificarAUsuariosAfectadosPorCambioDeClima();
 		RepositorioDeUsuarios.getInstance().obtenerSugerenciasDeEventosProximosA(fechaActual);
-		RepositorioDeUsuarios.getInstance().notificarAlertaMeterologicaDeEventosSugeridosPara(fechaActual);
+		//RepositorioDeUsuarios.getInstance().notificarAlertaMeterologicaDeEventosSugeridosPara(fechaActual);
 	}
 	public static void main() {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();

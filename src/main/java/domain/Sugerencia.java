@@ -8,7 +8,7 @@ public class Sugerencia {
 	private Evento evento;
 	
 	public Sugerencia(Set<Prenda> unAtuendo, Evento evento) {
-		atuendo=unAtuendo;
+		this.atuendo=unAtuendo;
 		this.evento=evento;
 	}
 	
@@ -27,5 +27,13 @@ public class Sugerencia {
 	public Evento getEvento() {
 		return evento;
 	}	
+	
+	public boolean mismoEvento(Evento evento) {
+		return this.evento== evento;
+	}
+
+	public boolean aceptada() {
+		return this.estado==TipoSugerencias.ACEPTADA;
+	}
 
 }

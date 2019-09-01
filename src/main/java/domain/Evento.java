@@ -30,9 +30,12 @@ public class Evento {
 		this.descripcion = descripcion;
 	}
 
+	public Set<Set<Prenda>> obtenerAtuendos(Usuario usuario){
+		return sugeridor.sugerirPrendasPara(usuario);
+	}
+	
 	public void sugerir(Usuario usuario) {
-		Set<Set<Prenda>> atuendos = sugeridor.sugerirPrendasPara(usuario);
-		atuendos.forEach(atuendo->usuario.agregarSugerencia(new Sugerencia(atuendo,this)));
+		this.obtenerAtuendos(usuario).forEach(atuendo->usuario.agregarSugerencia(new Sugerencia(atuendo,this)));
 		//this.setContador(contador+1);//Usado en forma provisoria para el JobsEventosTest
 	}
 	public SugerenciasListas getSugerenciasListas() {

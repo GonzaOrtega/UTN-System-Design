@@ -104,6 +104,7 @@ public class Usuario {
 	}
 	
 	public void notificarAlertaMeterologicaDe(Evento unEvento) {
+		System.out.println("Usuario "+this+" afectado por cambio de temperatura.");
 		this.medios.stream().forEach(medio->medio.notificarAlertaMeterologica(unEvento,this));
 	}
 	
@@ -114,4 +115,25 @@ public class Usuario {
 	public void calificar(Categoria parteCuerpo,TipoSensaciones sensacion) {
 		this.calificaciones.add(new Calificacion(parteCuerpo,sensacion));
 	}
+	
+	// Alertas meterologicas
+	public Set<Evento> eventosSugeridos(){
+		return this.eventos().stream().filter(evento->this.tengoSugerenciaDeEsteEvento(evento) && !evento.yaSucedio()).collect(Collectors.toSet());
+	}
+	
+	public Set<Set<Prenda>> atuendosSugeridosDe(Evento unEvento){
+		return this.sugerencias.stream()
+							   .filter(sugerencia->sugerencia.mismoEvento(unEvento) /*&& sugerencia.aceptada()*/)
+							   .map(sugerencia->sugerencia.getAtuendo()).collect(Collectors.toSet());
+	}
+	
+	public Set<Evento> eventosConCambioDeClima(){
+		return this.eventos.stream().filter(evento->this.atuendosNoSeEncuentranAptosPara(evento)).collect(Collectors.toSet());
+	}
+	
+	public boolean atuendosNoSeEncuentranAptosPara(Evento unEvento) {
+		Set<Set<Prenda>> atuendosDelEvento = this.atuendosSugeridosDe(unEvento);
+		return atuendosDelEvento.stream().allMatch(atuendo->!unEvento.obtenerAtuendos(this).contains(atuendo));
+	}
+	
 }
