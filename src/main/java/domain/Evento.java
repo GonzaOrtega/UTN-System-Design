@@ -51,9 +51,7 @@ public class Evento {
 	public boolean esProximo(LocalDateTime fechaActual) {
 		return frecuencia.esProximo(fechaActual);
 	}
-	
-	public boolean alertaMeterologicaPara(LocalDateTime fecha) {return sugeridor.proveedorDeClima().alertaMeterologica() && this.esProximo(fecha); }
-	
+		
 	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo,LocalDateTime fechaFin) {
 		return frecuencia.sucedeEntreEstasFechas(fechaComienzo,fechaFin);
 	}

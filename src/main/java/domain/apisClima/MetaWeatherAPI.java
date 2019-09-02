@@ -17,10 +17,6 @@ public class MetaWeatherAPI implements ProveedorClima {
 		return clima.getConsolidatedWeather().get(0).getTheTemp();
 	}
 
-	public double velocidadViento() {	
-		return clima.getConsolidatedWeather().get(1).getTheWind();
-	}
-	
 	public String estado(){
 		return clima.getConsolidatedWeather().get(2).getTheState();
 	}
