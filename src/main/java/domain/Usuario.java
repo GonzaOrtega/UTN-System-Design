@@ -85,8 +85,10 @@ public class Usuario {
 	}
 	
 	public void deshacerUltimaOperacionDeSugerencia() {
-		if (ultimaSugerencia != null) ultimaSugerencia
-										.setEstado(TipoSugerencias.PENDIENTE);
+		if (ultimaSugerencia != null) {
+			ultimaSugerencia.getAtuendo().forEach(prenda -> prenda.setUsada(false));
+			ultimaSugerencia.setEstado(TipoSugerencias.PENDIENTE);
+		}
 	}
 	
 	public Set<Sugerencia> getSugerencias() {
@@ -134,6 +136,15 @@ public class Usuario {
 	public boolean atuendosNoSeEncuentranAptosPara(Evento unEvento) {
 		Set<Set<Prenda>> atuendosDelEvento = this.atuendosSugeridosDe(unEvento);
 		return atuendosDelEvento.stream().allMatch(atuendo->!unEvento.obtenerAtuendos(this).contains(atuendo));
+	}
+	
+	public void lavarLaRopa() {
+		Set<Sugerencia> sugerenciasConEventosFinalizados = this.getSugerenciasConEventosFinalizados();
+		sugerenciasConEventosFinalizados.forEach(sugerencia -> sugerencia.setPrendasComoNoUsadas());
+	}
+	
+	private Set<Sugerencia> getSugerenciasConEventosFinalizados(){
+		return sugerencias.stream().filter(sugerencia-> sugerencia.getEvento().yaSucedio()).collect(Collectors.toSet());
 	}
 	
 }

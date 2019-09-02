@@ -57,13 +57,14 @@ public class Evento {
 	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo,LocalDateTime fechaFin) {
 		return frecuencia.sucedeEntreEstasFechas(fechaComienzo,fechaFin);
 	}
+	
 	public void setFecha(LocalDateTime fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
+	
 	public LocalDateTime getFecha() {
 		return frecuencia.cualEsLaFechaProxima(fechaInicio);
 	}
-
 	
 	public TipoFrecuencia getFrecuencia() {
 		return frecuencia.getFrecuencia();

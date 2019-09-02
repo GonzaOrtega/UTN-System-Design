@@ -12,6 +12,10 @@ public class Sugerencia {
 		this.evento=evento;
 	}
 	
+	public void setPrendasComoNoUsadas() {
+		atuendo.forEach(prenda -> prenda.setUsada(false));
+	}
+	
 	public TipoSugerencias getEstado() {
 		return estado;
 	}
