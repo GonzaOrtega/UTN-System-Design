@@ -35,10 +35,6 @@ public class Usuario {
 		return sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento));
 	}
 	
-	public Set<Evento> eventosConAlertasMeterologicasPara(LocalDateTime fecha){
-		return this.eventos().stream().filter(evento->evento.alertaMeterologicaPara(fecha) && this.tengoSugerenciaDeEsteEvento(evento) ).collect(Collectors.toSet());
-	}
-	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
 		this.validacionSegunTipoUsuario(unGuardarropa.prendas().size()-1); 
 		this.guardarropas.add(unGuardarropa);

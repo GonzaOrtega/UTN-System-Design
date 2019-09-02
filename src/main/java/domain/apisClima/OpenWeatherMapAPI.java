@@ -31,19 +31,6 @@ public class OpenWeatherMapAPI implements ProveedorClima{
     		throw new ErrorConAPIException(ex.getMessage());
     	}
     }
-
-    public double velocidadViento() {
-    	try{
-    		call=service.getWind(APP_ID, COUNTRY_ID);
-        	Response<ClimaOpenweathermap> response = call.execute();
-        	ClimaOpenweathermap user = response.body();
-        	return user.getWind()*3.6;
-
-    	}
-    	catch (Exception ex){
-    		throw new ErrorConAPIException(ex.getMessage());
-    	}
-    }
     
     public double ID() {
     	try{
