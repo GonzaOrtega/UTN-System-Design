@@ -140,7 +140,8 @@ public class Usuario {
 	}
 	
 	private Set<Sugerencia> getSugerenciasConEventosFinalizados(){
-		return sugerencias.stream().filter(sugerencia-> sugerencia.getEvento().yaSucedio()).collect(Collectors.toSet());
+		return sugerencias.stream()
+				.filter(sugerencia-> sugerencia.getEvento().yaSucedio()).collect(Collectors.toSet());
 	}
 	
 }

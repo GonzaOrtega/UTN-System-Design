@@ -52,4 +52,8 @@ public class RepositorioDeUsuarios {
 			);
 	}
 	
+	public void lavarTodaLaRopaSucia() {
+		this.usuarios.forEach(usuario -> usuario.lavarLaRopa());
+	}
+	
 }
