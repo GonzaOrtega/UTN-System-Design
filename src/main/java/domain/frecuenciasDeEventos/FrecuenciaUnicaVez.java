@@ -16,14 +16,12 @@ public class FrecuenciaUnicaVez implements FrecuenciaDeEvento{
 		Duration duracion = Duration.between(fechaActual,fechaEvento);
 		return duracion.toDays()<=limiteDeProximidad && duracion.toDays()>=0;
 	}
-	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
-		long diasEntreComienzoEvento =(Duration.between(fechaComienzo,fechaEvento)).toDays();
-		long diasEntreEventoFin =(Duration.between(fechaComienzo,fechaFin)).toDays();
-		return diasEntreComienzoEvento<=diasEntreEventoFin;
-	}
+	
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		return fechaEvento;
 	}
-	
+	public boolean yaSucedio(LocalDateTime fechaActual){
+		return fechaEvento.isBefore(fechaActual);
+	}
 }
 

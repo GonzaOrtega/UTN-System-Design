@@ -21,13 +21,11 @@ public class FrecuenciaMensual implements FrecuenciaDeEvento{
 		return dias;
 	}
 	
-	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
-		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDelMes,fechaComienzo.getDayOfMonth());
-		long diasEntreComienzoFin =this.diferenciaEntreDosDias(fechaFin.getDayOfMonth(),fechaComienzo.getDayOfMonth());
-		return diasEntreComienzoEvento<=diasEntreComienzoFin;		
-	}
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDelMes,fechaComienzo.getDayOfMonth());
 		return fechaComienzo.plusDays(diasEntreComienzoEvento);
+	}
+	public boolean yaSucedio(LocalDateTime fechaActual){
+		return !esProximo(fechaActual);
 	}
 }

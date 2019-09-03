@@ -20,12 +20,11 @@ public class FrecuenciaDiaria implements FrecuenciaDeEvento{
 		};
 		return horas;
 	}
-	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
-		long horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosHoras(hora,fechaComienzo.getHour());
-		return fechaComienzo.plusHours(horasEntreComienzoEvento).isBefore(fechaFin) || fechaComienzo.plusHours(horasEntreComienzoEvento).isEqual(fechaFin);
-	}
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		int horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosHoras(hora,fechaComienzo.getHour());
 		return fechaComienzo.plusHours(horasEntreComienzoEvento);
+	}
+	public boolean yaSucedio(LocalDateTime fechaActual){
+		return !esProximo(fechaActual);
 	}
 }

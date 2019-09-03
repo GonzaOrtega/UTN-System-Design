@@ -20,15 +20,7 @@ public class Evento {
 		this.sugeridor=unSugeridor;
 		this.frecuencia = unaFrecuencia;
 		this.descripcion= unaDescripcion;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+	}	
 
 	public Set<Set<Prenda>> obtenerAtuendos(Usuario usuario){
 		return sugeridor.sugerirPrendasPara(usuario);
@@ -38,14 +30,8 @@ public class Evento {
 		this.obtenerAtuendos(usuario).forEach(atuendo->usuario.agregarSugerencia(new Sugerencia(atuendo,this)));
 		//this.setContador(contador+1);//Usado en forma provisoria para el JobsEventosTest
 	}
-	public SugerenciasListas getSugerenciasListas() {
-		if(this.esProximo(LocalDateTime.now()) || this.yaSucedio())
-			return SugerenciasListas.YES;
-		else return SugerenciasListas.NO;
-		
-	}
 	public boolean yaSucedio(){
-		return LocalDateTime.now().isAfter(this.getFecha());
+		return frecuencia.yaSucedio(LocalDateTime.now());
 	}
 	
 	public boolean esProximo(LocalDateTime fechaActual) {
@@ -56,16 +42,26 @@ public class Evento {
 		return frecuencia.sucedeEntreEstasFechas(fechaComienzo,fechaFin);
 	}
 	
-	public void setFecha(LocalDateTime fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
 	
-	public LocalDateTime getFecha() {
-		return frecuencia.cualEsLaFechaProxima(fechaInicio);
-	}
-	
+	//////////////////////////////////////GETS_Y_SETS/////////////////////////////////////////////////	
 	public TipoFrecuencia getFrecuencia() {
 		return frecuencia.getFrecuencia();
 	}
 	
+	public void setFecha(LocalDateTime fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	public SugerenciasListas getSugerenciasListas() { //Es para Arena te tira si te tiro sugerencias, en caso de ser posibles.
+		if(this.esProximo(LocalDateTime.now()) || this.yaSucedio())
+			return SugerenciasListas.YES;
+		else return SugerenciasListas.NO;
+	}
 }

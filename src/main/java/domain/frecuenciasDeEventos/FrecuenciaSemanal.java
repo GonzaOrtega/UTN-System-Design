@@ -22,13 +22,11 @@ public class FrecuenciaSemanal implements FrecuenciaDeEvento{
 		};
 		return dias;
 	}
-	
-	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
-		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDeLaSemana,fechaComienzo.getDayOfWeek().getValue());
-		return fechaComienzo.plusDays(diasEntreComienzoEvento).isBefore(fechaFin) || fechaComienzo.plusDays(diasEntreComienzoEvento).isEqual(fechaFin);
-	}
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDeLaSemana,fechaComienzo.getDayOfWeek().getValue());
 		return fechaComienzo.plusDays(diasEntreComienzoEvento);
+	}
+	public boolean yaSucedio(LocalDateTime fechaActual){
+		return !esProximo(fechaActual);
 	}
 }

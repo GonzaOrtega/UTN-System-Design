@@ -21,14 +21,12 @@ public class FrecuenciaAnual implements FrecuenciaDeEvento{
 		}
 		return dias;
 	}
-	
-	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
-		long diasEntreComienzoEvento =this.diferenciaEnDiasEntreDosFechas(fechaEvento,fechaComienzo);
-		long diasEntreComienzoFin =this.diferenciaEnDiasEntreDosFechas(fechaFin,fechaComienzo);
-		return diasEntreComienzoEvento<=diasEntreComienzoFin;
-	}
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		long diasEntreComienzoEvento =this.diferenciaEnDiasEntreDosFechas(fechaEvento,fechaComienzo);
 		return fechaComienzo.plusDays(diasEntreComienzoEvento);
+	}
+	
+	public boolean yaSucedio(LocalDateTime fechaActual){
+		return fechaEvento.isBefore(fechaActual)  && fechaEvento.plusDays(1).isAfter(fechaActual);
 	}
 };
