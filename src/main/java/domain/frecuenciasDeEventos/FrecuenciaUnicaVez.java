@@ -10,6 +10,10 @@ public class FrecuenciaUnicaVez implements FrecuenciaDeEvento{
 		fechaEvento = LocalDateTime.of(anio,mes,dia,0,0,0);
 	}
 	
+	public FrecuenciaUnicaVez(LocalDateTime fechaEvento) {
+		this.fechaEvento = fechaEvento;
+	}
+	
 	public TipoFrecuencia getFrecuencia() {return TipoFrecuencia.Unico;}
 
 	public boolean esProximo(LocalDateTime fechaActual) {

@@ -3,6 +3,7 @@ import java.util.stream.*;
 import java.time.*;
 import java.util.*;
 import org.junit.*;
+import org.uqbarproject.jpa.java8.extras.convert.LocalDateConverter;
 
 import com.google.common.collect.Sets;
 
@@ -32,7 +33,9 @@ public class UsuarioTest {
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
-	Evento eventoConFrecuenciaUnica = new Evento(sugeridor, new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019"
+	Evento eventoConFrecuenciaUnica = new Evento(sugeridor, new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+//	Evento eventoPeriodico = new Evento(sugeridor, new FrecuenciaMensual(14), "Sin descripcion");
+//	Evento eventoSinFin  = new Evento(sugeridor, new FrecuenciaUnicaVez(LocalDateTime.now().plusDays(14)), "Sin descripcion");
 	
 	@Before
 	public void setUp(){
@@ -136,20 +139,8 @@ public class UsuarioTest {
 		assertEquals(lara.getGuardarropas(), juan.getGuardarropas());
 	}
 	
-//	public boolean interseccionAMano(ArrayList<Set<Prenda>> atuendo1, ArrayList<Set<Prenda>> atuendo2) {
-//		boolean hayInterseccion = false;
-//		int i=0, j=0;
-////		for(i =0; i < atuendo1.size();i++) {
-//			for(j=0; j< atuendo2.size();j++) {
-//				hayInterseccion = atuendo1.contains(atuendo2.get(j));
-//			}
-////		}
-//		
-//		return hayInterseccion;
-//	}
-	
-	public Set<Set<Prenda>> sugerirMasAceptarTodasLasSugerencias(Usuario usuario) {
-		eventoConFrecuenciaUnica.sugerir(usuario);
+	public Set<Set<Prenda>> sugerirMasAceptarTodasLasSugerencias(Usuario usuario, Evento evento) {
+		evento.sugerir(usuario);
 		usuario.getSugerencias().stream().forEach(sugerencia -> usuario.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA));
 		return usuario.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
 	}
@@ -157,11 +148,11 @@ public class UsuarioTest {
 	@Test
 	public void dosUsuariosCompartenUnGuardarropaYTienenSuficienteRopaParaHacerLosAtuendos() {
 		juan.cargarPrenda(armario, jean);
-		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan);
+		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
 		
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
-		lara.agregarGuardarropa(armario);
 		
+		lara.agregarGuardarropa(armario);
 		lara.cargarPrenda(armario, pantalon);
 		lara.cargarPrenda(armario, camisaDeLara);
 		lara.cargarPrenda(armario, sombrero);
@@ -179,9 +170,9 @@ public class UsuarioTest {
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
 		lara.agregarGuardarropa(armario);
 		
-		this.sugerirMasAceptarTodasLasSugerencias(juan);
+		this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
 		
-		sugeridor.sugerirPrendasPara(lara);
+		this.sugerirMasAceptarTodasLasSugerencias(lara, eventoConFrecuenciaUnica);
 		
 	}
 	
@@ -198,6 +189,45 @@ public class UsuarioTest {
 		
 		assertTrue(atuendosDeJuan.equals(atuendosDeLara));
 		
+	}
+	
+	public boolean todaLaRopaEstaLimpia(Set<Set<Prenda>> atuendos) {
+		return atuendos.stream().allMatch(atuendo -> atuendo.stream().allMatch(prenda -> !prenda.isUsada()));
+	}
+	
+	@Test
+	public void laRopaEstaSucia() {
+		juan.cargarPrenda(armario, jean);
+		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
+		assertTrue(!this.todaLaRopaEstaLimpia(atuendosDeJuan));
+	}
+	
+	@Test
+	public void lavarLaRopaLuegoDeUsarla() {
+		juan.cargarPrenda(armario, jean);
+		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
+		juan.lavarLaRopa();
+		assertTrue(this.todaLaRopaEstaLimpia(atuendosDeJuan));
+	}
+
+//	public void noSePuedeLavarLaRopaSiNoHayEventosTerminados(){
+//		juan.cargarPrenda(armario, jean);
+//		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoSinFin);
+//		juan.lavarLaRopa();
+//		assertTrue(this.todaLaRopaEstaLimpia(atuendosDeJuan));
+//	}
+	
+	@Test
+	public void lavoRopaYVuelvoAGenerarSugerencias(){
+		juan.cargarPrenda(armario, jean);
+		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
+		juan.lavarLaRopa();
+		
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		lara.agregarGuardarropa(armario);
+		Set<Set<Prenda>> atuendosDeLara = this.sugerirMasAceptarTodasLasSugerencias(lara, eventoConFrecuenciaUnica);
+		
+		assertEquals(atuendosDeJuan, atuendosDeLara);
 	}
 	
 }
