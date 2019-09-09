@@ -1,4 +1,4 @@
-﻿package domain;
+package domain;
 
 import java.util.*;
 import java.time.*;

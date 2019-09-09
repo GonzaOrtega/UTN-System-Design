@@ -1,20 +1,20 @@
 package domain;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.*;
-import java.util.stream.*;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import java.util.stream.Collectors;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import com.google.common.collect.*;
 import domain.apisClima.*;
 import domain.enums.*;
-import domain.exceptions.*;
 
-
+@Entity
 public class Guardarropa {
+	@Id @GeneratedValue
+  	private Long id;
+	
+	@OneToMany
 	private Set<Prenda> prendas = new HashSet<Prenda>();
 
 	public Set<Prenda> prendas(){return prendas;}

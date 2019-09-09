@@ -1,14 +1,35 @@
 package domain;
-import domain.enums.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
+import domain.enums.*;
+@Entity
 public class Prenda {
+	@Id @GeneratedValue
+  	private Long id;
 	
+	@Enumerated(EnumType.STRING)
 	private Color colorPrimario;
+	
+	@Enumerated(EnumType.STRING)
 	private Color colorSecundario;
+	
+	@Enumerated(EnumType.STRING)
 	private TipoPrenda tipo;
+	
+	@Enumerated(EnumType.STRING)
 	private Material tela;
+	
+	@Transient
 	private Foto foto;
+	
 	private int nivelAbrigo;
+	
 	private boolean usada = false;
 	
 	//Get y set de todos los atributos
