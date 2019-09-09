@@ -1,10 +1,33 @@
 package domain;
 import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
+
 import domain.enums.TipoSugerencias;
 
-public class Sugerencia {
+// @Entity -> Esto esta comentado porque tiene que mapearse las demas clases
+public class Sugerencia extends AbstractPersistenceTest implements WithGlobalEntityManager{
+	@Id 
+	@GeneratedValue
+	private long id;
+	
+	@ManyToMany
 	private Set<Prenda> atuendo;
+	
+	@Enumerated(EnumType.STRING)
 	private TipoSugerencias estado= TipoSugerencias.PENDIENTE;
+	
+	@ManyToOne
 	private Evento evento;
 	
 	public Sugerencia(Set<Prenda> unAtuendo, Evento evento) {
