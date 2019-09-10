@@ -6,14 +6,29 @@ import domain.enums.*;
 import domain.exceptions.*;
 import java.util.stream.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
+@Entity
 public class Usuario {
+	@Id @GeneratedValue
+	private long  id;
 	private TipoUsuario tipo;
 	private int  maximoDePrendas;
+	@ManyToMany
 	private HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
+	@OneToMany
 	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
+	@OneToOne
 	private Sugerencia ultimaSugerencia = null;
+	@Transient
 	private Set<MedioDeNotifiacion> medios = new HashSet<MedioDeNotifiacion>();
+	@ManyToMany
 	private Set<Evento> eventos = new HashSet<Evento>();
 	private ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
 	
@@ -142,6 +157,10 @@ public class Usuario {
 	private Set<Sugerencia> getSugerenciasConEventosFinalizados(){
 		return sugerencias.stream()
 				.filter(sugerencia-> sugerencia.getEvento().yaSucedio()).collect(Collectors.toSet());
+	}
+	
+	private void desagendarEvento(Evento unEvento) {
+		this.eventos = eventos.stream().filter(evento -> !evento.equals(unEvento)).collect(Collectors.toSet());
 	}
 	
 }

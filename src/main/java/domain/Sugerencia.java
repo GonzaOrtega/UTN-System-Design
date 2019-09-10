@@ -15,7 +15,7 @@ import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import domain.enums.TipoSugerencias;
 
-// @Entity -> Esto esta comentado porque tiene que mapearse las demas clases
+ @Entity 
 public class Sugerencia extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	@Id 
 	@GeneratedValue

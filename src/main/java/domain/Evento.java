@@ -14,7 +14,6 @@ import org.uqbar.commons.model.annotations.Observable;
 import domain.frecuenciasDeEventos.*;
 
 @Observable
-//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @Entity@Table(name="Calendario")
 public class Evento {
 	@Id @GeneratedValue
@@ -59,7 +58,6 @@ public class Evento {
 	public boolean sucedeEntreEstasfechas(LocalDateTime fechaComienzo,LocalDateTime fechaFin) {
 		return frecuencia.sucedeEntreEstasFechas(fechaComienzo,fechaFin);
 	}
-	
 	
 	//////////////////////////////////////GETS_Y_SETS/////////////////////////////////////////////////	
 	public TipoFrecuencia getFrecuencia() {
