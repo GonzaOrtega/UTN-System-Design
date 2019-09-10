@@ -23,7 +23,7 @@ public class Usuario {
 	private int  maximoDePrendas;
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
-	@OneToMany 
+	@OneToMany (cascade = CascadeType.PERSIST)
 	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
 	@OneToOne
 	private Sugerencia ultimaSugerencia = null;
@@ -31,6 +31,7 @@ public class Usuario {
 	private Set<MedioDeNotifiacion> medios = new HashSet<MedioDeNotifiacion>();
 	@ManyToMany
 	private Set<Evento> eventos = new HashSet<Evento>();
+	
 	private ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
 	
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {

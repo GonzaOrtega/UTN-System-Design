@@ -14,7 +14,7 @@ import org.uqbar.commons.model.annotations.Observable;
 import domain.frecuenciasDeEventos.*;
 
 @Observable
-@Entity@Table(name="Calendario")
+@Entity @Table(name="Calendario")
 public class Evento {
 	@Id @GeneratedValue
   	private Long id;
