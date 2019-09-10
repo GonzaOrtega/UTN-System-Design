@@ -66,10 +66,12 @@ public class Evento {
 		return frecuencia.getFrecuencia();
 	}
 	
-	public void setFecha(LocalDateTime fechaInicio) {
+	public void setFechaInicio(LocalDateTime fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-	
+	public LocalDateTime getFecha(){
+		return frecuencia.cualEsLaFechaProxima(fechaInicio);
+	}
 	public String getDescripcion() {
 		return descripcion;
 	}

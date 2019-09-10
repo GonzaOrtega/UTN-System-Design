@@ -45,6 +45,7 @@ public class QueMePongoModel {
 
 	public void setFechaInicio(int fechaInicio) {
 			this.fechaInicio=fechaInicio;
+			
 	}
 
 	public int getFechaFin() {
@@ -86,7 +87,7 @@ public class QueMePongoModel {
 				.stream()
 				.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
 				.collect(Collectors.toSet());
-		eventosDeLasFechas.forEach(evento->evento.setFecha(this.fecha(fechaInicio)));
+		eventosDeLasFechas.forEach(evento->evento.setFechaInicio(this.fecha(fechaInicio)));
 		this.eventos=eventosDeLasFechas;
 				
 		
