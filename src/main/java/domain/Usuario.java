@@ -9,6 +9,7 @@ import java.util.stream.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -23,7 +24,7 @@ public class Usuario {
 	private int  maximoDePrendas;
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
-	@OneToMany (cascade = CascadeType.PERSIST)
+	@OneToMany (cascade = CascadeType.PERSIST)@JoinColumn(name="id_usuario")
 	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
 	@OneToOne
 	private Sugerencia ultimaSugerencia = null;
@@ -161,7 +162,7 @@ public class Usuario {
 				.filter(sugerencia-> sugerencia.getEvento().yaSucedio()).collect(Collectors.toSet());
 	}
 	
-	private void desagendarEvento(Evento unEvento) {
+	public void desagendarEvento(Evento unEvento) {
 		this.eventos = eventos.stream().filter(evento -> !evento.equals(unEvento)).collect(Collectors.toSet());
 	}
 	

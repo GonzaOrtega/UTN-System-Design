@@ -8,8 +8,10 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 import domain.Evento;
 import domain.Sugeridor;
+import domain.Usuario;
 import domain.apisClima.MockAPI;
 import domain.apisClima.ProveedorClima;
+import domain.enums.TipoUsuario;
 import domain.frecuenciasDeEventos.FrecuenciaAnual;
 import domain.frecuenciasDeEventos.FrecuenciaDiaria;
 
@@ -19,11 +21,12 @@ public class EventoPersistenciaTest extends AbstractPersistenceTest implements W
 	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Evento eventoAnual = new Evento(sugeridor, new FrecuenciaAnual(02,01),"Medico");
 	Evento eventoDiario = new Evento(sugeridor,new FrecuenciaDiaria(0), "Trabajo");
-
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	@Before
 	public void setUp(){
 		em.persist(eventoDiario);
 		em.persist(eventoAnual);
+		em.persist(juan);
 	}
 	
 	@Test
@@ -31,6 +34,18 @@ public class EventoPersistenciaTest extends AbstractPersistenceTest implements W
 		int cantidadEventos = em.createQuery("from Evento order by Id", Evento.class)
 					.getResultList().size();
 		assertTrue(cantidadEventos == 2);
+	}
+	@Test
+	public void desagendarEventos() {
+		juan.agendarEvento(eventoDiario);
+		juan.agendarEvento(eventoAnual);
+		Usuario usuario = em.createQuery("from Usuario order by Id",Usuario.class)
+					.getSingleResult();
+		assertTrue(usuario.eventos().size()==2);
+		juan.desagendarEvento(eventoDiario);
+		usuario = em.createQuery("from Usuario order by Id",Usuario.class)
+				.getSingleResult();
+		assertTrue(usuario.eventos().size()==1);
 	}
 	
 }
