@@ -1,22 +1,12 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import org.junit.Before;
 import org.junit.Test;
-import domain.apisClima.*;
 import domain.enums.*;
-import domain.exceptions.*;
 import domain.*;
 import javax.persistence.EntityManager;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
-
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
-
-import antlr.collections.List;
-
 
 public class PruebaPersistenciaTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	EntityManager em = entityManager();
@@ -67,10 +57,10 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 				  .createQuery("from Usuario order by Id", Usuario.class)
 				  .getResultList()
 				  .get(0);
-		Usuario luisitoPersistido = em
+		/*Usuario luisitoPersistido = em
 				  .createQuery("from Usuario order by Id", Usuario.class)
 				  .getResultList()
-				  .get(1);
+				  .get(1);*/
 		assertTrue(koichiPersistido.getGuardarropas()
 					.contains(soyElGuarda));
 		assertTrue(koichi == koichiPersistido);

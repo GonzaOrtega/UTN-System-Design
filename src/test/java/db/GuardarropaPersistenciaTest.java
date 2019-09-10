@@ -1,22 +1,15 @@
 package db;
 import static org.junit.Assert.*;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 import java.util.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import domain.apisClima.*;
 import domain.enums.*;
-import domain.exceptions.*;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 import domain.*;
 import javax.persistence.EntityManager;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
-
-import antlr.collections.List;
-
 
 public class GuardarropaPersistenciaTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	
@@ -50,10 +43,10 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	  public void siSePersistenDosGuardarropasDistintosTendranDosIDsDistintos() throws Exception {
 		Guardarropa otroArmario = new Guardarropa();
 		juan.agregarGuardarropa(otroArmario);
-		
+		/*
 		Set<Guardarropa> guardarropas = em
 				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
-				  .getResultList().stream().collect(Collectors.toSet());
+				  .getResultList().stream().collect(Collectors.toSet());*/
 		Guardarropa armarioQuery = em
 				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
 				  .getResultList()
@@ -76,10 +69,10 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
 				  .getResultList()
 				  .get(0).prendas();
-		 
+		 /*
 		 Set<Guardarropa> guardarropas = em
 				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
-				  .getResultList().stream().collect(Collectors.toSet());
+				  .getResultList().stream().collect(Collectors.toSet());*/
 		 
 		 assertTrue(prendasQuery.contains(jean)); 
 	}

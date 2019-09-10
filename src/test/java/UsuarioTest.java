@@ -1,19 +1,12 @@
 import static org.junit.Assert.*;
 import java.util.stream.*;
-import java.time.*;
 import java.util.*;
 import org.junit.*;
-import org.uqbarproject.jpa.java8.extras.convert.LocalDateConverter;
-
-import com.google.common.collect.Sets;
-
 import domain.apisClima.*;
 import domain.frecuenciasDeEventos.*;
-import net.sf.oval.constraint.AssertTrue;
 import domain.enums.*;
 import domain.exceptions.*;
 import domain.*;
-import java.time.*;
 
 public class UsuarioTest {
 
@@ -34,8 +27,6 @@ public class UsuarioTest {
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
 	Evento eventoConFrecuenciaUnica = new Evento(sugeridor, new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
-//	Evento eventoPeriodico = new Evento(sugeridor, new FrecuenciaMensual(14), "Sin descripcion");
-//	Evento eventoSinFin  = new Evento(sugeridor, new FrecuenciaUnicaVez(LocalDateTime.now().plusDays(14)), "Sin descripcion");
 	
 	@Before
 	public void setUp(){

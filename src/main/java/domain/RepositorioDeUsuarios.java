@@ -3,12 +3,6 @@ import java.util.*;
 import java.time.*;
 import java.util.stream.*;
 
-import domain.apisClima.MockAPI;
-import domain.apisClima.ProveedorClima;
-import domain.enums.TipoUsuario;
-import domain.frecuenciasDeEventos.FrecuenciaDiaria;
-import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
-
 public class RepositorioDeUsuarios {
 	private Set<Usuario> usuarios = new HashSet<Usuario>();
 	private RepositorioDeUsuarios(){};

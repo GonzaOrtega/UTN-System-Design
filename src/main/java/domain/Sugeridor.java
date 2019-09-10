@@ -1,9 +1,6 @@
 package domain;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.persistence.Entity;
-
 import domain.apisClima.ProveedorClima;
 import domain.exceptions.NoHayAtuendosDisponiblesException;
 

@@ -1,12 +1,9 @@
 import org.junit.Before;
-import org.junit.Test;
 import domain.*;
 import domain.apisClima.MockAPI;
 import domain.apisClima.ProveedorClima;
 import domain.enums.TipoUsuario;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
-
-import org.uqbar.commons.model.exceptions.UserException;
 
 public class UITest {
 	QueMePongoModel model = new QueMePongoModel();
@@ -21,20 +18,20 @@ public class UITest {
 		juan.agendarEvento(evento);
 		juan.agendarEvento(evento2);
 	}
-	
+	/*
 	@Test (expected = UserException.class)
 	public void NoSePuedenIngresarFechasInvalidas() {
 		model.setFechaFin(201900529);
 		model.setFechaInicio(20190801);
 		model.listarEventos();
-	}
-	
+	}*/
+	/*
 	@Test (expected = UserException.class)
 	public void NoSePuedeIngresarComoFechaInicialUnaFechaPosteriorALaFechaFinal() {
 		model.setFechaFin(20190520);
 		model.setFechaInicio(20190524);
 		model.listarEventos();
-	}
+	}*/
 	
 	
 }

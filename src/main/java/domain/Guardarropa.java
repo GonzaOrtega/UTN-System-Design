@@ -1,13 +1,11 @@
 package domain;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import com.google.common.collect.*;
 import domain.apisClima.*;
@@ -17,12 +15,9 @@ import domain.enums.*;
 public class Guardarropa {
 	@Id @GeneratedValue
   	private Long id;
-	
 	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
 	private Set<Prenda> prendas = new HashSet<Prenda>();
-
 	public Set<Prenda> prendas(){return prendas;}
-	
 	public void cargarPrenda(Prenda unaPrenda){
 		prendas.add(unaPrenda);
 	}
@@ -126,13 +121,13 @@ public class Guardarropa {
 				categoria == unaCategoria).collect(Collectors.toSet());
 		return aux.size() == 1;//esto se traduce en que solo hay una prenda
 	}
-	
+	/*
 	private boolean contienePrendasDeTodasLasCategorias(Set<Prenda> atuendo) {
 		return  this.contienePrendasDeCategoria(atuendo, Categoria.INFERIOR)
 				&& this.contienePrendasDeCategoria(atuendo, Categoria.ACCESORIO)
 				&& this.contienePrendasDeCategoria(atuendo, Categoria.CALZADO);
 		//&& this.contienePrendasDeCategoria(atuendo, Categoria.SUPERIOR)
-	}
+	}*/
 	
 	public int cantidadDePrendasGuardadas() {
 		return this.prendas.size();

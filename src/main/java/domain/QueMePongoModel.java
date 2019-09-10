@@ -5,8 +5,6 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.uqbar.commons.model.annotations.Observable;
-import org.uqbar.commons.model.exceptions.UserException;
-
 import domain.apisClima.MockAPI;
 import domain.apisClima.ProveedorClima;
 import domain.enums.TipoUsuario;
