@@ -72,11 +72,14 @@ public class QueMePongoModel {
 	}
 	
 	public void validar() {
-		if(Integer.toString(fechaFin).length()>8 || Integer.toString(fechaInicio).length()>8) {
-			this.messageError = "AADISOJDASIODASJ";
-		throw new UserException("ERROR: Ingrese una fecha valida.");}
+		this.messageError = "";
+		if(Integer.toString(fechaFin).length()!=8 || Integer.toString(fechaInicio).length()!=8) {
+			this.messageError = "Error: La fecha ingresada no es valida";
+			//throw new UserException("ERROR: Ingrese una fecha valida.");
+		}
 		if(fechaFin<fechaInicio)
-			throw new UserException("ERROR: Ingrese correctamente las fechas.");
+			this.messageError = "Error: La fecha comienzo debe ser anterior a la fecha fin";
+			//throw new UserException("ERROR: Ingrese correctamente las fechas.");
 	}
 	
 	
