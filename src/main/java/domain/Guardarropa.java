@@ -1,9 +1,12 @@
 package domain;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import com.google.common.collect.*;
 import domain.apisClima.*;
@@ -14,7 +17,7 @@ public class Guardarropa {
 	@Id @GeneratedValue
   	private Long id;
 	
-	@OneToMany
+	@OneToMany (cascade = CascadeType.PERSIST)
 	private Set<Prenda> prendas = new HashSet<Prenda>();
 
 	public Set<Prenda> prendas(){return prendas;}
@@ -23,7 +26,7 @@ public class Guardarropa {
 		prendas.add(unaPrenda);
 	}
 	
-	public ArrayList<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor,Usuario unUser){
+	public List<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor,Usuario unUser){
 		Set<Set<Prenda>> elAux = new HashSet<Set<Prenda>>();
 		elAux = this.parteNoSuperior(proveedor,unUser); //esto esta asi por un tema de Set y List
 		ArrayList<Set<Prenda>> atuendosInferior = new ArrayList<Set<Prenda>>(elAux);

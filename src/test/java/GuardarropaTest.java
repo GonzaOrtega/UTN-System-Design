@@ -60,8 +60,8 @@ public class GuardarropaTest {
 		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,zapatos,camisaCorta));
 //		camisaCorta.setEsBase(true);//esto hay que cambiar despues
 		juan.cargarPrenda(armario, jean);
-		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo)
-				&& armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo2));
+		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo));
+		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo2));
 	}
 	@Test
 	public void siJuanCalificaFrioEnLosPiesNoDarleOjotas() {
@@ -72,8 +72,8 @@ public class GuardarropaTest {
 
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario,ojotas);
-		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo)
-				&& !armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo2));
+		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo));
+		assertFalse(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo2));
 	}
 	@Test
 	public void calificacionesFrio() {
@@ -93,8 +93,8 @@ public class GuardarropaTest {
 		juan.cargarPrenda(armario,buzo);
 		juan.calificar(Categoria.SUPERIOR,TipoSensaciones.FRIO);
 
-		assertTrue(armario.pedirAtuendosSegun(APIMockInvierno,juan).contains(atuendo)
-				&& !armario.pedirAtuendosSegun(APIMockInvierno,juan).contains(atuendo2));
+		assertTrue(armario.pedirAtuendosSegun(APIMockInvierno,juan).contains(atuendo));
+		assertFalse(armario.pedirAtuendosSegun(APIMockInvierno,juan).contains(atuendo2));
 	}
 	@Test
 	public void siJuanCalificaFrioEnPantalonesDarleMasAbrigoYCalorEnSuperiorDarleMenosAbrigo() {
@@ -108,9 +108,10 @@ public class GuardarropaTest {
 		juan.calificar(Categoria.INFERIOR,TipoSensaciones.FRIO);
 		juan.calificar(Categoria.SUPERIOR,TipoSensaciones.CALOR);
 
-		assertTrue(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo)
-				&& !armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo2)
-				&& !armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo3));
+		assertTrue(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo));
+		assertFalse(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo2));
+		assertFalse(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo3));
+		
 	}
 	
 	@Test

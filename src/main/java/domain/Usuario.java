@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.persistence.CascadeType;
 
 @Entity
 public class Usuario {
@@ -20,9 +21,9 @@ public class Usuario {
 	private long  id;
 	private TipoUsuario tipo;
 	private int  maximoDePrendas;
-	@ManyToMany
-	private HashSet<Guardarropa> guardarropas = new HashSet<Guardarropa>();
-	@OneToMany
+	@ManyToMany (cascade = CascadeType.PERSIST)
+	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
+	@OneToMany 
 	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
 	@OneToOne
 	private Sugerencia ultimaSugerencia = null;
@@ -67,7 +68,7 @@ public class Usuario {
 		return guardarropas.stream().anyMatch(guardarropa->guardarropa.prendas().contains(unaPrenda));
 	}
 	
-	public HashSet<Guardarropa> getGuardarropas() {
+	public Set<Guardarropa> getGuardarropas() {
 		return this.guardarropas;
 	}
 	
