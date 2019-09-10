@@ -1,27 +1,45 @@
 package domain;
 import java.time.*;
-import java.util.Date;
 import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import domain.enums.*;
 import org.uqbar.commons.model.annotations.Observable;
-
 import domain.frecuenciasDeEventos.*;
 
 @Observable
+//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Entity@Table(name="Calendario")
 public class Evento {
-	private Sugeridor sugeridor;
-	private FrecuenciaDeEvento frecuencia;
+	@Id @GeneratedValue
+  	private Long id;
+	@Transient
 	private String descripcion;
-	private SugerenciasListas estadoSugerencias;
-	private LocalDateTime fechaInicio;
-	//private int contador=0;// usado solo de forma provisoria para el JobsEventosTest
+	@Transient
+	private Sugeridor sugeridor;
+	@Transient
+	private FrecuenciaDeEvento frecuencia;
+	@Transient
+	private SugerenciasListas estadoSugerencias;////////////estoEsSoloParaArena
+	@Transient
+	private LocalDateTime fechaInicio;//////////////////estoEsSoloParaArena
 	
+	public Evento() {}///////////////////Solo para la Persistencia
+	//private int contador=0;// usado solo de forma provisoria para el JobsEventosTest
+
 	public Evento(Sugeridor unSugeridor, FrecuenciaDeEvento unaFrecuencia, String unaDescripcion) {
 		this.sugeridor=unSugeridor;
 		this.frecuencia = unaFrecuencia;
 		this.descripcion= unaDescripcion;
 	}	
-
+	
+	
 	public Set<Set<Prenda>> obtenerAtuendos(Usuario usuario){
 		return sugeridor.sugerirPrendasPara(usuario);
 	}

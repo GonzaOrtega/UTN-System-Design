@@ -31,5 +31,5 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 		  Long nuevoId = paleta.getId();
 		  Long nuevoId2 = paleta2.getId();
 		  assertNotEquals(nuevoId2,nuevoId);
-}
+	}
 }

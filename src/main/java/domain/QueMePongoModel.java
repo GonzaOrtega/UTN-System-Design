@@ -31,7 +31,6 @@ public class QueMePongoModel {
 	Evento eventoConFrecuenciaMensual = new Evento(sugeridor,new FrecuenciaMensual(16),"Sin descripcion");//"16-01-2019"
 	Evento eventoConFrecuenciaAnual = new Evento(sugeridor,new FrecuenciaAnual(2,16),"Sin descripcion");//"16-01-2019"
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
-	// Getters y setters
 	public QueMePongoModel() {
 		juan.agendarEvento(eventoConFrecuenciaAnual);
 		juan.agendarEvento(eventoConFrecuenciaDiaria);
@@ -39,6 +38,7 @@ public class QueMePongoModel {
 		juan.agendarEvento(eventoConFrecuenciaSemanal);
 		juan.agendarEvento(eventoConFrecuenciaUnica);
 	}
+//////////////////////////////////////GETS_Y_SETS/////////////////////////////////////////////////	
 	public int getFechaInicio() {
 		return fechaInicio;
 	}
@@ -64,7 +64,7 @@ public class QueMePongoModel {
 
 	public void setEventos(Set<Evento> eventos) { this.eventos = eventos; }
 
-	// ***********************************
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public LocalDateTime fecha(int fechaEnNro) {
 		return LocalDateTime.of(LocalDate.of(fechaEnNro/10000,(fechaEnNro%10000)/100,(fechaEnNro%10000)%100),LocalTime.of(0,0,0));
