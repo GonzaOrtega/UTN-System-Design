@@ -164,5 +164,7 @@ public class Guardarropa {
 				.collect(Collectors.toList()).size();
 		return nivelFriolento - nivelCaluroso;
 	}
-
+	public Long getId() {
+		return id;
+	}
 }
