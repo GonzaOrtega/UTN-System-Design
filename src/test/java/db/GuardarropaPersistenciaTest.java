@@ -92,10 +92,9 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 		assertFalse(usuarioQuery.getSugerencias().isEmpty());
 	}
 	
-	public Set<Set<Prenda>> sugerirMasAceptarTodasLasSugerencias(Usuario usuario, Evento evento) {
+	public void sugerirMasAceptarTodasLasSugerencias(Usuario usuario, Evento evento) {
 		evento.sugerir(usuario);
 		usuario.getSugerencias().stream().forEach(sugerencia -> usuario.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA));
-		return usuario.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
 	}
 	
 	public Set<Set<Prenda>> obtenerAtuendosDeUsuario(Usuario usuario) {
@@ -109,24 +108,24 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	@Test
 	public void siSeSugiereAtuendoActualizaLaPrendaAUsada() {
 		juan.cargarPrenda(armario, jean);
-		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
+		this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
 		Usuario usuarioQuery = em
 				.createQuery("from Usuario", Usuario.class)
 				.getResultList()
 				.get(0);
-		assertTrue(this.obtenerAtuendosDeUsuario(usuarioQuery).stream().allMatch(atuendo -> atuendo.stream().allMatch(prenda -> prenda.isUsada())));
+		assertFalse(this.todaLaRopaEstaLimpia(this.obtenerAtuendosDeUsuario(usuarioQuery)));
 	}
 	
 	@Test
 	public void alLavarLaRopaSeActualizaLaPrenda() {
 		juan.cargarPrenda(armario, jean);
-		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
+		this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
 		juan.lavarLaRopa();
 		Usuario usuarioQuery = em
 				.createQuery("from Usuario", Usuario.class)
 				.getResultList()
 				.get(0);
-		assertTrue(this.obtenerAtuendosDeUsuario(usuarioQuery).stream().allMatch(atuendo -> atuendo.stream().allMatch(prenda -> !prenda.isUsada())));
+		assertTrue(this.todaLaRopaEstaLimpia(this.obtenerAtuendosDeUsuario(usuarioQuery)));
 	}
 	
 	

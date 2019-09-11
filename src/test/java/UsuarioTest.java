@@ -187,10 +187,10 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void laRopaEstaSucia() {
+	public void laRopaEstaSuciaAlAceptarSugerencias() {
 		juan.cargarPrenda(armario, jean);
 		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
-		assertTrue(!this.todaLaRopaEstaLimpia(atuendosDeJuan));
+		assertFalse(this.todaLaRopaEstaLimpia(atuendosDeJuan));
 	}
 	
 	@Test
@@ -200,13 +200,6 @@ public class UsuarioTest {
 		juan.lavarLaRopa();
 		assertTrue(this.todaLaRopaEstaLimpia(atuendosDeJuan));
 	}
-
-//	public void noSePuedeLavarLaRopaSiNoHayEventosTerminados(){
-//		juan.cargarPrenda(armario, jean);
-//		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoSinFin);
-//		juan.lavarLaRopa();
-//		assertTrue(this.todaLaRopaEstaLimpia(atuendosDeJuan));
-//	}
 	
 	@Test
 	public void lavoRopaYVuelvoAGenerarSugerencias(){
