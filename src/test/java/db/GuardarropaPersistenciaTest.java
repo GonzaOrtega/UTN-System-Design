@@ -1,6 +1,9 @@
 package db;
+
 import static org.junit.Assert.*;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import org.junit.Before;
 import org.junit.Test;
 import domain.apisClima.*;
@@ -40,7 +43,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	}
 	
 	@Test
-	  public void siSePersistenDosGuardarropasDistintosTendranDosIDsDistintos() throws Exception {
+	public void siSePersistenDosGuardarropasDistintosTendranDosIDsDistintos() throws Exception {
 		Guardarropa otroArmario = new Guardarropa();
 		juan.agregarGuardarropa(otroArmario);
 		/*
@@ -61,7 +64,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	}
 	
 	@Test
-	 public void siSeSolicitanAtuendosSePersisten() {
+	public void siSeSolicitanAtuendosSePersisten() {
 
 		 juan.cargarPrenda(armario, jean);
 
@@ -78,7 +81,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	}
 	
 	@Test
-	 public void siSeSugiereConArmarioJuanTieneSugerencias() {
+	public void siSeSugiereConArmarioJuanTieneSugerencias() {
 		juan.cargarPrenda(armario, jean);
 		sugeridor.sugerirPrendasPara(juan).forEach(atuendo -> juan.agregarSugerencia(new Sugerencia(atuendo,eventoConFrecuenciaUnica)));
 		Usuario usuarioQuery = em
@@ -89,7 +92,42 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 		assertFalse(usuarioQuery.getSugerencias().isEmpty());
 	}
 	
-
+	public Set<Set<Prenda>> sugerirMasAceptarTodasLasSugerencias(Usuario usuario, Evento evento) {
+		evento.sugerir(usuario);
+		usuario.getSugerencias().stream().forEach(sugerencia -> usuario.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA));
+		return usuario.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
+	}
+	
+	public Set<Set<Prenda>> obtenerAtuendosDeUsuario(Usuario usuario) {
+		return usuario.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
+	}
+	
+	public boolean todaLaRopaEstaLimpia(Set<Set<Prenda>> atuendos) {
+		return atuendos.stream().allMatch(atuendo -> atuendo.stream().allMatch(prenda -> !prenda.isUsada()));
+	}
+	
+	@Test
+	public void siSeSugiereAtuendoActualizaLaPrendaAUsada() {
+		juan.cargarPrenda(armario, jean);
+		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
+		Usuario usuarioQuery = em
+				.createQuery("from Usuario", Usuario.class)
+				.getResultList()
+				.get(0);
+		assertTrue(this.obtenerAtuendosDeUsuario(usuarioQuery).stream().allMatch(atuendo -> atuendo.stream().allMatch(prenda -> prenda.isUsada())));
+	}
+	
+	@Test
+	public void alLavarLaRopaSeActualizaLaPrenda() {
+		juan.cargarPrenda(armario, jean);
+		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
+		juan.lavarLaRopa();
+		Usuario usuarioQuery = em
+				.createQuery("from Usuario", Usuario.class)
+				.getResultList()
+				.get(0);
+		assertTrue(this.obtenerAtuendosDeUsuario(usuarioQuery).stream().allMatch(atuendo -> atuendo.stream().allMatch(prenda -> !prenda.isUsada())));
+	}
 	
 	
 }
