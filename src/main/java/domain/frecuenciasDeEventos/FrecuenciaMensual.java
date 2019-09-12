@@ -3,7 +3,7 @@ import java.time.*;
 
 import domain.enums.TipoFrecuencia;
 
-public class FrecuenciaMensual implements FrecuenciaDeEvento{
+public class FrecuenciaMensual extends FrecuenciaDeEvento{
 	private int limiteDeProximidad = 5;
 	int diaDelMes;
 	public FrecuenciaMensual(int dia) {
@@ -24,8 +24,5 @@ public class FrecuenciaMensual implements FrecuenciaDeEvento{
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		long diasEntreComienzoEvento =this.diferenciaEntreDosDias(diaDelMes,fechaComienzo.getDayOfMonth());
 		return fechaComienzo.plusDays(diasEntreComienzoEvento);
-	}
-	public boolean yaSucedio(LocalDateTime fechaActual){
-		return !esProximo(fechaActual);
 	}
 }

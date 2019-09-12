@@ -1,35 +1,44 @@
 package domain;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import domain.apisClima.ProveedorClima;
 import domain.exceptions.NoHayAtuendosDisponiblesException;
 
 public class Sugeridor {
-	private  ProveedorClima proveedorDeClima;
-	
-	public Sugeridor(ProveedorClima proveedor) {
-		proveedorDeClima=proveedor;
+	private ProveedorClima proveedorDeClima;
+
+	private static class SugeridorHolder {
+		private static final Sugeridor INSTANCE = new Sugeridor();
 	}
-	
-	public void proveedorDeClima(ProveedorClima proveedorDeClima) {
+
+	public static Sugeridor getInstance() {
+		return SugeridorHolder.INSTANCE;
+	}
+	/*
+	private Sugeridor() {}
+
+	public Sugeridor(ProveedorClima proveedor) {
+		proveedorDeClima = proveedor;
+	}*/
+
+	public void setProveedorDeClima(ProveedorClima proveedorDeClima) {
 		this.proveedorDeClima = proveedorDeClima;
 	}
-	
-	public ProveedorClima proveedorDeClima() {
+
+	public ProveedorClima getProveedorDeClima() {
 		return proveedorDeClima;
 	}
 
-	public Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario){
-		Set<Set<Prenda>> atuendos = unUsuario
-									.getGuardarropas()
-									.stream()
-									.map(guardarrropa->guardarrropa.pedirAtuendosSegun(proveedorDeClima,unUsuario))
-									.flatMap(guardarropa->guardarropa.stream())
-									.collect(Collectors.toSet());
+	public Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario) {
+		Set<Set<Prenda>> atuendos = unUsuario.getGuardarropas().stream()
+				.map(guardarrropa -> guardarrropa.pedirAtuendosSegun(proveedorDeClima, unUsuario))
+				.flatMap(guardarropa -> guardarropa.stream()).collect(Collectors.toSet());
 		if (atuendos.isEmpty())
-			throw new NoHayAtuendosDisponiblesException("WARNING: falta ingresar prendas en los guardarropas para obtener posibles atuendos");
-		
+			throw new NoHayAtuendosDisponiblesException(
+					"WARNING: falta ingresar prendas en los guardarropas para obtener posibles atuendos");
+
 		return atuendos;
 	}
-	
+
 }

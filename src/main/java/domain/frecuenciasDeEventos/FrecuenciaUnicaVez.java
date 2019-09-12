@@ -4,7 +4,7 @@ import java.time.*;
 
 import domain.enums.TipoFrecuencia;
 
-public class FrecuenciaUnicaVez implements FrecuenciaDeEvento {
+public class FrecuenciaUnicaVez extends FrecuenciaDeEvento {
 	static int limiteDeProximidad = 7;
 	
 	LocalDateTime fechaEvento;

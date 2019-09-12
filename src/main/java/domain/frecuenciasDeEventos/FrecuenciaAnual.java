@@ -4,7 +4,7 @@ import java.time.*;
 
 import domain.enums.TipoFrecuencia;
 
-public class FrecuenciaAnual implements FrecuenciaDeEvento {
+public class FrecuenciaAnual extends FrecuenciaDeEvento {
 	
 	int limiteDeProximidad = 30;
 	

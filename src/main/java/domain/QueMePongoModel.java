@@ -4,7 +4,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+
 import org.uqbar.commons.model.annotations.Observable;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
 import domain.apisClima.MockAPI;
 import domain.apisClima.ProveedorClima;
 import domain.enums.TipoUsuario;
@@ -13,23 +18,25 @@ import domain.frecuenciasDeEventos.FrecuenciaDiaria;
 import domain.frecuenciasDeEventos.FrecuenciaMensual;
 import domain.frecuenciasDeEventos.FrecuenciaSemanal;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
+import ui.EventoView;
 
 @Observable
-public class QueMePongoModel {
+public class QueMePongoModel implements WithGlobalEntityManager {
 	private int fechaInicio;
 	private int fechaFin;
-	private Set<Evento> eventos = new HashSet<Evento>();
+	//private Set<Evento> eventos = new HashSet<Evento>();
+	private Set<EventoView> eventoView;
 	private String messageError;
 	//InicializamosElRepocitorioConAlgunosEventos
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
-	Evento eventoConFrecuenciaUnica = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,5,24),"Sin descripcion");//"24-05-2019"
-	Evento eventoConFrecuenciaDiaria = new Evento(sugeridor,new FrecuenciaDiaria(8),"Sin descripcion");//"16-01-2019"
-	Evento eventoConFrecuenciaSemanal = new Evento(sugeridor,new FrecuenciaSemanal(3),"Sin descripcion");//"16-01-2019" MIERCOLES
-	Evento eventoConFrecuenciaMensual = new Evento(sugeridor,new FrecuenciaMensual(16),"Sin descripcion");//"16-01-2019"
-	Evento eventoConFrecuenciaAnual = new Evento(sugeridor,new FrecuenciaAnual(2,16),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,5,24),"Sin descripcion");//"24-05-2019"
+	Evento eventoConFrecuenciaDiaria = new Evento(new FrecuenciaDiaria(8),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaSemanal = new Evento(new FrecuenciaSemanal(3),"Sin descripcion");//"16-01-2019" MIERCOLES
+	Evento eventoConFrecuenciaMensual = new Evento(new FrecuenciaMensual(16),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaAnual = new Evento(new FrecuenciaAnual(2,16),"Sin descripcion");//"16-01-2019"
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	public QueMePongoModel() {
+		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 		juan.agendarEvento(eventoConFrecuenciaAnual);
 		juan.agendarEvento(eventoConFrecuenciaDiaria);
 		juan.agendarEvento(eventoConFrecuenciaMensual);
@@ -59,9 +66,7 @@ public class QueMePongoModel {
 		return messageError;
 	}
 
-	public Set<Evento> getEventos() { return eventos; }
-
-	public void setEventos(Set<Evento> eventos) { this.eventos = eventos; }
+	public Set<EventoView> getEventoView() { return eventoView; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -83,16 +88,23 @@ public class QueMePongoModel {
 	
 	public void listarEventos() {
 		this.validar();
-		Set<Evento> eventosDeLasFechas =RepositorioDeUsuarios.getInstance()
+		//EntityManager em = entityManager();
+		System.gc();
+		Set<Evento> eventos =RepositorioDeUsuarios.getInstance()
+				.eventos()
+				.stream()
+				.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
+				.collect(Collectors.toSet());
+		Set<EventoView> eventoViewDeLaFecha= null; 
+		eventos.forEach(evento->eventoViewDeLaFecha.add(new EventoView(evento,this.fecha(fechaInicio))));
+		eventoView = eventoViewDeLaFecha;
+		/*Set<Evento> eventosDeLasFechas =RepositorioDeUsuarios.getInstance()
 				.eventos()
 				.stream()
 				.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
 				.collect(Collectors.toSet());
 		eventosDeLasFechas.forEach(evento->evento.setFechaInicio(this.fecha(fechaInicio)));
-		this.eventos=eventosDeLasFechas;
-				
-		
-		
+		this.eventos=eventosDeLasFechas;	*/	
 	}
 	
 }
