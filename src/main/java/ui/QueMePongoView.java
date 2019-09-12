@@ -23,7 +23,7 @@ public class QueMePongoView extends MainWindow<QueMePongoModel> {
 			new NumericField(panelHorizontal).setWidth(100).bindValueToProperty("fechaFin");
 			new Button(mainPanel).setCaption("Obtener eventos").onClick(()->this.getModelObject().listarEventos());
 			Table<Evento> tabla = new Table<Evento>(mainPanel, Evento.class);
-			tabla.bindItemsToProperty("eventos");
+			tabla.bindItemsToProperty("eventoView");
 			new Column<Evento>(tabla).setTitle("Fecha").setFixedSize(150).bindContentsToProperty("fecha");
 			new Column<Evento>(tabla).setTitle("Frecuencia").setFixedSize(150).bindContentsToProperty("frecuencia");
 			new Column<Evento>(tabla).setTitle("Descripcion").setFixedSize(300).bindContentsToProperty("descripcion");

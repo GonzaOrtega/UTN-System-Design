@@ -3,7 +3,7 @@ import java.time.*;
 
 import domain.enums.TipoFrecuencia;
 
-public class FrecuenciaDiaria implements FrecuenciaDeEvento{
+public class FrecuenciaDiaria extends FrecuenciaDeEvento{
 	private int limiteDeProximidad = 8;
 	int hora;
 	
@@ -27,8 +27,5 @@ public class FrecuenciaDiaria implements FrecuenciaDeEvento{
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo){
 		int horasEntreComienzoEvento =this.diferenciaEnHorasEntreDosHoras(hora,fechaComienzo.getHour());
 		return fechaComienzo.plusHours(horasEntreComienzoEvento);
-	}
-	public boolean yaSucedio(LocalDateTime fechaActual){
-		return !esProximo(fechaActual);
 	}
 }

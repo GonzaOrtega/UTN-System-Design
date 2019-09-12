@@ -13,7 +13,6 @@ public class GuardarropaTest {
 	ProveedorClima APIDeMentiritasDeInvierno = new MockAPI(10,19,false);
 	ProveedorClima APIMockInvierno = new MockAPI(10,12,false);
 	ProveedorClima APIMockTemplado = new MockAPI(16,16,false);
-	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
@@ -34,6 +33,7 @@ public class GuardarropaTest {
 		juan.cargarPrenda(armario,zapatos);
 		juan.cargarPrenda(armario,gorra);
 		juan.cargarPrenda(armario,camperaGucci);
+		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 	}
 
 

@@ -1,20 +1,35 @@
 package domain.frecuenciasDeEventos;
-
 import java.time.*;
-import domain.enums.*;
 
-public interface FrecuenciaDeEvento {
-	
-	public TipoFrecuencia getFrecuencia();
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-	public boolean esProximo(LocalDateTime fechaActual);
+import domain.enums.TipoFrecuencia;
+@Entity@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class FrecuenciaDeEvento{
+	@Id
+	@GeneratedValue
+	private Long id;
+	public TipoFrecuencia getFrecuencia() {
+		return TipoFrecuencia.Anual;
+	}
+	public boolean esProximo(LocalDateTime fechaActual) {
+		return false;
+	}
 
-	public default boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
+	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {
 		return this.cualEsLaFechaProxima(fechaComienzo).isBefore(fechaFin)
 				|| this.cualEsLaFechaProxima(fechaComienzo).isEqual(fechaFin);
 	}
 
-	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo);
+	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaComienzo) {
+		return LocalDateTime.now();
+	}
 
-	public boolean yaSucedio(LocalDateTime fechaActual);
+	public boolean yaSucedio(LocalDateTime fechaActual) {
+		return !esProximo(fechaActual);
+	}
 }

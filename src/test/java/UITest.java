@@ -8,15 +8,15 @@ import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 public class UITest {
 	QueMePongoModel model = new QueMePongoModel();
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
-	Evento evento = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,5,24),"Ir a cenar");
-	Evento evento2 = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,8,1),"Ir a cenar");
+	Evento evento = new Evento(new FrecuenciaUnicaVez(2019,5,24),"Ir a cenar");
+	Evento evento2 = new Evento(new FrecuenciaUnicaVez(2019,8,1),"Ir a cenar");
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	
 	@Before
 	public void setUp() {
 		juan.agendarEvento(evento);
 		juan.agendarEvento(evento2);
+		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 	}
 	/*
 	@Test (expected = UserException.class)

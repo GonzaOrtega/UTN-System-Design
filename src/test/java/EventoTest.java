@@ -9,7 +9,6 @@ import java.time.*;
 
 public class EventoTest {
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	Guardarropa armario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).conAbrigo(0).crearPrenda();
@@ -18,12 +17,12 @@ public class EventoTest {
 	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).conAbrigo(0).crearPrenda();
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).conAbrigo(0).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(0).crearPrenda();
-	Evento eventoLoco = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//la fecha es:"16-02-2019"
-	Evento eventoConFrecuenciaUnica = new Evento(sugeridor,new FrecuenciaUnicaVez(2019,5,24),"Sin descripcion");//"24-05-2019"
-	Evento eventoConFrecuenciaDiaria = new Evento(sugeridor,new FrecuenciaDiaria(0),"Sin descripcion");//"16-01-2019"
-	Evento eventoConFrecuenciaSemanal = new Evento(sugeridor,new FrecuenciaSemanal(3),"Sin descripcion");//"16-01-2019" MIERCOLES
-	Evento eventoConFrecuenciaMensual = new Evento(sugeridor,new FrecuenciaMensual(16),"Sin descripcion");//"16-01-2019"
-	Evento eventoConFrecuenciaAnual = new Evento(sugeridor,new FrecuenciaAnual(2,16),"Sin descripcion");//"16-01-2019"
+	Evento eventoLoco = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//la fecha es:"16-02-2019"
+	Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,5,24),"Sin descripcion");//"24-05-2019"
+	Evento eventoConFrecuenciaDiaria = new Evento(new FrecuenciaDiaria(0),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaSemanal = new Evento(new FrecuenciaSemanal(3),"Sin descripcion");//"16-01-2019" MIERCOLES
+	Evento eventoConFrecuenciaMensual = new Evento(new FrecuenciaMensual(16),"Sin descripcion");//"16-01-2019"
+	Evento eventoConFrecuenciaAnual = new Evento(new FrecuenciaAnual(2,16),"Sin descripcion");//"16-01-2019"
 
 	@Before
 	public void setUp(){
@@ -34,6 +33,7 @@ public class EventoTest {
 		juan.cargarPrenda(armario, camisaLarga);
 		juan.cargarPrenda(armario, ojotas);
 		juan.cargarPrenda(armario, jean);
+		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 	}
 	
 	@Test

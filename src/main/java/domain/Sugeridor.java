@@ -15,18 +15,18 @@ public class Sugeridor {
 	public static Sugeridor getInstance() {
 		return SugeridorHolder.INSTANCE;
 	}
-
+	/*
 	private Sugeridor() {}
 
 	public Sugeridor(ProveedorClima proveedor) {
 		proveedorDeClima = proveedor;
-	}
+	}*/
 
-	public void proveedorDeClima(ProveedorClima proveedorDeClima) {
+	public void setProveedorDeClima(ProveedorClima proveedorDeClima) {
 		this.proveedorDeClima = proveedorDeClima;
 	}
 
-	public ProveedorClima proveedorDeClima() {
+	public ProveedorClima getProveedorDeClima() {
 		return proveedorDeClima;
 	}
 

@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import domain.enums.*;
@@ -22,34 +23,20 @@ public class Evento {
 
 	private String descripcion;
 	
-	//TODO Ver como conseguir el sugeridor
-	@Transient
-	private Sugeridor sugeridor;
-	
-	//TODO Ver de persistir
-	@Transient
+	@ManyToOne
 	private FrecuenciaDeEvento frecuencia;
-	
-	//TODO volarlo
-	@Transient
-	private SugerenciasListas estadoSugerencias;//////////// estoEsSoloParaArena
-	
-	//TODO volarlo y poner en Arena un objeto que conozca el evento y la fecha
-	@Transient
-	private LocalDateTime fechaInicio;////////////////// estoEsSoloParaArena
 
 	private Evento() {}/////////////////// Solo para la Persistencia
 	// private int contador=0;// usado solo de forma provisoria para el
 	// JobsEventosTest
 
-	public Evento(Sugeridor unSugeridor, FrecuenciaDeEvento unaFrecuencia, String unaDescripcion) {
-		this.sugeridor = unSugeridor;
+	public Evento(FrecuenciaDeEvento unaFrecuencia, String unaDescripcion) {
 		this.frecuencia = unaFrecuencia;
 		this.descripcion = unaDescripcion;
 	}
 
 	public Set<Set<Prenda>> obtenerAtuendos(Usuario usuario) {
-		return sugeridor.sugerirPrendasPara(usuario);
+		return Sugeridor.getInstance().sugerirPrendasPara(usuario);
 	}
 
 	public void sugerir(Usuario usuario) {
@@ -75,11 +62,7 @@ public class Evento {
 		return frecuencia.getFrecuencia();
 	}
 
-	public void setFechaInicio(LocalDateTime fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-	public LocalDateTime getFecha() {
+	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaInicio) {
 		return frecuencia.cualEsLaFechaProxima(fechaInicio);
 	}
 
