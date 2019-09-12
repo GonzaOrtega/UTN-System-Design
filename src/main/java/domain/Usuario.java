@@ -20,20 +20,35 @@ import javax.persistence.CascadeType;
 public class Usuario {
 	@Id @GeneratedValue
 	private long  id;
+	
+	// enumerated?
 	private TipoUsuario tipo;
+	
 	private int  maximoDePrendas;
+	
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
-	@OneToMany (cascade = CascadeType.PERSIST)@JoinColumn(name="id_usuario")
+	
+	@OneToMany (cascade = CascadeType.PERSIST)
+	@JoinColumn(name="id_usuario")
 	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
+	
+	// revisar
 	@OneToOne
 	private Sugerencia ultimaSugerencia = null;
+	
+	// persistir
 	@Transient
-	private Set<MedioDeNotifiacion> medios = new HashSet<MedioDeNotifiacion>();
+	private Set<MedioDeNotificacion> medios = new HashSet<MedioDeNotificacion>();
+	
 	@ManyToMany
 	private Set<Evento> eventos = new HashSet<Evento>();
 	
+	// mapeo?
+	// sin arraylist
 	private ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
+	
+	private Usuario() {}
 	
 	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
 		this.tipo = tipo;

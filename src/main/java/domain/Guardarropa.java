@@ -13,15 +13,20 @@ import domain.enums.*;
 
 @Entity
 public class Guardarropa {
+
 	@Id @GeneratedValue
   	private Long id;
+
 	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
 	private Set<Prenda> prendas = new HashSet<Prenda>();
+	
 	public Set<Prenda> prendas(){return prendas;}
+	
 	public void cargarPrenda(Prenda unaPrenda){
 		prendas.add(unaPrenda);
 	}
 	
+	//TODO Borrar codigo muerto
 	public List<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor,Usuario unUser){
 		Set<Set<Prenda>> elAux = new HashSet<Set<Prenda>>();
 		elAux = this.parteNoSuperior(proveedor,unUser); //esto esta asi por un tema de Set y List

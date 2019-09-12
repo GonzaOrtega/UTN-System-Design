@@ -109,11 +109,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	public void siSeSugiereAtuendoActualizaLaPrendaAUsada() {
 		juan.cargarPrenda(armario, jean);
 		this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
-		Usuario usuarioQuery = em
-				.createQuery("from Usuario", Usuario.class)
-				.getResultList()
-				.get(0);
-		assertFalse(this.todaLaRopaEstaLimpia(this.obtenerAtuendosDeUsuario(usuarioQuery)));
+		assertFalse(this.todaLaRopaEstaLimpia(this.obtenerAtuendosDeUsuario(juan)));
 	}
 	
 	@Test

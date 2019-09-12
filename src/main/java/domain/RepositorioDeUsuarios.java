@@ -3,7 +3,9 @@ import java.util.*;
 import java.time.*;
 import java.util.stream.*;
 
+//TODO revisar e implementar queries
 public class RepositorioDeUsuarios {
+
 	private Set<Usuario> usuarios = new HashSet<Usuario>();
 	private RepositorioDeUsuarios(){};
 

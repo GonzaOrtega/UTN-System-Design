@@ -2,17 +2,21 @@ package domain.frecuenciasDeEventos;
 import java.time.*;
 
 import domain.enums.TipoFrecuencia;
+
 public class FrecuenciaDiaria implements FrecuenciaDeEvento{
 	private int limiteDeProximidad = 8;
 	int hora;
+	
 	public FrecuenciaDiaria(int hora) {
 		this.hora=hora;
 	}
+	
 	public TipoFrecuencia getFrecuencia() {return TipoFrecuencia.Diario;}
 	
 	public boolean esProximo(LocalDateTime fechaActual) {
 		return this.diferenciaEnHorasEntreDosHoras(hora,fechaActual.getHour())<=limiteDeProximidad;
 	}
+
 	public int diferenciaEnHorasEntreDosHoras(int horaFinal, int horaComienzo) {
 		int horas= horaFinal-horaComienzo;
 		if (horaFinal<horaComienzo){ 

@@ -1,4 +1,5 @@
 package domain;
+
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -14,34 +15,37 @@ import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import domain.enums.TipoSugerencias;
 
- @Entity 
+//TODO wtf? abstract persistence test
+//TODO buscar mapped superclass
+@Entity 
 public class Sugerencia extends AbstractPersistenceTest implements WithGlobalEntityManager{
-	@Id 
+
+	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	@ManyToMany
 	private Set<Prenda> atuendo;
-	
+
 	@Enumerated(EnumType.STRING)
-	private TipoSugerencias estado= TipoSugerencias.PENDIENTE;
-	
+	private TipoSugerencias estado = TipoSugerencias.PENDIENTE;
+
 	@ManyToOne
 	private Evento evento;
-	
+
 	public Sugerencia(Set<Prenda> unAtuendo, Evento evento) {
-		this.atuendo=unAtuendo;
-		this.evento=evento;
+		this.atuendo = unAtuendo;
+		this.evento = evento;
 	}
-	
+
 	public void setPrendasComoNoUsadas() {
 		atuendo.forEach(prenda -> prenda.setUsada(false));
 	}
-	
+
 	public TipoSugerencias getEstado() {
 		return estado;
 	}
-	
+
 	public void setEstado(TipoSugerencias estado) {
 		this.estado = estado;
 	}
@@ -52,14 +56,14 @@ public class Sugerencia extends AbstractPersistenceTest implements WithGlobalEnt
 
 	public Evento getEvento() {
 		return evento;
-	}	
-	
+	}
+
 	public boolean mismoEvento(Evento evento) {
-		return this.evento== evento;
+		return this.evento == evento;
 	}
 
 	public boolean aceptada() {
-		return this.estado==TipoSugerencias.ACEPTADA;
+		return this.estado == TipoSugerencias.ACEPTADA;
 	}
 
 }
