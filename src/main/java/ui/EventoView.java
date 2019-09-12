@@ -1,10 +1,13 @@
 package ui;
 
 import java.time.LocalDateTime;
+
+import org.uqbar.commons.model.annotations.Observable;
+
 import domain.Evento;
 import domain.enums.SugerenciasListas;
 import domain.enums.TipoFrecuencia;
-
+@Observable
 public class EventoView {
 	private LocalDateTime fechaInicio;
 	Evento evento;

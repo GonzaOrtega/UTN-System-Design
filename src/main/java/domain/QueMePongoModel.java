@@ -88,15 +88,16 @@ public class QueMePongoModel implements WithGlobalEntityManager {
 	
 	public void listarEventos() {
 		this.validar();
-		EntityManager em = entityManager();
-		eventoView= null;
+		//EntityManager em = entityManager();
 		System.gc();
 		Set<Evento> eventos =RepositorioDeUsuarios.getInstance()
 				.eventos()
 				.stream()
 				.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
 				.collect(Collectors.toSet());
-		eventos.forEach(evento->eventoView.add(new EventoView(evento,this.fecha(fechaInicio))));
+		Set<EventoView> eventoViewDeLaFecha= null; 
+		eventos.forEach(evento->eventoViewDeLaFecha.add(new EventoView(evento,this.fecha(fechaInicio))));
+		eventoView = eventoViewDeLaFecha;
 		/*Set<Evento> eventosDeLasFechas =RepositorioDeUsuarios.getInstance()
 				.eventos()
 				.stream()

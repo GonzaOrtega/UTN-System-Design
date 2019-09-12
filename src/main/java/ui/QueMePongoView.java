@@ -22,12 +22,12 @@ public class QueMePongoView extends MainWindow<QueMePongoModel> {
 			new Label(panelHorizontal).setText("Ingrese otra fecha final:");
 			new NumericField(panelHorizontal).setWidth(100).bindValueToProperty("fechaFin");
 			new Button(mainPanel).setCaption("Obtener eventos").onClick(()->this.getModelObject().listarEventos());
-			Table<Evento> tabla = new Table<Evento>(mainPanel, Evento.class);
+			Table<EventoView> tabla = new Table<EventoView>(mainPanel, EventoView.class);
 			tabla.bindItemsToProperty("eventoView");
-			new Column<Evento>(tabla).setTitle("Fecha").setFixedSize(150).bindContentsToProperty("fecha");
-			new Column<Evento>(tabla).setTitle("Frecuencia").setFixedSize(150).bindContentsToProperty("frecuencia");
-			new Column<Evento>(tabla).setTitle("Descripcion").setFixedSize(300).bindContentsToProperty("descripcion");
-			new Column<Evento>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("sugerenciasListas");
+			new Column<EventoView>(tabla).setTitle("Fecha").setFixedSize(150).bindContentsToProperty("fecha");
+			new Column<EventoView>(tabla).setTitle("Frecuencia").setFixedSize(150).bindContentsToProperty("frecuencia");
+			new Column<EventoView>(tabla).setTitle("Descripcion").setFixedSize(300).bindContentsToProperty("descripcion");
+			new Column<EventoView>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("sugerenciasListas");
 			new Label(mainPanel).bindValueToProperty("messageError");
 	  }
 	  
