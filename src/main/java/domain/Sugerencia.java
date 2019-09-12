@@ -18,7 +18,7 @@ import domain.enums.TipoSugerencias;
 //TODO wtf? abstract persistence test
 //TODO buscar mapped superclass
 @Entity 
-public class Sugerencia extends AbstractPersistenceTest implements WithGlobalEntityManager{
+public class Sugerencia{
 
 	@Id
 	@GeneratedValue
