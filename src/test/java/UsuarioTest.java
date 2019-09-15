@@ -12,7 +12,6 @@ public class UsuarioTest {
 
 	ProveedorClima weatherAPI = new OpenWeatherMapAPI();
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
@@ -26,7 +25,7 @@ public class UsuarioTest {
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
-	Evento eventoConFrecuenciaUnica = new Evento(sugeridor, new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+	Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
 	
 	@Before
 	public void setUp(){
@@ -90,7 +89,7 @@ public class UsuarioTest {
 	@Test (expected = NoHayAtuendosDisponiblesException.class)
 	public void siLaraPideUnAtuendoPeroNoTienePrendasSuficientesLanzaExcepcion(){
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
-		sugeridor.sugerirPrendasPara(lara);
+		Sugeridor.getInstance().sugerirPrendasPara(lara);
 	}
 	
 	@Test(expected = SeExcedioElLimiteDeCapacidadDelGuardarropaException.class)

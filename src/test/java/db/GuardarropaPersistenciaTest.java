@@ -19,7 +19,6 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	EntityManager em = entityManager();
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
@@ -27,7 +26,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Guardarropa armario = new Guardarropa();
-	Evento eventoConFrecuenciaUnica = new Evento(sugeridor, new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+	Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
 
 	
 	@Before
@@ -83,7 +82,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	@Test
 	public void siSeSugiereConArmarioJuanTieneSugerencias() {
 		juan.cargarPrenda(armario, jean);
-		sugeridor.sugerirPrendasPara(juan).forEach(atuendo -> juan.agregarSugerencia(new Sugerencia(atuendo,eventoConFrecuenciaUnica)));
+		Sugeridor.getInstance().sugerirPrendasPara(juan).forEach(atuendo -> juan.agregarSugerencia(new Sugerencia(atuendo,eventoConFrecuenciaUnica)));
 		Usuario usuarioQuery = em
 				.createQuery("from Usuario", Usuario.class)
 				.getResultList()

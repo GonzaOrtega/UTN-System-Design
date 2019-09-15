@@ -18,9 +18,8 @@ import domain.frecuenciasDeEventos.FrecuenciaDiaria;
 public class EventoPersistenciaTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	EntityManager em = entityManager();
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Sugeridor sugeridor = new Sugeridor(APIDeMentiritas);
-	Evento eventoAnual = new Evento(sugeridor, new FrecuenciaAnual(02,01),"Medico");
-	Evento eventoDiario = new Evento(sugeridor,new FrecuenciaDiaria(0), "Trabajo");
+	Evento eventoAnual = new Evento(new FrecuenciaAnual(02,01),"Medico");
+	Evento eventoDiario = new Evento(new FrecuenciaDiaria(0), "Trabajo");
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
 	@Before
 	public void setUp(){
