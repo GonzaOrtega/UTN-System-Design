@@ -1,9 +1,8 @@
 package domain;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 import domain.apisClima.ProveedorClima;
-import domain.exceptions.NoHayAtuendosDisponiblesException;
+import domain.exceptions.*;
 
 public class Sugeridor {
 	private ProveedorClima proveedorDeClima;
@@ -15,12 +14,6 @@ public class Sugeridor {
 	public static Sugeridor getInstance() {
 		return SugeridorHolder.INSTANCE;
 	}
-	/*
-	private Sugeridor() {}
-
-	public Sugeridor(ProveedorClima proveedor) {
-		proveedorDeClima = proveedor;
-	}*/
 
 	public void setProveedorDeClima(ProveedorClima proveedorDeClima) {
 		this.proveedorDeClima = proveedorDeClima;
@@ -31,6 +24,10 @@ public class Sugeridor {
 	}
 
 	public Set<Set<Prenda>> sugerirPrendasPara(Usuario unUsuario) {
+		if(this.proveedorDeClima == null) {
+			throw new DebeHaberUnProveedorDeClimaAsignado("WARNING: debe asignarle un proveedor de clima para poder obtener sugerencias.");
+		}
+		else {
 		Set<Set<Prenda>> atuendos = unUsuario.getGuardarropas().stream()
 				.map(guardarrropa -> guardarrropa.pedirAtuendosSegun(proveedorDeClima, unUsuario))
 				.flatMap(guardarropa -> guardarropa.stream()).collect(Collectors.toSet());
@@ -38,7 +35,8 @@ public class Sugeridor {
 			throw new NoHayAtuendosDisponiblesException(
 					"WARNING: falta ingresar prendas en los guardarropas para obtener posibles atuendos");
 
-		return atuendos;
+			return atuendos;
+		}
 	}
 
 }
