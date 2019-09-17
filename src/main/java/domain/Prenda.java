@@ -8,10 +8,7 @@ import javax.persistence.Transient;
 
 import domain.enums.*;
 @Entity
-public class Prenda {
-	
-	@Id @GeneratedValue
-  	private Long id;
+public class Prenda extends SuperClase{
 	
 	@Enumerated(EnumType.STRING)
 	private Color colorPrimario;

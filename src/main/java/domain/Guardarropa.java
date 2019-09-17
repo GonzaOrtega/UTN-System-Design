@@ -12,10 +12,10 @@ import domain.apisClima.*;
 import domain.enums.*;
 
 @Entity
-public class Guardarropa {
+public class Guardarropa{
 
 	@Id @GeneratedValue
-  	private Long id;
+  	private Long id;    ///Dejo esto aca porque se usa mas abajo y no hagoque herede de SuperClase
 
 	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
 	private Set<Prenda> prendas = new HashSet<Prenda>();

@@ -5,24 +5,14 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
-
 import domain.enums.TipoSugerencias;
 
 //TODO wtf? abstract persistence test
 //TODO buscar mapped superclass
 @Entity 
-public class Sugerencia{
-
-	@Id
-	@GeneratedValue
-	private long id;
+public class Sugerencia extends SuperClase{
 
 	@ManyToMany
 	private Set<Prenda> atuendo;

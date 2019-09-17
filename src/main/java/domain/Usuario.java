@@ -5,10 +5,8 @@ import java.time.*;
 import domain.enums.*;
 import domain.exceptions.*;
 import java.util.stream.*;
-
+import domain.SuperClase;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -17,10 +15,7 @@ import javax.persistence.Transient;
 import javax.persistence.CascadeType;
 
 @Entity
-public class Usuario {
-	@Id @GeneratedValue
-	private long  id;
-	
+public class Usuario extends SuperClase {
 	// enumerated?
 	private TipoUsuario tipo;
 	
