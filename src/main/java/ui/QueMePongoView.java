@@ -6,10 +6,9 @@ import org.uqbar.arena.windows.*;
 import org.uqbar.arena.widgets.tables.*;
 
 public class QueMePongoView extends MainWindow<QueMePongoModel> {
-
 	public QueMePongoView(){
-	    super(new QueMePongoModel());
-	  }
+		super(new QueMePongoModel());	  
+	}
 	
 	  public void createContents(Panel mainPanel){		  
 		  	this.setTitle("Que Me Pongo");
@@ -22,12 +21,12 @@ public class QueMePongoView extends MainWindow<QueMePongoModel> {
 			new Label(panelHorizontal).setText("Ingrese otra fecha final:");
 			new NumericField(panelHorizontal).setWidth(100).bindValueToProperty("fechaFin");
 			new Button(mainPanel).setCaption("Obtener eventos").onClick(()->this.getModelObject().listarEventos());
-			Table<EventoView> tabla = new Table<EventoView>(mainPanel, EventoView.class);
-			tabla.bindItemsToProperty("eventoView");
-			new Column<EventoView>(tabla).setTitle("Fecha").setFixedSize(150).bindContentsToProperty("fecha");
-			new Column<EventoView>(tabla).setTitle("Frecuencia").setFixedSize(150).bindContentsToProperty("frecuencia");
-			new Column<EventoView>(tabla).setTitle("Descripcion").setFixedSize(300).bindContentsToProperty("descripcion");
-			new Column<EventoView>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("sugerenciasListas");
+			Table<Evento> tabla = new Table<Evento>(mainPanel, Evento.class);
+			tabla.bindItemsToProperty("eventos");
+			new Column<Evento>(tabla).setTitle("Fecha").setFixedSize(150).bindContentsToProperty("fecha");
+			new Column<Evento>(tabla).setTitle("Frecuencia").setFixedSize(150).bindContentsToProperty("frecuencia");
+			new Column<Evento>(tabla).setTitle("Descripcion").setFixedSize(300).bindContentsToProperty("descripcion");
+			new Column<Evento>(tabla).setTitle("¿Sugerencias listas?").setFixedSize(100).bindContentsToProperty("sugerenciasListas");
 			new Label(mainPanel).bindValueToProperty("messageError");
 	  }
 	  

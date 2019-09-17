@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-
 import org.uqbar.commons.model.annotations.Observable;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
@@ -24,8 +21,7 @@ import ui.EventoView;
 public class QueMePongoModel implements WithGlobalEntityManager {
 	private int fechaInicio;
 	private int fechaFin;
-	//private Set<Evento> eventos = new HashSet<Evento>();
-	private Set<EventoView> eventoView;
+	private Set<Evento> eventos = new HashSet<Evento>();
 	private String messageError;
 	//InicializamosElRepocitorioConAlgunosEventos
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
@@ -66,11 +62,11 @@ public class QueMePongoModel implements WithGlobalEntityManager {
 		return messageError;
 	}
 
-	public Set<EventoView> getEventoView() { return eventoView; }
+	public Set<Evento> getEventos() { return eventos; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public LocalDateTime fecha(int fechaEnNro) {
+
+	public static LocalDateTime fecha(int fechaEnNro) {
 		return LocalDateTime.of(LocalDate.of(fechaEnNro/10000,(fechaEnNro%10000)/100,(fechaEnNro%10000)%100),LocalTime.of(0,0,0));
 	}
 	
@@ -78,33 +74,20 @@ public class QueMePongoModel implements WithGlobalEntityManager {
 		this.messageError = "";
 		if(Integer.toString(fechaFin).length()!=8 || Integer.toString(fechaInicio).length()!=8) {
 			this.messageError = "Error: La fecha ingresada no es valida";
-			//throw new UserException("ERROR: Ingrese una fecha valida.");
 		}
 		if(fechaFin<fechaInicio)
 			this.messageError = "Error: La fecha comienzo debe ser anterior a la fecha fin";
-			//throw new UserException("ERROR: Ingrese correctamente las fechas.");
 	}
 	
 	
 	public void listarEventos() {
 		this.validar();
-		//EntityManager em = entityManager();
-		System.gc();
-		Set<Evento> eventos =RepositorioDeUsuarios.getInstance()
+		EventoView.getInstance().setQueMePongoModel(this);
+		eventos =RepositorioDeUsuarios.getInstance()
 				.eventos()
 				.stream()
-				.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
-				.collect(Collectors.toSet());
-		Set<EventoView> eventoViewDeLaFecha= null; 
-		eventos.forEach(evento->eventoViewDeLaFecha.add(new EventoView(evento,this.fecha(fechaInicio))));
-		eventoView = eventoViewDeLaFecha;
-		/*Set<Evento> eventosDeLasFechas =RepositorioDeUsuarios.getInstance()
-				.eventos()
-				.stream()
-				.filter(evento->evento.sucedeEntreEstasfechas(this.fecha(fechaInicio),this.fecha(fechaFin)))
-				.collect(Collectors.toSet());
-		eventosDeLasFechas.forEach(evento->evento.setFechaInicio(this.fecha(fechaInicio)));
-		this.eventos=eventosDeLasFechas;	*/	
+				.filter(evento->evento.sucedeEntreEstasfechas(fecha(fechaInicio),fecha(fechaFin)))
+				.collect(Collectors.toSet());		
 	}
 	
 }

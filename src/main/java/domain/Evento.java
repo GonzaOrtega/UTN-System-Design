@@ -8,11 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import domain.enums.*;
 import org.uqbar.commons.model.annotations.Observable;
 import domain.frecuenciasDeEventos.*;
+import ui.EventoView;
 
 @Observable
 @Entity
@@ -62,7 +61,9 @@ public class Evento {
 	public TipoFrecuencia getFrecuencia() {
 		return frecuencia.getFrecuencia();
 	}
-
+	public LocalDateTime getFecha() { ///Persistencia
+		return this.cualEsLaFechaProxima(EventoView.getInstance().getFechaInicio());
+	}
 	public LocalDateTime cualEsLaFechaProxima(LocalDateTime fechaInicio) {
 		return frecuencia.cualEsLaFechaProxima(fechaInicio);
 	}
