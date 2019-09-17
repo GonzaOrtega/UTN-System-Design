@@ -35,6 +35,7 @@ public class UsuarioTest {
 		juan.cargarPrenda(armario, gorra);
 		juan.cargarPrenda(armario, camisaLarga);
 		juan.cargarPrenda(armario, ojotas);
+		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 	}
 
 	@Test
@@ -154,8 +155,10 @@ public class UsuarioTest {
 		assertFalse(atuendosDeLara.containsAll(atuendosDeJuan));
 	}
 	
-	@Test (expected = NoHayAtuendosDisponiblesException.class)
+	@Test (expected = domain.exceptions.NoHayAtuendosDisponiblesException.class)
 	public void unoDeLosUsuariosConGuardarropaCompartidoNoPuedeEjecutarSusAtuendosPorFaltaDeRopa() {
+		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
+
 		juan.cargarPrenda(armario, jean);
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
 		lara.agregarGuardarropa(armario);

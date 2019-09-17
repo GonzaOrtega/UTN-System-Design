@@ -41,7 +41,7 @@ public class Evento {
 	}
 
 	public void sugerir(Usuario usuario) {
-		this.obtenerAtuendos(usuario).forEach(atuendo -> usuario.agregarSugerencia(new Sugerencia(atuendo, this)));
+		Sugeridor.getInstance().sugerirPrendasPara(usuario).forEach(atuendo -> usuario.agregarSugerencia(new Sugerencia(atuendo, this)));
 		// this.setContador(contador+1);//Usado en forma provisoria para el
 		// JobsEventosTest
 	}
