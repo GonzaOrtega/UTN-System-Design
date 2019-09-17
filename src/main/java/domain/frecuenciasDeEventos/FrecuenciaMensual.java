@@ -1,8 +1,13 @@
 package domain.frecuenciasDeEventos;
+
 import java.time.*;
-
 import domain.enums.TipoFrecuencia;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
 public class FrecuenciaMensual extends FrecuenciaDeEvento{
 	private int limiteDeProximidad = 5;
 	int diaDelMes;
