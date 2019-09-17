@@ -2,11 +2,8 @@ package domain;
 
 import java.time.*;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import domain.enums.*;
 import org.uqbar.commons.model.annotations.Observable;
@@ -15,11 +12,7 @@ import ui.EventoView;
 
 @Observable
 @Entity
-public class Evento {
-
-	@Id
-	@GeneratedValue
-	private Long id;
+public class Evento extends SuperClase{
 
 	private String descripcion;
 	

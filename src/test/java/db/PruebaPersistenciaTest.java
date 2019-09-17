@@ -21,9 +21,7 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 		em.persist(giorno);
 		Guardarropa paleta = em.createQuery("from Guardarropa order by Id", Guardarropa.class).getResultList().get(0);
 		Guardarropa paleta2 = em.createQuery("from Guardarropa order by Id", Guardarropa.class).getResultList().get(1);
-		Long nuevoId = paleta.getId();
-		Long nuevoId2 = paleta2.getId();
-		assertNotEquals(nuevoId2, nuevoId);
+		assertNotEquals(paleta, paleta2);
 	}
 
 	@Test
@@ -52,10 +50,6 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 		em.persist(koichi);
 		em.persist(luisito);
 		Usuario koichiPersistido = em.createQuery("from Usuario order by Id", Usuario.class).getResultList().get(0);
-		/*
-		 * Usuario luisitoPersistido = em .createQuery("from Usuario order by Id",
-		 * Usuario.class) .getResultList() .get(1);
-		 */
 		assertTrue(koichiPersistido.getGuardarropas().contains(soyElGuarda));
 		assertEquals(koichi, koichiPersistido);
 		assertNotEquals(koichi.getTipo(), luisito.getTipo());

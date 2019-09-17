@@ -3,8 +3,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import com.google.common.collect.*;
@@ -12,10 +10,7 @@ import domain.apisClima.*;
 import domain.enums.*;
 
 @Entity
-public class Guardarropa{
-
-	@Id @GeneratedValue
-  	private Long id;    ///Dejo esto aca porque se usa mas abajo y no hagoque herede de SuperClase
+public class Guardarropa extends SuperClase{
 
 	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
 	private Set<Prenda> prendas = new HashSet<Prenda>();
@@ -26,15 +21,12 @@ public class Guardarropa{
 		prendas.add(unaPrenda);
 	}
 	
-	//TODO Borrar codigo muerto
 	public List<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor,Usuario unUser){
 		Set<Set<Prenda>> elAux = new HashSet<Set<Prenda>>();
 		elAux = this.parteNoSuperior(proveedor,unUser); //esto esta asi por un tema de Set y List
 		ArrayList<Set<Prenda>> atuendosInferior = new ArrayList<Set<Prenda>>(elAux);
-//		System.out.println(atuendosInferior);
 		Set<Set<Prenda>> atuendoSup = parteSuperior(proveedor,unUser);
 		ArrayList<Set<Prenda>> listaAtuSuperior = new ArrayList<Set<Prenda>>(atuendoSup);
-//		System.out.println(listaAtuSuperior);
 		ArrayList<Set<Prenda>> listaReturn = new ArrayList<Set<Prenda>>();
 		for (int i=0;i<atuendosInferior.size();i++)
 		{
@@ -43,8 +35,6 @@ public class Guardarropa{
 				Set<Prenda> atuInf = new HashSet<Prenda>(atuendosInferior.get(i));
 				Set<Prenda> atuSup = new HashSet<Prenda>(listaAtuSuperior.get(j));
 				atuInf.addAll(atuSup);
-				//duplicates.retainAll(listaAtuSuperior.get(j));
-				//atuendosInferior.get(i).addAll(listaAtuSuperior.get(j));
 				listaReturn.add(atuInf);
 			}
 		}
@@ -70,8 +60,6 @@ public class Guardarropa{
 		powerSetSuperiores = powerSetSuperiores.stream()
 				.filter(at->this.parteSuperiorValida(at,clima,unUsuario))
 				.collect(Collectors.toSet());
-//		System.out.println("PowerSet: ");
-//		System.out.println(powerSetSuperiores); //Lo dejo para hacer pruebas despues
 		return powerSetSuperiores;
 		
 	}
@@ -126,13 +114,6 @@ public class Guardarropa{
 				categoria == unaCategoria).collect(Collectors.toSet());
 		return aux.size() == 1;//esto se traduce en que solo hay una prenda
 	}
-	/*
-	private boolean contienePrendasDeTodasLasCategorias(Set<Prenda> atuendo) {
-		return  this.contienePrendasDeCategoria(atuendo, Categoria.INFERIOR)
-				&& this.contienePrendasDeCategoria(atuendo, Categoria.ACCESORIO)
-				&& this.contienePrendasDeCategoria(atuendo, Categoria.CALZADO);
-		//&& this.contienePrendasDeCategoria(atuendo, Categoria.SUPERIOR)
-	}*/
 	
 	public int cantidadDePrendasGuardadas() {
 		return this.prendas.size();
@@ -158,7 +139,7 @@ public class Guardarropa{
 	}
 	private int calificacionUsuario(Usuario user,Categoria cat)
 	{
-		ArrayList<Calificacion> califUser = user.getCalificaciones();
+		List<Calificacion> califUser = user.getCalificaciones();
 		List<TipoSensaciones> sensaciones = califUser.stream().
 				filter(calif->calif.getCategoria() == cat).
 				map(calif->calif.getSensacion()).collect(Collectors.toList());
@@ -167,8 +148,5 @@ public class Guardarropa{
 		int nivelCaluroso = sensaciones.stream().filter(sensa->sensa == TipoSensaciones.CALOR)
 				.collect(Collectors.toList()).size();
 		return nivelFriolento - nivelCaluroso;
-	}
-	public Long getId() {
-		return id;
 	}
 }

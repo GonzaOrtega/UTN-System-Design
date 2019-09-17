@@ -12,6 +12,7 @@
 		<class>domain.Evento</class>
 		<class>domain.Prenda</class>
 		<class>domain.Usuario</class>
+		<class>domain.Calificacion</class>
 		<class>domain.Sugerencia</class>
 		<class>domain.frecuenciasDeEventos.FrecuenciaAnual</class>
 		<class>domain.frecuenciasDeEventos.FrecuenciaDiaria</class>

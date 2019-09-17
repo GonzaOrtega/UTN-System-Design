@@ -3,7 +3,6 @@ package domain;
 import java.util.*;
 import java.time.*;
 import java.util.stream.*;
-import javax.persistence.EntityManager;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 //TODO revisar e implementar queries (Estoy en eso)
@@ -22,7 +21,6 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager{
 	}
 
 	public void agregar(Usuario usuario) {
-		//this.usuarios.add(usuario);
 		entityManager().persist(usuario);
 	}
 

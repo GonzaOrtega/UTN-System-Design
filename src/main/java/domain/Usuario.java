@@ -7,6 +7,7 @@ import domain.exceptions.*;
 import java.util.stream.*;
 import domain.SuperClase;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -16,7 +17,7 @@ import javax.persistence.CascadeType;
 
 @Entity
 public class Usuario extends SuperClase {
-	// enumerated?
+	@Enumerated
 	private TipoUsuario tipo;
 	
 	private int  maximoDePrendas;
@@ -39,9 +40,8 @@ public class Usuario extends SuperClase {
 	@ManyToMany
 	private Set<Evento> eventos = new HashSet<Evento>();
 	
-	// mapeo?
-	// sin arraylist
-	private ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
+	@OneToMany@JoinColumn(name="id_Usuario")
+	private List<Calificacion> calificaciones = new ArrayList<Calificacion>();
 	
 	private Usuario() {}
 	
@@ -50,9 +50,6 @@ public class Usuario extends SuperClase {
 		this.maximoDePrendas = maximoDePrendas;
 		RepositorioDeUsuarios.getInstance().agregar(this);
 	}
-	
-	public Set<Evento> eventos() { return eventos; }
-
 	
 	public Set<Evento> eventosProximos(LocalDateTime fecha) {
 		
@@ -80,17 +77,7 @@ public class Usuario extends SuperClase {
 		return guardarropas.stream().anyMatch(guardarropa->guardarropa.prendas().contains(unaPrenda));
 	}
 	
-	public Set<Guardarropa> getGuardarropas() {
-		return this.guardarropas;
-	}
 	
-	public ArrayList<Calificacion> getCalificaciones(){
-		return this.calificaciones;
-	}
-	
-	public TipoUsuario getTipo() {
-		return tipo;
-	}
 	
 	//Recibe las nuevas sugerencias
 	public void agregarSugerencia(Sugerencia sugerenciaNueva){
@@ -115,9 +102,7 @@ public class Usuario extends SuperClase {
 		}
 	}
 	
-	public Set<Sugerencia> getSugerencias() {
-		return sugerencias;
-	}
+	
 
 	public void validacionSegunTipoUsuario(int cantidadDePrendasDelGuardarropas) {
 		if(tipo == TipoUsuario.GRATUITO && cantidadDePrendasDelGuardarropas >= maximoDePrendas) {
@@ -167,13 +152,30 @@ public class Usuario extends SuperClase {
 		sugerenciasConEventosFinalizados.forEach(sugerencia -> sugerencia.setPrendasComoNoUsadas());
 	}
 	
+	
+	public void desagendarEvento(Evento unEvento) {
+		this.eventos = eventos.stream().filter(evento -> !evento.equals(unEvento)).collect(Collectors.toSet());
+	}	
+	
+	////////////////////////////////GETERSYSETERS////////////////////////////////////////
+
 	private Set<Sugerencia> getSugerenciasConEventosFinalizados(){
 		return sugerencias.stream()
 				.filter(sugerencia-> sugerencia.getEvento().yaSucedio()).collect(Collectors.toSet());
 	}
-	
-	public void desagendarEvento(Evento unEvento) {
-		this.eventos = eventos.stream().filter(evento -> !evento.equals(unEvento)).collect(Collectors.toSet());
+	public Set<Sugerencia> getSugerencias() {
+		return sugerencias;
+	}
+	public Set<Guardarropa> getGuardarropas() {
+		return this.guardarropas;
 	}
 	
+	public List<Calificacion> getCalificaciones(){
+		return this.calificaciones;
+	}
+	
+	public TipoUsuario getTipo() {
+		return tipo;
+	}
+	public Set<Evento> eventos() { return eventos; }
 }

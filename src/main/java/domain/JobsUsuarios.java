@@ -11,7 +11,6 @@ public class JobsUsuarios implements Runnable{
 		RepositorioDeUsuarios.getInstance().notificarAUsuariosAfectadosPorCambioDeClima();
 		RepositorioDeUsuarios.getInstance().obtenerSugerenciasDeEventosProximosA(fechaActual);
 		RepositorioDeUsuarios.getInstance().lavarTodaLaRopaSucia();
-		//RepositorioDeUsuarios.getInstance().notificarAlertaMeterologicaDeEventosSugeridosPara(fechaActual);
 	}
 	public static void main() {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();

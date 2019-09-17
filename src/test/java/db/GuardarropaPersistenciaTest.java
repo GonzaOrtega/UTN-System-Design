@@ -46,10 +46,6 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	public void siSePersistenDosGuardarropasDistintosTendranDosIDsDistintos() throws Exception {
 		Guardarropa otroArmario = new Guardarropa();
 		juan.agregarGuardarropa(otroArmario);
-		/*
-		Set<Guardarropa> guardarropas = em
-				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
-				  .getResultList().stream().collect(Collectors.toSet());*/
 		Guardarropa armarioQuery = em
 				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
 				  .getResultList()
@@ -60,7 +56,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 				  .getResultList()
 				  .get(1);
 		
-		assertNotEquals(armarioQuery.getId(),otroArmarioQuery.getId());
+		assertNotEquals(armarioQuery, otroArmarioQuery);
 	}
 	
 	@Test
@@ -71,12 +67,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 		 Set<Prenda> prendasQuery = em
 				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
 				  .getResultList()
-				  .get(0).prendas();
-		 /*
-		 Set<Guardarropa> guardarropas = em
-				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
-				  .getResultList().stream().collect(Collectors.toSet());*/
-		 
+				  .get(0).prendas();		 
 		 assertTrue(prendasQuery.contains(jean)); 
 	}
 	

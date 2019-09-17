@@ -1,11 +1,15 @@
 package domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+
 import domain.enums.Categoria;
 import domain.enums.TipoSensaciones;
-
-public class Calificacion {
-
+@Entity
+public class Calificacion extends SuperClase{
+	@Enumerated
 	private Categoria parteCuerpo;
+	@Enumerated
 	private TipoSensaciones sensacion;
 
 	public Calificacion(Categoria parteCuerpo, TipoSensaciones sensacion) {
