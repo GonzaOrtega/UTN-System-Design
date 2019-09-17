@@ -60,5 +60,14 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 		assertEquals(koichi, koichiPersistido);
 		assertNotEquals(koichi.getTipo(), luisito.getTipo());
 	}
-
+	@Test
+	public void primerTestRepositorio() throws Exception {
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario koichi = new Usuario(TipoUsuario.GRATUITO, 15);
+		Usuario luisito = new Usuario(TipoUsuario.PREMIUM, 125);
+		repo.agregar(koichi);
+		repo.agregar(luisito);
+		int cantidad = repo.getUsuarios().size();
+		assertTrue(cantidad == 2);
+	}
 }

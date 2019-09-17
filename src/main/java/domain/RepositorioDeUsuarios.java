@@ -3,11 +3,12 @@ package domain;
 import java.util.*;
 import java.time.*;
 import java.util.stream.*;
+import javax.persistence.EntityManager;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
-//TODO revisar e implementar queries
-public class RepositorioDeUsuarios {
-
-	private Set<Usuario> usuarios = new HashSet<Usuario>();
+//TODO revisar e implementar queries (Estoy en eso)
+public class RepositorioDeUsuarios implements WithGlobalEntityManager{
+	//private Set<Usuario> usuarios = new HashSet<Usuario>();
 
 	private RepositorioDeUsuarios() {
 	};
@@ -21,15 +22,18 @@ public class RepositorioDeUsuarios {
 	}
 
 	public void agregar(Usuario usuario) {
-		this.usuarios.add(usuario);
+		//this.usuarios.add(usuario);
+		entityManager().persist(usuario);
 	}
 
-	public Set<Usuario> usuarios() {
+	public Set<Usuario> getUsuarios() {
+		List<Usuario> usuaries = entityManager().createQuery("from Usuario order by Id", Usuario.class).getResultList();
+		Set<Usuario> usuarios = new HashSet<Usuario>(usuaries);
 		return usuarios;
 	}
 
 	public Set<Evento> eventos() {
-		return usuarios.stream().flatMap(usuario -> usuario.eventos().stream()).collect(Collectors.toSet());
+		return getUsuarios().stream().flatMap(usuario -> usuario.eventos().stream()).collect(Collectors.toSet());
 	}
 
 	public Set<Evento> eventosProximos() {
@@ -38,19 +42,19 @@ public class RepositorioDeUsuarios {
 	}
 
 	public void obtenerSugerenciasDeEventosProximosA(LocalDateTime fecha) {
-		this.usuarios.stream().forEach(usuario -> usuario.eventosProximos(fecha).stream().forEach(evento -> {
+		this.getUsuarios().stream().forEach(usuario -> usuario.eventosProximos(fecha).stream().forEach(evento -> {
 			evento.sugerir(usuario);
 			usuario.notificarSugerenciasNuevas();
 		}));
 	}
 
 	public void notificarAUsuariosAfectadosPorCambioDeClima() {
-		this.usuarios.stream().forEach(usuario -> usuario.eventosConCambioDeClima().stream()
+		this.getUsuarios().stream().forEach(usuario -> usuario.eventosConCambioDeClima().stream()
 				.forEach(evento -> usuario.notificarAlertaMeterologicaDe(evento)));
 	}
 
 	public void lavarTodaLaRopaSucia() {
-		this.usuarios.forEach(usuario -> usuario.lavarLaRopa());
+		this.getUsuarios().forEach(usuario -> usuario.lavarLaRopa());
 	}
 
 }
