@@ -1,9 +1,16 @@
 package domain.frecuenciasDeEventos;
 import java.time.*;
 
-import domain.enums.TipoFrecuencia;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+import domain.enums.TipoFrecuencia;
+@Entity
 public class FrecuenciaDiaria extends FrecuenciaDeEvento{
+//	@Id @GeneratedValue
+//	long id;
 	private int limiteDeProximidad = 8;
 	int hora;
 	

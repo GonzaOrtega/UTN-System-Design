@@ -27,7 +27,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Guardarropa armario = new Guardarropa();
 	Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
-
+	
 	
 	@Before
 	public void setUp(){
@@ -39,6 +39,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 		juan.agregarGuardarropa(armario);
 		em.persist(juan);
 		em.persist(eventoConFrecuenciaUnica);
+		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 	}
 	
 	@Test

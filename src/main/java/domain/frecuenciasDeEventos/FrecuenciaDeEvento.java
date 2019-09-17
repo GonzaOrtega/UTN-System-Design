@@ -8,8 +8,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import domain.enums.TipoFrecuencia;
-@Entity@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class FrecuenciaDeEvento{
+
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Entity
+public class FrecuenciaDeEvento{
 	@Id
 	@GeneratedValue
 	private Long id;

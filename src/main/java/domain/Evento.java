@@ -2,6 +2,8 @@ package domain;
 
 import java.time.*;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +16,6 @@ import domain.frecuenciasDeEventos.*;
 
 @Observable
 @Entity
-@Table(name = "Calendario")
 public class Evento {
 
 	@Id
@@ -23,7 +24,7 @@ public class Evento {
 
 	private String descripcion;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private FrecuenciaDeEvento frecuencia;
 
 	private Evento() {}/////////////////// Solo para la Persistencia

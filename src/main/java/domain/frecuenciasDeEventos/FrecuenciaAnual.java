@@ -2,10 +2,15 @@ package domain.frecuenciasDeEventos;
 
 import java.time.*;
 
-import domain.enums.TipoFrecuencia;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+import domain.enums.TipoFrecuencia;
+@Entity
 public class FrecuenciaAnual extends FrecuenciaDeEvento {
-	
+//	@Id @GeneratedValue
+//	long id;
 	int limiteDeProximidad = 30;
 	
 	LocalDateTime fechaEvento;

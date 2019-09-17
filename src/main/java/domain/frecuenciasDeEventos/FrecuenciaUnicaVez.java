@@ -1,9 +1,13 @@
 package domain.frecuenciasDeEventos;
 
 import java.time.*;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import domain.enums.TipoFrecuencia;
-
+@Entity
 public class FrecuenciaUnicaVez extends FrecuenciaDeEvento {
 	static int limiteDeProximidad = 7;
 	
