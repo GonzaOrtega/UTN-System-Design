@@ -1,4 +1,6 @@
 import static org.junit.Assert.*;
+
+import java.io.File;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -35,15 +37,15 @@ public class PrendaTest {
 	}
 	
 	@Test
-	public void crearUnaPrendaConFoto() throws IOException {
-		Foto imagenDeRemeraNegra = new FotoBuilder().ruta("src/test/java/remeranegra.jpg").crearFoto();
+	public void crearUnaPrendaConFoto() throws NoSePuedeAbrirImagen {
+		Foto imagenDeRemeraNegra = new Foto(new File("src/test/java/remeranegra.jpg"));
 		Prenda remeraNegra = new PrendaBuilder().conColorPrimario(Color.NEGRO).conTipo(TipoPrenda.Remera).conTela(Material.ALGODON).conFoto(imagenDeRemeraNegra).conAbrigo(0).crearPrenda();
 		assertEquals(remeraNegra.getFoto(),imagenDeRemeraNegra);
 	}
 	
-	@Test (expected = IOException.class)
+	@Test (expected = NoSePuedeAbrirImagen.class)
 	public void noSePodranCrearFotosSiNoSeLeeCorrectamenteElArchivo() throws IOException {
-		new FotoBuilder().ruta("remerarosa.jpg").crearFoto();
+		new Foto(new File("remerarosa.jpg"));
 	}
 	@Test (expected = TieneParametrosNulosException.class)
 	public void noSePodranCrearPrendasSinNivelAbrigo() {
