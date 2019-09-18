@@ -27,6 +27,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Guardarropa armario = new Guardarropa();
 	Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+	Usuario karen = new Usuario(TipoUsuario.PREMIUM,0);
 	
 	
 	@Before
@@ -38,82 +39,22 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 		juan.cargarPrenda(armario, ojotas);
 		juan.agregarGuardarropa(armario);
 		em.persist(juan);
-		em.persist(eventoConFrecuenciaUnica);
+		//em.persist(eventoConFrecuenciaUnica);
 		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 	}
-	
+
 	@Test
-	public void siSePersistenDosGuardarropasDistintosTendranDosIDsDistintos() throws Exception {
+	public void siJuanAgregaUnJeanAArmarioEsteSeVeraModificadoYPersistido() {
+		withTransaction(() -> {juan.cargarPrenda(armario, jean);});
+		assertTrue(armario.prendas().contains(jean));
+	}
+
+	//TODO: ver por que da 3 y no 2
+	@Test
+	public void siJuanAgregaASuGuardarropasOtroArmarioHabraDosArmariosPersistidos() {
 		Guardarropa otroArmario = new Guardarropa();
-		juan.agregarGuardarropa(otroArmario);
-		Guardarropa armarioQuery = em
-				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
-				  .getResultList()
-				  .get(0);
-		
-		Guardarropa otroArmarioQuery = em
-				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
-				  .getResultList()
-				  .get(1);
-		
-		assertNotEquals(armarioQuery, otroArmarioQuery);
+		withTransaction(() -> {juan.agregarGuardarropa(otroArmario);});
+		assertEquals(em.createQuery("from Guardarropa order by Id",Guardarropa.class).getResultList().size(),2);
 	}
-	
-	@Test
-	public void siSeSolicitanAtuendosSePersisten() {
-
-		 juan.cargarPrenda(armario, jean);
-
-		 Set<Prenda> prendasQuery = em
-				  .createQuery("from Guardarropa order by Id", Guardarropa.class)
-				  .getResultList()
-				  .get(0).prendas();		 
-		 assertTrue(prendasQuery.contains(jean)); 
-	}
-	
-	@Test
-	public void siSeSugiereConArmarioJuanTieneSugerencias() {
-		juan.cargarPrenda(armario, jean);
-		Sugeridor.getInstance().sugerirPrendasPara(juan).forEach(atuendo -> juan.agregarSugerencia(new Sugerencia(atuendo,eventoConFrecuenciaUnica)));
-		Usuario usuarioQuery = em
-				.createQuery("from Usuario", Usuario.class)
-				.getResultList()
-				.get(0);
-
-		assertFalse(usuarioQuery.getSugerencias().isEmpty());
-	}
-	
-	public void sugerirMasAceptarTodasLasSugerencias(Usuario usuario, Evento evento) {
-		evento.sugerir(usuario);
-		usuario.getSugerencias().stream().forEach(sugerencia -> usuario.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA));
-	}
-	
-	public Set<Set<Prenda>> obtenerAtuendosDeUsuario(Usuario usuario) {
-		return usuario.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
-	}
-	
-	public boolean todaLaRopaEstaLimpia(Set<Set<Prenda>> atuendos) {
-		return atuendos.stream().allMatch(atuendo -> atuendo.stream().allMatch(prenda -> !prenda.isUsada()));
-	}
-	
-	@Test
-	public void siSeSugiereAtuendoActualizaLaPrendaAUsada() {
-		juan.cargarPrenda(armario, jean);
-		this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
-		assertFalse(this.todaLaRopaEstaLimpia(this.obtenerAtuendosDeUsuario(juan)));
-	}
-	
-	@Test
-	public void alLavarLaRopaSeActualizaLaPrenda() {
-		juan.cargarPrenda(armario, jean);
-		this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
-		juan.lavarLaRopa();
-		Usuario usuarioQuery = em
-				.createQuery("from Usuario", Usuario.class)
-				.getResultList()
-				.get(0);
-		assertTrue(this.todaLaRopaEstaLimpia(this.obtenerAtuendosDeUsuario(usuarioQuery)));
-	}
-	
 	
 }

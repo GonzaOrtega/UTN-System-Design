@@ -8,4 +8,9 @@ import javax.persistence.MappedSuperclass;
 public abstract class SuperClase {
 	@Id @GeneratedValue
 	private long  id;
+
+	public long getId() {
+		return id;
+	}
+	
 }

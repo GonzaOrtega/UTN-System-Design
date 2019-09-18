@@ -12,18 +12,25 @@ import domain.enums.*;
 @Entity
 public class Guardarropa extends SuperClase{
 
+	// ---------------------------- Atributos -------------------------------
+	
 	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
 	private Set<Prenda> prendas = new HashSet<Prenda>();
 	
-	public Set<Prenda> prendas(){return prendas;}
+	
+	// ------------------ Getters, setters y constructores ------------------
 	
 	public void cargarPrenda(Prenda unaPrenda){
 		prendas.add(unaPrenda);
 	}
 	
+	public Set<Prenda> prendas(){return prendas;}
+
+	// ------------------------------ Metodos -------------------------------
+	
 	public List<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor,Usuario unUser){
 		Set<Set<Prenda>> elAux = new HashSet<Set<Prenda>>();
-		elAux = this.parteNoSuperior(proveedor,unUser); //esto esta asi por un tema de Set y List
+		elAux = this.parteNoSuperior(proveedor,unUser); 
 		ArrayList<Set<Prenda>> atuendosInferior = new ArrayList<Set<Prenda>>(elAux);
 		Set<Set<Prenda>> atuendoSup = parteSuperior(proveedor,unUser);
 		ArrayList<Set<Prenda>> listaAtuSuperior = new ArrayList<Set<Prenda>>(atuendoSup);
@@ -54,6 +61,7 @@ public class Guardarropa extends SuperClase{
 				.collect(Collectors.toSet());
 		return powerSetInferiores;
 	}
+	
 	private Set<Set<Prenda>> parteSuperior(ProveedorClima clima,Usuario unUsuario){
 		Set<Prenda> partesSuperiores = this.soloSuperior();
 		Set<Set<Prenda>> powerSetSuperiores = Sets.powerSet(partesSuperiores); 
@@ -69,12 +77,12 @@ public class Guardarropa extends SuperClase{
 				Categoria.SUPERIOR).collect(Collectors.toSet());
 		return ret;
 	}
+	
 	private boolean parteSuperiorValida(Set<Prenda> ps, ProveedorClima clima,Usuario unUser) {
 		Set<Prenda> aux = ps.stream().filter(prenda->prenda.getEsBase()).collect(Collectors.toSet());
 		boolean soloUnaPrendaBase = aux.size() == 1;
 		int aux2 = ps.stream().mapToInt(prenda -> prenda.getNivelAbrigo()).sum();
 		boolean abrigaBien = this.EstaEnRango(aux2,clima,unUser,Categoria.SUPERIOR);
-		//nuevo para que no devuelva dos camperas o dos buzos
 		boolean soloUnaCampera = ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Campera).collect(Collectors.toSet()).size()<2;
 		boolean soloUnTapado = ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Tapado).collect(Collectors.toSet()).size()<2;
 		boolean soloUnBuzo= ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Buzo).collect(Collectors.toSet()).size()<2;
@@ -85,10 +93,8 @@ public class Guardarropa extends SuperClase{
 
 	public boolean EstaEnRango(int nivelAbrigo,ProveedorClima clima,Usuario unUsuario,Categoria cat) {
 		int nf =this.nivelFrio(clima.temperatura());
-		nf += calificacionUsuario(unUsuario,cat);//Nuevo, si tiene frio en el pechito(como ya saben quien...)
-		//Aumenta o disminuye este rango.
+		nf += calificacionUsuario(unUsuario,cat);
 		return nivelAbrigo >= nf-1 && nivelAbrigo <= nf+2;
-		//Aca establezco un rango, fijense definicion de nivel frio
 	}
 	
 	private boolean parteInferiorValida(Set<Prenda> ps,ProveedorClima clima,Usuario user) {
@@ -96,12 +102,11 @@ public class Guardarropa extends SuperClase{
 				&& this.contienePrendasDeCategoria(ps, Categoria.CALZADO)
 				&& this.abrigaCorrectamenteInferior(ps,clima,user);
 	}
+	
 	private boolean abrigaCorrectamenteInferior(Set<Prenda> prenInf,ProveedorClima clima,Usuario user) {
 		boolean abriganBien = prenInf.stream().
 				filter(pr->EstaEnRango(pr.getNivelAbrigo(),clima,user,pr.getTipo().categoria)).
 				collect(Collectors.toSet()).size()>1;
-		//Como prendas inferiores solo puede haber dos, esto se fija si las dos
-				//Abrigan bien a la persona
 		return abriganBien;
 	}
 	
@@ -112,13 +117,9 @@ public class Guardarropa extends SuperClase{
 		
 		aux = atuendo.stream().filter(prenda->prenda.getTipo().
 				categoria == unaCategoria).collect(Collectors.toSet());
-		return aux.size() == 1;//esto se traduce en que solo hay una prenda
+		return aux.size() == 1;
 	}
-	
-	public int cantidadDePrendasGuardadas() {
-		return this.prendas.size();
-	}
-	
+
 	private int nivelFrio(double temperatura) {
 		if (temperatura < 1)
 			return 5;
@@ -129,14 +130,11 @@ public class Guardarropa extends SuperClase{
 		if (temperatura < 17)
 			return 2;
 		if (temperatura < 20)
-			return 1; //irias con remera manga larga/corta
+			return 1; 
 		else
-			return -1;//irias solo con remera manga corta porque esta abriga 0
+			return -1;
 	}
 	
-	public Set<Prenda> prendasNoUsadas(){
-		return prendas.stream().filter(prenda -> !prenda.isUsada()).collect(Collectors.toSet());
-	}
 	private int calificacionUsuario(Usuario user,Categoria cat)
 	{
 		List<Calificacion> califUser = user.getCalificaciones();
@@ -149,4 +147,13 @@ public class Guardarropa extends SuperClase{
 				.collect(Collectors.toList()).size();
 		return nivelFriolento - nivelCaluroso;
 	}
+	
+	public Set<Prenda> prendasNoUsadas(){
+		return prendas.stream().filter(prenda -> !prenda.isUsada()).collect(Collectors.toSet());
+	}
+	
+	public int cantidadDePrendasGuardadas() {
+		return this.prendas.size();
+	}
+	
 }

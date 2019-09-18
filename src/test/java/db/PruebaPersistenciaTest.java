@@ -61,7 +61,7 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 		Usuario luisito = new Usuario(TipoUsuario.PREMIUM, 125);
 		repo.agregar(koichi);
 		repo.agregar(luisito);
-		int cantidad = repo.getUsuarios().size();
+		int cantidad = repo.usuarios().size();
 		assertTrue(cantidad == 2);
 	}
 }

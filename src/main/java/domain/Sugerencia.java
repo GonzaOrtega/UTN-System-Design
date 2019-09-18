@@ -9,8 +9,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import domain.enums.TipoSugerencias;
 
-//TODO wtf? abstract persistence test
-//TODO buscar mapped superclass
 @Entity 
 public class Sugerencia extends SuperClase{
 
