@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import org.junit.Test;
 import domain.enums.*;
+import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 import domain.*;
 import javax.persistence.EntityManager;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -62,6 +63,25 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 		repo.agregar(koichi);
 		repo.agregar(luisito);
 		int cantidad = repo.usuarios().size();
+		System.out.println(cantidad);
 		assertTrue(cantidad == 2);
+	}
+	@Test
+	public void segundoTestRepositorio() throws Exception {
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario guidoMista = new Usuario(TipoUsuario.GRATUITO, 15);
+		Evento evento1 = new Evento(new FrecuenciaUnicaVez(2019,10,24),"Almorzar en Restaurante.");//"24-05-2019"
+		Evento evento2 = new Evento(new FrecuenciaUnicaVez(2019,10,25),"Entrenar tiro.");
+		Evento evento3 = new Evento(new FrecuenciaUnicaVez(2019,10,25),"Entrenar tiro.");
+		guidoMista.agendarEvento(evento1);
+		guidoMista.agendarEvento(evento2);
+		repo.agregar(guidoMista);
+		guidoMista.agendarEvento(evento3);
+		guidoMista = null;
+		Usuario bdUser = em.createQuery("from Usuario order by Id", Usuario.class).getResultList().get(0);
+		
+		int cantidad = bdUser.eventos().size();
+
+		assertTrue(cantidad == 3);
 	}
 }

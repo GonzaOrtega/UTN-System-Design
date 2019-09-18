@@ -5,10 +5,7 @@ import java.time.*;
 import java.util.stream.*;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
-//TODO revisar e implementar queries (Estoy en eso)
 public class RepositorioDeUsuarios implements WithGlobalEntityManager{
-	//private Set<Usuario> usuarios = new HashSet<Usuario>();
-
 	// ------------------- Metodos p/ obtener instancia -------------------
 
 	private static class RepositorioDeUsuariosHolder {

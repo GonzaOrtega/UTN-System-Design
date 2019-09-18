@@ -45,7 +45,7 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<MedioDeNotificacion> medios = new HashSet<MedioDeNotificacion>();
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private Set<Evento> eventos = new HashSet<Evento>();
 	
 	@OneToMany (cascade = CascadeType.PERSIST) @JoinColumn(name="id_Usuario") 
@@ -83,7 +83,14 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 		return tipo;
 	}
 	
-	public Set<Evento> eventos() { return eventos; }
+	public Set<Evento> eventos() { 
+/*		List<Evento> listaEventos = entityManager()
+				.createQuery("from Evento order by Id", Evento.class)
+				.getResultList();
+		Set<Evento> setEventos = new HashSet<Evento>(listaEventos);
+		return setEventos;*/
+		return eventos;
+		}
 	
 	public Set<Evento> eventosSugeridos(){
 		return this.eventos().stream().filter(evento->this.tengoSugerenciaDeEsteEvento(evento) && !evento.yaSucedio()).collect(Collectors.toSet());
