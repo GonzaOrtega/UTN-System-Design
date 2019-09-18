@@ -4,13 +4,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import domain.exceptions.NoSePuedeAbrirImagen;
 
-public class Foto {
-
+@Entity
+public class Foto extends SuperClase {
+	@Transient
 	private BufferedImage imagen;
 	
+	private String ruta;
+	
 	public Foto(File ruta){
+		this.ruta=ruta.toString();
 		BufferedImage imagen;
 		try {
 			imagen = ImageIO.read(ruta);

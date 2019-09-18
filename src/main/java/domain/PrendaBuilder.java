@@ -47,7 +47,7 @@ public class PrendaBuilder{
 		prenda.setFoto(foto);
 		return this;
 	}
-	//Agregue esto
+
 	public PrendaBuilder conAbrigo(int nivelAbrigo) {
 		prenda.setNivelAbrigo(nivelAbrigo);
 		return this;

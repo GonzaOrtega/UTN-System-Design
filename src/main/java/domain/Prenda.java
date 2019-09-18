@@ -1,9 +1,11 @@
 package domain;
+import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import domain.enums.*;
@@ -24,8 +26,7 @@ public class Prenda extends SuperClase{
 	@Enumerated(EnumType.STRING)
 	private Material tela;
 	
-	// TODO: cambiar el formato de la foto, buscar una nueva forma
-	@Transient
+    @Nullable @OneToOne 
 	private Foto foto;
 	
 	private int nivelAbrigo;
