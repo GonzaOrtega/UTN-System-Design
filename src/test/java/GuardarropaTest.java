@@ -13,7 +13,7 @@ public class GuardarropaTest {
 	ProveedorClima APIDeMentiritasDeInvierno = new MockAPI(10,19,false);
 	ProveedorClima APIMockInvierno = new MockAPI(10,12,false);
 	ProveedorClima APIMockTemplado = new MockAPI(16,16,false);
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0);
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0,"juan","123");
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).conAbrigo(0).crearPrenda();
@@ -115,7 +115,7 @@ public class GuardarropaTest {
 	
 	@Test
 	public void seAgregaUnGuardarropaADosUsuarios() {
-		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"lara","123");
 		lara.agregarGuardarropa(armario);
 	}
 	

@@ -12,7 +12,7 @@ public class UsuarioTest {
 
 	ProveedorClima weatherAPI = new OpenWeatherMapAPI();
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
@@ -89,13 +89,13 @@ public class UsuarioTest {
 	
 	@Test (expected = NoHayAtuendosDisponiblesException.class)
 	public void siLaraPideUnAtuendoPeroNoTienePrendasSuficientesLanzaExcepcion(){
-		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 		Sugeridor.getInstance().sugerirPrendasPara(lara);
 	}
 	
 	@Test(expected = SeExcedioElLimiteDeCapacidadDelGuardarropaException.class)
 	public void siSeIntentaCargarMasCantidadDePrendasDeLaPermitidaLanzaException(){
-		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1);
+		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1,"juan","123");
 		lara.agregarGuardarropa(otroArmario);
 		lara.cargarPrenda(otroArmario, camisaCorta);
 		lara.cargarPrenda(otroArmario, zapatos);
@@ -103,7 +103,7 @@ public class UsuarioTest {
 	
 	@Test 
 	public void siUnUsuarioGratuitoNoSePasaDeLaCantidadPermitidaPuedeCargarPrenda(){
-		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1);
+		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1,"juan","123");
 		lara.agregarGuardarropa(otroArmario);
 		lara.cargarPrenda(otroArmario, camisaCorta);
 		assertTrue(otroArmario.prendas().size() == 1);
@@ -125,7 +125,7 @@ public class UsuarioTest {
 	
 	@Test
 	public void dosUsuariosCompartenUnGuardarropa() {
-		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 		lara.agregarGuardarropa(armario);
 		assertEquals(lara.getGuardarropas(), juan.getGuardarropas());
 	}
@@ -141,7 +141,7 @@ public class UsuarioTest {
 		juan.cargarPrenda(armario, jean);
 		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
 		
-		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 		
 		lara.agregarGuardarropa(armario);
 		lara.cargarPrenda(armario, pantalon);
@@ -160,7 +160,7 @@ public class UsuarioTest {
 		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 
 		juan.cargarPrenda(armario, jean);
-		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 		lara.agregarGuardarropa(armario);
 		
 		this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
@@ -172,7 +172,7 @@ public class UsuarioTest {
 	@Test
 	public void siNoSeAceptanLasSugerenciasConGuardarropaCompartidoSeGeneranLasMismasSugerencias() {
 		juan.cargarPrenda(armario, jean);
-		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 		lara.agregarGuardarropa(armario);
 		
 		eventoConFrecuenciaUnica.sugerir(juan);
@@ -209,7 +209,7 @@ public class UsuarioTest {
 		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
 		juan.lavarLaRopa();
 		
-		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0);
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 		lara.agregarGuardarropa(armario);
 		Set<Set<Prenda>> atuendosDeLara = this.sugerirMasAceptarTodasLasSugerencias(lara, eventoConFrecuenciaUnica);
 		

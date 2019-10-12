@@ -17,7 +17,7 @@ import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 public class GuardarropaPersistenciaTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	
 	EntityManager em = entityManager();
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
+	//Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
@@ -27,25 +27,25 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Guardarropa armario = new Guardarropa();
 	Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
-	Usuario karen = new Usuario(TipoUsuario.PREMIUM,0);
+	Usuario karen = new Usuario(TipoUsuario.PREMIUM,0,"kare22n722222277","123");
 	
 	
 	@Before
 	public void setUp(){
-		juan.cargarPrenda(armario, camisaCorta);
-		juan.cargarPrenda(armario, zapatos);
-		juan.cargarPrenda(armario, gorra);
-		juan.cargarPrenda(armario, camisaLarga);
-		juan.cargarPrenda(armario, ojotas);
-		juan.agregarGuardarropa(armario);
-		em.persist(juan);
+		karen.cargarPrenda(armario, camisaCorta);
+		karen.cargarPrenda(armario, zapatos);
+		karen.cargarPrenda(armario, gorra);
+		karen.cargarPrenda(armario, camisaLarga);
+		karen.cargarPrenda(armario, ojotas);
+		karen.agregarGuardarropa(armario);
+		em.persist(karen);
 		//em.persist(eventoConFrecuenciaUnica);
 		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 	}
 
 	@Test
 	public void siJuanAgregaUnJeanAArmarioEsteSeVeraModificadoYPersistido() {
-		withTransaction(() -> {juan.cargarPrenda(armario, jean);});
+		karen.cargarPrenda(armario, jean);
 		assertTrue(armario.prendas().contains(jean));
 	}
 
@@ -53,8 +53,10 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	@Test
 	public void siJuanAgregaASuGuardarropasOtroArmarioHabraDosArmariosPersistidos() {
 		Guardarropa otroArmario = new Guardarropa();
-		withTransaction(() -> {juan.agregarGuardarropa(otroArmario);});
-		assertEquals(2,em.createQuery("from Guardarropa order by Id",Guardarropa.class).getResultList().size());
+		withTransaction(() -> {karen.agregarGuardarropa(otroArmario);});
+		Long nro = karen.getId();
+		String id = nro.toString();
+		assertEquals(2,em.createQuery("from Usuario_Guardarropa gg where gg.Usuario_id = "+id,Guardarropa.class).getResultList().size());
 	}
 	
 }

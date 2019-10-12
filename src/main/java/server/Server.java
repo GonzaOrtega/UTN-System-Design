@@ -10,6 +10,7 @@ public class Server {
 		Spark.staticFileLocation("/public");
 		Router.instance().configurar();
 		//Spark.init();
+
 	}
 
 }

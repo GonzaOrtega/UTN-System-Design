@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import com.google.common.collect.*;
 import domain.apisClima.*;
@@ -16,7 +17,8 @@ public class Guardarropa extends SuperClase{
 	
 	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
 	private Set<Prenda> prendas = new HashSet<Prenda>();
-	
+	/*@ManyToMany(mappedBy = "guardarropas")
+	private Set<Usuario> duenios = new HashSet<Usuario>();*/
 	
 	// ------------------ Getters, setters y constructores ------------------
 	

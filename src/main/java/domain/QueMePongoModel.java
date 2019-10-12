@@ -30,7 +30,7 @@ public class QueMePongoModel implements WithGlobalEntityManager {
 	Evento eventoConFrecuenciaSemanal = new Evento(new FrecuenciaSemanal(3),"Sin descripcion");//"16-01-2019" MIERCOLES
 	Evento eventoConFrecuenciaMensual = new Evento(new FrecuenciaMensual(16),"Sin descripcion");//"16-01-2019"
 	Evento eventoConFrecuenciaAnual = new Evento(new FrecuenciaAnual(2,16),"Sin descripcion");//"16-01-2019"
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,15,"juan","123");
 	public QueMePongoModel() {
 		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 		juan.agendarEvento(eventoConFrecuenciaAnual);

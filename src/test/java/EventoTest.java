@@ -9,7 +9,7 @@ import java.time.*;
 
 public class EventoTest {
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 	Guardarropa armario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).conAbrigo(0).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).conAbrigo(0).crearPrenda();

@@ -19,11 +19,11 @@ public class EventoPersistenciaTest extends AbstractPersistenceTest implements W
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	Evento eventoAnual = new Evento(new FrecuenciaAnual(02,01),"Medico");
 	Evento eventoDiario = new Evento(new FrecuenciaDiaria(0), "Trabajo");
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 	@Before
 	public void setUp(){
-		em.persist(eventoDiario);
-		em.persist(eventoAnual);
+		juan.agendarEvento(eventoDiario);
+		juan.agendarEvento(eventoAnual);
 		em.persist(juan);
 	}
 	
@@ -35,13 +35,13 @@ public class EventoPersistenciaTest extends AbstractPersistenceTest implements W
 	}
 	@Test
 	public void desagendarEventos() {
-		juan.agendarEvento(eventoDiario);
-		juan.agendarEvento(eventoAnual);
-		Usuario usuario = em.createQuery("from Usuario order by Id",Usuario.class)
+//		juan.agendarEvento(eventoDiario);
+	//	juan.agendarEvento(eventoAnual);
+		Usuario usuario = em.createQuery("from Usuario where nombreUsuario = 'juan'",Usuario.class)
 					.getSingleResult();
 		assertTrue(usuario.eventos().size()==2);
 		juan.desagendarEvento(eventoDiario);
-		usuario = em.createQuery("from Usuario order by Id",Usuario.class)
+		usuario = em.createQuery("from Usuario  where nombreUsuario = 'juan'",Usuario.class)
 				.getSingleResult();
 		assertTrue(usuario.eventos().size()==1);
 	}

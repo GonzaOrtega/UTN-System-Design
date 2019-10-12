@@ -27,8 +27,8 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 
 	@Test
 	public void testUsuario() throws Exception {
-		Usuario bruno = new Usuario(TipoUsuario.PREMIUM, 25);
-		Usuario giorno = new Usuario(TipoUsuario.GRATUITO, 15);
+		Usuario bruno = new Usuario(TipoUsuario.PREMIUM, 25,"juan","123");
+		Usuario giorno = new Usuario(TipoUsuario.GRATUITO, 15,"juan","123");
 		Guardarropa soyElGuarda = new Guardarropa();
 		bruno.agregarGuardarropa(soyElGuarda);
 		em.persist(bruno);
@@ -44,8 +44,8 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 
 	@Test
 	public void guardaBienLosAtributos() throws Exception {
-		Usuario koichi = new Usuario(TipoUsuario.GRATUITO, 15);
-		Usuario luisito = new Usuario(TipoUsuario.PREMIUM, 125);
+		Usuario koichi = new Usuario(TipoUsuario.GRATUITO, 15,"juan","123");
+		Usuario luisito = new Usuario(TipoUsuario.PREMIUM, 125,"juan","123");
 		Guardarropa soyElGuarda = new Guardarropa();
 		koichi.agregarGuardarropa(soyElGuarda);
 		em.persist(koichi);
@@ -58,8 +58,8 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 	@Test
 	public void primerTestRepositorio() throws Exception {
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario koichi = new Usuario(TipoUsuario.GRATUITO, 15);
-		Usuario luisito = new Usuario(TipoUsuario.PREMIUM, 125);
+		Usuario koichi = new Usuario(TipoUsuario.GRATUITO, 15,"juan","123");
+		Usuario luisito = new Usuario(TipoUsuario.PREMIUM, 125,"juan","123");
 		repo.agregar(koichi);
 		repo.agregar(luisito);
 		int cantidad = repo.usuarios().size();
@@ -69,7 +69,7 @@ public class PruebaPersistenciaTest extends AbstractPersistenceTest implements W
 	@Test
 	public void segundoTestRepositorio() throws Exception {
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario guidoMista = new Usuario(TipoUsuario.GRATUITO, 15);
+		Usuario guidoMista = new Usuario(TipoUsuario.GRATUITO, 15,"juan","123");
 		Evento evento1 = new Evento(new FrecuenciaUnicaVez(2019,10,24),"Almorzar en Restaurante.");//"24-05-2019"
 		Evento evento2 = new Evento(new FrecuenciaUnicaVez(2019,10,25),"Entrenar tiro.");
 		Evento evento3 = new Evento(new FrecuenciaUnicaVez(2019,10,25),"Entrenar tiro.");

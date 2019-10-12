@@ -10,7 +10,7 @@ public class UITest {
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	Evento evento = new Evento(new FrecuenciaUnicaVez(2019,5,24),"Ir a cenar");
 	Evento evento2 = new Evento(new FrecuenciaUnicaVez(2019,8,1),"Ir a cenar");
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0);
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
 	
 	@Before
 	public void setUp() {

@@ -10,7 +10,6 @@ import org.uqbar.commons.model.annotations.Observable;
 import domain.frecuenciasDeEventos.*;
 import ui.EventoView;
 
-@Observable
 @Entity
 public class Evento extends SuperClase{
 

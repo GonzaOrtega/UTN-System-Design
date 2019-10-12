@@ -15,6 +15,6 @@ public class Router {
 	}
 	
 	public void configurar() {
-	Spark.get("/conversor/millas",InicioSesionController::verificarUsuario );
+	Spark.get("/inicioSesion/Usuario",InicioSesionController::verificarUsuario );
 	}
 }

@@ -19,12 +19,15 @@ import javax.persistence.Transient;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 
 @Entity
 public class Usuario extends SuperClase implements WithGlobalEntityManager{
 	
 	// ---------------------------- Atributos -------------------------------
-
+	@Column(unique=true)
+	private String nombreUsuario;
+	private String password;
 	@Enumerated
 	private TipoUsuario tipo;
 	
@@ -53,14 +56,18 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 	
 	// ------------------ Getters, setters y constructores ------------------
 	
+	
 	private Usuario() {}
 	
-	public Usuario(TipoUsuario tipo, int maximoDePrendas) {
+	public Usuario(TipoUsuario tipo, int maximoDePrendas,String nombre,String pass) {
 		this.tipo = tipo;
 		this.maximoDePrendas = maximoDePrendas;
-		RepositorioDeUsuarios.getInstance().agregar(this);
+		this.nombreUsuario = nombre;
+		this.password = pass;
 	}
-	
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
 	public Set<Evento> eventosProximos(LocalDateTime fecha) {
 		
 		return this.eventos().stream().filter(evento->evento.esProximo(fecha)&& !this.tengoSugerenciaDeEsteEvento(evento)).collect(Collectors.toSet());
