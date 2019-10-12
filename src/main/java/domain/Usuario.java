@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -37,12 +38,12 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	
 	@OneToMany (cascade = CascadeType.PERSIST)
-	@JoinColumn(name="id_usuario")
-	private Set<Sugerencia> sugerencias = new HashSet<Sugerencia>();
+	@JoinColumn(name="id_usuario")@OrderColumn
+	private List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 	
-	// TODO: revisar
-	@OneToOne
-	private Sugerencia ultimaSugerencia = null;
+	private Sugerencia ultimaSugerencia() {
+		return sugerencias.get(sugerencias.size()-1);//obtiene el ultimo.
+	}
 	
 	
 	@ManyToMany (cascade = CascadeType.PERSIST)
@@ -73,7 +74,7 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 		return this.eventos().stream().filter(evento->evento.esProximo(fecha)&& !this.tengoSugerenciaDeEsteEvento(evento)).collect(Collectors.toSet());
 	}
 
-	public Set<Sugerencia> getSugerencias() {
+	public List<Sugerencia> getSugerencias() {
 		return sugerencias;
 	}
 	
@@ -161,7 +162,6 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 		if(tipo.equals(TipoSugerencias.ACEPTADA)) {
 			sugerencia.getAtuendo().forEach(prenda -> prenda.setUsada(true));
 		}
-			ultimaSugerencia =sugerencia;
 			sugerencia.setEstado(tipo);
 	}
 	
@@ -171,9 +171,9 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 	}
 	
 	public void deshacerUltimaOperacionDeSugerencia() {
-		if (ultimaSugerencia != null) {
-			ultimaSugerencia.getAtuendo().forEach(prenda -> prenda.setUsada(false));
-			ultimaSugerencia.setEstado(TipoSugerencias.PENDIENTE);
+		if (this.ultimaSugerencia() != null) {
+			this.ultimaSugerencia().getAtuendo().forEach(prenda -> prenda.setUsada(false));
+			this.ultimaSugerencia().setEstado(TipoSugerencias.PENDIENTE);
 		}
 	}
 	
