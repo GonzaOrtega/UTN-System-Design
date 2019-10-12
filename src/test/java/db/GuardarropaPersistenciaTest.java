@@ -54,9 +54,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	public void siJuanAgregaASuGuardarropasOtroArmarioHabraDosArmariosPersistidos() {
 		Guardarropa otroArmario = new Guardarropa();
 		withTransaction(() -> {karen.agregarGuardarropa(otroArmario);});
-		Long nro = karen.getId();
-		String id = nro.toString();
-		assertEquals(2,em.createQuery("from Usuario_Guardarropa gg where gg.Usuario_id = "+id,Guardarropa.class).getResultList().size());
+		assertEquals(2,karen.getGuardarropas().size());
 	}
 	
 }
