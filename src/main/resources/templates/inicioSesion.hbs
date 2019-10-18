@@ -1,20 +1,19 @@
 <html>
-	<head>
-		<title>Conversor</title>
-	</head>
-
-	<body>
-	{{#partial "contenido"}}
-	<header>Conversor loco </header>
-		<form method="get" action="/inicioSesion/Usuario">
-		KM <input name = "km"/ value = "{{km}}">
-		<button type ="submit"> Convertir! </button>
-		</form>
-		{{#if hayKm}}
-		<marquee scrollamount = {{millas}}>Las millas son <b> {{millas}} </b></marquee>
-		Las millas son <b> {{millas}} </b></marquee>
-		{{/if}}
+<head>
+<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+</head>
+<body>
+{{#partial "contenido"}}
+	<div class="login-page">
+	  <div class="form">
+	    <form class="login-form">
+	      <input type="text" placeholder="Nombre Usuario" name="nombreUsuario"/value = "{{nombreUsuario}}"/>
+	      <input type="password" placeholder="Contraseña" name="contrasenia"/>
+	      <button>login</button>
+	    </form>
+	  </div>
+	</div>
 	{{/partial}}
 	{{>layout.hbs}}
-	</body>
+</body>
 </html>
