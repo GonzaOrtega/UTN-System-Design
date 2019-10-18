@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<title>Conversor</title>
+	</head>
+
+	<body>
+	{{#partial "contenido"}}
+	<header>Conversor loco </header>
+		<form method="get" action="/inicioSesion/Usuario">
+		KM <input name = "km"/ value = "{{km}}">
+		<button type ="submit"> Convertir! </button>
+		</form>
+		{{#if hayKm}}
+		<marquee scrollamount = {{millas}}>Las millas son <b> {{millas}} </b></marquee>
+		Las millas son <b> {{millas}} </b></marquee>
+		{{/if}}
+	{{/partial}}
+	{{>layout.hbs}}
+	</body>
+</html>
