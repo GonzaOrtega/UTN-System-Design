@@ -27,7 +27,7 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
 	Guardarropa armario = new Guardarropa();
 	Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
-	Usuario karen = new Usuario(TipoUsuario.PREMIUM,0,"kare22n722222277","123");
+	Usuario karen = new Usuario(TipoUsuario.PREMIUM,0,"kare2222277","123");
 	
 	
 	@Before
