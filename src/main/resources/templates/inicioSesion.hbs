@@ -6,7 +6,7 @@
 {{#partial "contenido"}}
 	<div class="login-page">
 	  <div class="form">
-	    <form class="login-form">
+	    <form class="login-form" action="/login" method="POST">
 	      <input type="text" placeholder="Nombre Usuario" name="nombreUsuario"/value = "{{nombreUsuario}}"/>
 	      <input type="password" placeholder="Contraseña" name="contrasenia"/>
 	      <button>login</button>

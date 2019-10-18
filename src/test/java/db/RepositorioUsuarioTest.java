@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import javax.persistence.Query;
 import org.junit.Test;
 import domain.enums.*;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
@@ -51,4 +52,13 @@ public class RepositorioUsuarioTest extends AbstractPersistenceTest implements W
 
 		assertTrue(cantidad == 3);
 	}
+	@Test
+	public void buscarPorNombre(){
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		//Usuario juan =em.find(Usuario.class, new Long(9));
+		Usuario juan = repo.buscarPorNombre("juan");
+		assertTrue(juan.getId()==9);
+	}
+	//String hql="Select log.userId from Login log where log.username=:username and log.password=:password"
+
 }

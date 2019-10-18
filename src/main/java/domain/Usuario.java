@@ -198,5 +198,10 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 		System.out.println("Usuario "+this+" afectado por cambio de temperatura.");
 		this.medios.stream().forEach(medio->medio.notificarAlertaMeterologica(unEvento,this));
 	}
+
+	public boolean validarContrasenia(String contra) {
+		return (contra == this.password);
+		
+	}
 	
 }

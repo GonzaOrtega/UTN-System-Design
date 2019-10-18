@@ -16,5 +16,7 @@ public class Router {
 	
 	public void configurar() {
 	Spark.get("/inicioSesion/Usuario",InicioSesionController::verificarUsuario );
+	Spark.post("/login", InicioSesionController::crearSesion);
+	Spark.get("/perfil", InicioSesionController::verPerfil);
 	}
 }

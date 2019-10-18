@@ -3,6 +3,9 @@ package domain;
 import java.util.*;
 import java.time.*;
 import java.util.stream.*;
+
+import javax.persistence.Query;
+
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 public class RepositorioDeUsuarios implements WithGlobalEntityManager{
@@ -25,6 +28,12 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager{
 		List<Usuario> usuaries = entityManager().createQuery("from Usuario order by Id", Usuario.class).getResultList();
 		Set<Usuario> usuarios = new HashSet<Usuario>(usuaries);
 		return usuarios;
+	}
+	public Usuario buscarPorNombre(String username) {
+		Query queryResult = entityManager().createQuery("from Usuario u where u.nombreUsuario =:username",Usuario.class);
+		queryResult.setParameter("username", username);
+		return (Usuario) queryResult.getSingleResult();
+		
 	}
 	
 	public Set<Evento> eventos() {
