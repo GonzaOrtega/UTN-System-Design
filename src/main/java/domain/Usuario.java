@@ -38,7 +38,8 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	
 	@OneToMany (cascade = CascadeType.PERSIST)
-	@JoinColumn(name="id_usuario")@OrderColumn
+	@JoinColumn(name="id_usuario")
+	@OrderColumn
 	private List<Sugerencia> sugerencias = new ArrayList<Sugerencia>();
 	
 	private Sugerencia ultimaSugerencia() {
@@ -52,7 +53,8 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private Set<Evento> eventos = new HashSet<Evento>();
 	
-	@OneToMany (cascade = CascadeType.PERSIST) @JoinColumn(name="id_Usuario") 
+	@OneToMany (cascade = CascadeType.PERSIST) 
+	@JoinColumn(name="id_Usuario") 
 	private List<Calificacion> calificaciones = new ArrayList<Calificacion>();
 	
 	// ------------------ Getters, setters y constructores ------------------
