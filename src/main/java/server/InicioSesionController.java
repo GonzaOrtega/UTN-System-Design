@@ -29,12 +29,11 @@ public class InicioSesionController {
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
-	public static ModelAndView crearSesion(Request req, Response res) {
+	public static String crearSesion(Request req, Response res) {
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		//agregar tryCatch
-		Usuario usuarie = repo.buscarPorNombre(req.params("nombreUsuario"));
+		Usuario usuarie = repo.buscarPorNombre(req.queryParams("nombreUsuario"));
 		//si no existe, lanzar excepción
-		System.out.println("Apreto en LOGIN");
 		if (usuarie.validarContrasenia(req.queryParams("pass")) ) {
 			res.cookie("uid", usuarie.getId().toString());
 			res.redirect("/perfil");
