@@ -3,11 +3,16 @@ package server;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
 import domain.Evento;
 import domain.Guardarropa;
 import domain.Prenda;
 import domain.PrendaBuilder;
 import domain.Sugerencia;
+import domain.Sugeridor;
 import domain.Usuario;
 import domain.apisClima.MockAPI;
 import domain.apisClima.OpenWeatherMapAPI;
@@ -26,10 +31,44 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class SugerenciasController {
 	public static String verSugerenciasAceptadas(Request req, Response res) {
 		HashMap<String, Object> viewModel = new HashMap();
-		List<Sugerencia> listaSugerencia = generarYObtenerSugerenciasAceptadas();
+		
+		List<Sugerencia> listaSugerencia = new ArrayList<Sugerencia>();
+		Sugerencia sugerenciaPosta = generarSugerencia();
+		listaSugerencia.add(sugerenciaPosta);
+		listaSugerencia.add(generarSugerencia2());
+		
+//		viewModel.put("sugerencia", listaSugerencia.toString());
+//		Gson gson = new Gson();
+//		String json = gson.toJson(listaSugerencia);
+//		System.out.println(json);
+//		
+//		viewModel.put("json", json);
+		
+		listaSugerencia.forEach((sugerencia) -> {
+			// Sugerencia
+			
+			// Atuendo
+			sugerencia.getAtuendo().forEach((prenda)->{
+				viewModel.put("colorPrimario", prenda.getColorPrimario().toString());
+				viewModel.put("tipo", prenda.getTipo().toString());
+				viewModel.put("tela", prenda.getTela().toString());
+				viewModel.put("nivelAbrigo", prenda.getNivelAbrigo());
+				viewModel.put("usada", prenda.isUsada());
+			});
+			
+			// Estado
+			viewModel.put("estado", sugerencia.getEstado().toString());
+			
+			// Evento
+			viewModel.put("descripcion", sugerencia.getEvento().getDescripcion());
+			viewModel.put("frecuencia", sugerencia.getEvento().getFrecuencia().toString());
+		});
+		
 		ModelAndView modelAndView = new ModelAndView(viewModel, "verSugerenciasAceptadas.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
+	
+	
 	
 	public static String calificarSugerencias(Request req, Response res) {
 		HashMap<String, Object> viewModel = new HashMap();
@@ -38,45 +77,58 @@ public class SugerenciasController {
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
-	// Hardcodeo esto para probarlo, luego se hace con las sugerencias del usuario que inicia sesion
-	public static List<Sugerencia> generarYObtenerSugerenciasAceptadas() {
-		Usuario juan = iniciarUsuario();
-		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
-		return sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
-	}
 	
-	public static Usuario iniciarUsuario() {
-		ProveedorClima weatherAPI = new OpenWeatherMapAPI();
-		ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
-		Guardarropa armario = new Guardarropa();
-		Guardarropa otroArmario = new Guardarropa();
+	// Hardcodeo esto para probarlo, luego se hace con las sugerencias del usuario que inicia sesion	
+	public static Sugerencia generarSugerencia() {
+//		ProveedorClima weatherAPI = new OpenWeatherMapAPI();
+//		ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
+//		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
+//		Guardarropa armario = new Guardarropa();
+//		Guardarropa otroArmario = new Guardarropa();
 		Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
 		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
-		Prenda zapatillas = new PrendaBuilder().conTipo(TipoPrenda.Zapatillas).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
+//		Prenda zapatillas = new PrendaBuilder().conTipo(TipoPrenda.Zapatillas).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
 		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
-		Prenda sombrero= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
-		Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
-		Prenda camisaDeLara = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
-		Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
+//		Prenda sombrero= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
+//		Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
+//		Prenda camisaDeLara = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
+//		Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 		Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
-		Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
+//		Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
+		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
 		
-		
-		juan.agregarGuardarropa(armario);
-		juan.cargarPrenda(armario, camisaCorta);
-		juan.cargarPrenda(armario, zapatos);
-		juan.cargarPrenda(armario, gorra);
-		juan.cargarPrenda(armario, camisaLarga);
-		juan.cargarPrenda(armario, ojotas);
-		juan.cargarPrenda(armario, jean);
-		
-		return juan;
+		Set<Prenda> atuendo = new HashSet<Prenda>();
+		atuendo.add(jean);
+		atuendo.add(camisaCorta);
+		atuendo.add(gorra);
+		atuendo.add(zapatos);
+		return new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 	}
 	
-	public static List<Sugerencia> sugerirMasAceptarTodasLasSugerencias(Usuario usuario, Evento evento) {
-		evento.sugerir(usuario);
-		usuario.getSugerencias().stream().forEach(sugerencia -> usuario.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA));
-		return usuario.getSugerencias();
+	public static Sugerencia generarSugerencia2() {
+//		ProveedorClima weatherAPI = new OpenWeatherMapAPI();
+//		ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
+//		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
+//		Guardarropa armario = new Guardarropa();
+//		Guardarropa otroArmario = new Guardarropa();
+		Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).crearPrenda();
+		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
+//		Prenda zapatillas = new PrendaBuilder().conTipo(TipoPrenda.Zapatillas).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).crearPrenda();
+		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
+//		Prenda sombrero= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).crearPrenda();
+//		Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
+//		Prenda camisaDeLara = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
+//		Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
+		Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).crearPrenda();
+//		Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.BLANCO).crearPrenda();
+		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Hola!!");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+		
+		Set<Prenda> atuendo = new HashSet<Prenda>();
+		atuendo.add(jean);
+		atuendo.add(camisaCorta);
+		atuendo.add(gorra);
+		atuendo.add(zapatos);
+		return new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 	}
+	
 }

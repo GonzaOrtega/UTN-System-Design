@@ -1,32 +1,10 @@
-<html>
-
-	<head>
+	{{#partial "contenido"}}
 	
-	<!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
+	<h1> Eventos: </h1>
+	<p>Mostrando eventos:</p>
 	
-	</head>
+	<p>{{Descripcion}}</p>
+	<p>{{Frecuencia}}</p>
 	
-	<body>
-	
-		{{#partial "contenido"}}
-		
-		<h1> Eventos: </h1>
-		<p>Mostrando eventos:</p>
-		
-		<p>{{Descripcion}}</p>
-		<p>{{Frecuencia}}</p>
-		
-		{{/partial}}
-		{{>layout.hbs}}
-	
-	</body>
-
-</html>
+	{{/partial}}
+	{{>layout.hbs}}
