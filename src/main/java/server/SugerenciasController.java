@@ -34,8 +34,9 @@ public class SugerenciasController {
 		
 		List<Sugerencia> listaSugerencia = new ArrayList<Sugerencia>();
 		Sugerencia sugerenciaPosta = generarSugerencia();
-		listaSugerencia.add(sugerenciaPosta);
+		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
 		listaSugerencia.add(generarSugerencia2());
+		listaSugerencia.add(sugerenciaPosta);
 		
 //		viewModel.put("sugerencia", listaSugerencia.toString());
 //		Gson gson = new Gson();
@@ -48,6 +49,10 @@ public class SugerenciasController {
 			// Sugerencia
 			
 			// Atuendo
+			
+			Boolean haySugerenciaAceptada = sugerencia.getEstado().equals(TipoSugerencias.ACEPTADA);
+			viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);
+			
 			sugerencia.getAtuendo().forEach((prenda)->{
 				viewModel.put("colorPrimario", prenda.getColorPrimario().toString());
 				viewModel.put("tipo", prenda.getTipo().toString());
@@ -65,6 +70,7 @@ public class SugerenciasController {
 		});
 		
 		ModelAndView modelAndView = new ModelAndView(viewModel, "verSugerenciasAceptadas.hbs");
+		
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	

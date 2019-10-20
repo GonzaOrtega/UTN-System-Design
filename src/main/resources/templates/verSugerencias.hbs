@@ -1,0 +1,31 @@
+<html>
+	<head>
+    <title>Sugerencias</title>
+	</head>
+	<body>
+	
+	{{#partial "contenido"}}
+		<h1>Sugerencias</h1>
+		
+			<p> Hola!!! Mi estado es: {{estado}}, mi descripcion es : {{descripcion}} y mi frecuencia es: {{frecuencia}}.</p>
+		
+		<h2> Atuendo </h2>
+		
+		<ul>
+			<li>Color primario: {{colorPrimario}}</li>
+			<li>Tipo: {{tipo}}</li>
+			<li>Tela: {{tela}}</li>
+			<li>Nivel Abrigo: {{nivelAbrigo}}</li> (Creo que esto no se tiene que mostrar)
+			<li>EstaUsada: {{usada}}</li> (Creo que esto no se tiene que mostrar)
+		</ul>
+		
+		<p>Estado: {{estado}}</p>
+		
+		<h2>Evento</h2>
+		
+		<ul>
+			<li>Descripcion: {{descripcion}}</li>
+	{{/partial}}
+	
+	</body>
+</html>
