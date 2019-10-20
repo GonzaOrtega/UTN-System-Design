@@ -18,26 +18,34 @@ import domain.enums.TipoPrenda;
 import domain.enums.TipoSugerencias;
 import domain.enums.TipoUsuario;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class SugerenciasController {
 	public static String verSugerenciasAceptadas(Request req, Response res) {
-		return "Hola!!";
+		HashMap<String, Object> viewModel = new HashMap();
+		List<Sugerencia> listaSugerencia = generarYObtenerSugerenciasAceptadas();
+		ModelAndView modelAndView = new ModelAndView(viewModel, "verSugerenciasAceptadas.hbs");
+		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
 	public static String calificarSugerencias(Request req, Response res) {
-		return "Hola!!";
+		HashMap<String, Object> viewModel = new HashMap();
+		
+		ModelAndView modelAndView = new ModelAndView(viewModel, "calificarSugerencias.hbs");
+		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	
 	// Hardcodeo esto para probarlo, luego se hace con las sugerencias del usuario que inicia sesion
-	public List<Sugerencia> generarYObtenerSugerenciasAceptadas() {
-		Usuario juan = this.iniciarUsuario();
+	public static List<Sugerencia> generarYObtenerSugerenciasAceptadas() {
+		Usuario juan = iniciarUsuario();
 		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
-		return this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
+		return sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
 	}
 	
-	public Usuario iniciarUsuario() {
+	public static Usuario iniciarUsuario() {
 		ProveedorClima weatherAPI = new OpenWeatherMapAPI();
 		ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
@@ -66,7 +74,7 @@ public class SugerenciasController {
 		return juan;
 	}
 	
-	public List<Sugerencia> sugerirMasAceptarTodasLasSugerencias(Usuario usuario, Evento evento) {
+	public static List<Sugerencia> sugerirMasAceptarTodasLasSugerencias(Usuario usuario, Evento evento) {
 		evento.sugerir(usuario);
 		usuario.getSugerencias().stream().forEach(sugerencia -> usuario.clasificarUnaSugerencia(sugerencia, TipoSugerencias.ACEPTADA));
 		return usuario.getSugerencias();
