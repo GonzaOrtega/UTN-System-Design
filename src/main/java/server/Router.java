@@ -22,7 +22,7 @@ public class Router {
 		Spark.get("/inicioSesion/Usuario",InicioSesionController::verificarUsuario);
 		Spark.post("/inicioSesion/Usuario", InicioSesionController::crearSesion);
 		Spark.get("/perfil", InicioSesionController::verPerfil);
-		Spark.get("/sugerencias/show", SugerenciasController::verSugerenciasAceptadas);
+		Spark.get("/sugerencias/show/aceptadas", SugerenciasController::verSugerenciasAceptadas);
 //		Spark.get("/sugerencias/calificar", SugerenciasController::calificarSugerencias);
 		Spark.get("/evento/show", EventoController::mostrarEventos);
 		Spark.get("/evento/alta", EventoController::altaDeEvento);

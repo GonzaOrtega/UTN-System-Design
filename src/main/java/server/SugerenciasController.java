@@ -38,36 +38,13 @@ public class SugerenciasController {
 		listaSugerencia.add(generarSugerencia2());
 		listaSugerencia.add(sugerenciaPosta);
 		
-//		viewModel.put("sugerencia", listaSugerencia.toString());
-//		Gson gson = new Gson();
-//		String json = gson.toJson(listaSugerencia);
-//		System.out.println(json);
-//		
-//		viewModel.put("json", json);
 		
-		listaSugerencia.forEach((sugerencia) -> {
-			// Sugerencia
-			
-			// Atuendo
-			
-			Boolean haySugerenciaAceptada = sugerencia.getEstado().equals(TipoSugerencias.ACEPTADA);
-			viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);
-			
-			sugerencia.getAtuendo().forEach((prenda)->{
-				viewModel.put("colorPrimario", prenda.getColorPrimario().toString());
-				viewModel.put("tipo", prenda.getTipo().toString());
-				viewModel.put("tela", prenda.getTela().toString());
-				viewModel.put("nivelAbrigo", prenda.getNivelAbrigo());
-				viewModel.put("usada", prenda.isUsada());
-			});
-			
-			// Estado
-			viewModel.put("estado", sugerencia.getEstado().toString());
-			
-			// Evento
-			viewModel.put("descripcion", sugerencia.getEvento().getDescripcion());
-			viewModel.put("frecuencia", sugerencia.getEvento().getFrecuencia().toString());
-		});
+		Boolean haySugerenciaAceptada = listaSugerencia.stream().anyMatch(sugerencia -> sugerencia.aceptada());
+		viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);
+		
+		List<Sugerencia> listaSugerenciaAceptadas = listaSugerencia.stream().filter(sugerencia -> sugerencia.aceptada()).collect(Collectors.toList());
+		
+		viewModel.put("sugerencias", listaSugerenciaAceptadas);
 		
 		ModelAndView modelAndView = new ModelAndView(viewModel, "verSugerenciasAceptadas.hbs");
 		
