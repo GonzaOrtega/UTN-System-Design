@@ -56,15 +56,9 @@ public class RepositorioDeUsuarios extends AbstractPersistenceTest implements Wi
 	}
 	
 	public void agregar(Usuario usuario) {
-<<<<<<< HEAD
-		entityManager().getTransaction().begin();
-		entityManager().persist(usuario);
-		entityManager().getTransaction().commit();
-=======
 		//entityManager().getTransaction().begin();
 		withTransaction(()->{entityManager().persist(usuario);});
 		//entityManager().getTransaction().commit();
->>>>>>> e9c63c47adc762375e4a97ba73f9805138e12544
 		//Los borro porque segun Juan esto afecta la unicidad de las transacciones
 	}
 
