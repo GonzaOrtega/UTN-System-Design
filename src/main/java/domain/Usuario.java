@@ -201,9 +201,9 @@ public class Usuario extends SuperClase implements WithGlobalEntityManager{
 		this.medios.stream().forEach(medio->medio.notificarAlertaMeterologica(unEvento,this));
 	}
 
-	public boolean validarContrasenia(String contra) {
-		return (contra == this.password);
-		
+	public void validarContrasenia(String contra) {
+		if (!contra.equals(this.password))
+			throw new NoPoseeLaSugerenciaException("Error, contraseña incorrecta!");
 	}
 	
 }

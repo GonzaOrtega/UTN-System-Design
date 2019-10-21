@@ -1,7 +1,9 @@
 package server;
 
 import spark.Spark;
+import spark.TemplateEngine;
 import domain.*;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Router {
 	static Router _instance;
@@ -15,7 +17,9 @@ public class Router {
 	}
 	
 	public void configurar() {
-		Spark.get("/inicioSesion/Usuario",InicioSesionController::verificarUsuario );
+		TemplateEngine engine = new HandlebarsTemplateEngine();
+
+		Spark.get("/inicioSesion/Usuario",InicioSesionController::verificarUsuario);
 		Spark.post("/inicioSesion/Usuario", InicioSesionController::crearSesion);
 		Spark.get("/perfil", InicioSesionController::verPerfil);
 		Spark.get("/sugerencias/show", SugerenciasController::verSugerenciasAceptadas);
