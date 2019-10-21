@@ -45,7 +45,7 @@ public class EventoController {
 		
 		if(frecuencia != null) { // Si no veo de tirar una exception en algun lado
 			eligieronDesYFrec = true;
-			Evento eventoObtenido = armarEvento(descripcion, obtenerFrecuencia(frecuencia));
+			Evento eventoObtenido = armarEvento(descripcion, obtenerFrecuencia(frecuencia, viewModel));
 		}
 		
 		viewModel.put("eligieronDesYFrec", eligieronDesYFrec);
@@ -60,29 +60,34 @@ public class EventoController {
 		return new Evento(frecuencia, descripcion);
 	}
 	
-	private static FrecuenciaDeEvento obtenerFrecuencia(String frecuencia) {
+	private static FrecuenciaDeEvento obtenerFrecuencia(String frecuencia, HashMap<String, Object> viewModel) {
 		// Falta arreglar los elementos hardcodeados
+		boolean esFrecuencia = true;
 		switch(frecuencia) {
 		case "Anual":
+			viewModel.put("esAnual", esFrecuencia);
 			return new FrecuenciaAnual(1, 1);
 		case "Diaria":
+			viewModel.put("esDiaria", esFrecuencia);
 			return new FrecuenciaDiaria(1);
 		case "Mensual":
+			viewModel.put("esMensual", esFrecuencia);
 			return new FrecuenciaMensual(1);
 		case "Semanal":
+			viewModel.put("esSemanal", esFrecuencia);
 			return new FrecuenciaSemanal(1);
 		case "UnicaVez":
+			viewModel.put("esUnicaVez", esFrecuencia);
 			return new FrecuenciaUnicaVez(1, 1, 1);
 		default:
 			return null; // Esto no va a pasar nunca ya que esta seteado que para esta altura ya haya una frecuencia (valida por checkpoints)
 		}
 	}
 	
-//	public static FrecuenciaDeEvento configurarFrecuencia(String frecuencia, String frecuenciaAComparar) {
-//		if(frecuencia.equals(frecuenciaAComparar)) {
-//			System.out.println(frecuenciaAComparar);
-//			return new FrecuenciaAnual(1, 1); // Solo falta esto, que no sea hardcodeado
-//		}
-//		return null; // Lo pongo porque ya se que en alguno no me va a dar null
-//	}
+	public static FrecuenciaDeEvento configurarFrecuencia(FrecuenciaDeEvento frecuencia) {
+		
+		
+		
+		return frecuencia;
+	}
 }

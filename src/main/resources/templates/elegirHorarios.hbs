@@ -1,1 +1,32 @@
-<p>Elegir horarios</p>
+<h3>Elegir horarios</h3>
+
+{{#if esAnual}}
+	<p>Ingrese mes</p>
+	<input name='mes' value='{{mes}}'/>
+	<p>Ingrese dia</p>
+	<input name='dia' value='{{dia}}'/>
+{{/if}}
+
+{{#if esDiaria}}
+	<p>Ingrese hora</p>
+	<input name='hora' value='{{hora}}'/>
+{{/if}}
+
+{{#if esMensual}}
+	<p>Ingrese dia</p>
+	<input name='dia' value='{{dia}}'/>
+{{/if}}
+
+{{#if esSemanal}}
+	<p>Ingrese dia</p>
+	<input name='dia' value='{{dia}}'/>
+{{/if}}
+
+{{#if esUnicaVez}}
+	<p>Ingrese anio</p>
+	<input name='anio' value='{{anio}}'/>
+	<p>Ingrese mes</p>
+	<input name='mes' value='{{mes}}'/>
+	<p>Ingrese dia</p>
+	<input name='dia' value='{{dia}}'/>
+{{/if}}
