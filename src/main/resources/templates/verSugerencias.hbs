@@ -1,31 +1,32 @@
 <html>
-	<head>
-    <title>Sugerencias</title>
-	</head>
-	<body>
+<head>
+<title>Sugerencias</title>
+</head>
+<body>	
+{{#partial "contenido"}}
 	
-	{{#partial "contenido"}}
-		<h1>Sugerencias</h1>
-		
-			<p> Hola!!! Mi estado es: {{estado}}, mi descripcion es : {{descripcion}} y mi frecuencia es: {{frecuencia}}.</p>
-		
-		<h2> Atuendo </h2>
-		
-		<ul>
-			<li>Color primario: {{colorPrimario}}</li>
-			<li>Tipo: {{tipo}}</li>
-			<li>Tela: {{tela}}</li>
-			<li>Nivel Abrigo: {{nivelAbrigo}}</li> (Creo que esto no se tiene que mostrar)
-			<li>EstaUsada: {{usada}}</li> (Creo que esto no se tiene que mostrar)
-		</ul>
-		
-		<p>Estado: {{estado}}</p>
-		
-		<h2>Evento</h2>
-		
-		<ul>
-			<li>Descripcion: {{descripcion}}</li>
-	{{/partial}}
+	{{! Ahora lo modifico para que me me muestre la lista de sugerencias}}
 	
-	</body>
+	<h1>Sugerencias</h1>
+	
+	<h2> Atuendo </h2>
+	
+	<ul>
+		<li>Color primario: {{colorPrimario}}</li>
+		<li>Tipo: {{tipo}}</li>
+		<li>Tela: {{tela}}</li>
+		<li>Nivel Abrigo: {{nivelAbrigo}}</li> (Creo que esto no se tiene que mostrar pero por las dudas lo muestro)
+		<li>EstaUsada: {{usada}}</li> Creo que esto no se tiene que mostrar pero por las dudas lo muestro)
+	</ul>
+	
+	<p>Estado: {{estado}}</p>
+	
+	<h2>Evento</h2>
+	
+	<ul>
+		<li>Descripcion: {{descripcion}}</li>
+				
+{{/partial}}
+
+</body>
 </html>

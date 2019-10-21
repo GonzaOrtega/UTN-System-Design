@@ -1,10 +1,14 @@
-	{{#partial "contenido"}}
+{{#partial "contenido"}}
+
+<h1> Eventos: </h1>
+
+<ul>
+	<li>{{descripcion}}</li>
+	<li>{{frecuencia}}</li>
 	
-	<h1> Eventos: </h1>
-	<p>Mostrando eventos:</p>
-	
-	<p>{{Descripcion}}</p>
-	<p>{{Frecuencia}}</p>
-	
-	{{/partial}}
-	{{>layout.hbs}}
+	{{! Falta mostrar la info especifica de la frecuencia}}
+</ul>
+
+{{/partial}}
+
+{{>layout.hbs}}	

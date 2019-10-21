@@ -1,0 +1,28 @@
+{{#partial "contenido" }}
+
+	<form method='get' action='/evento/alta'>
+		<h1>Alta de Evento</h1>
+		
+		<h2>Ingresar descripcion</h2>
+		<input name='Descripcion' value='{{descripcionIngresada}}'/>
+		<h2>Elegir frecuencia</h2>
+		<input type="radio" name="Frecuencia" value="Anual"> Anual<br>
+		<input type="radio" name="Frecuencia" value="Diaria"> Diaria<br>
+		<input type="radio" name="Frecuencia" value="Mensual"> Mensual<br>
+		<input type="radio" name="Frecuencia" value="Semanal"> Semanal<br>
+		<input type="radio" name="Frecuencia" value="UnicaVez"> Unica vez<br>
+		
+		<button type='submit'>Siguiente</button>
+		<input type="reset"><br>
+		Lo leido es: {{descripcionObtenida}}
+		
+		
+		{{#if eligieronDesYFrec}}
+			{{> elegirHorarios.hbs}}
+		{{/if}}
+		
+	</form>
+
+{{/partial}}
+
+{{> layout.hbs}}
