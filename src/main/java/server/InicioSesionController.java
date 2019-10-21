@@ -31,12 +31,18 @@ public class InicioSesionController {
 	
 	public static String crearSesion(Request req, Response res) {
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		//agregar tryCatch
+		String password = req.queryParams("pass");
+		try {
 		Usuario usuarie = repo.buscarPorNombre(req.queryParams("nombreUsuario"));
-		//si no existe, lanzar excepción
-		if (usuarie.validarContrasenia(req.queryParams("pass")) ) {
-			res.cookie("uid", usuarie.getId().toString());
-			res.redirect("/perfil");
+		usuarie.validarContrasenia(password);
+		res.cookie("uid", usuarie.getId().toString());
+		res.redirect("/perfil");
+		req.session().attribute("uid", usuarie.getId()); 
+		}
+		catch(Exception e) {
+			System.out.println("Eror->" + e);
+			res.redirect("/inicioSesion/Usuario");
+
 		}
 		return null;
 	}
