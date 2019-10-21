@@ -1,14 +1,14 @@
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/login.css" media="screen" />
 </head>
 <body>
 {{#partial "contenido"}}
 
 	<div class="login-page">
 	  <div class="form">
-	    <form class="login-form" action="/inicioSesion/Usuario" method="POST">
-	      <input type="text" placeholder="Nombre Usuario" name="nombreUsuario"/>
+	    <form class="login-form" action="/" method="POST">
+	      <input type="text" placeholder="Username" name="nombreUsuario"/>
 	      <input type="password" placeholder="Contraseña" name="pass"/>
 	      <input type="submit">
 	    </form>

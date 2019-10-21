@@ -22,18 +22,16 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
-@Entity
-public class Usuario extends SuperClase implements WithGlobalEntityManager{
-	
+@Entity 
+@Table(name = "usuario")
+public class Usuario extends SuperClase{
 	// ---------------------------- Atributos -------------------------------
 	@Column(unique=true)
 	private String nombreUsuario;
 	private String password;
 	@Enumerated
 	private TipoUsuario tipo;
-	
 	private int  maximoDePrendas;
-	
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	

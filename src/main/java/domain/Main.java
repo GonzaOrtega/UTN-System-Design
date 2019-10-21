@@ -18,14 +18,14 @@ public class Main implements WithGlobalEntityManager{
 		Evento event = new Evento(new FrecuenciaAnual(02,01),"Medico");
 		Usuario juan = new Usuario(TipoUsuario.GRATUITO,15,"el_Risas","123");
 		Guardarropa armario = new Guardarropa();
+		RepositorioDeUsuarios.getInstance().agregar(juan);
 
 		//main.persistirGuar(armario,juan);
-		main.persistir(event, juan);
+	//	main.persistir(juan);
 		return;
 	}
-    public void persistir(Evento juga,Usuario user) {
+    public void persistir(Usuario user) {
     	em.getTransaction().begin();
-		RepositorioDeUsuarios.getInstance().agregar(user);
     	em.getTransaction().commit();
     	
     }

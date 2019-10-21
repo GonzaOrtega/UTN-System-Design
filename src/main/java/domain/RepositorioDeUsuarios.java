@@ -55,9 +55,9 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager{
 	}
 	
 	public void agregar(Usuario usuario) {
-		//entityManager().getTransaction().begin();
+		entityManager().getTransaction().begin();
 		entityManager().persist(usuario);
-		//entityManager().getTransaction().commit();
+		entityManager().getTransaction().commit();
 		//Los borro porque segun Juan esto afecta la unicidad de las transacciones
 	}
 
