@@ -3,6 +3,7 @@ package server;
 import spark.Spark;
 import spark.TemplateEngine;
 import domain.*;
+import server.controller.CalendarioController;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Router {
@@ -26,5 +27,6 @@ public class Router {
 //		Spark.get("/sugerencias/calificar", SugerenciasController::calificarSugerencias);
 		Spark.get("/evento/show", EventoController::mostrarEventos);
 		Spark.get("/evento/alta", EventoController::altaDeEvento);
+		Spark.get("/calendario", CalendarioController::verCalendario);
 	}
 }
