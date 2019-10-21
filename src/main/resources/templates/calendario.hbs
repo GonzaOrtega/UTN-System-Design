@@ -1,0 +1,14 @@
+{{#partial "contenido"}}
+<form method='get' action='/calendario'>
+		<input name='dia' value='{{dia}}'/>
+		<input name='mes' value='{{mes}}'/>
+		<input name='anio' value='{{anio}}'/>
+		<button type='submit'>Eventos!</button>
+		{{#if hayFecha}}
+				{{#each eventos}}
+    				descripcion: {{this.descripcion}}
+    			{{/each}}
+		{{/if}}
+    	
+{{/partial}}
+{{>layout.hbs}}
