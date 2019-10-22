@@ -17,8 +17,7 @@ public class Guardarropa extends SuperClase{
 	
 	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
 	private Set<Prenda> prendas = new HashSet<Prenda>();
-	/*@ManyToMany(mappedBy = "guardarropas")
-	private Set<Usuario> duenios = new HashSet<Usuario>();*/
+
 	
 	// ------------------ Getters, setters y constructores ------------------
 	

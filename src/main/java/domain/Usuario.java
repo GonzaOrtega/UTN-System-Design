@@ -28,10 +28,14 @@ public class Usuario extends SuperClase{
 	// ---------------------------- Atributos -------------------------------
 	@Column(unique=true)
 	private String nombreUsuario;
+	
 	private String password;
+	
 	@Enumerated
 	private TipoUsuario tipo;
-	private int  maximoDePrendas;
+	
+	private int maximoDePrendas;
+	
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	

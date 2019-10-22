@@ -1,37 +1,24 @@
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
-</head>
-<body>
 
 {{#partial "contenido"}}
 
-<h1> Step 3 </h1>
+	<h1>Sugerencias</h1>
 
-<div class="story-page">
-  <div>
-   — Tipo: {{tipoPrenda}}
-  </div>
-  <div>
-  — Color primario: {{colorPrimario}}
-  </div>
-  <div>
-  — Color Secundario: {{colorSecundario}}
-  </div>
-  <div>
-  — Material: {{tela}}
-  </div>
-  <div>
-  — Nivel de frio: {{nivelAbrigo}}
-  </div>
+	{{#each guardarropas}}
+    <h1>Guardarropas</h1>
+		{{#each this.prendas}}
+			<h3> Prenda </h3>
 
-  <form class="profile-form" action="/prendas/step-3" method="POST">
-      <button>Dar de alta prenda</button>
-  </form>
+			<ul>
+				<li>Color primario: {{this.colorPrimario}}</li>
+				<li>Color secundario: {{this.colorSecundario}}</li>
+				<li>Tipo: {{this.tipo}}</li>
+				<li>Tela: {{this.tela}}</li>
+			</ul>
 
-</div>
+		{{/each}}
+	{{/each}}
 
-{{/partial}}
-{{>layout.hbs}}
-</body>
-</html>
+
+  {{/partial}}
+
+  {{>layout.hbs}}

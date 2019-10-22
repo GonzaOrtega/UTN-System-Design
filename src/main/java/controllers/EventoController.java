@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import domain.Evento;
 import domain.frecuenciasDeEventos.FrecuenciaAnual;
@@ -19,7 +20,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class EventoController {
 	
 	public static String mostrarEventos(Request req, Response res) {
-		HashMap<String, Object> viewModel = new HashMap();
+		Map<String, Object> viewModel = new HashMap();
 		
 		// Primero lo pruebo con un solo evento
 		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
@@ -53,7 +54,6 @@ public class EventoController {
 		ModelAndView modelAndView = new ModelAndView(viewModel, "altaDeEvento.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
-
 	
 	// Metodos complementarios
 	public static Evento armarEvento(String descripcion, FrecuenciaDeEvento frecuencia) {
@@ -84,10 +84,7 @@ public class EventoController {
 		}
 	}
 	
-	public static FrecuenciaDeEvento configurarFrecuencia(FrecuenciaDeEvento frecuencia) {
-		
-		
-		
+	public static FrecuenciaDeEvento configurarFrecuencia(FrecuenciaDeEvento frecuencia) {	
 		return frecuencia;
 	}
 }

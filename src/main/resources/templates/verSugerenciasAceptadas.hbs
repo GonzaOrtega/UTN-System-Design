@@ -1,7 +1,11 @@
+{{#partial "contenido"}}
+
 {{#if haySugerenciaAceptada}}
 	{{> verSugerencias.hbs}}
 {{else}}
-	<h2> No hay sugerencias aceptadas aun </h2>
+	<h2> No hay sugerencias aceptadas </h2>
 {{/if}}
 
-{{> layout.hbs}}
+{{/partial}}
+
+{{>layout.hbs}}
