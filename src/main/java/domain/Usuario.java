@@ -23,7 +23,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 @Entity 
-@Table(name = "usuario")
 public class Usuario extends SuperClase{
 	// ---------------------------- Atributos -------------------------------
 	@Column(unique=true)

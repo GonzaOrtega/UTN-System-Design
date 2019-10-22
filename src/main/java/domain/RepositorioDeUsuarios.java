@@ -7,9 +7,8 @@ import java.util.stream.*;
 import javax.persistence.Query;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
-public class RepositorioDeUsuarios extends AbstractPersistenceTest implements WithGlobalEntityManager{
+public class RepositorioDeUsuarios implements WithGlobalEntityManager{
 	// ------------------- Metodos p/ obtener instancia -------------------
 
 	private static class RepositorioDeUsuariosHolder {
