@@ -9,8 +9,10 @@ import controllers.*;
 
 public class Router {
 	static Router _instance;
+	
 	private Router() {
 	}
+	
 	public static Router instance() {
 		if(_instance == null) {
 			_instance = new Router();

@@ -9,8 +9,29 @@
 	  Bienvenide {{nombreUsuario}}
 	</div>
 
-	<input type="button" value="Website Random" onclick="window.open('http://www.website.com/page')" />
+	<form class="profile-form" action="/sugerencias/show/aceptadas" method="GET">
+	    <button>Ver sugerencias aceptadas</button>
+	</form>
 
+	<form class="profile-form" action="/evento/show" method="GET">
+	    <button>Ver eventos agendados</button>
+	</form>
+
+	<form class="profile-form" action="/evento/alta" method="GET">
+	    <button>Agendar evento</button>
+	</form>
+
+	<form class="profile-form" action="/calendario" method="GET">
+			<button>Visualizar calendario</button>
+	</form>
+
+	<form class="profile-form" action="/prendas" method="GET">
+			<button>Listas prendas de guardarropas</button>
+	</form>
+
+	<form class="profile-form" action="/prendas" method="GET">
+			<button>Dar de alta prendas</button>
+	</form>
 
 {{/partial}}
 {{>layout.hbs}}
