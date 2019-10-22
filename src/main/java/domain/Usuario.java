@@ -44,7 +44,6 @@ public class Usuario extends SuperClase{
 		return sugerencias.get(sugerencias.size()-1);//obtiene el ultimo.
 	}
 	
-	
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<MedioDeNotificacion> medios = new HashSet<MedioDeNotificacion>();
 	
@@ -79,7 +78,6 @@ public class Usuario extends SuperClase{
 	}
 	
 	public Set<Guardarropa> getGuardarropas() {
-		//Set<Guardarropa> guardarropasQ = entityManager().createQuery("Select u.Guardarropa from Usuario , Guardarropa.class).getResultList().stream().collect(Collectors.toSet());
 		return guardarropas;
 	}
 	
@@ -92,11 +90,6 @@ public class Usuario extends SuperClase{
 	}
 	
 	public Set<Evento> eventos() { 
-/*		List<Evento> listaEventos = entityManager()
-				.createQuery("from Evento order by Id", Evento.class)
-				.getResultList();
-		Set<Evento> setEventos = new HashSet<Evento>(listaEventos);
-		return setEventos;*/
 		return eventos;
 		}
 	

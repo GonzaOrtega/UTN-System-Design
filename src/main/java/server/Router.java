@@ -36,7 +36,9 @@ public class Router {
 		Spark.get("/prendas/step-1", prendaContoller::showstep1,engine);
 		Spark.post("/prendas/step-1", prendaContoller::load_step1,engine);		 
 		Spark.get("/prendas/step-2", prendaContoller::showstep2,engine);	
-		Spark.post("/prendas/step-2", prendaContoller::load,engine);		 
+		Spark.post("/prendas/step-2", prendaContoller::load_step2,engine);		 
+		Spark.get("/prendas/step-3", prendaContoller::showstep3,engine);		 
+		//park.post("/prendas/step-3", prendaContoller::load,engine);		 
 
 	}
 }

@@ -8,99 +8,100 @@
 
 <h1> Step 1 </h1>
 <div>
-— Seleccione tipo de prenda:
+  <form class="clothes-form" action="/prendas/step-1" method="POST">
+  <div>
+    <select name="tipoPrenda">
+      <option value="Ninguno">Sin seleccionar</option>
+       <option value="Remera">Remera</option>
+       <option value="RemeraMangaCorta">Remera Manga Corta</option>
+       <option value="RemeraMangaLarga">Remera Manga Larga</option>
+       <option value="CamisaMangaCorta">Camisa Manga Corta</option>
+       <option value="CamisaMangaLarga">Camisa Manga Larga</option>
+       <option value="Pantalon">Pantalon</option>
+       <option value="Short">Short</option>
+       <option value="PolleraCorta">PolleraCorta</option>
+       <option value="PolleraLarga">PolleraLarga</option>
+       <option value="Bermuda">Bermuda</option>
+       <option value="Calza">Calza</option>
+       <option value="Jardinero">Jardinero</option>
+       <option value="Zapatos">Zapatos</option>
+       <option value="Ojotas">Ojotas</option>
+       <option value="Botas">Botas</option>
+       <option value="Zapatillas">Zapatillas</option>
+       <option value="Borcegos">Borcegos</option>
+       <option value="Gorro">Gorro</option>
+       <option value="Gorra">Gorra</option>
+       <option value="Sombrero">Sombrero</option>
+       <option value="Tapado">Tapado</option>
+       <option value="Buzo">Buzo</option>
+       <option value="Campera">Campera</option>
+     </select>
+   </div>
 
-<select name="tipo">
-   <option value="1">Remera</option>
-   <option value="2">Remera Manga Corta</option>
-   <option value="3">Remera Manga Larga</option>
-   <option value="4">Camisa Manga Corta</option>
-   <option value="5">Camisa Manga Larga</option>
-   <option value="6">Pantalon</option>
-   <option value="7">Short</option>
-   <option value="8">PolleraCorta</option>
-   <option value="9">PolleraLarga</option>
-   <option value="10">Bermuda</option>
-   <option value="11">Calza</option>
-   <option value="12">Jardinero</option>
-   <option value="13">Zapatos</option>
-   <option value="14">Ojotas</option>
-   <option value="15">Botas</option>
-   <option value="16">Zapatillas</option>
-   <option value="17">Borcegos</option>
-   <option value="18">Gorro</option>
-   <option value="19">Gorra</option>
-   <option value="20">Sombrero</option>
-   <option value="21">Tapado</option>
-   <option value="22">Buzo</option>
-   <option value="23">Campera</option>
- </select>
-</div>
+   <div>
+     — Seleccione un color primario:
+     <select name="colorPrimario">
+        <option value="Ninguno">Sin seleccionar</option>
+        <option value=Rojo>Rojo</option>
+        <option value=Amarillo>Amarillo</option>
+        <option value=Verde>Verde</option>
+        <option value=Naranja>Naranja</option>
+        <option value=Azul>Azul</option>
+        <option value=Violeta>Violeta</option>
+        <option value=Rosa>Rosa</option>
+        <option value=Lila>Lila</option>
+        <option value=Fucsia>Fucsia</option>
+        <option value=Mostaza>Mostaza</option>
+        <option value=Turquesa>Turquesa</option>
+        <option value=Ocre>Ocre</option>
+        <option value=Magenta>Magenta</option>
+        <option value=Gris>Gris</option>
+        <option value=Negro>Negro</option>
+        <option value=Blanco>Blanco</option>
+        <option value=Beige>Beige</option>
+        <option value=Salmon>Salmon</option>
+        <option value=Granate>Granate</option>
+        <option value=Lavanda>Lavanda</option>
+        <option value=Malva>Malva</option>
+        <option value=Purpura>Purpura</option>
+        <option value=Ciruela>Ciruela</option>
+        <option value=Melocoton>Melocoton</option>
+      </select>
+    </div>
 
-<div>
-— Seleccione el color primario:
-<select name="colorPrimario">
-   <option value=1>Rojo</option>
-   <option value=2>Amarillo</option>
-   <option value=3>Verde</option>
-   <option value=4>Naranja</option>
-   <option value=5>Azul</option>
-   <option value=6>Violeta</option>
-   <option value=7>Rosa</option>
-   <option value=8>Lila</option>
-   <option value=9>FucsiA</option>
-   <option value=10>Mostazaa</option>
-   <option value=11>Turquesa</option>
-   <option value=12>Ocre</option>
-   <option value=13>Magenta</option>
-   <option value=14>Gris</option>
-   <option value=15>Negro</option>
-   <option value=16>Blanco</option>
-   <option value=17>Beige</option>
-   <option value=18>Salmon</option>
-   <option value=19>Granate</option>
-   <option value=20>Lavanda</option>
-   <option value=21>Malva</option>
-   <option value=22>Purpura</option>
-   <option value=23>Ciruela</option>
-   <option value=24>Melocoton</option>
- </select>
-</div>
-
-<div>
-— Seleccione el color secundario:
-   <select name="colorSecundario">
-      <option value=1>Rojo</option>
-      <option value=2>Amarillo</option>
-      <option value=3>Verde</option>
-      <option value=4>Naranja</option>
-      <option value=5>Azul</option>
-      <option value=6>Violeta</option>
-      <option value=7>Rosa</option>
-      <option value=8>Lila</option>
-      <option value=9>Fucsia</option>
-      <option value=10>Mostaza</option>
-      <option value=11>Turquesa</option>
-      <option value=12>Ocre</option>
-      <option value=13>Magenta</option>
-      <option value=14>Gris</option>
-      <option value=15>Negro</option>
-      <option value=16>Blanco</option>
-      <option value=17>Beige</option>
-      <option value=18>Salmon</option>
-      <option value=19>Granate</option>
-      <option value=20>Lavanda</option>
-      <option value=21>Malva</option>
-      <option value=22>Purpura</option>
-      <option value=23>Ciruela</option>
-      <option value=24>Melocoton</option>
-</select>
-</div>
-
-
-<form class="profile-form" action="/prendas/step-2" method="GET">
-    <button>Siguiente</button>
-</form>
+    <div>
+      — Seleccione un color secundario:
+      <select name="colorSecundario">
+         <option value="Ninguno">Sin seleccionar</option>
+         <option value="SinColor">Sin color</option>
+         <option value=Rojo>Rojo</option>
+         <option value=Amarillo>Amarillo</option>
+         <option value=Verde>Verde</option>
+         <option value=Naranja>Naranja</option>
+         <option value=Azul>Azul</option>
+         <option value=Violeta>Violeta</option>
+         <option value=Rosa>Rosa</option>
+         <option value=Lila>Lila</option>
+         <option value=Fucsia>Fucsia</option>
+         <option value=Mostaza>Mostaza</option>
+         <option value=Turquesa>Turquesa</option>
+         <option value=Ocre>Ocre</option>
+         <option value=Magenta>Magenta</option>
+         <option value=Gris>Gris</option>
+         <option value=Negro>Negro</option>
+         <option value=Blanco>Blanco</option>
+         <option value=Beige>Beige</option>
+         <option value=Salmon>Salmon</option>
+         <option value=Granate>Granate</option>
+         <option value=Lavanda>Lavanda</option>
+         <option value=Malva>Malva</option>
+         <option value=Purpura>Purpura</option>
+         <option value=Ciruela>Ciruela</option>
+         <option value=Melocoton>Melocoton</option>
+       </select>
+     </div>
+         <input type="submit">
+  </form>
 
 {{/partial}}
 {{>layout.hbs}}
