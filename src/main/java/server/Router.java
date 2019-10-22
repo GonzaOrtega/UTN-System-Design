@@ -4,6 +4,7 @@ import spark.Spark;
 import spark.TemplateEngine;
 import domain.*;
 import server.controller.CalendarioController;
+import server.controller.SugerenciasDisponiblesController;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import controllers.*;
 
@@ -34,6 +35,7 @@ public class Router {
 		Spark.get("/evento/show", EventoController::mostrarEventos);
 		Spark.get("/evento/alta", EventoController::altaDeEvento);
 		Spark.get("/calendario", CalendarioController::verCalendario);
+		Spark.get("/sugerencias", SugerenciasDisponiblesController::verSugerencias);
 		Spark.get("/prendas/step-1", prendaContoller::showstep1,engine);
 		Spark.post("/prendas/step-1", prendaContoller::load_step1,engine);		 
 		Spark.get("/prendas/step-2", prendaContoller::showstep2,engine);	
