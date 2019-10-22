@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+</head>
+<body>
+
+{{#partial "contenido"}}
+
+<h1> Step 1 </h1>
+<div>
+— Seleccione tipo de prenda:
+
+<select name="tipo">
+   <option value="1">Remera</option>
+   <option value="2">Remera Manga Corta</option>
+   <option value="3">Remera Manga Larga</option>
+   <option value="4">Camisa Manga Corta</option>
+   <option value="5">Camisa Manga Larga</option>
+   <option value="6">Pantalon</option>
+   <option value="7">Short</option>
+   <option value="8">PolleraCorta</option>
+   <option value="9">PolleraLarga</option>
+   <option value="10">Bermuda</option>
+   <option value="11">Calza</option>
+   <option value="12">Jardinero</option>
+   <option value="13">Zapatos</option>
+   <option value="14">Ojotas</option>
+   <option value="15">Botas</option>
+   <option value="16">Zapatillas</option>
+   <option value="17">Borcegos</option>
+   <option value="18">Gorro</option>
+   <option value="19">Gorra</option>
+   <option value="20">Sombrero</option>
+   <option value="21">Tapado</option>
+   <option value="22">Buzo</option>
+   <option value="23">Campera</option>
+ </select>
+</div>
+
+<div>
+— Seleccione el color primario:
+<select name="colorPrimario">
+   <option value=1>Rojo</option>
+   <option value=2>Amarillo</option>
+   <option value=3>Verde</option>
+   <option value=4>Naranja</option>
+   <option value=5>Azul</option>
+   <option value=6>Violeta</option>
+   <option value=7>Rosa</option>
+   <option value=8>Lila</option>
+   <option value=9>FucsiA</option>
+   <option value=10>Mostazaa</option>
+   <option value=11>Turquesa</option>
+   <option value=12>Ocre</option>
+   <option value=13>Magenta</option>
+   <option value=14>Gris</option>
+   <option value=15>Negro</option>
+   <option value=16>Blanco</option>
+   <option value=17>Beige</option>
+   <option value=18>Salmon</option>
+   <option value=19>Granate</option>
+   <option value=20>Lavanda</option>
+   <option value=21>Malva</option>
+   <option value=22>Purpura</option>
+   <option value=23>Ciruela</option>
+   <option value=24>Melocoton</option>
+ </select>
+</div>
+
+<div>
+— Seleccione el color secundario:
+   <select name="colorSecundario">
+      <option value=1>Rojo</option>
+      <option value=2>Amarillo</option>
+      <option value=3>Verde</option>
+      <option value=4>Naranja</option>
+      <option value=5>Azul</option>
+      <option value=6>Violeta</option>
+      <option value=7>Rosa</option>
+      <option value=8>Lila</option>
+      <option value=9>Fucsia</option>
+      <option value=10>Mostaza</option>
+      <option value=11>Turquesa</option>
+      <option value=12>Ocre</option>
+      <option value=13>Magenta</option>
+      <option value=14>Gris</option>
+      <option value=15>Negro</option>
+      <option value=16>Blanco</option>
+      <option value=17>Beige</option>
+      <option value=18>Salmon</option>
+      <option value=19>Granate</option>
+      <option value=20>Lavanda</option>
+      <option value=21>Malva</option>
+      <option value=22>Purpura</option>
+      <option value=23>Ciruela</option>
+      <option value=24>Melocoton</option>
+</select>
+</div>
+
+
+<form class="profile-form" action="/prendas/step-2" method="GET">
+    <button>Siguiente</button>
+</form>
+
+{{/partial}}
+{{>layout.hbs}}
+</body>
+</html>

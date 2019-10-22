@@ -1,0 +1,20 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+</head>
+<body>
+
+{{#partial "contenido"}}
+
+<h1> Step 2 </h1>
+
+TIPO: {{tipo}}
+
+<form class="profile-form" action="/prendas/step-2" method="POST">
+    <button>Dar de alta prenda</button>
+</form>
+
+{{/partial}}
+{{>layout.hbs}}
+</body>
+</html>
