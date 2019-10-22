@@ -7,6 +7,6 @@ import spark.Request;
 
 public interface Tiempo {
 	public boolean verificarTiempo(String tiempo);
-	public boolean esPeriodico(HashMap<String, Object> viewModel);
+	public void esPeriodico(HashMap<String, Object> viewModel);
 	public FrecuenciaDeEvento obtenerFrecuencia(Request req, HashMap<String, Object> viewModel);
 }

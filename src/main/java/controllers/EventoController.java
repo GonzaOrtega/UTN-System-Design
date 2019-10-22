@@ -48,20 +48,19 @@ public class EventoController {
 		if(frecuencia != null)
 			frecuenciaPosta = frecuencia;
 		
-		boolean eligieronDesYFrec = false; // Esto sirve tanto para cuando se inicia la pagina como para si la persona no eligio frecuencia
 		Evento eventoObtenido = null;
 		
 		if(frecuenciaPosta != null) { // Si no veo de tirar una exception en algun lado
-			eligieronDesYFrec = true;
-			FrecuenciaDeEvento frecuenciaDeEvento = organizacion(frecuenciaPosta, req, viewModel);
+			Tiempo fecha = null;
+			fecha = organizacion(frecuenciaPosta, req, viewModel);
+			FrecuenciaDeEvento frecuenciaDeEvento = fecha.obtenerFrecuencia(req, viewModel);
 			if(frecuenciaDeEvento != null) {
 				eventoObtenido = armarEvento(descripcion, frecuenciaDeEvento);
-				eligieronDesYFrec = false;
 				frecuenciaPosta = null;
 			}
 		}
 		// Para cuando se ingresen todos lo valores correctamente a esta altura ya esta el evento cargado. Vamos a probarlo
-		viewModel.put("eligieronDesYFrec", eligieronDesYFrec);
+		viewModel.put("eligieronDesYFrec", frecuenciaPosta!=null);
 		System.out.println(eventoObtenido);
 		
 		// Para usar el evento ya cargado hay que hacer if(eventoObtenido != null) y usarlo
@@ -72,18 +71,13 @@ public class EventoController {
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 
-	public static FrecuenciaDeEvento organizacion(String frecuencia, Request req, HashMap<String, Object> viewModel) {
-		FrecuenciaDeEvento frecuenciaDeEvento = null;
+	public static Tiempo organizacion(String frecuencia, Request req, HashMap<String, Object> viewModel) {
 		List<Tiempo> elemTiempo = new ArrayList<Tiempo>();
 		elemTiempo.add(new DiaCheckbox());
 		elemTiempo.stream().filter(tiempo -> tiempo.verificarTiempo(frecuencia));
-		boolean hayTiempo = elemTiempo.get(0).esPeriodico(viewModel);
+		elemTiempo.get(0).esPeriodico(viewModel);
 		
-//		String action = req.queryParams("action");
-		if(hayTiempo) {
-			frecuenciaDeEvento = elemTiempo.get(0).obtenerFrecuencia(req, viewModel);
-		}
-		return frecuenciaDeEvento;
+		return elemTiempo.get(0);
 	}
 	
 	// Metodos complementarios
