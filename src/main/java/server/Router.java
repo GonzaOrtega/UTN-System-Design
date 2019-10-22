@@ -25,10 +25,11 @@ public class Router {
 		LoginController loginController = new LoginController();
 		UserController userController = new UserController();
 		PrendaController prendaContoller = new PrendaController();
-
+		GuardarropasController guardarropasController = new GuardarropasController();
 		Spark.get("/", loginController::show, engine);
 		Spark.post("/", loginController::login, engine);
 		Spark.get("/perfil", userController::showProfile,engine);
+		Spark.get("/guardarropa", guardarropasController::show,engine);
 		Spark.get("/sugerencias/show/aceptadas", SugerenciasController::verSugerenciasAceptadas);
 		Spark.get("/evento/show", EventoController::mostrarEventos);
 		Spark.get("/evento/alta", EventoController::altaDeEvento);
@@ -38,7 +39,6 @@ public class Router {
 		Spark.get("/prendas/step-2", prendaContoller::showstep2,engine);	
 		Spark.post("/prendas/step-2", prendaContoller::load_step2,engine);		 
 		Spark.get("/prendas/step-3", prendaContoller::showstep3,engine);		 
-		//park.post("/prendas/step-3", prendaContoller::load,engine);		 
-
+		//Spark.get("/prendas/step-3", prendaContoller::load_step3,engine);		 
 	}
 }

@@ -1,0 +1,17 @@
+{{#partial "contenido"}}
+
+<h1>Guardarropas</h1>
+
+{{#each guardarropas}}
+  <h3>Guardarropa nro</h3> {{this.id}}
+  {{#each this.prendas}}
+    <ul>
+      <li>Color primario: {{this.colorPrimario}}</li>
+    </ul>
+  {{/each}}
+{{/each}}
+
+
+{{/partial}}
+
+{{>layout.hbs}}

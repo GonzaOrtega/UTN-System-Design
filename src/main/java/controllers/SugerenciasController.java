@@ -11,6 +11,7 @@ import domain.Evento;
 import domain.Guardarropa;
 import domain.Prenda;
 import domain.PrendaBuilder;
+import domain.RepositorioDeUsuarios;
 import domain.Sugerencia;
 import domain.Sugeridor;
 import domain.Usuario;
@@ -30,14 +31,23 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class SugerenciasController {
 	public static String verSugerenciasAceptadas(Request req, Response res) {
-		HashMap<String, Object> viewModel = new HashMap();
+		Map<String, Object> viewModel = new HashMap();
 		
-		List<Sugerencia> listaSugerencia = new ArrayList<Sugerencia>();
+		// ------------------------------------------------------
+/*
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		List<Sugerencia> listaSugerencia = usuarie.getSugerencias();
+*/
+		// ---------------------- Hardcodeo ----------------------
+		
+		List<Sugerencia> listaSugerencia= new ArrayList<Sugerencia>();
 		Sugerencia sugerenciaPosta = generarSugerencia();
 		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
 		listaSugerencia.add(generarSugerencia2());
 		listaSugerencia.add(sugerenciaPosta);
 		
+		// -------------------------------------------------------
 		
 		Boolean haySugerenciaAceptada = listaSugerencia.stream().anyMatch(sugerencia -> sugerencia.aceptada());
 		viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);

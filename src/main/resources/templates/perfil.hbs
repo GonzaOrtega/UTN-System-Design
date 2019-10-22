@@ -36,6 +36,17 @@
 			<button>Dar de alta prendas</button>
 	</form>
 
+	<form class="profile-form" action="/guardarropa" method="GET">
+			<button>Guardarropas</button>
+	</form>
+
+	{{#each lista}}
+	<li>{{this}}</li>
+	<tr>
+					<td>{{colorPrimario}}
+	</tr>
+	{{/each}}
+
 {{/partial}}
 {{>layout.hbs}}
 </body>

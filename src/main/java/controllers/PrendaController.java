@@ -1,20 +1,19 @@
 package controllers;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import domain.Evento;
-import domain.Prenda;
+import java.util.stream.Collectors;
+import java.util.List;
+import domain.Guardarropa;
 import domain.PrendaBuilder;
 import domain.RepositorioDeUsuarios;
 import domain.Usuario;
-import domain.enums.Categoria;
 import domain.enums.Color;
 import domain.enums.Material;
 import domain.enums.TipoPrenda;
-import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class PrendaController {
 	
@@ -103,9 +102,13 @@ public class PrendaController {
 	public  ModelAndView load_step3(Request req, Response res) {
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		Usuario usuarie = repo.buscarPorNombre(req.queryParams("nombreUsuario"));
-		Prenda prenda = builder.crearPrenda();
-		
+		Map<String, Object> viewModel = new HashMap<String, Object>();
+		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
+		viewModel.put("guardarropas", guardarropas);
+		res.redirect("/prendas/step-3");
+
 		return null;
 	}
 	
 }
+//kare2222277
