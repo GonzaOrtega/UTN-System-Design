@@ -24,7 +24,12 @@ public enum Color{
 		Malva,
 		Purpura,
 		Ciruela,
-		Melocoton;
+		Melocoton,
+		ROJO,
+		NEGRO,
+		BLANCO,
+		NARANJA,
+		AMARILLO;
 		// Etc.
 	}
 

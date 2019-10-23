@@ -38,6 +38,5 @@ public class GuardarropasController {
 		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
 		viewModel.put("guardarropas", guardarropas);
 	return new ModelAndView(viewModel,"guardarropa2.hbs");
-
 	}*/
 }
