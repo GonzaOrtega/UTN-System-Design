@@ -10,8 +10,8 @@
 		{{#if eventos}}
 			{{#each eventos}}
     			<li>descripcion: {{this.descripcion}}<li>
-				<form class="profile-form" action="/sugerencias?eventos="+{{this}} method="GET">
-	    			<button>Ver sugerencias</button>
+				<form class="profile-form" action="/calendario" method="POST">
+	    			<button type='submit'>Ver sugerencias</button>
 				</form>    				
     		{{/each}}
     	{{else}}

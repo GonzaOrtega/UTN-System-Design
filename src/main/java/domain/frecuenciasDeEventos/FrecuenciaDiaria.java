@@ -13,7 +13,7 @@ public class FrecuenciaDiaria extends FrecuenciaDeEvento{
 //	long id;
 	private int limiteDeProximidad = 8;
 	int hora;
-	
+	public FrecuenciaDiaria() {}
 	public FrecuenciaDiaria(int hora) {
 		this.hora=hora;
 	}

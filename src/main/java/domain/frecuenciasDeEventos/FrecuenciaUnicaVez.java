@@ -12,7 +12,7 @@ public class FrecuenciaUnicaVez extends FrecuenciaDeEvento {
 	static int limiteDeProximidad = 7;
 	
 	LocalDateTime fechaEvento;
-
+	public FrecuenciaUnicaVez() {}
 	public FrecuenciaUnicaVez(int anio, int mes, int dia) {
 		fechaEvento = LocalDateTime.of(anio, mes, dia, 0, 0, 0);
 	}

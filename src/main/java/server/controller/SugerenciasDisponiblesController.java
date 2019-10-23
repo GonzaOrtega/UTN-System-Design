@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import domain.Evento;
 import domain.Prenda;
 import domain.PrendaBuilder;
+import domain.RepositorioDeUsuarios;
 import domain.Usuario;
 import domain.enums.Color;
 import domain.enums.Material;
@@ -24,28 +25,36 @@ import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class SugerenciasDisponiblesController {
-	public static String verSugerencias(Request req, Response res){
-		//String evento= req.queryParams("evento");
-		Evento evento = new Evento(new FrecuenciaUnicaVez(2019,5,24),"Sin descripcion");
-		Usuario usuario = new Usuario(TipoUsuario.PREMIUM,0,"ana","123");
-		Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
-		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
-		Set<Prenda> atuendo= new HashSet<Prenda>();
-		Set<Prenda> atuendo2= new HashSet<Prenda>();
-		atuendo.add(camisaCorta);
-		atuendo.add(zapatos);
-		atuendo2.add(camisaCorta);
-		Sugerencia sugerenciaLoca = new Sugerencia(atuendo,evento);
-		Sugerencia sugerenciaLoca2 = new Sugerencia(atuendo2,evento);
-		usuario.agregarSugerencia(sugerenciaLoca);
-		usuario.agregarSugerencia(sugerenciaLoca2);
-		List<Sugerencia> sugerencias= usuario.getSugerencias();
+	private List<Sugerencia> sugerencias=null;
+	public static ModelAndView confirmarSugerencia(Request req, Response res){
+		String sugerenciaNum=req.queryParams("sugerencia");
+		if(isNumeric(sugerenciaNum)) {
+			res.redirect("/calendario");
+		}
+		return new ModelAndView(null, "sugerenciasPendientes.hbs");
+	}
+	public static boolean isNumeric(String cadena) {
+		try {
+			Integer.parseInt(cadena);
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
 		
+	}
+	private List<Sugerencia> obtenerSugerencias(Long idEvento) {
+		Set<Evento> eventos =RepositorioDeUsuarios.getInstance().eventos();
+		Evento evento =eventos.stream().filter(even->even.getId() == idEvento).collect(Collectors.toList()).get(0);
+		Set<Sugerencia> sugerencias = RepositorioDeUsuarios.getInstance().usuarios().stream()
+			.flatMap(usuario->usuario.getSugerencias().stream()).collect(Collectors.toSet());
+		return sugerencias.stream().filter(sugerencia->sugerencia.getEvento()==evento).collect(Collectors.toList());
+	}
+	public String verSugerencias(Request req, Response res){
+		String idEvento = req.cookie("evento");
+		sugerencias = obtenerSugerencias(Long.parseLong(idEvento));
 		boolean haySugerencias;
 		boolean haySugerenciasAceptadas;
 		HashMap<String, Object> viewModel = new HashMap<>();
-		sugerencias = sugerencias.stream().filter(sugerencia->sugerencia.getEvento() == evento)
-				.collect(Collectors.toList());
 		haySugerencias = !sugerencias.isEmpty();
 		haySugerenciasAceptadas = sugerencias.stream().anyMatch(sugerencia->sugerencia.getEstado()==TipoSugerencias.ACEPTADA);
 		viewModel.put("sugerencias", sugerencias);
