@@ -7,15 +7,21 @@
 	</form>	
 	{{#if hayFecha}}
 		<h2>Eventos</h2>
-		{{#if eventos}}
-			{{#each eventos}}
-    			<li>descripcion: {{this.descripcion}}<li>
+		{{#if haySugerencias}}
+			{{#each haySugerencias}}
+    			<li>descripcion: {{this.evento.descripcion}}<li>
 				<form class="profile-form" action="/calendario" method="POST">
 	    			<button type='submit'>Ver sugerencias</button>
 				</form>    				
     		{{/each}}
     	{{else}}
-    		<li>No se han encontrado eventos<li>
+    		{{#if eventos}}
+    			{{#each eventos}}
+    				<li>descripcion: {{this.evento}}<li>
+    			{{/each}}
+    		{{else}}
+    			<li>No se han encontrado eventos<li>
+    		{{/if}}
     	{{/if}}
 	{{/if}}
 
