@@ -3,8 +3,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
 import java.util.List;
 import domain.Guardarropa;
+import domain.Prenda;
 import domain.PrendaBuilder;
 import domain.RepositorioDeUsuarios;
 import domain.Usuario;
@@ -14,9 +18,11 @@ import domain.enums.TipoPrenda;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import javax.persistence.EntityManager;
 
-public class PrendaController {
-	
+public class PrendaController implements WithGlobalEntityManager{
+	EntityManager em = entityManager();
 	PrendaBuilder builder = new PrendaBuilder();
 	
 	public  ModelAndView showstep1(Request req, Response res) {
@@ -46,7 +52,15 @@ public class PrendaController {
 		viewModel.put("colorSecundario",colorS);
 		viewModel.put("tela",material);
 		viewModel.put("nivelAbrigo",nivel_abrigo);
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
+		viewModel.put("guardarropas", guardarropas);
 		return new ModelAndView(viewModel, "step3.hbs");
+	}
+	
+	public  ModelAndView showstep4(Request req, Response res) {
+		return new ModelAndView(null, "step4.hbs");
 	}
 	
 	public  ModelAndView load_step1(Request req, Response res) {
@@ -91,7 +105,7 @@ public class PrendaController {
 			res.cookie("nivelDeAbrigo",abrigo);
 		}
 		catch(Exception e) {
-			System.out.println("Eror->" + e);
+			System.out.println("Error->" + e);
 			res.redirect("/prendas/step-2");
 		}
 		res.redirect("/prendas/step-3");
@@ -100,13 +114,24 @@ public class PrendaController {
 	}
 	
 	public  ModelAndView load_step3(Request req, Response res) {
+		Map<String,Object> viewModel = new HashMap<String, Object>();
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario usuarie = repo.buscarPorNombre(req.queryParams("nombreUsuario"));
-		Map<String, Object> viewModel = new HashMap<String, Object>();
-		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
-		viewModel.put("guardarropas", guardarropas);
-		res.redirect("/prendas/step-3");
-
+		try {
+			Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+			int id_guardarropa = Integer.parseInt(req.queryParams("guardarropa"));
+			Guardarropa guardarropa = usuarie.buscarGuardarropa(id_guardarropa);
+			Prenda prenda = builder.crearPrenda();
+			
+			this.cargarPrenda(prenda, usuarie, guardarropa);
+			builder = new PrendaBuilder();//sino devuelve siempre la misma prenda
+			
+		//	res.cookie("idGuardarropa", req.queryParams("guardarropa"));
+			res.redirect("/perfil");
+		}
+		catch(Exception e){
+			System.out.println("Error -> " + e);
+		}
+		
 		return null;
 	}
 	public ModelAndView mostrarPrendas(Request req, Response res) {
@@ -115,6 +140,13 @@ public class PrendaController {
 		Map<String, Object> viewModel = new HashMap<String, Object>();
 		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
 		return null;
+	}
+	public void cargarPrenda(Prenda prenda,Usuario user,Guardarropa guar) {
+    	entityManager().getTransaction().begin();
+    	em.persist(prenda);
+    	user.cargarPrenda(guar, prenda);
+    	entityManager().getTransaction().commit();
+    	
 	}
 }
 //kare2222277

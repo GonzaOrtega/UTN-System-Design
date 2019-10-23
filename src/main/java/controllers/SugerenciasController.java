@@ -34,11 +34,11 @@ public class SugerenciasController {
 		Map<String, Object> viewModel = new HashMap();
 		
 		// ------------------------------------------------------
-/*
+		/*
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
 		List<Sugerencia> listaSugerencia = usuarie.getSugerencias();
-*/
+ 		*/
 		// ---------------------- Hardcodeo ----------------------
 		
 		List<Sugerencia> listaSugerencia= new ArrayList<Sugerencia>();
@@ -51,13 +51,9 @@ public class SugerenciasController {
 		
 		Boolean haySugerenciaAceptada = listaSugerencia.stream().anyMatch(sugerencia -> sugerencia.aceptada());
 		viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);
-		
 		List<Sugerencia> listaSugerenciaAceptadas = listaSugerencia.stream().filter(sugerencia -> sugerencia.aceptada()).collect(Collectors.toList());
-		
 		viewModel.put("sugerencias", listaSugerenciaAceptadas);
-		
 		ModelAndView modelAndView = new ModelAndView(viewModel, "verSugerenciasAceptadas.hbs");
-		
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 	

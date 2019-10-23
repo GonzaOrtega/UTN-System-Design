@@ -15,8 +15,8 @@ public class Guardarropa extends SuperClase{
 
 	// ---------------------------- Atributos -------------------------------
 	
-	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
-	private Set<Prenda> prendas = new HashSet<Prenda>();
+	@OneToMany(cascade = CascadeType.PERSIST) @JoinColumn(name="id_Guardarropa") 
+	private Set<Prenda> prendas;
 
 	
 	// ------------------ Getters, setters y constructores ------------------
@@ -25,6 +25,10 @@ public class Guardarropa extends SuperClase{
 		prendas.add(unaPrenda);
 	}
 	
+	public Set<Prenda> getPrendas() {
+		return prendas;
+	}
+
 	public Set<Prenda> prendas(){return prendas;}
 
 	// ------------------------------ Metodos -------------------------------
