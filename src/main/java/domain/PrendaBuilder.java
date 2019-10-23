@@ -10,6 +10,10 @@ public class PrendaBuilder{
 	
 	Prenda prenda = new Prenda();
 	
+	public Prenda prenda() {
+		return prenda;
+	}
+
 	public Prenda crearPrenda(){
 		if(this.tieneAlgunParametroNulo()) {
 			throw new TieneParametrosNulosException("WARNING: no se pudo crear la prenda ya que tiene parametros sin instanciar.");

@@ -15,10 +15,9 @@ public class Guardarropa extends SuperClase{
 
 	// ---------------------------- Atributos -------------------------------
 	
-	@OneToMany(cascade = CascadeType.PERSIST)@JoinColumn(name="id_Guardarropa")
-	private Set<Prenda> prendas = new HashSet<Prenda>();
-	/*@ManyToMany(mappedBy = "guardarropas")
-	private Set<Usuario> duenios = new HashSet<Usuario>();*/
+	@OneToMany(cascade = CascadeType.PERSIST) @JoinColumn(name="id_Guardarropa") 
+	private Set<Prenda> prendas;
+
 	
 	// ------------------ Getters, setters y constructores ------------------
 	
@@ -26,6 +25,10 @@ public class Guardarropa extends SuperClase{
 		prendas.add(unaPrenda);
 	}
 	
+	public Set<Prenda> getPrendas() {
+		return prendas;
+	}
+
 	public Set<Prenda> prendas(){return prendas;}
 
 	// ------------------------------ Metodos -------------------------------
@@ -52,7 +55,7 @@ public class Guardarropa extends SuperClase{
 	
 	private Set<Prenda> noSuperior(){
 		return this.prendasNoUsadas().stream().filter(p->p.getTipo().categoria != 
-				Categoria.SUPERIOR).collect(Collectors.toSet());
+				Categoria.Superior).collect(Collectors.toSet());
 	}
 
 	private Set<Set<Prenda>> parteNoSuperior(ProveedorClima clima,Usuario user){
@@ -76,7 +79,7 @@ public class Guardarropa extends SuperClase{
 	
 	private Set<Prenda> soloSuperior(){
 		Set<Prenda> ret = this.prendasNoUsadas().stream().filter(p->p.getTipo().categoria == 
-				Categoria.SUPERIOR).collect(Collectors.toSet());
+				Categoria.Superior).collect(Collectors.toSet());
 		return ret;
 	}
 	
@@ -84,7 +87,7 @@ public class Guardarropa extends SuperClase{
 		Set<Prenda> aux = ps.stream().filter(prenda->prenda.getEsBase()).collect(Collectors.toSet());
 		boolean soloUnaPrendaBase = aux.size() == 1;
 		int aux2 = ps.stream().mapToInt(prenda -> prenda.getNivelAbrigo()).sum();
-		boolean abrigaBien = this.EstaEnRango(aux2,clima,unUser,Categoria.SUPERIOR);
+		boolean abrigaBien = this.EstaEnRango(aux2,clima,unUser,Categoria.Superior);
 		boolean soloUnaCampera = ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Campera).collect(Collectors.toSet()).size()<2;
 		boolean soloUnTapado = ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Tapado).collect(Collectors.toSet()).size()<2;
 		boolean soloUnBuzo= ps.stream().filter(prenda->prenda.getTipo() == TipoPrenda.Buzo).collect(Collectors.toSet()).size()<2;
@@ -100,8 +103,8 @@ public class Guardarropa extends SuperClase{
 	}
 	
 	private boolean parteInferiorValida(Set<Prenda> ps,ProveedorClima clima,Usuario user) {
-		return this.contienePrendasDeCategoria(ps, Categoria.INFERIOR)
-				&& this.contienePrendasDeCategoria(ps, Categoria.CALZADO)
+		return this.contienePrendasDeCategoria(ps, Categoria.Inferior)
+				&& this.contienePrendasDeCategoria(ps, Categoria.Calzado)
 				&& this.abrigaCorrectamenteInferior(ps,clima,user);
 	}
 	
@@ -114,7 +117,7 @@ public class Guardarropa extends SuperClase{
 	
 	private boolean contienePrendasDeCategoria(Set<Prenda> atuendo, Categoria unaCategoria) {
 		Set<Prenda> aux;
-		if (unaCategoria != Categoria.INFERIOR)
+		if (unaCategoria != Categoria.Inferior)
 			return atuendo.stream().anyMatch(prenda->prenda.getTipo().categoria == unaCategoria); 
 		
 		aux = atuendo.stream().filter(prenda->prenda.getTipo().

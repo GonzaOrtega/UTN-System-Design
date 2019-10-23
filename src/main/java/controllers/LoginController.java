@@ -9,6 +9,11 @@ import spark.Request;
 
 public class LoginController {
 	public ModelAndView show(Request req, Response res) {
+		if(req.session().attribute("nombreUsuario") != null) {
+			res.redirect("/perfil");
+			return null;
+		}	
+		
 		return new ModelAndView(null, "login.hbs");
 	}
 	
@@ -18,9 +23,9 @@ public class LoginController {
 		try {
 		Usuario usuarie = repo.buscarPorNombre(req.queryParams("nombreUsuario"));
 		usuarie.validarContrasenia(password);
+		req.session().attribute("nombreUsuario", usuarie.getNombreUsuario()); 
 		res.cookie("nombreUsuario", usuarie.getNombreUsuario());
 		res.redirect("/perfil");
-		req.session().attribute("nombreUsuario", usuarie.getNombreUsuario()); 
 		}
 		catch(Exception e) {
 			System.out.println("Eror->" + e);

@@ -16,15 +16,16 @@ public class GuardarropaTest {
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0,"juan","123");
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
-	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.ALGODON).conColorPrimario(Color.ROJO).conColorSecundario(Color.AMARILLO).conAbrigo(0).crearPrenda();
-	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).conAbrigo(1).crearPrenda();
-	Prenda ojotas =  new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).conAbrigo(-1).crearPrenda();
-	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.ALGODON).conAbrigo(0).crearPrenda();
-	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(1).crearPrenda();
-	Prenda camperaGucci = new PrendaBuilder().conTipo(TipoPrenda.Campera).conTela(Material.ALGODON).conColorPrimario(Color.NEGRO).conAbrigo(2).crearPrenda();
-	Prenda botas = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.CUERO).conColorPrimario(Color.AMARILLO).conAbrigo(3).crearPrenda();
-	Prenda pantalonAbrigo = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.JEAN).conColorPrimario(Color.AZUL).conAbrigo(3).crearPrenda();
-	Prenda buzo =  new PrendaBuilder().conTipo(TipoPrenda.Buzo).conTela(Material.ALGODON).conColorPrimario(Color.ROSA).conColorSecundario(Color.AMARILLO).conAbrigo(2).crearPrenda();
+	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
+	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
+	Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.Negro).conTela(Material.Algodon).crearPrenda();
+	Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.Blanco).conTela(Material.Saten).crearPrenda();
+	Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.Caucho).conColorPrimario(Color.Negro).crearPrenda();
+	Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.Azul).crearPrenda();
+	Prenda camperaGucci = new PrendaBuilder().conTipo(TipoPrenda.Campera).conTela(Material.Algodon).conColorPrimario(Color.Negro).conAbrigo(2).crearPrenda();
+	Prenda botas = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).conAbrigo(3).crearPrenda();
+	Prenda pantalonAbrigo = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.Azul).conAbrigo(3).crearPrenda();
+	Prenda buzo =  new PrendaBuilder().conTipo(TipoPrenda.Buzo).conTela(Material.Algodon).conColorPrimario(Color.Rosa).conColorSecundario(Color.Amarillo).conAbrigo(2).crearPrenda();
 	@Before
 	public void setUp(){
 		juan.agregarGuardarropa(armario);
@@ -66,8 +67,8 @@ public class GuardarropaTest {
 	public void siJuanCalificaFrioEnLosPiesNoDarleOjotas() {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta));
 		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,ojotas,camisaCorta));
-		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
-		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
 
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario,ojotas);
@@ -76,10 +77,10 @@ public class GuardarropaTest {
 	}
 	@Test
 	public void calificacionesFrio() {
-		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
-		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
-		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
-		juan.calificar(Categoria.CALZADO,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
 		assertEquals(juan.getCalificaciones().size(),4);
 
 	}
@@ -90,7 +91,7 @@ public class GuardarropaTest {
 		juan.cargarPrenda(armario, pantalonAbrigo);
 		juan.cargarPrenda(armario, botas);
 		juan.cargarPrenda(armario,buzo);
-		juan.calificar(Categoria.SUPERIOR,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Superior,TipoSensaciones.FRIO);
 
 		assertTrue(armario.pedirAtuendosSegun(APIMockInvierno,juan).contains(atuendo));
 		assertFalse(armario.pedirAtuendosSegun(APIMockInvierno,juan).contains(atuendo2));
@@ -104,8 +105,8 @@ public class GuardarropaTest {
 		juan.cargarPrenda(armario, pantalonAbrigo);
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario, buzo);
-		juan.calificar(Categoria.INFERIOR,TipoSensaciones.FRIO);
-		juan.calificar(Categoria.SUPERIOR,TipoSensaciones.CALOR);
+		juan.calificar(Categoria.Inferior,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Superior,TipoSensaciones.CALOR);
 
 		assertTrue(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo));
 		assertFalse(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo2));

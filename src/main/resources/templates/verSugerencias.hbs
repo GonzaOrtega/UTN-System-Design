@@ -1,30 +1,16 @@
-<html>
-<head>
-<title>Sugerencias</title>
-</head>
-<body>	
-{{#partial "contenido"}}
-	
 	<h1>Sugerencias</h1>
-	
+
 	{{#each sugerencias}}
-	
-		{{#each this.atuendo}} 
+
+		{{#each this.atuendo}}
 			<h3> Atuendo </h3>
-			
 			<ul>
 				<li>Color primario: {{this.colorPrimario}}</li>
+				<li>Color secundario: {{this.colorSecundario}}</li>
 				<li>Tipo: {{this.tipo}}</li>
 				<li>Tela: {{this.tela}}</li>
-				<li>Nivel Abrigo: {{this.nivelAbrigo}}</li> (Creo que esto no se tiene que mostrar pero por las dudas lo muestro)
-				<li>EstaUsada: {{this.usada}}</li> Creo que esto no se tiene que mostrar pero por las dudas lo muestro)
 			</ul>
-			
+
 		{{/each}}
 		<h3>Estado: </h3> {{this.estado}}
 	{{/each}}
-
-{{/partial}}
-
-</body>
-</html>

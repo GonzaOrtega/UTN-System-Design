@@ -4,74 +4,74 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum TipoPrenda{
-		Remera			(Categoria.SUPERIOR,
-						Arrays.asList(Material.ALGODON,Material.LYCRA,Material.SEDA, Material.SATEN,Material.GAMUZA,Material.CHIFFON, Material.POLIESTER,Material.MEZCLILLA)
+		Remera			(Categoria.Superior,
+						Arrays.asList(Material.Algodon,Material.Lycra,Material.Seda, Material.Saten,Material.Gamuza,Material.Chiffon, Material.Poliester,Material.Mezclilla)
 						),
-		RemeraMangaCorta(Categoria.SUPERIOR,
-						Arrays.asList(Material.ALGODON,Material.LYCRA,Material.SEDA, Material.SATEN,Material.GAMUZA,Material.CHIFFON, Material.POLIESTER,Material.MEZCLILLA)
+		RemeraMangaCorta(Categoria.Superior,
+						Arrays.asList(Material.Algodon,Material.Lycra,Material.Seda, Material.Saten,Material.Gamuza,Material.Chiffon, Material.Poliester,Material.Mezclilla)
 						),
-		RemeraMangaLarga(Categoria.SUPERIOR,
-						Arrays.asList(Material.ALGODON,Material.LYCRA,Material.SEDA, Material.SATEN,Material.GAMUZA,Material.CHIFFON, Material.POLIESTER,Material.MEZCLILLA)
+		RemeraMangaLarga(Categoria.Superior,
+						Arrays.asList(Material.Algodon,Material.Lycra,Material.Seda, Material.Saten,Material.Gamuza,Material.Chiffon, Material.Poliester,Material.Mezclilla)
 						),
-		CamisaMangaCorta(Categoria.SUPERIOR,
-						Arrays.asList(Material.ALGODON,Material.LYCRA,Material.SEDA, Material.SATEN,Material.GAMUZA, Material.JEAN,Material.MEZCLILLA,Material.LINO)
+		CamisaMangaCorta(Categoria.Superior,
+						Arrays.asList(Material.Algodon,Material.Lycra,Material.Seda, Material.Saten,Material.Gamuza, Material.Jean,Material.Mezclilla,Material.Lino)
 						),
-		CamisaMangaLarga(Categoria.SUPERIOR,
-						Arrays.asList(Material.ALGODON,Material.LYCRA,Material.SEDA, Material.SATEN,Material.GAMUZA, Material.JEAN,Material.MEZCLILLA,Material.LINO)
+		CamisaMangaLarga(Categoria.Superior,
+						Arrays.asList(Material.Algodon,Material.Lycra,Material.Seda, Material.Saten,Material.Gamuza, Material.Jean,Material.Mezclilla,Material.Lino)
 						),
-		Pantalon		(Categoria.INFERIOR,
-						Arrays.asList(Material.JEAN, Material.SPANDEX,Material.CUERO,Material.GABARDINA,Material.MODAL,Material.LINO,Material.MEZCLILLA)
+		Pantalon		(Categoria.Inferior,
+						Arrays.asList(Material.Jean, Material.Spandex,Material.Cuero,Material.Gabardina,Material.Modal,Material.Lino,Material.Mezclilla)
 						),
-		Short			(Categoria.INFERIOR,
-						Arrays.asList(Material.JEAN, Material.SPANDEX,Material.CUERO,Material.GABARDINA,Material.MODAL,Material.LINO,Material.MEZCLILLA)
+		Short			(Categoria.Inferior,
+						Arrays.asList(Material.Jean, Material.Spandex,Material.Cuero,Material.Gabardina,Material.Modal,Material.Lino,Material.Mezclilla)
 						),
-		PolleraCorta	(Categoria.INFERIOR,
-						Arrays.asList(Material.LANILLA,Material.JEAN, Material.CUERO,Material.GABARDINA,Material.SPANDEX)
+		PolleraCorta	(Categoria.Inferior,
+						Arrays.asList(Material.Lanilla,Material.Jean, Material.Cuero,Material.Gabardina,Material.Spandex)
 						),
-		PolleraLarga	(Categoria.INFERIOR,
-						Arrays.asList(Material.LANILLA,Material.JEAN, Material.CUERO,Material.GABARDINA,Material.SPANDEX)
+		PolleraLarga	(Categoria.Inferior,
+						Arrays.asList(Material.Lanilla,Material.Jean, Material.Cuero,Material.Gabardina,Material.Spandex)
 						),
-		Bermuda			(Categoria.INFERIOR,
-						Arrays.asList(Material.JEAN, Material.SPANDEX,Material.CUERO,Material.GABARDINA,Material.MODAL,Material.LINO,Material.MEZCLILLA)
+		Bermuda			(Categoria.Inferior,
+						Arrays.asList(Material.Jean, Material.Spandex,Material.Cuero,Material.Gabardina,Material.Modal,Material.Lino,Material.Mezclilla)
 						),
-		Calza			(Categoria.INFERIOR,
-						Arrays.asList(Material.ALGODON,Material.MEZCLILLA,Material.POLIESTER)
+		Calza			(Categoria.Inferior,
+						Arrays.asList(Material.Algodon,Material.Mezclilla,Material.Poliester)
 						),
-		Jardinero		(Categoria.INFERIOR,
-						Arrays.asList(Material.JEAN)
+		Jardinero		(Categoria.Inferior,
+						Arrays.asList(Material.Jean)
 						),
-		Zapatos			(Categoria.CALZADO,
-						Arrays.asList(Material.CUERO)
+		Zapatos			(Categoria.Calzado,
+						Arrays.asList(Material.Cuero)
 						),
-		Ojotas			(Categoria.CALZADO,
-						Arrays.asList(Material.CUERO,Material.POLIESTER,Material.CAUCHO)
+		Ojotas			(Categoria.Calzado,
+						Arrays.asList(Material.Cuero,Material.Poliester,Material.Caucho)
 						),
-		Botas			(Categoria.CALZADO,
-						Arrays.asList(Material.CUERO,Material.POLIESTER,Material.CAUCHO)
+		Botas			(Categoria.Calzado,
+						Arrays.asList(Material.Cuero,Material.Poliester,Material.Caucho)
 						),
-		Zapatillas		(Categoria.CALZADO,
-						Arrays.asList(Material.NYLON,Material.LONA,Material.CUERO)
+		Zapatillas		(Categoria.Calzado,
+						Arrays.asList(Material.Nylon,Material.Lana,Material.Cuero)
 						),
-		Borcegos		(Categoria.CALZADO,
-						Arrays.asList(Material.CUERO)
+		Borcegos		(Categoria.Calzado,
+						Arrays.asList(Material.Cuero)
 						),
-		Gorro			(Categoria.ACCESORIO,
-						Arrays.asList(Material.MEZCLILLA,Material.ALGODON, Material.LANA)
+		Gorro			(Categoria.Accesorio,
+						Arrays.asList(Material.Mezclilla,Material.Algodon, Material.Lana)
 						),
-		Gorra			(Categoria.ACCESORIO,
-						Arrays.asList(Material.CUERO,Material.NYLON,Material.POLIESTER,Material.ALGODON)
+		Gorra			(Categoria.Accesorio,
+						Arrays.asList(Material.Cuero,Material.Nylon,Material.Poliester,Material.Algodon)
 						),
-		Sombrero		(Categoria.ACCESORIO,
-						Arrays.asList(Material.RAYON,Material.LANA)
+		Sombrero		(Categoria.Accesorio,
+						Arrays.asList(Material.Rayon,Material.Lana)
 						),
-		Tapado			(Categoria.SUPERIOR,
-						Arrays.asList(Material.RAYON,Material.LANA)
+		Tapado			(Categoria.Superior,
+						Arrays.asList(Material.Rayon,Material.Lana)
 						),
-		Buzo			(Categoria.SUPERIOR,
-						Arrays.asList(Material.ALGODON,Material.LANA,Material.NYLON)
+		Buzo			(Categoria.Superior,
+						Arrays.asList(Material.Algodon,Material.Lana,Material.Nylon)
 						),
-		Campera			(Categoria.SUPERIOR,
-						Arrays.asList(Material.ALGODON,Material.LANA,Material.NYLON)
+		Campera			(Categoria.Superior,
+						Arrays.asList(Material.Algodon,Material.Lana,Material.Nylon)
 						);
 		//Etc.
 

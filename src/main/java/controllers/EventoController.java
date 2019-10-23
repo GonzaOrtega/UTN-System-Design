@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import domain.Evento;
 import domain.frecuenciasDeEventos.FrecuenciaAnual;
@@ -23,7 +24,7 @@ public class EventoController {
 	static String frecuenciaPosta = null; // Pongo esto porque no se porque se me desaparece la frecuencia casi al final y aun la necesito
 
 	public static String mostrarEventos(Request req, Response res) {
-		HashMap<String, Object> viewModel = new HashMap();
+		Map<String, Object> viewModel = new HashMap();
 		
 		// Primero lo pruebo con un solo evento
 		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
@@ -80,34 +81,4 @@ public class EventoController {
 		return new Evento(frecuencia, descripcion);
 	}
 	
-//	private static FrecuenciaDeEvento obtenerFrecuencia(String frecuencia, HashMap<String, Object> viewModel) {
-//		// Falta arreglar los elementos hardcodeados
-//		boolean esFrecuencia = true;
-//		switch(frecuencia) {
-//		case "Anual":
-//			viewModel.put("esAnual", esFrecuencia);
-//			return new FrecuenciaAnual(1, 1);
-//		case "Diaria":
-//			viewModel.put("esDiaria", esFrecuencia);
-//			return new FrecuenciaDiaria(1);
-//		case "Mensual":
-//			viewModel.put("esMensual", esFrecuencia);
-//			return new FrecuenciaMensual(1);
-//		case "Semanal":
-//			viewModel.put("esSemanal", esFrecuencia);
-//			return new FrecuenciaSemanal(1);
-//		case "UnicaVez":
-//			viewModel.put("esUnicaVez", esFrecuencia);
-//			return new FrecuenciaUnicaVez(1, 1, 1);
-//		default:
-//			return null; // Esto no va a pasar nunca ya que esta seteado que para esta altura ya haya una frecuencia (valida por checkpoints)
-//		}
-//	}
-	
-	public static FrecuenciaDeEvento configurarFrecuencia(FrecuenciaDeEvento frecuencia) {
-		
-		
-		
-		return frecuencia;
-	}
 }

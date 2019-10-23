@@ -9,6 +9,9 @@
 	  Bienvenide {{nombreUsuario}}
 	</div>
 
+	<a href="/sugerencias/show/aceptadas" class="boton_1" action="/sugerencias/show/aceptadas" method="GET">
+	    Ver sugerencias aceptadas
+	</a>
 	<form class="profile-form" action="/sugerencias/show/aceptadas" method="GET">
 	    <button>Ver sugerencias aceptadas</button>
 	</form>
@@ -32,6 +35,17 @@
 	<form class="profile-form" action="/prendas/step-1" method="GET">
 			<button>Dar de alta prendas</button>
 	</form>
+
+	<form class="profile-form" action="/guardarropas/show" method="GET">
+			<button>Guardarropas</button>
+	</form>
+
+	{{#each lista}}
+	<li>{{this}}</li>
+	<tr>
+					<td>{{colorPrimario}}
+	</tr>
+	{{/each}}
 
 {{/partial}}
 {{>layout.hbs}}

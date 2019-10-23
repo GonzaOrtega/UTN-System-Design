@@ -17,21 +17,23 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 @Entity 
-@Table(name = "usuario")
 public class Usuario extends SuperClase{
 	// ---------------------------- Atributos -------------------------------
 	@Column(unique=true)
 	private String nombreUsuario;
+	
 	private String password;
+	
 	@Enumerated
 	private TipoUsuario tipo;
-	private int  maximoDePrendas;
+	
+	private int maximoDePrendas;
+	
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<Guardarropa> guardarropas = new HashSet<Guardarropa>();
 	
@@ -43,7 +45,6 @@ public class Usuario extends SuperClase{
 	private Sugerencia ultimaSugerencia() {
 		return sugerencias.get(sugerencias.size()-1);//obtiene el ultimo.
 	}
-	
 	
 	@ManyToMany (cascade = CascadeType.PERSIST)
 	private Set<MedioDeNotificacion> medios = new HashSet<MedioDeNotificacion>();
@@ -79,7 +80,6 @@ public class Usuario extends SuperClase{
 	}
 	
 	public Set<Guardarropa> getGuardarropas() {
-		//Set<Guardarropa> guardarropasQ = entityManager().createQuery("Select u.Guardarropa from Usuario , Guardarropa.class).getResultList().stream().collect(Collectors.toSet());
 		return guardarropas;
 	}
 	
@@ -92,11 +92,6 @@ public class Usuario extends SuperClase{
 	}
 	
 	public Set<Evento> eventos() { 
-/*		List<Evento> listaEventos = entityManager()
-				.createQuery("from Evento order by Id", Evento.class)
-				.getResultList();
-		Set<Evento> setEventos = new HashSet<Evento>(listaEventos);
-		return setEventos;*/
 		return eventos;
 		}
 	
@@ -202,6 +197,10 @@ public class Usuario extends SuperClase{
 	public void validarContrasenia(String contra) {
 		if (!contra.equals(this.password))
 			throw new NoPoseeLaSugerenciaException("Error, contraseña incorrecta!");
+	}
+	
+	public Guardarropa buscarGuardarropa(int id) {
+		return this.getGuardarropas().stream().filter(g->g.getId()==id).collect(Collectors.toList()).get(0);
 	}
 	
 }
