@@ -17,7 +17,7 @@ import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class GuardarropasController {
-	/*
+	
 	public ModelAndView show(Request req, Response res) {
 		Map<String, Object> viewModel = new HashMap<String, Object>();		
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
@@ -27,8 +27,10 @@ public class GuardarropasController {
 		viewModel.put("hayGuardarropas", hayGuardarropas);
 		viewModel.put("guardarropas", guardarropas);
 		return new ModelAndView(viewModel,"guardarropa.hbs");
-	}*/
+	}
 	
+	// Lista desplegable
+	/*
 	public ModelAndView show(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
@@ -37,5 +39,5 @@ public class GuardarropasController {
 		viewModel.put("guardarropas", guardarropas);
 	return new ModelAndView(viewModel,"guardarropa2.hbs");
 
-	}
+	}*/
 }
