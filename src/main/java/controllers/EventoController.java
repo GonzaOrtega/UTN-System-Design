@@ -40,11 +40,6 @@ public class EventoController {
 		String descripcion = req.queryParams("Descripcion");
 		String frecuencia = req.queryParams("Frecuencia");
 		
-		// Hago que me muestre la descripcion por pantalla, para probar nada mas
-		viewModel.put("descripcionIngresada", descripcion);
-		String descripcionObtenida = descripcion;
-		viewModel.put("descripcionObtenida", descripcionObtenida);
-		
 		if(frecuencia != null)
 			frecuenciaPosta = frecuencia;
 		

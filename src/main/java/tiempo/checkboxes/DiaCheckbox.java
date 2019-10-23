@@ -12,7 +12,7 @@ public class DiaCheckbox implements Tiempo{
 	
 	public FrecuenciaDeEvento obtenerFrecuencia(Request req, HashMap<String, Object> viewModel) {
 		this.vincularWeb(req, viewModel);
-		if(this.esError()) {
+		if(!this.esError()) {
 			return new FrecuenciaDiaria(hora);
 		}
 		return null;
@@ -29,20 +29,34 @@ public class DiaCheckbox implements Tiempo{
 	public void vincularWeb(Request req, HashMap<String, Object> viewModel) {
 		String horaString = req.queryParams("hora");
 		viewModel.put("hora", horaString);
-		if(horaString != null) {
-			hora = Integer.parseInt(horaString);
-		}
-		else {
+		if(horaString == null) {
 			noRecibioFechaPorAhora();
+		}else {
+			try {
+				hora = Integer.parseInt(horaString);
+				if(!this.validarFecha())
+					setError(viewModel);
+			}catch(Exception e){
+				setError(viewModel);
+			}
 		}
+	}
+	
+	public boolean validarFecha() {
+		return hora >=0 && hora <=24;
+	}
+	
+	public boolean esError() {
+		return hora == -1;
 	}
 	
 	public void noRecibioFechaPorAhora() {
 		hora = -1;
 	}
 	
-	public boolean esError() {
-		return hora != -1;
+	public void setError(HashMap<String, Object> viewModel) {
+		hora = -1;
+		viewModel.put("fechaIncorrecta", true);
 	}
 	
 }
