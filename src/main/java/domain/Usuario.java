@@ -199,4 +199,8 @@ public class Usuario extends SuperClase{
 			throw new NoPoseeLaSugerenciaException("Error, contraseña incorrecta!");
 	}
 	
+	public Guardarropa buscarGuardarropa(int id) {
+		return this.getGuardarropas().stream().filter(g->g.getId()==id).collect(Collectors.toList()).get(0);
+	}
+	
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.List;
 import domain.Guardarropa;
+import domain.Prenda;
 import domain.PrendaBuilder;
 import domain.RepositorioDeUsuarios;
 import domain.Usuario;
@@ -46,7 +47,15 @@ public class PrendaController {
 		viewModel.put("colorSecundario",colorS);
 		viewModel.put("tela",material);
 		viewModel.put("nivelAbrigo",nivel_abrigo);
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
+		viewModel.put("guardarropas", guardarropas);
 		return new ModelAndView(viewModel, "step3.hbs");
+	}
+	
+	public  ModelAndView showstep4(Request req, Response res) {
+		return new ModelAndView(null, "step4.hbs");
 	}
 	
 	public  ModelAndView load_step1(Request req, Response res) {
@@ -100,13 +109,15 @@ public class PrendaController {
 	}
 	
 	public  ModelAndView load_step3(Request req, Response res) {
+		Map<String,Object> viewModel = new HashMap<String, Object>();
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario usuarie = repo.buscarPorNombre(req.queryParams("nombreUsuario"));
-		Map<String, Object> viewModel = new HashMap<String, Object>();
-		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
-		viewModel.put("guardarropas", guardarropas);
-		res.redirect("/prendas/step-3");
-
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		int id_guardarropa = Integer.parseInt(req.queryParams("guardarropa"));
+		Guardarropa guardarropa = usuarie.buscarGuardarropa(id_guardarropa);
+		Prenda prenda = builder.crearPrenda();
+		usuarie.cargarPrenda(guardarropa, prenda);
+		res.cookie("idGuardarropa", req.queryParams("guardarropa"));
+		res.redirect("/prendas/step-4");
 		return null;
 	}
 	

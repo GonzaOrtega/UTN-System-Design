@@ -30,7 +30,7 @@ public class Router {
 		Spark.get("/", loginController::show, engine);
 		Spark.post("/", loginController::login, engine);
 		Spark.get("/perfil", userController::showProfile,engine);
-		Spark.get("/guardarropa", guardarropasController::show,engine);
+		Spark.get("/guardarropas/show", guardarropasController::show,engine);
 		Spark.get("/sugerencias/show/aceptadas", SugerenciasController::verSugerenciasAceptadas);
 		Spark.get("/evento/show", EventoController::mostrarEventos);
 		Spark.get("/evento/alta", EventoController::altaDeEvento);
@@ -40,7 +40,9 @@ public class Router {
 		Spark.post("/prendas/step-1", prendaContoller::load_step1,engine);		 
 		Spark.get("/prendas/step-2", prendaContoller::showstep2,engine);	
 		Spark.post("/prendas/step-2", prendaContoller::load_step2,engine);		 
-		Spark.get("/prendas/step-3", prendaContoller::showstep3,engine);		 
-		//Spark.get("/prendas/step-3", prendaContoller::load_step3,engine);		 
+		Spark.get("/prendas/step-3", prendaContoller::showstep3,engine);	
+		Spark.post("/prendas/step-3", prendaContoller::load_step3,engine);	
+		Spark.get("/prendas/step-4", prendaContoller::showstep4,engine);		 
+
 	}
 }
