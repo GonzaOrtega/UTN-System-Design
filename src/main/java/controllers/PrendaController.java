@@ -109,6 +109,12 @@ public class PrendaController {
 
 		return null;
 	}
-	
+	public ModelAndView mostrarPrendas(Request req, Response res) {
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.queryParams("nombreUsuario"));
+		Map<String, Object> viewModel = new HashMap<String, Object>();
+		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
+		return null;
+	}
 }
 //kare2222277

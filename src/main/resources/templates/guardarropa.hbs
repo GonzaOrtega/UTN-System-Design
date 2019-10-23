@@ -3,10 +3,12 @@
 <h1>Guardarropas</h1>
 
 {{#each guardarropas}}
-  <h3>Guardarropa nro</h3> {{this.id}}
+  <h3>Guardarropa nro {{this.id}}</h3> 
   {{#each this.prendas}}
+  	<h2>Prenda</h2>
     <ul>
       <li>Color primario: {{this.colorPrimario}}</li>
+      <li>Tipo: {{this.tipo}}</li>
     </ul>
   {{/each}}
 {{/each}}

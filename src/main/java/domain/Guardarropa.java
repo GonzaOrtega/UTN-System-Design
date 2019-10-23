@@ -156,5 +156,7 @@ public class Guardarropa extends SuperClase{
 	public int cantidadDePrendasGuardadas() {
 		return this.prendas.size();
 	}
-	
+	public List<Prenda> listPrendas(){
+		return this.prendas.stream().collect(Collectors.toList());
+	}
 }

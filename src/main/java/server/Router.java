@@ -29,11 +29,12 @@ public class Router {
 		Spark.get("/", loginController::show, engine);
 		Spark.post("/", loginController::login, engine);
 		Spark.get("/perfil", userController::showProfile,engine);
-		Spark.get("/guardarropa", guardarropasController::show,engine);
+		Spark.get("/guardarropa", guardarropasController::show);
 		Spark.get("/sugerencias/show/aceptadas", SugerenciasController::verSugerenciasAceptadas);
 		Spark.get("/evento/show", EventoController::mostrarEventos);
 		Spark.get("/evento/alta", EventoController::altaDeEvento);
 		Spark.get("/calendario", CalendarioController::verCalendario);
+		Spark.get("/prendas/mostrar", prendaContoller::mostrarPrendas,engine);
 		Spark.get("/prendas/step-1", prendaContoller::showstep1,engine);
 		Spark.post("/prendas/step-1", prendaContoller::load_step1,engine);		 
 		Spark.get("/prendas/step-2", prendaContoller::showstep2,engine);	

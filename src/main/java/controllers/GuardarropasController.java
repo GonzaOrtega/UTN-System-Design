@@ -17,7 +17,7 @@ import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class GuardarropasController {
-	public ModelAndView show(Request req, Response res) {
+	public String show(Request req, Response res) {
 		Map<String, Object> viewModel = new HashMap<String, Object>();
 		//-----------------------------------------------------------------
 		
@@ -35,8 +35,18 @@ public class GuardarropasController {
 		*/
 		// -----------------------------------------------------------------
 		viewModel.put("guardarropas", guardarropas);
-		return new ModelAndView(viewModel,"guardarropa.hbs");
+		//return new ModelAndView(viewModel,"guardarropa.hbs");
+		ModelAndView modelAndView = new ModelAndView(viewModel, "guardarropa.hbs");
+
+		return new HandlebarsTemplateEngine().render(modelAndView);
+
 	}
+	
+	
+	
+	
+	
+	
 	
 	public void hardcodear(Guardarropa armario, Guardarropa otroArmario) {
 		Usuario juan = new Usuario(TipoUsuario.PREMIUM, 0,"juan","123");
