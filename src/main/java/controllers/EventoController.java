@@ -46,28 +46,40 @@ public class EventoController {
 		
 		Evento eventoObtenido = null;
 		
-		if(frecuenciaPosta != null) { // Si no veo de tirar una exception en algun lado
-			Tiempo fecha = null;
-			fecha = organizacion(frecuenciaPosta, req, viewModel);
-			FrecuenciaDeEvento frecuenciaDeEvento = fecha.obtenerFrecuencia(req, viewModel);
-			if(frecuenciaDeEvento != null) {
-				eventoObtenido = armarEvento(descripcion, frecuenciaDeEvento);
-				frecuenciaPosta = null;
-			}
+		if(ingresoFrecuencia()) {
+			eventoObtenido = ingresaFecha(req, viewModel, descripcion, eventoObtenido);
 		}
-		// Para cuando se ingresen todos lo valores correctamente a esta altura ya esta el evento cargado. Vamos a probarlo
-		viewModel.put("eligieronDesYFrec", frecuenciaPosta!=null);
-		System.out.println(eventoObtenido);
 		
-		// Para usar el evento ya cargado hay que hacer if(eventoObtenido != null) y usarlo
-		// Se que esta quedando muy desprolijo pero ya lo arreglo
-		// #DeudaTecnica
+		viewModel.put("eligieronDesYFrec", frecuenciaPosta!=null);
+		
+		if(eventoEstaCargado(eventoObtenido)) {
+			System.out.println(eventoObtenido);
+		}
 		
 		ModelAndView modelAndView = new ModelAndView(viewModel, "altaDeEvento.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 
-	public static Tiempo organizacion(String frecuencia, Request req, HashMap<String, Object> viewModel) {
+
+	
+	
+	/*************** Metodos complementarios ***************/
+	private static Evento ingresaFecha(Request req, HashMap<String, Object> viewModel, String descripcion,
+			Evento eventoObtenido) {
+		
+		Tiempo fecha = null;
+		fecha = obtenerFecha(frecuenciaPosta, req, viewModel);
+		FrecuenciaDeEvento frecuenciaDeEvento = fecha.obtenerFrecuencia(req, viewModel);
+		
+		if(frecuenciaDeEvento != null) {
+			eventoObtenido = armarEvento(descripcion, frecuenciaDeEvento);
+			vuelveACargarAltaDeEvento();
+		}
+		return eventoObtenido;
+	}
+
+
+	public static Tiempo obtenerFecha(String frecuencia, Request req, HashMap<String, Object> viewModel) {
 		List<Tiempo> elemTiempo = new ArrayList<Tiempo>();
 		elemTiempo.add(new DiaCheckbox());
 		elemTiempo.stream().filter(tiempo -> tiempo.verificarTiempo(frecuencia));
@@ -76,9 +88,20 @@ public class EventoController {
 		return elemTiempo.get(0);
 	}
 	
-	// Metodos complementarios
+	private static void vuelveACargarAltaDeEvento() {
+		frecuenciaPosta = null;
+	}
+	
+	public static boolean ingresoFrecuencia() {
+		return frecuenciaPosta != null;
+	}
+
 	public static Evento armarEvento(String descripcion, FrecuenciaDeEvento frecuencia) {
 		return new Evento(frecuencia, descripcion);
+	}
+
+	private static boolean eventoEstaCargado(Evento eventoObtenido) {
+		return eventoObtenido != null;
 	}
 	
 }
