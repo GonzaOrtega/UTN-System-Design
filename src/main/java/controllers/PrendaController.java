@@ -126,7 +126,7 @@ public class PrendaController implements WithGlobalEntityManager{
 			builder = new PrendaBuilder();//sino devuelve siempre la misma prenda
 			
 		//	res.cookie("idGuardarropa", req.queryParams("guardarropa"));
-			res.redirect("/perfil");
+			res.redirect("/prendas/step-4");
 		}
 		catch(Exception e){
 			System.out.println("Error -> " + e);
@@ -147,7 +147,7 @@ public class PrendaController implements WithGlobalEntityManager{
     	user.cargarPrenda(guar, prenda);
     	entityManager().getTransaction().commit();
 	}
-	public  ModelAndView prueba(Request req, Response res) {
+/*	public  ModelAndView prueba(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
 		
 		return new ModelAndView(viewModel, "wizardPrenda.hbs");
@@ -162,6 +162,6 @@ public class PrendaController implements WithGlobalEntityManager{
 			res.redirect("/perfil");
 		
 		return null;
-	}
+	}*/
 }
 //kare2222277

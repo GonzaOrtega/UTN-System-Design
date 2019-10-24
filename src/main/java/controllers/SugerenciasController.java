@@ -41,7 +41,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class SugerenciasController extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	List<Sugerencia> listaSugerenciaAceptadas;
 	List<Calificacion> listaCalificaciones;
-	EntityManager em = entityManager();
 	
 	public ModelAndView verSugerenciasAceptadas(Request req, Response res) {
 		Map<String, Object> viewModel = new HashMap();
@@ -96,12 +95,13 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 	
 	public ModelAndView calificarSugerencias(Request req, Response res) {
 		try {
-//			em.getTransaction().begin();
+			EntityManager em = entityManager();
+			em.getTransaction().begin();
 				listaCalificaciones.add(this.armarCalificacion("Superior", req));
 				listaCalificaciones.add(this.armarCalificacion("Calzado", req));
 				listaCalificaciones.add(this.armarCalificacion("Inferior", req));
 				listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
-//			em.getTransaction().commit();
+			em.getTransaction().commit();
 		}catch(Exception e) {
 			res.redirect("/sugerencias/calificar/aceptadas");
 		}
@@ -117,7 +117,10 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		String sensacionString = req.queryParams(parteCuerpoString);
 		Categoria parteCuerpo = Categoria.valueOf(parteCuerpoString);
 		TipoSensaciones sensacion = TipoSensaciones.valueOf(sensacionString);
-		return new Calificacion(parteCuerpo, sensacion);
+		EntityManager em = entityManager();
+		Calificacion calificacion = new Calificacion(parteCuerpo, sensacion);
+		em.persist(calificacion);
+		return calificacion;
 	}
 	
 	// Hardcodeo esto para probarlo, luego se hace con las sugerencias del usuario que inicia sesion	
