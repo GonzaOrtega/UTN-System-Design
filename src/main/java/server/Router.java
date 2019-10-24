@@ -6,6 +6,9 @@ import domain.*;
 import server.controller.CalendarioController;
 import server.controller.SugerenciasDisponiblesController;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+
 import controllers.*;
 
 public class Router {
@@ -52,9 +55,12 @@ public class Router {
 		Spark.get("/prendas/step-3", prendaContoller::showstep3,engine);	
 		Spark.post("/prendas/step-3", prendaContoller::load_step3,engine);	
 		Spark.get("/prendas/step-4", prendaContoller::showstep4,engine);
-//		Spark.get("/prendas/prueba", prendaContoller::prueba,engine);
-//		Spark.post("/prendas/prueba", prendaContoller::pruebaPost,engine);
+		Spark.get("/prendas/prueba", prendaContoller::prueba,engine);
+		Spark.post("/prendas/prueba", prendaContoller::pruebaPost,engine);
 		
-		//Spark.after((req, res)-> ; 
+		Spark.after((request, response) -> { 
+			   PerThreadEntityManagers.getEntityManager(); 
+			   PerThreadEntityManagers.closeEntityManager();
+			 });
 	}
 }

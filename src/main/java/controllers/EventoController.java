@@ -33,7 +33,6 @@ import tiempo.checkboxes.UnicaVezCheckbox;
 
 public class EventoController  extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	
-	EntityManager em = entityManager();
 	static String frecuenciaIngresada = null; // Pongo esto porque no se porque se me desaparece la frecuencia casi al final y aun la necesito
 	static String descripcionIngresada = null;
 	
@@ -106,6 +105,7 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 	}
 	
 	public void cargarEvento(Evento evento) {
+		EntityManager em = entityManager();
 		em.getTransaction().begin();
 		em.persist(evento);
 		em.getTransaction().commit();

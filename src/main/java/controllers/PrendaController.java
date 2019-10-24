@@ -145,14 +145,14 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
     		user.cargarPrenda(guar, prenda);
     	}); 		
 	}
-/*	public  ModelAndView prueba(Request req, Response res) {
+	public  ModelAndView prueba(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
 		
 		return new ModelAndView(viewModel, "wizardPrenda.hbs");
 	}
 	public  ModelAndView pruebaPost(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
-		System.out.println("FUNCIONO!"+req.queryParams("a") + " y "+ req.params("b"));
+		System.out.println("FUNCIONO!"+req.queryParams("nivelAbrigo") + " y "+ req.params("tipoPrenda")+ " y "+req.queryParams("colorPrimario"));
 		System.out.println(req.body());
 
 
@@ -160,6 +160,6 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 			res.redirect("/perfil");
 		
 		return null;
-	}*/
+	}
 }
 //kare2222277

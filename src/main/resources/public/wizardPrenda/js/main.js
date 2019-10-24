@@ -80,13 +80,13 @@
         onFinished: function (event, currentIndex)
         {
             alert('Sumited');
-//		$.ajax({
+//	  $.ajax({
 //            url: "http://localhost:9000/prendas/prueba",   
 //            method: "POST", 
 //            data: {tipoRopa:"pepe2",colorP:"10"},
 //            dataType: "json"            
 //        });
-
+		
 	  document.getElementById("signup-form").submit();
 
         },
