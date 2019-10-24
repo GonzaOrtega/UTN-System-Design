@@ -19,7 +19,7 @@ public class EventoPersistenciaTest extends AbstractPersistenceTest implements W
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
 	Evento eventoAnual = new Evento(new FrecuenciaAnual(02,01),"Medico");
 	Evento eventoDiario = new Evento(new FrecuenciaDiaria(0), "Trabajo");
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan2","123");
 	@Before
 	public void setUp(){
 		juan.agendarEvento(eventoDiario);
