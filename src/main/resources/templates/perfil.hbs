@@ -1,17 +1,19 @@
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/perfil.css" media="screen" />
 </head>
 <body>
 {{#partial "contenido"}}
 
 	<div class="story-page">
-	  Bienvenide {{nombreUsuario}}
+	 <h3> Bienvenide {{nombreUsuario}} </h3>
 	</div>
-
+	<div class="form">
+	<!--
 	<a href="/sugerencias/show/aceptadas" class="boton_1" action="/sugerencias/show/aceptadas" method="GET">
 	    Ver sugerencias aceptadas
 	</a>
+	-->
 	<form class="profile-form" action="/sugerencias/show/aceptadas" method="GET">
 	    <button>Ver sugerencias aceptadas</button>
 	</form>
@@ -39,7 +41,7 @@
 	<form class="profile-form" action="/guardarropas/show" method="GET">
 			<button>Guardarropas</button>
 	</form>
-
+	</div>
 	{{#each lista}}
 	<li>{{this}}</li>
 	<tr>

@@ -146,7 +146,22 @@ public class PrendaController implements WithGlobalEntityManager{
     	em.persist(prenda);
     	user.cargarPrenda(guar, prenda);
     	entityManager().getTransaction().commit();
-    	
+	}
+	public  ModelAndView prueba(Request req, Response res) {
+		Map<String,Object> viewModel = new HashMap<String, Object>();
+		
+		return new ModelAndView(viewModel, "wizardPrenda.hbs");
+	}
+	public  ModelAndView pruebaPost(Request req, Response res) {
+		Map<String,Object> viewModel = new HashMap<String, Object>();
+		System.out.println("FUNCIONO!"+req.queryParams("a") + " y "+ req.params("b"));
+		System.out.println(req.body());
+
+
+
+			res.redirect("/perfil");
+		
+		return null;
 	}
 }
 //kare2222277
