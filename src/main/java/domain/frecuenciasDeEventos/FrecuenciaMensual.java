@@ -11,6 +11,7 @@ import javax.persistence.Id;
 public class FrecuenciaMensual extends FrecuenciaDeEvento{
 	private int limiteDeProximidad = 5;
 	int diaDelMes;
+	public FrecuenciaMensual() {}
 	public FrecuenciaMensual(int dia) {
 		this.diaDelMes = dia;
 	}

@@ -1,18 +1,25 @@
 package server.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
-
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import domain.Evento;
+import domain.Prenda;
+import domain.PrendaBuilder;
 import domain.RepositorioDeUsuarios;
+import domain.Sugerencia;
 import domain.Usuario;
+import domain.enums.Color;
+import domain.enums.Material;
 import domain.enums.TipoFrecuencia;
-import domain.enums.TipoUsuario;
+import domain.enums.TipoPrenda;
+import domain.enums.TipoSugerencias;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 import spark.ModelAndView;
 import spark.Request;
@@ -21,44 +28,114 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class CalendarioController implements WithGlobalEntityManager{
 	EntityManager em = entityManager();
-	public static String verCalendario(Request req, Response res) {
+	List<Evento> eventosPendientes=null; 
+	public ModelAndView verSugerencia(Request req, Response res) {
+		String numString=req.queryParams("eventoNum");
+		int numEvento = Integer.parseInt(numString);
+		Evento evento = eventosPendientes.get(numEvento);
+		res.cookie("evento",evento.getId().toString());
+		res.redirect("/sugerencias");
+		return null;
+	}
+	public String verCalendario(Request req, Response res) {
 		String dia = req.queryParams("dia");
 		String mes = req.queryParams("mes");
 		String anio = req.queryParams("anio");
-		Boolean hayFecha = dia !=null && mes!=null && anio!=null;
-		Set<Evento> eventos = hayFecha? calcularEventos(dia,mes,anio):null;
+		Boolean hayFecha = isNumeric(dia) && isNumeric(mes) && isNumeric(anio);
+		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
+		List<Evento>eventoList = null;
+		List<Evento>eventosNoPendientes = null;
+		
+		eventoList = hayFecha? calcularEventos(dia,mes,anio,usuarie):null;
 		HashMap<String, Object> viewModel = new HashMap<>();
-		viewModel.put("eventos", eventos);
+		if(eventoList!=null) {
+		 eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
+		eventosNoPendientes = eventosNoPendientes(eventoList,usuarie);
+		}else {
+			eventosPendientes = null;
+			eventosNoPendientes=null;
+		}
+		 System.out.println(eventosNoPendientes);
+		viewModel.put("eventosPendientes", eventosPendientes);
+		viewModel.put("eventosNoPendientes", eventosNoPendientes);
+		viewModel.put("eventos",eventoList);
 		viewModel.put("hayFecha", hayFecha);
 		ModelAndView modelAndView = new ModelAndView(viewModel, "calendario.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
+	public List<Evento> tieneSugerenciasPendientes(List<Evento> eventos,Usuario usuario) {
+		List<Sugerencia> sugerencias =usuario.getSugerencias();
+		sugerencias.remove(null);
+		if(!sugerencias.stream().anyMatch(sugerencia->sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE)))
+		return null;
+			return eventos.stream().filter(evento->sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento))).collect(Collectors.toList());
+	}
+	public static boolean isNumeric(String cadena) {
+		try {
+			Integer.parseInt(cadena);
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
+		
+	}
+	public boolean noTieneSugerenciaPendiente(Evento evento,Usuario usuario) {	
+		List<Sugerencia> sugerencias =usuario.getSugerencias();
+		sugerencias.remove(null);
+		return !sugerencias.stream()
+				.anyMatch(sugerencia->sugerencia.getEvento().equals(evento)&&sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE));
+	}
+	private List<Evento> eventosNoPendientes(List<Evento> eventos,Usuario usuario) {	
+            List<Evento>resp= eventos.stream().filter(evento->noTieneSugerenciaPendiente(evento,usuario)).collect(Collectors.toList());
+            System.out.println(resp);
+            return resp;
+	}
 	
 	
-	private static Set<Evento> calcularEventos(String dia,String mes,String anio){
+	private List<Evento> calcularEventos(String dia,String mes,String anio,Usuario usuarie){
 		int diaNum = Integer.parseInt(dia);
 		int mesNum = Integer.parseInt(mes);
 		int anioNum = Integer.parseInt(anio);
-		LocalDateTime fecha = LocalDateTime.of(anioNum,mesNum,diaNum,0,0,0);	
-		agregarEventoCualquiera();
-		Set<Evento> eventos=RepositorioDeUsuarios.getInstance().eventos();
+		List<Evento> eventos= new ArrayList<Evento>(usuarie.eventos());
+		LocalDateTime fecha = LocalDateTime.of(anioNum,mesNum,diaNum,0,0,0);
+		//agregarEvento(usuarie);
+		//agregarSugerencia(usuarie);
 		return eventos.stream()
-				.filter(evento->evento.getFrecuencia() ==TipoFrecuencia.Unico && sucedeEnEsteDia(fecha,evento))
-				.collect(Collectors.toSet());
+				.filter(evento->((evento.getFrecuencia().equals(TipoFrecuencia.Unico)) && sucedeEnEsteDia(fecha,evento)))
+				.collect(Collectors.toList()); 
 	}
-	private static void agregarEventoCualquiera() {
-		CalendarioController calendario = new CalendarioController();
-		Usuario ana = new Usuario(TipoUsuario.PREMIUM,10,"ana","123");
-		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Hola Soy Un Evento");
-		ana.agendarEvento(eventoConFrecuenciaUnica);
-		calendario.persistirUsuario(ana);
-		RepositorioDeUsuarios.getInstance().agregar(ana);
-	}
-	public void persistirUsuario(Usuario ana) {
-		
+	private void agregarEvento(Usuario usuario) {
 		em.getTransaction().begin();
-    	RepositorioDeUsuarios.getInstance().agregar(ana);;
-    	em.getTransaction().commit();
+			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2019,5,24);
+			Evento evento = new Evento(frecuencia,"Sin descripcion");
+			usuario.agendarEvento(evento);
+			em.persist(frecuencia);
+			em.persist(evento);
+		em.getTransaction().commit();
+	}
+	private void agregarSugerencia(Usuario usuario) {
+		em.getTransaction().begin();
+			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2019,5,24);
+			Evento evento = new Evento(frecuencia,"TengoUnaSugerencia");
+			Set<Prenda> atuendo = new HashSet<Prenda>();
+			Set<Prenda> atuendo2 = new HashSet<Prenda>();
+			Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.Azul).crearPrenda();
+			Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
+			atuendo.add(jean);
+			atuendo.add(camisaCorta);
+			atuendo2.add(jean);
+			Sugerencia sugerencia1 = new Sugerencia(atuendo,evento);
+			Sugerencia sugerencia2 = new Sugerencia(atuendo2,evento);
+			usuario.agregarSugerencia(sugerencia1);
+			usuario.agregarSugerencia(sugerencia2);
+			usuario.agendarEvento(evento);
+			em.persist(frecuencia);
+			em.persist(evento);
+			em.persist(sugerencia2);
+			em.persist(sugerencia1);
+			em.persist(jean);
+			em.persist(camisaCorta);
+		em.getTransaction().commit();
 	}
 	private static boolean sucedeEnEsteDia(LocalDateTime fecha,Evento evento) {
 		LocalDateTime fechaEvento=evento.cualEsLaFechaProxima(fecha);

@@ -1,16 +1,35 @@
-	<h1>Sugerencias</h1>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+</head>
+<body>
 
-	{{#each sugerencias}}
+<h1>Sugerencias</h1>
 
-		{{#each this.atuendo}}
-			<h3> Atuendo </h3>
-			<ul>
-				<li>Color primario: {{this.colorPrimario}}</li>
-				<li>Color secundario: {{this.colorSecundario}}</li>
-				<li>Tipo: {{this.tipo}}</li>
-				<li>Tela: {{this.tela}}</li>
-			</ul>
+{{#each sugerencias}}
 
+	Sugerencia N: {{@index}}
+
+	{{#each this.atuendo}}
+	
+		<h3> Atuendo</h3>
+		<ul>
+			<li>Color primario: {{this.colorPrimario}}</li>
+			<li>Color secundario: {{this.colorSecundario}}</li>
+			<li>Tipo: {{this.tipo}}</li>
+			<li>Tela: {{this.tela}}</li>
+		</ul>
+		
+		
+		{{!No se por que no me muestra la descripcion del evento}}
+		{{#each this.evento}}
+			<h3>Evento</h3>
+			<p>Descripcion: {{this.evento.descripcion}}</p>
 		{{/each}}
-		<h3>Estado: </h3> {{this.estado}}
+	
 	{{/each}}
+	<h3>Estado: </h3> {{this.estado}}
+{{/each}}
+</body>
+
+</html>

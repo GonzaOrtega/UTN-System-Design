@@ -7,17 +7,25 @@
 	</form>	
 	{{#if hayFecha}}
 		<h2>Eventos</h2>
-		{{#if eventos}}
-			{{#each eventos}}
-    			<li>descripcion: {{this.descripcion}}<li>
-				<form class="profile-form" action="/sugerencias?eventos="+{{this}} method="GET">
-	    			<button>Ver sugerencias</button>
-				</form>    				
-    		{{/each}}
-    	{{else}}
-    		<li>No se han encontrado eventos<li>
-    	{{/if}}
+		
+		{{#if eventosPendientes}}
+			{{#each eventosPendientes}}
+				<li>descripcion: {{this.descripcion}}</li>
+				<form method='post' action='/calendario'>
+					<button type="submit" name='eventoNum' value='{{@index}}'>Confirmar</button>
+				</form>
+			{{/each}}
+		{{/if}}
+			{{#if eventosNoPendientes}}
+    			{{#each eventosNoPendientes}}
+    				<li>descripcion: {{this.descripcion}}</li>
+    			{{/each}}
+    		{{/if}}
+    	{{#unless eventos}}
+    		<li>No se han encontrado eventos</li>
+    	{{/unless}}
 	{{/if}}
+	
 
 {{/partial}}
 {{>layout.hbs}}

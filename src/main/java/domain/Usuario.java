@@ -59,7 +59,7 @@ public class Usuario extends SuperClase{
 	// ------------------ Getters, setters y constructores ------------------
 	
 	
-	private Usuario() {}
+	public Usuario() {}
 	
 	public Usuario(TipoUsuario tipo, int maximoDePrendas,String nombre,String pass) {
 		this.tipo = tipo;

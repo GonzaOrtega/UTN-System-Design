@@ -14,7 +14,7 @@ public class FrecuenciaAnual extends FrecuenciaDeEvento {
 	int limiteDeProximidad = 30;
 	
 	LocalDateTime fechaEvento;
-
+	public FrecuenciaAnual() {}
 	public FrecuenciaAnual(int mes, int dia) {
 		fechaEvento = LocalDateTime.of(119, mes, dia, 0, 0, 0);
 	}

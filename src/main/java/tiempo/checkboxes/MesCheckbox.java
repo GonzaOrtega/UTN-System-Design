@@ -4,37 +4,38 @@ import java.util.HashMap;
 
 import domain.frecuenciasDeEventos.FrecuenciaDeEvento;
 import domain.frecuenciasDeEventos.FrecuenciaDiaria;
+import domain.frecuenciasDeEventos.FrecuenciaMensual;
 import spark.Request;
 
-public class DiaCheckbox implements Tiempo{
-	public Integer hora = 1; // Establezco hora default
-	boolean esDiario = true;
+public class MesCheckbox implements Tiempo{
+	public Integer dia = 1; // Establezco hora default
+	boolean esMensual = true;
 	boolean error = false;
 	
 	public FrecuenciaDeEvento obtenerFrecuencia(Request req, HashMap<String, Object> viewModel) {
 		this.vincularWeb(req, viewModel);
 		if(!error) {
-			return new FrecuenciaDiaria(hora);
+			return new FrecuenciaMensual(dia);
 		}
 		return null;
 	}
 	
 	public boolean verificarTiempo(String tiempo) {
-		return tiempo.equals("Diaria");
+		return tiempo.equals("Mensual");
 	}
 	
 	public void esPeriodico(HashMap<String, Object> viewModel) {
-		viewModel.put("esDiaria", esDiario);
+		viewModel.put("esMensual", esMensual);
 	}
 	
 	public void vincularWeb(Request req, HashMap<String, Object> viewModel) {
-		String horaString = req.queryParams("hora");
-		viewModel.put("hora", horaString);
-		if(horaString == null) {
+		String diaString = req.queryParams("dia");
+		viewModel.put("dia", diaString);
+		if(diaString == null) {
 			noRecibioFechaPorAhora();
 		}else {
 			try {
-				hora = Integer.parseInt(horaString);
+				dia = Integer.parseInt(diaString);
 				if(!this.validarFecha())
 					setError(viewModel);
 			}catch(Exception e){
@@ -44,7 +45,7 @@ public class DiaCheckbox implements Tiempo{
 	}
 	
 	public boolean validarFecha() {
-		return hora >=0 && hora <=24;
+		return dia >=1 && dia <=30;
 	}
 	
 	public void noRecibioFechaPorAhora() {

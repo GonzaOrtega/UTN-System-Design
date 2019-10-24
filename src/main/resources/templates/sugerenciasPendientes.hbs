@@ -1,6 +1,6 @@
 {{#partial "contenido"}}
-<form method='get' action='/calendario'>
-	{{#if haySugerencias}}
+
+		<form method='post' action='/sugerencias'>
 		{{#each sugerencias}}
 			<h2> Una sugerencia es</h2> 
 			{{#each this.atuendo}}
@@ -9,11 +9,12 @@
 				<li>Tipo: {{this.tipo}}</li>
 				<li>Tela: {{this.tela}}</li>
 			{{/each}}
-			<input type="radio" name="Sugerencia" value="Aceptada"> Aceptada<br>
+			<input type="radio" name='sugerencia' value='{{@index}}'>Aceptar<br>
+			
 		{{/each}}
-	{{else}}
-		No hay todavia una sugerencia para este evento
-	{{/if}}
-<form>
+		
+		<button type="submit">Confirmar</button>
+		</form>
+
 {{/partial}}
 {{>layout.hbs}}

@@ -15,6 +15,7 @@ public class FrecuenciaDeEvento{
 	@Id
 	@GeneratedValue
 	private Long id;
+	public FrecuenciaDeEvento(){}
 	public TipoFrecuencia getFrecuencia() {
 		return TipoFrecuencia.Anual;
 	}

@@ -11,7 +11,7 @@ public class Calificacion extends SuperClase{
 	private Categoria parteCuerpo;
 	@Enumerated
 	private TipoSensaciones sensacion;
-
+	public Calificacion() {}
 	public Calificacion(Categoria parteCuerpo, TipoSensaciones sensacion) {
 		this.parteCuerpo = parteCuerpo;
 		this.sensacion = sensacion;

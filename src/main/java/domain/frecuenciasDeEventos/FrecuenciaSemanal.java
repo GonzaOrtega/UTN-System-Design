@@ -9,7 +9,7 @@ import domain.enums.TipoFrecuencia;
 public class FrecuenciaSemanal extends FrecuenciaDeEvento{
 	private int limiteDeProximidad = 2;
 	private int diaDeLaSemana;
-	
+	public FrecuenciaSemanal() {}
 	public FrecuenciaSemanal(int diaDeLaSemana) {
 		this.diaDeLaSemana= diaDeLaSemana;
 	}

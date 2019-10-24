@@ -3,10 +3,16 @@ package controllers;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import domain.Calificacion;
 import domain.Evento;
 import domain.Guardarropa;
 import domain.Prenda;
@@ -18,19 +24,26 @@ import domain.Usuario;
 import domain.apisClima.MockAPI;
 import domain.apisClima.OpenWeatherMapAPI;
 import domain.apisClima.ProveedorClima;
+import domain.enums.Categoria;
 import domain.enums.Color;
 import domain.enums.Material;
 import domain.enums.TipoPrenda;
+import domain.enums.TipoSensaciones;
 import domain.enums.TipoSugerencias;
 import domain.enums.TipoUsuario;
+import domain.frecuenciasDeEventos.FrecuenciaDiaria;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class SugerenciasController {
-	public static String verSugerenciasAceptadas(Request req, Response res) {
+public class SugerenciasController extends AbstractPersistenceTest implements WithGlobalEntityManager{
+	List<Sugerencia> listaSugerenciaAceptadas;
+	List<Calificacion> listaCalificaciones;
+	EntityManager em = entityManager();
+	
+	public ModelAndView verSugerenciasAceptadas(Request req, Response res) {
 		Map<String, Object> viewModel = new HashMap();
 		
 		// ------------------------------------------------------
@@ -41,50 +54,79 @@ public class SugerenciasController {
  		*/
 		// ---------------------- Hardcodeo ----------------------
 		
-		List<Sugerencia> listaSugerencia= new ArrayList<Sugerencia>();
+		// Hardcodeo del usuario para db
+		
+		Usuario usuario = new Usuario(TipoUsuario.PREMIUM, 100, "pepe", "1234");
+		
+		listaCalificaciones = usuario.getCalificaciones();
+		List<Sugerencia> listaSugerencia = listaSugerencia = usuario.getSugerencias();
 		Sugerencia sugerenciaPosta = generarSugerencia();
+		Sugerencia sugerenciaPosta2 = generarSugerencia2();
 		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
-		listaSugerencia.add(generarSugerencia2());
+		listaSugerencia.add(sugerenciaPosta2);
 		listaSugerencia.add(sugerenciaPosta);
+		
+//		em.getTransaction().begin();
+//		em.persist(usuario);
+//		em.getTransaction().commit();
 		
 		// -------------------------------------------------------
 		
 		Boolean haySugerenciaAceptada = listaSugerencia.stream().anyMatch(sugerencia -> sugerencia.aceptada());
 		viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);
-		List<Sugerencia> listaSugerenciaAceptadas = listaSugerencia.stream().filter(sugerencia -> sugerencia.aceptada()).collect(Collectors.toList());
+		listaSugerenciaAceptadas = listaSugerencia.stream().filter(sugerencia -> sugerencia.aceptada()).collect(Collectors.toList());
 		viewModel.put("sugerencias", listaSugerenciaAceptadas);
-		ModelAndView modelAndView = new ModelAndView(viewModel, "verSugerenciasAceptadas.hbs");
-		return new HandlebarsTemplateEngine().render(modelAndView);
+		return new ModelAndView(viewModel, "verSugerenciasAceptadas.hbs");
+	}
+	
+	public ModelAndView elegirSugerenciaAceptada(Request req, Response res) {
+		String coord = req.queryParams("nroSugerencia");
+		try {
+			listaSugerenciaAceptadas.remove(Integer.parseInt(coord));
+		}catch(Exception e) {
+			res.redirect("/sugerencias/show/aceptadas");
+		}
+		res.redirect("/sugerencias/calificar/aceptadas");
+		return null;
+	}
+	
+	public ModelAndView verCalificarSugerencias(Request req, Response res) {
+		return new ModelAndView(null, "calificarSugerencias.hbs");
+	}
+	
+	public ModelAndView calificarSugerencias(Request req, Response res) {
+		try {
+//			em.getTransaction().begin();
+				listaCalificaciones.add(this.armarCalificacion("Superior", req));
+				listaCalificaciones.add(this.armarCalificacion("Calzado", req));
+				listaCalificaciones.add(this.armarCalificacion("Inferior", req));
+				listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
+//			em.getTransaction().commit();
+		}catch(Exception e) {
+			res.redirect("/sugerencias/calificar/aceptadas");
+		}
+		res.redirect("/perfil");
+		return null;
 	}
 	
 	
 	
-	public static String calificarSugerencias(Request req, Response res) {
-		HashMap<String, Object> viewModel = new HashMap();
-		
-		ModelAndView modelAndView = new ModelAndView(viewModel, "calificarSugerencias.hbs");
-		return new HandlebarsTemplateEngine().render(modelAndView);
-	}
 	
+	/*************** Metodos complementarios ***************/
+	public Calificacion armarCalificacion(String parteCuerpoString, Request req) {
+		String sensacionString = req.queryParams(parteCuerpoString);
+		Categoria parteCuerpo = Categoria.valueOf(parteCuerpoString);
+		TipoSensaciones sensacion = TipoSensaciones.valueOf(sensacionString);
+		return new Calificacion(parteCuerpo, sensacion);
+	}
 	
 	// Hardcodeo esto para probarlo, luego se hace con las sugerencias del usuario que inicia sesion	
 	public static Sugerencia generarSugerencia() {
-//		ProveedorClima weatherAPI = new OpenWeatherMapAPI();
-//		ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-//		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
-//		Guardarropa armario = new Guardarropa();
-//		Guardarropa otroArmario = new Guardarropa();
 		Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
 		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
-//		Prenda zapatillas = new PrendaBuilder().conTipo(TipoPrenda.Zapatillas).conTela(Material.Cuero).conColorPrimario(Color.AMARILLO).crearPrenda();
 		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.Negro).conTela(Material.Algodon).crearPrenda();
-//		Prenda sombrero= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.Algodon).crearPrenda();
-//		Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
-//		Prenda camisaDeLara = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
-//		Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 		Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.Azul).crearPrenda();
-//		Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.BLANCO).crearPrenda();
-		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaDiaria(1),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
 		
 		Set<Prenda> atuendo = new HashSet<Prenda>();
 		atuendo.add(jean);
@@ -95,22 +137,11 @@ public class SugerenciasController {
 	}
 	
 	public static Sugerencia generarSugerencia2() {
-//		ProveedorClima weatherAPI = new OpenWeatherMapAPI();
-//		ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-//		Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
-//		Guardarropa armario = new Guardarropa();
-//		Guardarropa otroArmario = new Guardarropa();
 		Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
 		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
-//		Prenda zapatillas = new PrendaBuilder().conTipo(TipoPrenda.Zapatillas).conTela(Material.Cuero).conColorPrimario(Color.AMARILLO).crearPrenda();
 		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.Negro).conTela(Material.Algodon).crearPrenda();
-//		Prenda sombrero= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.NEGRO).conTela(Material.Algodon).crearPrenda();
-//		Prenda camisaLarga = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
-//		Prenda camisaDeLara = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaLarga).conColorPrimario(Color.BLANCO).conTela(Material.SATEN).crearPrenda();
-//		Prenda ojotas = new PrendaBuilder().conTipo(TipoPrenda.Ojotas).conTela(Material.CAUCHO).conColorPrimario(Color.NEGRO).crearPrenda();
 		Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.Azul).crearPrenda();
-//		Prenda pantalon = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.BLANCO).crearPrenda();
-		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Hola!!");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaDiaria(1),"Hola!!");//Fecha "16-02-2019" -> Es decir, un evento finalizado
 		
 		Set<Prenda> atuendo = new HashSet<Prenda>();
 		atuendo.add(jean);
@@ -119,5 +150,4 @@ public class SugerenciasController {
 		atuendo.add(zapatos);
 		return new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 	}
-	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
@@ -21,8 +22,12 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import tiempo.checkboxes.AnioCheckbox;
 import tiempo.checkboxes.DiaCheckbox;
+import tiempo.checkboxes.MesCheckbox;
+import tiempo.checkboxes.SemanaCheckbox;
 import tiempo.checkboxes.Tiempo;
+import tiempo.checkboxes.UnicaVezCheckbox;
 
 public class EventoController  extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	
@@ -49,7 +54,7 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		
 		Evento eventoObtenido = null;
 		
-		if(ingresoFrecuencia()) {
+		if(ingresoDescripcionYFrecuencia()) {
 			eventoObtenido = ingresaFecha(req, viewModel, eventoObtenido);
 		}
 		
@@ -86,7 +91,11 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 	public static Tiempo obtenerFecha(String frecuencia, Request req, HashMap<String, Object> viewModel) {
 		List<Tiempo> elemTiempo = new ArrayList<Tiempo>();
 		elemTiempo.add(new DiaCheckbox());
-		elemTiempo.stream().filter(tiempo -> tiempo.verificarTiempo(frecuencia));
+		elemTiempo.add(new AnioCheckbox());
+		elemTiempo.add(new SemanaCheckbox());
+		elemTiempo.add(new MesCheckbox());
+		elemTiempo.add(new UnicaVezCheckbox());
+		elemTiempo = elemTiempo.stream().filter(tiempo -> tiempo.verificarTiempo(frecuencia)).collect(Collectors.toList());
 		elemTiempo.get(0).esPeriodico(viewModel);
 		
 		return elemTiempo.get(0);
@@ -102,8 +111,8 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		frecuenciaIngresada = null;
 	}
 	
-	public static boolean ingresoFrecuencia() {
-		return frecuenciaIngresada != null;
+	public static boolean ingresoDescripcionYFrecuencia() {
+		return frecuenciaIngresada != null && descripcionIngresada != null;
 	}
 
 	public static Evento armarEvento(String descripcion, FrecuenciaDeEvento frecuencia) {
