@@ -1,3 +1,9 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+</head>
+<body>
+
 <h1>Sugerencias</h1>
 
 {{#each sugerencias}}
@@ -18,9 +24,12 @@
 		{{!No se por que no me muestra la descripcion del evento}}
 		{{#each this.evento}}
 			<h3>Evento</h3>
-			<p>Descripcion: {{this.descripcion}}</p>
+			<p>Descripcion: {{this.evento.descripcion}}</p>
 		{{/each}}
 	
 	{{/each}}
 	<h3>Estado: </h3> {{this.estado}}
 {{/each}}
+</body>
+
+</html>

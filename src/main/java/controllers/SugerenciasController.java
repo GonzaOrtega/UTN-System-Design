@@ -81,7 +81,6 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 	
 	public ModelAndView elegirSugerenciaAceptada(Request req, Response res) {
 		String coord = req.queryParams("nroSugerencia");
-		System.out.println(coord);
 		try {
 			listaSugerenciaAceptadas.remove(Integer.parseInt(coord));
 		}catch(Exception e) {
@@ -110,6 +109,10 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		return null;
 	}
 	
+	
+	
+	
+	/*************** Metodos complementarios ***************/
 	public Calificacion armarCalificacion(String parteCuerpoString, Request req) {
 		String sensacionString = req.queryParams(parteCuerpoString);
 		Categoria parteCuerpo = Categoria.valueOf(parteCuerpoString);
