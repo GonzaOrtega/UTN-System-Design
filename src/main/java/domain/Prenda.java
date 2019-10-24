@@ -32,7 +32,7 @@ public class Prenda extends SuperClase{
 	private int nivelAbrigo;
 	
 	private boolean usada = false;
-	
+	public Prenda() {}
 	// ------------------ Getters, setters y constructores ------------------
 	
 	public Color getColorPrimario() {

@@ -9,21 +9,21 @@
 		<h2>Eventos</h2>
 		{{#if haySugerencias}}
 			{{#each haySugerencias}}
-    			<li>descripcion: {{this.evento.descripcion}}<li>
-				<form class="profile-form" action="/calendario" method="POST">
-	    			<button type='submit'>Ver sugerencias</button>
-				</form>    				
-    		{{/each}}
-    	{{else}}
-    		{{#if eventos}}
+				<li>descripcion: {{this.evento.descripcion}}</li>
+				<form method='post' action='/calendario'>
+					<button type="submit">Confirmar</button>
+				</form>
+			{{/each}}
+			{{#if eventos}}
     			{{#each eventos}}
-    				<li>descripcion: {{this.evento}}<li>
+    				<li>descripcion: {{this.descripcion}}</li>
     			{{/each}}
-    		{{else}}
-    			<li>No se han encontrado eventos<li>
     		{{/if}}
+    	{{else}}
+    		<li>No se han encontrado eventos</li>
     	{{/if}}
 	{{/if}}
+	
 
 {{/partial}}
 {{>layout.hbs}}
