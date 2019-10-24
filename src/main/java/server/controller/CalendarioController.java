@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.persistence.EntityManager;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import domain.Evento;
@@ -30,11 +28,11 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class CalendarioController implements WithGlobalEntityManager{
 	EntityManager em = entityManager();
-	List<Evento> eventos=null; 
+	List<Evento> eventosPendientes=null; 
 	public ModelAndView verSugerencia(Request req, Response res) {
-		String numString=req.queryParams("evento");
+		String numString=req.queryParams("eventoNum");
 		int numEvento = Integer.parseInt(numString);
-		Evento evento = eventos.get(numEvento);
+		Evento evento = eventosPendientes.get(numEvento);
 		res.cookie("evento",evento.getId().toString());
 		res.redirect("/sugerencias");
 		return null;
@@ -46,34 +44,32 @@ public class CalendarioController implements WithGlobalEntityManager{
 		Boolean hayFecha = isNumeric(dia) && isNumeric(mes) && isNumeric(anio);
 		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		List<Evento>eventoList = null;
-		List<Evento>eventoNoPendientes = null;
+		List<Evento>eventosNoPendientes = null;
+		
 		eventoList = hayFecha? calcularEventos(dia,mes,anio,usuarie):null;
 		HashMap<String, Object> viewModel = new HashMap<>();
-		List<Sugerencia> haySugerenciasPendientes = tieneSugerenciasPendientes(eventoList,usuarie);
-		eventoNoPendientes = eventosNoPendientes(eventoList,usuarie);
-		viewModel.put("haySugerencias", haySugerenciasPendientes);
-		viewModel.put("eventos", eventoNoPendientes);
+		if(eventoList!=null) {
+		 eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
+		eventosNoPendientes = eventosNoPendientes(eventoList,usuarie);
+		}else {
+			eventosPendientes = null;
+			eventosNoPendientes=null;
+		}
+		 System.out.println(eventosNoPendientes);
+		viewModel.put("eventosPendientes", eventosPendientes);
+		viewModel.put("eventosNoPendientes", eventosNoPendientes);
+		viewModel.put("eventos",eventoList);
 		viewModel.put("hayFecha", hayFecha);
 		ModelAndView modelAndView = new ModelAndView(viewModel, "calendario.hbs");
-		eventos = eventoList;
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
-	public boolean tieneAsignadoUnEvento(List<Evento> eventos,Sugerencia sugerencia) {
-		return (eventos.stream().anyMatch(evento->evento.equals(sugerencia.getEvento()))
-				&&sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE));
-	}
-	public List<Sugerencia> tieneSugerenciasPendientes(List<Evento> eventos,Usuario usuario) {
+	public List<Evento> tieneSugerenciasPendientes(List<Evento> eventos,Usuario usuario) {
 		List<Sugerencia> sugerencias =usuario.getSugerencias();
 		sugerencias.remove(null);
-		return sugerencias.stream().filter(sugerencia->tieneAsignadoUnEvento(eventos,sugerencia))
-				.collect(Collectors.toList());
+		if(!sugerencias.stream().anyMatch(sugerencia->sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE)))
+		return null;
+			return eventos.stream().filter(evento->sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento))).collect(Collectors.toList());
 	}
-	
-	/*public List<Evento> agregarEventos(Set<Evento> sets){
-		List<Evento> list = new ArrayList<Evento>();
-		sets.stream().map(set->list.add(set));
-		return list;
-	}*/
 	public static boolean isNumeric(String cadena) {
 		try {
 			Integer.parseInt(cadena);

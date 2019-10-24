@@ -7,21 +7,23 @@
 	</form>	
 	{{#if hayFecha}}
 		<h2>Eventos</h2>
-		{{#if haySugerencias}}
-			{{#each haySugerencias}}
-				<li>descripcion: {{this.evento.descripcion}}</li>
+		
+		{{#if eventosPendientes}}
+			{{#each eventosPendientes}}
+				<li>descripcion: {{this.descripcion}}</li>
 				<form method='post' action='/calendario'>
-					<button type="submit">Confirmar</button>
+					<button type="submit" name='eventoNum' value='{{@index}}'>Confirmar</button>
 				</form>
 			{{/each}}
-			{{#if eventos}}
-    			{{#each eventos}}
+		{{/if}}
+			{{#if eventosNoPendientes}}
+    			{{#each eventosNoPendientes}}
     				<li>descripcion: {{this.descripcion}}</li>
     			{{/each}}
     		{{/if}}
-    	{{else}}
+    	{{#unless eventos}}
     		<li>No se han encontrado eventos</li>
-    	{{/if}}
+    	{{/unless}}
 	{{/if}}
 	
 

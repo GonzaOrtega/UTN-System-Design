@@ -2,35 +2,33 @@ package server.controller;
 
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import domain.Evento;
-import domain.Prenda;
-import domain.PrendaBuilder;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import domain.RepositorioDeUsuarios;
 import domain.Usuario;
-import domain.enums.Color;
-import domain.enums.Material;
-import domain.enums.TipoPrenda;
 import domain.enums.TipoSugerencias;
-import domain.enums.TipoUsuario;
-import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 import domain.Sugerencia;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class SugerenciasDisponiblesController {
+public class SugerenciasDisponiblesController implements WithGlobalEntityManager{
 	private List<Sugerencia> sugerencias=null;
-	public static ModelAndView confirmarSugerencia(Request req, Response res){
+	public ModelAndView confirmarSugerencia(Request req, Response res){
 		String sugerenciaNum=req.queryParams("sugerencia");
 		if(isNumeric(sugerenciaNum)) {
+			Sugerencia sugerencia = sugerencias.get(Integer.parseInt(sugerenciaNum));
+			entityManager().getTransaction().begin();
+				sugerencia.setEstado(TipoSugerencias.ACEPTADA);
+				sugerencias.remove(sugerencia);
+				sugerencias.forEach(sug->sug.setEstado(TipoSugerencias.RECHAZADA));
+			entityManager().getTransaction().commit();
 			res.redirect("/calendario");
+			
 		}
+		res.redirect("/sugerencias");
 		return new ModelAndView(null, "sugerenciasPendientes.hbs");
 	}
 	public static boolean isNumeric(String cadena) {
@@ -46,20 +44,18 @@ public class SugerenciasDisponiblesController {
 		return sugerencia.getEvento().getId()==idEvento;
 	}
 	private List<Sugerencia> obtenerSugerencias(Long idEvento,Usuario usuario) {
-		return usuario.getSugerencias().stream().filter(sugerencia->esDeEsteEvento(sugerencia,idEvento)).collect(Collectors.toList());
+		List<Sugerencia> sugerencias =  usuario.getSugerencias();
+		sugerencias.remove(null);
+		return sugerencias.stream().filter(sugerencia->esDeEsteEvento(sugerencia,idEvento)).collect(Collectors.toList());
 	}
 	public String verSugerencias(Request req, Response res){
 		String idEvento = req.cookie("evento");
+		System.out.println(idEvento);
 		Usuario usuario = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		sugerencias = obtenerSugerencias(Long.parseLong(idEvento),usuario);
-		boolean haySugerencias;
-		boolean haySugerenciasAceptadas;
 		HashMap<String, Object> viewModel = new HashMap<>();
-		haySugerencias = !sugerencias.isEmpty();
-		haySugerenciasAceptadas = sugerencias.stream().anyMatch(sugerencia->sugerencia.getEstado()==TipoSugerencias.ACEPTADA);
 		viewModel.put("sugerencias", sugerencias);
-		viewModel.put("haySugerencias",haySugerencias);
-		viewModel.put("haySugerenciasAceptadas",haySugerenciasAceptadas);
+		viewModel.put("sugerencia", "a");
 		ModelAndView modelAndView = new ModelAndView(viewModel, "sugerenciasPendientes.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
