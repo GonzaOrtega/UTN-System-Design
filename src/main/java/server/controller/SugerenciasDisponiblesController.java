@@ -42,16 +42,16 @@ public class SugerenciasDisponiblesController {
 		}
 		
 	}
-	private List<Sugerencia> obtenerSugerencias(Long idEvento) {
-		Set<Evento> eventos =RepositorioDeUsuarios.getInstance().eventos();
-		Evento evento =eventos.stream().filter(even->even.getId() == idEvento).collect(Collectors.toList()).get(0);
-		Set<Sugerencia> sugerencias = RepositorioDeUsuarios.getInstance().usuarios().stream()
-			.flatMap(usuario->usuario.getSugerencias().stream()).collect(Collectors.toSet());
-		return sugerencias.stream().filter(sugerencia->sugerencia.getEvento()==evento).collect(Collectors.toList());
+	private boolean esDeEsteEvento(Sugerencia sugerencia,Long idEvento) {
+		return sugerencia.getEvento().getId()==idEvento;
+	}
+	private List<Sugerencia> obtenerSugerencias(Long idEvento,Usuario usuario) {
+		return usuario.getSugerencias().stream().filter(sugerencia->esDeEsteEvento(sugerencia,idEvento)).collect(Collectors.toList());
 	}
 	public String verSugerencias(Request req, Response res){
 		String idEvento = req.cookie("evento");
-		sugerencias = obtenerSugerencias(Long.parseLong(idEvento));
+		Usuario usuario = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
+		sugerencias = obtenerSugerencias(Long.parseLong(idEvento),usuario);
 		boolean haySugerencias;
 		boolean haySugerenciasAceptadas;
 		HashMap<String, Object> viewModel = new HashMap<>();

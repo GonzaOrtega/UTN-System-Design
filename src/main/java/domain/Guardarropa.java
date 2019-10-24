@@ -18,6 +18,7 @@ public class Guardarropa extends SuperClase{
 	@OneToMany(cascade = CascadeType.PERSIST) @JoinColumn(name="id_Guardarropa") 
 	private Set<Prenda> prendas;
 
+	public Guardarropa() {}
 	
 	// ------------------ Getters, setters y constructores ------------------
 	
