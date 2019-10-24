@@ -66,9 +66,9 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		listaSugerencia.add(sugerenciaPosta2);
 		listaSugerencia.add(sugerenciaPosta);
 		
-		em.getTransaction().begin();
-		em.persist(usuario);
-		em.getTransaction().commit();
+//		em.getTransaction().begin();
+//		em.persist(usuario);
+//		em.getTransaction().commit();
 		
 		// -------------------------------------------------------
 		
@@ -97,12 +97,12 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 	
 	public ModelAndView calificarSugerencias(Request req, Response res) {
 		try {
-			em.getTransaction().begin();
+//			em.getTransaction().begin();
 				listaCalificaciones.add(this.armarCalificacion("Superior", req));
 				listaCalificaciones.add(this.armarCalificacion("Calzado", req));
 				listaCalificaciones.add(this.armarCalificacion("Inferior", req));
 				listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
-			em.getTransaction().commit();
+//			em.getTransaction().commit();
 		}catch(Exception e) {
 			res.redirect("/sugerencias/calificar/aceptadas");
 		}
