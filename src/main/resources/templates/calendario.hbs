@@ -1,13 +1,23 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/login.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/calendario.css" media="screen" />
+</head>
+<body>
+
 {{#partial "contenido"}}
+	<div class=calendario>
+	<div class=fecha>
 	<form class="profile-form" action="/calendario" method="GET">
-		<input name='dia' value='{{dia}}'/>
-		<input name='mes' value='{{mes}}'/>
-		<input name='anio' value='{{anio}}'/>
+		<input placeholder="Ingrese dia" name='dia' value='{{dia}}'/>
+		<input placeholder="Ingrese mes" name='mes' value='{{mes}}'/>
+		<input placeholder="Ingrese año" name='anio' value='{{anio}}'/>
 		<button type='submit'>Eventos!</button>
 	</form>	
+	</div>
+	<div class=eventos>
 	{{#if hayFecha}}
 		<h2>Eventos</h2>
-		
 		{{#if eventosPendientes}}
 			{{#each eventosPendientes}}
 				<li>descripcion: {{this.descripcion}}</li>
@@ -16,16 +26,18 @@
 				</form>
 			{{/each}}
 		{{/if}}
-			{{#if eventosNoPendientes}}
-    			{{#each eventosNoPendientes}}
-    				<li>descripcion: {{this.descripcion}}</li>
-    			{{/each}}
-    		{{/if}}
+		{{#if eventosNoPendientes}}
+    		{{#each eventosNoPendientes}}
+    			<li>descripcion: {{this.descripcion}}</li>
+    		{{/each}}
+    	{{/if}}
     	{{#unless eventos}}
     		<li>No se han encontrado eventos</li>
     	{{/unless}}
-	{{/if}}
-	
-
+			{{/if}}
+		</div>
+	</div>
 {{/partial}}
 {{>layout.hbs}}
+</body>
+</html>

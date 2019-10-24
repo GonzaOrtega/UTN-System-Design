@@ -1,7 +1,15 @@
-{{#partial "contenido"}}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/login.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/sugerenciasPendientes.css" media="screen" />
+</head>
+<body>
 
+{{#partial "contenido"}}
+	<div id = "body">
 		<form method='post' action='/sugerencias'>
 		{{#each sugerencias}}
+			<div id = "sugerencia">
 			<h2> Una sugerencia es</h2> 
 			{{#each this.atuendo}}
 				<h3>Prenda {{@index}}</h3>
@@ -9,12 +17,16 @@
 				<li>Tipo: {{this.tipo}}</li>
 				<li>Tela: {{this.tela}}</li>
 			{{/each}}
-			<input type="radio" name='sugerencia' value='{{@index}}'>Aceptar<br>
 			
+			<input type="radio" name='sugerencia' value='{{@index}}'>Aceptar<br>
+			</div>
 		{{/each}}
-		
-		<button type="submit">Confirmar</button>
+		<div class="boton">
+			<button type="submit">Confirmar</button>
+		</div>
 		</form>
-
+	</div>
 {{/partial}}
 {{>layout.hbs}}
+</body>
+</html>
