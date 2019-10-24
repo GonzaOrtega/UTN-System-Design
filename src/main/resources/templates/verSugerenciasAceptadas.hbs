@@ -1,7 +1,16 @@
 {{#partial "contenido"}}
 
 {{#if haySugerenciaAceptada}}
+	
+	<form class="mostrarSugerencias" action="/sugerencias/show/aceptadas" method="POST">
 	{{> verSugerencias.hbs}}
+	
+	<p>Elegir sugerencia</p>
+	<input name='nroSugerencia' value='{{posicion}}'/>
+	<button type='submit'>Calificar</button>
+	
+	</form>
+	
 {{else}}
 	<h2> No hay sugerencias aceptadas </h2>
 {{/if}}

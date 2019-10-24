@@ -29,11 +29,16 @@ public class Router {
 		GuardarropasController guardarropasController = new GuardarropasController();
 		CalendarioController calendarioController = new CalendarioController();
 		SugerenciasDisponiblesController sugerenciasDisponiblesController = new SugerenciasDisponiblesController();
+		SugerenciasController sugerenciasController = new SugerenciasController();
+		
 		Spark.get("/", loginController::show, engine);
 		Spark.post("/", loginController::login, engine);
 		Spark.get("/perfil", userController::showProfile,engine);
 		Spark.get("/guardarropas/show", guardarropasController::show,engine);
-		Spark.get("/sugerencias/show/aceptadas", SugerenciasController::verSugerenciasAceptadas);
+		Spark.get("/sugerencias/show/aceptadas", sugerenciasController::verSugerenciasAceptadas, engine);
+		Spark.post("/sugerencias/show/aceptadas", sugerenciasController::elegirSugerenciaAceptada, engine);
+		Spark.get("/sugerencias/calificar/aceptadas", sugerenciasController::verCalificarSugerencias, engine);
+		Spark.post("/sugerencias/calificar/aceptadas", sugerenciasController::calificarSugerencias, engine);
 		Spark.get("/evento/show", EventoController::mostrarEventos);
 		Spark.get("/evento/alta", EventoController::altaDeEvento);
 		Spark.get("/calendario", calendarioController::verCalendario);
