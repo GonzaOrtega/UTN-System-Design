@@ -54,5 +54,7 @@ public class Router {
 		Spark.get("/prendas/step-4", prendaContoller::showstep4,engine);
 //		Spark.get("/prendas/prueba", prendaContoller::prueba,engine);
 //		Spark.post("/prendas/prueba", prendaContoller::pruebaPost,engine);
+		
+		//Spark.after((req, res)-> ; 
 	}
 }

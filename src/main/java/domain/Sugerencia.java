@@ -20,6 +20,8 @@ public class Sugerencia extends SuperClase{
 
 	@ManyToOne
 	private Evento evento;
+	
+	
 
 	public Sugerencia() {}
 	public Sugerencia(Set<Prenda> unAtuendo, Evento evento) {

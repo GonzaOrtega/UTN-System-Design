@@ -11,8 +11,8 @@
   <form class="clothes-form" action="/prendas/step-1" method="POST">
   <div>
     — Seleccione un tipo de prenda:
-    <select name="tipoPrenda">
-      <option value="Ninguno">Sin seleccionar</option>
+    <select name="tipoPrenda" required>
+      <option value="">Sin seleccionar</option>
        <option value="Remera">Remera</option>
        <option value="RemeraMangaCorta">Remera Manga Corta</option>
        <option value="RemeraMangaLarga">Remera Manga Larga</option>
@@ -41,8 +41,8 @@
 
    <div>
      — Seleccione un color primario:
-     <select name="colorPrimario">
-        <option value="Ninguno">Sin seleccionar</option>
+     <select name="colorPrimario" required>
+        <option value="">Sin seleccionar</option>
         <option value=Rojo>Rojo</option>
         <option value=Amarillo>Amarillo</option>
         <option value=Verde>Verde</option>

@@ -15,7 +15,8 @@ public class Guardarropa extends SuperClase{
 
 	// ---------------------------- Atributos -------------------------------
 	
-	@OneToMany(cascade = CascadeType.PERSIST) @JoinColumn(name="id_Guardarropa") 
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="id_Guardarropa") 
 	private Set<Prenda> prendas;
 
 	public Guardarropa() {}

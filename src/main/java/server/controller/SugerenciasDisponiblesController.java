@@ -16,6 +16,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class SugerenciasDisponiblesController implements WithGlobalEntityManager{
 	private List<Sugerencia> sugerencias=null;
+	
 	public ModelAndView confirmarSugerencia(Request req, Response res){
 		String sugerenciaNum=req.queryParams("sugerencia");
 		if(isNumeric(sugerenciaNum)) {
@@ -50,7 +51,6 @@ public class SugerenciasDisponiblesController implements WithGlobalEntityManager
 	}
 	public String verSugerencias(Request req, Response res){
 		String idEvento = req.cookie("evento");
-		System.out.println(idEvento);
 		Usuario usuario = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		sugerencias = obtenerSugerencias(Long.parseLong(idEvento),usuario);
 		HashMap<String, Object> viewModel = new HashMap<>();

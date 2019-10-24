@@ -1,12 +1,12 @@
 package controllers;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
-import java.util.List;
 import domain.Guardarropa;
 import domain.Prenda;
 import domain.PrendaBuilder;
@@ -18,11 +18,9 @@ import domain.enums.TipoPrenda;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import javax.persistence.EntityManager;
 
-public class PrendaController implements WithGlobalEntityManager{
-	EntityManager em = entityManager();
+public class PrendaController implements WithGlobalEntityManager, TransactionalOps{
+	//EntityManager em = entityManager();
 	PrendaBuilder builder = new PrendaBuilder();
 	
 	public  ModelAndView showstep1(Request req, Response res) {
@@ -142,10 +140,10 @@ public class PrendaController implements WithGlobalEntityManager{
 		return null;
 	}
 	public void cargarPrenda(Prenda prenda,Usuario user,Guardarropa guar) {
-    	entityManager().getTransaction().begin();
-    	em.persist(prenda);
-    	user.cargarPrenda(guar, prenda);
-    	entityManager().getTransaction().commit();
+    	withTransaction(() -> {
+    		//em.persist(prenda);    		
+    		user.cargarPrenda(guar, prenda);
+    	}); 		
 	}
 /*	public  ModelAndView prueba(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();

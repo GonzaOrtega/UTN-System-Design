@@ -1,20 +1,16 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.*;
-import domain.enums.Color;
-import domain.enums.Material;
-import domain.enums.TipoPrenda;
-import domain.enums.TipoUsuario;
+import domain.Guardarropa;
+import domain.RepositorioDeUsuarios;
+import domain.Usuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class GuardarropasController {
 	
@@ -26,6 +22,7 @@ public class GuardarropasController {
 		Boolean hayGuardarropas = !guardarropas.isEmpty();
 		viewModel.put("hayGuardarropas", hayGuardarropas);
 		viewModel.put("guardarropas", guardarropas);
+		
 		return new ModelAndView(viewModel,"guardarropa.hbs");
 	}
 	

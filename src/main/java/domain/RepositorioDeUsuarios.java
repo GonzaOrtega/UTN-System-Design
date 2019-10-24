@@ -8,7 +8,7 @@ import javax.persistence.Query;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
-public class RepositorioDeUsuarios implements WithGlobalEntityManager{
+public class RepositorioDeUsuarios implements WithGlobalEntityManager {
 	// ------------------- Metodos p/ obtener instancia -------------------
 
 	private static class RepositorioDeUsuariosHolder {
@@ -18,9 +18,9 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager{
 	public static RepositorioDeUsuarios getInstance() {
 		return RepositorioDeUsuariosHolder.INSTANCE;
 	}
-	
+
 	// ---------------- Getters, setters y constructores -----------------
-	
+
 	private RepositorioDeUsuarios() {
 	};
 
@@ -29,13 +29,15 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager{
 		Set<Usuario> usuarios = new HashSet<Usuario>(usuaries);
 		return usuarios;
 	}
+
 	public Usuario buscarPorNombre(String username) {
-		Query queryResult = entityManager().createQuery("from Usuario u where u.nombreUsuario =:username",Usuario.class);
+		Query queryResult = entityManager().createQuery("from Usuario u where u.nombreUsuario =:username",
+				Usuario.class);
 		queryResult.setParameter("username", username);
 		return (Usuario) queryResult.getSingleResult();
-		
+
 	}
-	
+
 	public Set<Evento> eventos() {
 		return usuarios().stream().flatMap(usuario -> usuario.eventos().stream()).collect(Collectors.toSet());
 	}
@@ -44,7 +46,7 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager{
 		return this.eventos().stream().filter(evento -> evento.esProximo(LocalDateTime.now()))
 				.collect(Collectors.toSet());
 	}
-	
+
 	// ------------------------------ Metodos -------------------------------
 
 	public void sugerir(LocalDateTime fecha) {
@@ -53,19 +55,19 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager{
 			usuario.notificarSugerenciasNuevas();
 		}));
 	}
-	
+
 	public void agregar(Usuario usuario) {
-		//entityManager().getTransaction().begin();
+		// entityManager().getTransaction().begin();
 		entityManager().persist(usuario);
-		//entityManager().getTransaction().commit();
-		//Los borro porque segun Juan esto afecta la unicidad de las transacciones
+		// entityManager().getTransaction().commit();
+		// Los borro porque segun Juan esto afecta la unicidad de las transacciones
 	}
 
 	public void notificarAUsuariosAfectadosPorCambioDeClima() {
 		this.usuarios().stream().forEach(usuario -> usuario.eventosConCambioDeClima().stream()
 				.forEach(evento -> usuario.notificarAlertaMeterologicaDe(evento)));
 	}
-	
+
 	public void lavarTodaLaRopaSucia() {
 		this.usuarios().forEach(usuario -> usuario.lavarLaRopa());
 	}

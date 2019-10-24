@@ -24,10 +24,13 @@
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
+			            <!--
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/quemepongo" /> 
             <property name="hibernate.connection.username" value="root" /> 
-            <property name="hibernate.connection.password" value="anonimato" /> 
+            <property name="hibernate.connection.password" value="" /> 
+  			            
+ 			-->
  			<!-- 
  			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>
             <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:app-db"/>
@@ -35,13 +38,12 @@
             <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
  			 -->
- 			 <!--
  			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/mi_base_de_datos" /> 
             <property name="hibernate.connection.username" value="mi_usuario" /> 
             <property name="hibernate.connection.password" value="Mi_Contraseña123" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
- 			-->
+ 			
  			
  			
             <property name="hibernate.show_sql" value="true"/>
@@ -53,3 +55,4 @@
     </persistence-unit>
 
 </persistence> 
+ 

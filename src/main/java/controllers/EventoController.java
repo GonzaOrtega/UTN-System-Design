@@ -12,6 +12,8 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import domain.Evento;
+import domain.RepositorioDeUsuarios;
+import domain.Usuario;
 import domain.frecuenciasDeEventos.FrecuenciaAnual;
 import domain.frecuenciasDeEventos.FrecuenciaDeEvento;
 import domain.frecuenciasDeEventos.FrecuenciaDiaria;
@@ -49,6 +51,8 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 	
 	public static String altaDeEvento(Request req, Response res) {
 		HashMap<String, Object> viewModel = new HashMap();
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
 		
 		obtenerFrecuenciaYDescripcion(req);
 		
@@ -62,9 +66,9 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		
 		if(eventoEstaCargado(eventoObtenido)) {
 			EventoController eventoController = new EventoController();
+			usuarie.agendarEvento(eventoObtenido);
 			eventoController.cargarEvento(eventoObtenido);
 		}
-		
 		ModelAndView modelAndView = new ModelAndView(viewModel, "altaDeEvento.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
