@@ -10,20 +10,11 @@ import domain.exceptions.NoSePuedeAbrirImagen;
 
 @Entity
 public class Foto extends SuperClase {
-	@Transient
-	private BufferedImage imagen;
-	
+
 	private String ruta;
 	
-	public Foto(File ruta){
+	public Foto(String ruta){
 		this.ruta=ruta.toString();
-		BufferedImage imagen;
-		try {
-			imagen = ImageIO.read(ruta);
-		} catch (IOException e) {
-			throw new NoSePuedeAbrirImagen("ERROR: no se encuentra el archivo.");
-		}
-        this.imagen= Normalizador.getInstance().normalizarImagen(imagen);
 	}
 
 }
