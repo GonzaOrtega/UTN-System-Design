@@ -3,8 +3,8 @@ package server;
 import spark.Spark;
 import spark.TemplateEngine;
 import domain.*;
-import server.controller.CalendarioController;
-import server.controller.SugerenciasDisponiblesController;
+import controllers.CalendarioController;
+import controllers.SugerenciasPendientesController;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
@@ -31,7 +31,7 @@ public class Router {
 		PrendaController prendaContoller = new PrendaController();
 		GuardarropasController guardarropasController = new GuardarropasController();
 		CalendarioController calendarioController = new CalendarioController();
-		SugerenciasDisponiblesController sugerenciasDisponiblesController = new SugerenciasDisponiblesController();
+		SugerenciasPendientesController sugerenciasPendientesController = new SugerenciasPendientesController();
 		SugerenciasController sugerenciasController = new SugerenciasController();
 		
 		Spark.get("/", loginController::show, engine);
@@ -46,8 +46,8 @@ public class Router {
 		Spark.get("/evento/alta", EventoController::altaDeEvento);
 		Spark.get("/calendario", calendarioController::verCalendario);
 		Spark.post("/calendario", calendarioController::verSugerencia);
-		Spark.get("/sugerencias", sugerenciasDisponiblesController::verSugerencias);
-		Spark.post("/sugerencias", sugerenciasDisponiblesController::confirmarSugerencia);
+		Spark.get("/sugerenciasPendientes", sugerenciasPendientesController::verSugerencias);
+		Spark.post("/sugerenciasPendientes", sugerenciasPendientesController::confirmarSugerencia);
 		Spark.get("/prendas/step-1", prendaContoller::showstep1,engine);
 		Spark.post("/prendas/step-1", prendaContoller::load_step1,engine);		 
 		Spark.get("/prendas/step-2", prendaContoller::showstep2,engine);	

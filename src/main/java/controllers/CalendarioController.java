@@ -1,4 +1,4 @@
-package server.controller;
+package controllers;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import domain.Evento;
 import domain.Prenda;
@@ -26,15 +26,14 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class CalendarioController implements WithGlobalEntityManager{
-	EntityManager em = entityManager();
+public class CalendarioController implements WithGlobalEntityManager, TransactionalOps{
 	List<Evento> eventosPendientes=null; 
 	public ModelAndView verSugerencia(Request req, Response res) {
 		String numString=req.queryParams("eventoNum");
 		int numEvento = Integer.parseInt(numString);
 		Evento evento = eventosPendientes.get(numEvento);
 		res.cookie("evento",evento.getId().toString());
-		res.redirect("/sugerencias");
+		res.redirect("/sugerenciasPendientes");
 		return null;
 	}
 	public String verCalendario(Request req, Response res) {
@@ -45,17 +44,17 @@ public class CalendarioController implements WithGlobalEntityManager{
 		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		List<Evento>eventoList = null;
 		List<Evento>eventosNoPendientes = null;
-		
 		eventoList = hayFecha? calcularEventos(dia,mes,anio,usuarie):null;
-		HashMap<String, Object> viewModel = new HashMap<>();
+		
 		if(eventoList!=null) {
 		 eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
-		eventosNoPendientes = eventosNoPendientes(eventoList,usuarie);
+		 eventosNoPendientes= eventoList;
+		 eventosNoPendientes.removeAll(eventosPendientes);
 		}else {
 			eventosPendientes = null;
 			eventosNoPendientes=null;
 		}
-		 System.out.println(eventosNoPendientes);
+		HashMap<String, Object> viewModel = new HashMap<>();
 		viewModel.put("eventosPendientes", eventosPendientes);
 		viewModel.put("eventosNoPendientes", eventosNoPendientes);
 		viewModel.put("eventos",eventoList);
@@ -79,18 +78,6 @@ public class CalendarioController implements WithGlobalEntityManager{
 		}
 		
 	}
-	public boolean noTieneSugerenciaPendiente(Evento evento,Usuario usuario) {	
-		List<Sugerencia> sugerencias =usuario.getSugerencias();
-		sugerencias.remove(null);
-		return !sugerencias.stream()
-				.anyMatch(sugerencia->sugerencia.getEvento().equals(evento)&&sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE));
-	}
-	private List<Evento> eventosNoPendientes(List<Evento> eventos,Usuario usuario) {	
-            List<Evento>resp= eventos.stream().filter(evento->noTieneSugerenciaPendiente(evento,usuario)).collect(Collectors.toList());
-            System.out.println(resp);
-            return resp;
-	}
-	
 	
 	private List<Evento> calcularEventos(String dia,String mes,String anio,Usuario usuarie){
 		int diaNum = Integer.parseInt(dia);
@@ -104,17 +91,24 @@ public class CalendarioController implements WithGlobalEntityManager{
 				.filter(evento->((evento.getFrecuencia().equals(TipoFrecuencia.Unico)) && sucedeEnEsteDia(fecha,evento)))
 				.collect(Collectors.toList()); 
 	}
+	private static boolean sucedeEnEsteDia(LocalDateTime fecha,Evento evento) {
+		LocalDateTime fechaEvento=evento.cualEsLaFechaProxima(fecha);
+		return fechaEvento.equals(fecha)||(fechaEvento.isAfter(fecha) && fechaEvento.isBefore(fecha.plusDays(1)));
+	}
+	//////////////////////////////////////////SETEA_EJEMPLOS///////////////////////////////////////////////////////////////
 	private void agregarEvento(Usuario usuario) {
-		em.getTransaction().begin();
+		withTransaction(() -> {
 			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2019,5,24);
 			Evento evento = new Evento(frecuencia,"Sin descripcion");
 			usuario.agendarEvento(evento);
-			em.persist(frecuencia);
-			em.persist(evento);
-		em.getTransaction().commit();
+			entityManager().persist(frecuencia);
+			entityManager().persist(evento);
+			entityManager().getTransaction().commit();
+		});
+		entityManager().close();
 	}
 	private void agregarSugerencia(Usuario usuario) {
-		em.getTransaction().begin();
+		withTransaction(()->{
 			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2019,5,24);
 			Evento evento = new Evento(frecuencia,"TengoUnaSugerencia");
 			Set<Prenda> atuendo = new HashSet<Prenda>();
@@ -129,20 +123,13 @@ public class CalendarioController implements WithGlobalEntityManager{
 			usuario.agregarSugerencia(sugerencia1);
 			usuario.agregarSugerencia(sugerencia2);
 			usuario.agendarEvento(evento);
-			em.persist(frecuencia);
-			em.persist(evento);
-			em.persist(sugerencia2);
-			em.persist(sugerencia1);
-			em.persist(jean);
-			em.persist(camisaCorta);
-		em.getTransaction().commit();
-	}
-	private static boolean sucedeEnEsteDia(LocalDateTime fecha,Evento evento) {
-		LocalDateTime fechaEvento=evento.cualEsLaFechaProxima(fecha);
-		return fechaEvento.equals(fecha)||(fechaEvento.isAfter(fecha) && fechaEvento.isBefore(fecha.plusDays(1)));
-	}
-	public static String verSugerencias(Request req,Response res) {
-		res.redirect("/sugerencias");
-		return null;
+			entityManager().persist(frecuencia);
+			entityManager().persist(evento);
+			entityManager().persist(sugerencia2);
+			entityManager().persist(sugerencia1);
+			entityManager().persist(jean);
+			entityManager().persist(camisaCorta);
+		});
+		entityManager().close();
 	}
 }
