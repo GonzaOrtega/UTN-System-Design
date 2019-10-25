@@ -38,7 +38,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 	}
 	public String verCalendario(Request req, Response res) {
 		String fecha=req.queryParams("fecha");
-		Boolean hayFecha = (fecha!=null);
+		Boolean hayFecha = (fecha.length()!=0);
 		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		List<Evento>eventoList = null;
 		List<Evento>eventosNoPendientes = null;
