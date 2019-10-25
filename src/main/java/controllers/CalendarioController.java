@@ -37,14 +37,12 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		return null;
 	}
 	public String verCalendario(Request req, Response res) {
-		String dia = req.queryParams("dia");
-		String mes = req.queryParams("mes");
-		String anio = req.queryParams("anio");
-		Boolean hayFecha = isNumeric(dia) && isNumeric(mes) && isNumeric(anio);
+		String fecha=req.queryParams("fecha");
+		Boolean hayFecha = (fecha!=null);
 		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		List<Evento>eventoList = null;
 		List<Evento>eventosNoPendientes = null;
-		eventoList = hayFecha? calcularEventos(dia,mes,anio,usuarie):null;
+		eventoList = hayFecha? calcularEventos(fecha,usuarie):null;
 		
 		if(eventoList!=null) {
 		 eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
@@ -69,20 +67,11 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		return null;
 			return eventos.stream().filter(evento->sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento))).collect(Collectors.toList());
 	}
-	public static boolean isNumeric(String cadena) {
-		try {
-			Integer.parseInt(cadena);
-			return true;
-		}catch (Exception e) {
-			return false;
-		}
-		
-	}
 	
-	private List<Evento> calcularEventos(String dia,String mes,String anio,Usuario usuarie){
-		int diaNum = Integer.parseInt(dia);
-		int mesNum = Integer.parseInt(mes);
-		int anioNum = Integer.parseInt(anio);
+	private List<Evento> calcularEventos(String fechaString,Usuario usuarie){
+		int diaNum = Integer.parseInt(fechaString.substring(8,10));
+		int mesNum = Integer.parseInt(fechaString.substring(5,7));
+		int anioNum = Integer.parseInt(fechaString.substring(0,4));
 		List<Evento> eventos= new ArrayList<Evento>(usuarie.eventos());
 		LocalDateTime fecha = LocalDateTime.of(anioNum,mesNum,diaNum,0,0,0);
 		//agregarEvento(usuarie);
