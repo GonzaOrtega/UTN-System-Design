@@ -1,24 +1,24 @@
-<html lang="en">
-<head>
+{{#partial "otherHead"}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="author" content="colorlib.com">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <title>Sign Up Form</title>
 
-    <!-- Font Icon -->
+    
     <link rel="stylesheet" href="/wizardPrenda/fonts/material-icon/css/material-design-iconic-font.min.css">
 
-    <!-- Main css -->
+    
     <link rel="stylesheet" href="/wizardPrenda/css/style.css">
-</head>
-<body>
+{{/partial}}
+{{#partial "contenido"}}
 
     <div class="main">
 
         <div class="container">
             <h2>Build your profile</h2>
-            <form method="POST" id="signup-form" class="signup-form" action="http://localhost:9000/prendas/prueba">
+            <form method="POST" id="signup-form" class="signup-form" action="/prendas/cargaDatos">
                 <h3>
                     About
                 </h3>
@@ -218,5 +218,6 @@
     <script src="/wizardPrenda/vendor/jquery-validation/dist/additional-methods.min.js"></script>
     <script src="/wizardPrenda/vendor/jquery-steps/jquery.steps.min.js"></script>
     <script src="/wizardPrenda/js/main.js"></script>
-</body>
-</html>
+    
+   {{/partial}}
+   {{>layout.hbs}}

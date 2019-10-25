@@ -19,10 +19,16 @@ public class Guardarropa extends SuperClase{
 	@JoinColumn(name="id_Guardarropa") 
 	private Set<Prenda> prendas;
 
+	public String nombre;
 	public Guardarropa() {}
 	
 	// ------------------ Getters, setters y constructores ------------------
-	
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String otro) {
+		nombre = otro;
+	}
 	public void cargarPrenda(Prenda unaPrenda){
 		prendas.add(unaPrenda);
 	}

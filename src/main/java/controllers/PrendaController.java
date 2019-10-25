@@ -147,18 +147,57 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 	}
 	public  ModelAndView prueba(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
+		viewModel.put("guardarropas", guardarropas);
 		
-		return new ModelAndView(viewModel, "wizardPrenda.hbs");
+		return new ModelAndView(viewModel, "eleccionGuardarropa.hbs");
 	}
 	public  ModelAndView pruebaPost(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
-		System.out.println("FUNCIONO!"+req.queryParams("nivelAbrigo") + " y "+ req.params("tipoPrenda")+ " y "+req.queryParams("colorPrimario"));
-		System.out.println(req.body());
-
-
-
-			res.redirect("/perfil");
 		
+		res.cookie("idGuardarropa", req.queryParams("nroGuardarropa"));
+
+		res.redirect("/prendas/cargaDatos");	
+		return null;
+	}
+	public ModelAndView showCargaDatos(Request req, Response res) {
+		Map<String,Object> viewModel = new HashMap<String, Object>();
+		return new ModelAndView(viewModel, "wizardPrenda.hbs");
+	}
+	public  ModelAndView saveCargaDatos(Request req, Response res) {
+		Map<String,Object> viewModel = new HashMap<String, Object>();
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		String idGuardarropa = req.cookie("idGuardarropa");
+		String tipo = req.queryParams("tipoPrenda");
+		String colorP = req.queryParams("colorPrimario");
+		String colorS = req.queryParams("colorSecundario");
+		String material_de_prenda = req.queryParams("tela");
+		String abrigo = req.queryParams("nivelAbrigo");
+		TipoPrenda tipo_de_prenda = TipoPrenda.valueOf(tipo);
+		builder.conTipo(tipo_de_prenda);
+		Color colorPrimario = Color.valueOf(colorP);
+		builder.conColorPrimario(colorPrimario);
+		if(!colorS.equals("SinColor")){
+			Color colorSecundario = Color.valueOf(colorS);	
+			builder.conColorSecundario(colorSecundario);
+			}
+		else {
+			builder.conColorSecundario(null);
+			}
+		Material material = Material.valueOf(material_de_prenda);
+		builder.conTela(material);
+		builder.conAbrigo(Integer.parseInt(abrigo));
+		int id_guardarropa = Integer.parseInt(idGuardarropa);
+		Guardarropa guardarropa = usuarie.buscarGuardarropa(id_guardarropa);
+		Prenda prenda = builder.crearPrenda();
+		
+		this.cargarPrenda(prenda, usuarie, guardarropa);
+		builder = new PrendaBuilder();//sino devuelve siempre la misma prenda
+		
+		res.redirect("/perfil");	
 		return null;
 	}
 }
