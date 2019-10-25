@@ -27,27 +27,35 @@ import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class CalendarioController implements WithGlobalEntityManager, TransactionalOps{
-	List<Evento> eventosPendientes=null; 
 	public ModelAndView verSugerencia(Request req, Response res) {
 		String numString=req.queryParams("eventoNum");
 		int numEvento = Integer.parseInt(numString);
+		List<Evento> eventosPendientes=req.session().attribute("EventosPendientes");
+		req.session().removeAttribute("EventosPendientes");
 		Evento evento = eventosPendientes.get(numEvento);
-		res.cookie("evento",evento.getId().toString());
+		req.session().attribute("Evento",evento);
+		System.out.println(evento);
 		res.redirect("/sugerenciasPendientes");
 		return null;
 	}
 	public String verCalendario(Request req, Response res) {
 		String fecha=req.queryParams("fecha");
-		Boolean hayFecha = (fecha.length()!=0);
+		Boolean hayFecha;
+		if (fecha!=null) {
+			hayFecha = (fecha.length()!=0);
+		}else {
+			hayFecha = false;
+		}
 		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		List<Evento>eventoList = null;
 		List<Evento>eventosNoPendientes = null;
+		List<Evento> eventosPendientes = null;
 		eventoList = hayFecha? calcularEventos(fecha,usuarie):null;
-		
 		if(eventoList!=null) {
 		 eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
 		 eventosNoPendientes= eventoList;
 		 eventosNoPendientes.removeAll(eventosPendientes);
+		 req.session().attribute("EventosPendientes",eventosPendientes);
 		}else {
 			eventosPendientes = null;
 			eventosNoPendientes=null;

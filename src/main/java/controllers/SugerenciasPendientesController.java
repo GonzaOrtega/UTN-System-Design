@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import domain.Evento;
 import domain.RepositorioDeUsuarios;
 import domain.Usuario;
 import domain.enums.TipoSugerencias;
@@ -16,12 +17,10 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class SugerenciasPendientesController implements WithGlobalEntityManager, TransactionalOps{
-	private List<Sugerencia> sugerencias=null;
-	
+public class SugerenciasPendientesController implements WithGlobalEntityManager, TransactionalOps{	
 	
 	////////////METODOS_QUE_USA_POST_INICIANDO_EN_confirmarSugerencia/////////////////////////////
-	private void cambiarEstados(Sugerencia sugerenciaAceptada) {
+	private void cambiarEstados(Sugerencia sugerenciaAceptada, List<Sugerencia> sugerencias) {
 		withTransaction(()->{
 			sugerenciaAceptada.setEstado(TipoSugerencias.ACEPTADA);
 			sugerencias.remove(sugerenciaAceptada);
@@ -40,8 +39,9 @@ public class SugerenciasPendientesController implements WithGlobalEntityManager,
 	public ModelAndView confirmarSugerencia(Request req, Response res){
 		String sugerenciaNum=req.queryParams("sugerencia");
 		if(isNumeric(sugerenciaNum)) {
-			Sugerencia sugerencia = sugerencias.get(Integer.parseInt(sugerenciaNum));
-			cambiarEstados(sugerencia);
+			List<Sugerencia> sugerencias = req.session().attribute("Sugerencias");
+			Sugerencia sugerencia = sugerencias.get(Integer.valueOf(sugerenciaNum));
+			cambiarEstados(sugerencia,sugerencias);
 			res.redirect("/calendario");
 		}
 		res.redirect("/sugerenciasPendientes");
@@ -52,15 +52,17 @@ public class SugerenciasPendientesController implements WithGlobalEntityManager,
 	private boolean esDeEsteEvento(Sugerencia sugerencia,Long idEvento) {
 		return sugerencia.getEvento().getId()==idEvento;
 	}
-	private List<Sugerencia> obtenerSugerencias(Long idEvento,Usuario usuario) {
+	private List<Sugerencia> obtenerSugerencias(Evento evento,Usuario usuario) {
 		List<Sugerencia> sugerencias =  usuario.getSugerencias();
 		sugerencias.remove(null);
-		return sugerencias.stream().filter(sugerencia->esDeEsteEvento(sugerencia,idEvento)).collect(Collectors.toList());
+		return sugerencias.stream().filter(sugerencia->esDeEsteEvento(sugerencia,evento.getId())).collect(Collectors.toList());
 	}
 	public String verSugerencias(Request req, Response res){
-		String idEvento = req.cookie("evento");
+		Evento evento = req.session().attribute("Evento");
+		System.out.println(evento.getId());
 		Usuario usuario = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
-		sugerencias = obtenerSugerencias(Long.parseLong(idEvento),usuario);
+		List<Sugerencia>sugerencias = obtenerSugerencias(evento,usuario);
+		req.session().attribute("Sugerencias", sugerencias);
 		HashMap<String, Object> viewModel = new HashMap<>();
 		viewModel.put("sugerencias", sugerencias);
 		ModelAndView modelAndView = new ModelAndView(viewModel, "sugerenciasPendientes.hbs");
