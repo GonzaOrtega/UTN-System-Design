@@ -43,15 +43,11 @@ public class Router {
 		Spark.post("/sugerencias/show/aceptadas", sugerenciasController::elegirSugerenciaAceptada, engine);
 		Spark.get("/sugerencias/calificar/aceptadas", sugerenciasController::verCalificarSugerencias, engine);
 		Spark.post("/sugerencias/calificar/aceptadas", sugerenciasController::calificarSugerencias, engine);
-		
 		Spark.get("/evento/show", EventoController::mostrarEventos);
-		
 		Spark.get("/eventos/alta", eventoController::mostrarAltaDeEvento, engine);
 		Spark.post("/eventos/alta", eventoController::elegirDescripcionYFrecuencia, engine);
 		Spark.get("/eventos/alta/horarios", eventoController::mostrarOpcionesDeFrecuencia, engine);
 		Spark.post("/eventos/alta/horarios", eventoController::completarFrecuencia, engine);
-		
-		
 		Spark.get("/calendario", calendarioController::verCalendario);
 		Spark.post("/calendario", calendarioController::verSugerencia);
 		Spark.get("/sugerenciasPendientes", sugerenciasPendientesController::verSugerencias);
@@ -66,11 +62,14 @@ public class Router {
 		Spark.get("/prendas/eleccionGuardarropa", prendaContoller::prueba,engine);
 		Spark.post("/prendas/eleccionGuardarropa", prendaContoller::pruebaPost,engine);
 		
-//		Spark.get("/prendas/cargaDatos", prendaContoller::showCargaDatos,engine);
-//		Spark.post("/prendas/cargaDatos", prendaContoller::saveCargaDatos,engine);
-//		Spark.after((request, response) -> { 
-//			   PerThreadEntityManagers.getEntityManager(); 
-//			   PerThreadEntityManagers.closeEntityManager();
-//			 });
+		Spark.get("/prendas/cargaDatos", prendaContoller::showCargaDatos,engine);
+		Spark.post("/prendas/cargaDatos", prendaContoller::saveCargaDatos,engine);
+		
+		Spark.get("/pru", guardarropasController::pru,engine);
+		
+		Spark.after((request, response) -> { 
+			   PerThreadEntityManagers.getEntityManager(); 
+			   PerThreadEntityManagers.closeEntityManager();
+			 });
 	}
 }
