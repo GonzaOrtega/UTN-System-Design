@@ -6,39 +6,39 @@
 
 {{#partial "contenido" }}
 
-	<form class="clothes-form" method='post' action='/evento/alta/horarios'>
-
+	<form class="clothes-form" method='post' action='/eventos/alta/horarios'>
+	
 		<h3>Elegir horarios</h3>
 
 		{{#if esAnual}}
 			<p>Ingrese mes</p>
-			<input name='mes' value='{{mes}}'/>
+			<input name='mes' value='{{mes}}' type="number" min = "1" max = "12" required>
 			<p>Ingrese dia</p>
-			<input name='dia' value='{{dia}}'/>
+			<input name='dia' value='{{dia}}' type="number" min = "1" max = "31" required>
 		{{/if}}
 
 		{{#if esDiaria}}
 			<p>Ingrese hora</p>
-			<input name='hora' value='{{hora}}'/>
+			<input name='hora' value='{{hora}}' type="number" min = "0" max = "23" required>
 		{{/if}}
 
 		{{#if esMensual}}
 			<p>Ingrese dia</p>
-			<input name='dia' value='{{dia}}'/>
+			<input name='dia' value='{{dia}}' type="number" min = "1" max = "31" required>
 		{{/if}}
 
 		{{#if esSemanal}}
 			<p>Ingrese dia de la semana (numero) arrancando lunes =1, etc</p>
-			<input name='dia' value='{{dia}}'/>
+			<input name='dia' value='{{dia}}' type="number" min = "1" max = "7" required>
 		{{/if}}
 
 		{{#if esUnicaVez}}
 			<p>Ingrese anio</p>
-			<input name='anio' value='{{anio}}'/>
+			<input name='anio' value='{{anio}}' type="number" min = "2019" required>
 			<p>Ingrese mes</p>
-			<input name='mes' value='{{mes}}'/>
+			<input name='mes' value='{{mes}}' type="number" min = "1" max = "12" required>
 			<p>Ingrese dia</p>
-			<input name='dia' value='{{dia}}'/>
+			<input name='dia' value='{{dia}}' type="number" min = "1" max = "31" required>
 		{{/if}}
 
 		<button type='submit'>Finalizar</button>
@@ -46,7 +46,7 @@
 		{{#if fechaIncorrecta}}
 			<p>La fecha ingresada no es correcta. Por favor, intente ingresar otra nuevamente</p>
 		{{/if}}
-	
+
 	</form>
 
 {{/partial}}

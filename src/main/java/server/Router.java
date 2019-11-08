@@ -46,8 +46,10 @@ public class Router {
 		
 		Spark.get("/evento/show", EventoController::mostrarEventos);
 		
-		Spark.get("/evento/alta", eventoController::mostrarAltaDeEvento, engine);
-		Spark.post("/evento/alta", eventoController::elegirDescripcionYFrecuencia, engine);
+		Spark.get("/eventos/alta", eventoController::mostrarAltaDeEvento, engine);
+		Spark.post("/eventos/alta", eventoController::elegirDescripcionYFrecuencia, engine);
+		Spark.get("/eventos/alta/horarios", eventoController::mostrarOpcionesDeFrecuencia, engine);
+		Spark.post("/eventos/alta/horarios", eventoController::completarFrecuencia, engine);
 		
 		
 		Spark.get("/calendario", calendarioController::verCalendario);

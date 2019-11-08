@@ -29,10 +29,10 @@ public class SemanaCheckbox implements Tiempo{
 	}
 	
 	public boolean validarFecha() {
-		return validarDia();
+		return validarDiaDeSemana();
 	}
 
-	private boolean validarDia() {
+	private boolean validarDiaDeSemana() {
 		return dia >=1 && dia <=7;
 	}
 

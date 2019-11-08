@@ -6,24 +6,20 @@
 
 {{#partial "contenido" }}
 
-	<form class="clothes-form" method='post' action='/evento/alta'>
+	<form class="clothes-form" method='post' action='/eventos/alta'>
 		<h1>Alta de Evento</h1>
 		
 		<h3>Ingresar descripcion</h3>
-		<input name='Descripcion' value='{{descripcionIngresada}}'/>
+		<input name='Descripcion' value='{{descripcionIngresada}}' required>
 		<h3>Elegir frecuencia</h3>
-		<input type="radio" name="Frecuencia" value="Anual"> Anual<br>
-		<input type="radio" name="Frecuencia" value="Diaria"> Diaria<br>
-		<input type="radio" name="Frecuencia" value="Mensual"> Mensual<br>
-		<input type="radio" name="Frecuencia" value="Semanal"> Semanal<br>
-		<input type="radio" name="Frecuencia" value="UnicaVez"> Unica vez<br>
+		<input type="radio" name="Frecuencia" value="Anual" required> Anual<br>
+		<input type="radio" name="Frecuencia" value="Diaria" required> Diaria<br>
+		<input type="radio" name="Frecuencia" value="Mensual" required> Mensual<br>
+		<input type="radio" name="Frecuencia" value="Semanal" required> Semanal<br>
+		<input type="radio" name="Frecuencia" value="UnicaVez" required> Unica vez<br>
 		
 		<button type='submit'>Siguiente</button>
 		<input type="reset"><br>
-		
-		{{#if errorAlCargarDatos}}
-			Error: No se cargaron bien los datos!!! Reintentar!!!
-		{{/if}}
 		
 	</form>
 
