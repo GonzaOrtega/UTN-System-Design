@@ -34,32 +34,4 @@ public class DiaCheckbox implements Tiempo{
 	private boolean validarHora() {
 		return hora >=0 && hora <=24;
 	}
-	
-//	public void vincularWeb(Request req, HashMap<String, Object> viewModel) {
-//		String horaString = req.queryParams("hora");
-//		viewModel.put("hora", horaString);
-//		if(horaString == null) {
-//			noRecibioFechaPorAhora();
-//		}else {
-//			try {
-//				hora = Integer.parseInt(horaString);
-//				if(!this.validarFecha())
-//					setError(viewModel);
-//			}catch(Exception e){
-//				setError(viewModel);
-//			}
-//		}
-//	}
-//	
-//	
-//	public void noRecibioFechaPorAhora() {
-//		error = true;
-//	}
-//	
-//	public void setError(HashMap<String, Object> viewModel) {
-//		error = true;
-//		viewModel.put("fechaIncorrecta", true);
-//	}
-
-	
 }

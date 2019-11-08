@@ -44,6 +44,7 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		viewModel.put("descripcion", eventoConFrecuenciaUnica.getDescripcion());
 		viewModel.put("frecuencia", eventoConFrecuenciaUnica.getFrecuencia().toString());
 		ModelAndView modelAndView = new ModelAndView(viewModel, "mostrarEvento.hbs");
+		
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
 
@@ -53,24 +54,31 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 
 	public ModelAndView elegirDescripcionYFrecuencia(Request req, Response res) {
 		HashMap<String, Object> viewModel = new HashMap();
+		
 		String descripcion = req.queryParams("Descripcion");
 		String frecuencia = req.queryParams("Frecuencia");
+		
 		fecha = this.obtenerFecha(frecuencia);
 		res.cookie("Descripcion", descripcion);
+		
 		return this.mostrarOpcionesDeFrecuencia(req, res);
 	}
 	
 	public ModelAndView mostrarOpcionesDeFrecuencia(Request req, Response res) {
 		HashMap<String, Object> viewModel = new HashMap();
+		
 		viewModel.put(fecha.esPeriodico(), true);
 		viewModel.put("fechaIncorrecta", false);
+		
 		return new ModelAndView(viewModel, "elegirHorarios.hbs");
 	}
 	
 	public ModelAndView completarFrecuencia(Request req, Response res) {
 		HashMap<String, Object> viewModel = new HashMap();
+		
 		viewModel.put("fechaIncorrecta", false);
 		String descripcion = req.cookie("Descripcion");
+		
 		if(fecha.datosIngresadosCorrectamente(req)) {
 			FrecuenciaDeEvento frecuenciaDeEvento = fecha.obtenerFrecuencia();
 			Evento eventoObtenido = this.armarEvento(descripcion, frecuenciaDeEvento);
@@ -79,9 +87,15 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 			viewModel.put("fechaIncorrecta", true);
 			return new ModelAndView(viewModel, "elegirHorarios.hbs");
 		}
+		
 		res.redirect("/perfil");
 		return null;
 	}
+	
+	
+	
+	
+	
 	
 	/*************** Metodos complementarios ***************/
 
@@ -97,6 +111,10 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		return elemTiempo.get(0);
 	}
 	
+	public Evento armarEvento(String descripcion, FrecuenciaDeEvento frecuencia) {
+		return new Evento(frecuencia, descripcion);
+	}
+
 	public void cargarEvento(Evento evento, Request req) {
 		EventoController eventoController = new EventoController();
 		
@@ -112,7 +130,4 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		em.getTransaction().commit();
 	}
 	
-	public Evento armarEvento(String descripcion, FrecuenciaDeEvento frecuencia) {
-		return new Evento(frecuencia, descripcion);
-	}
 }

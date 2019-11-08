@@ -35,32 +35,4 @@ public class SemanaCheckbox implements Tiempo{
 	private boolean validarDiaDeSemana() {
 		return dia >=1 && dia <=7;
 	}
-
-
-//	public void vincularWeb(Request req, HashMap<String, Object> viewModel) {
-//		String diaString = req.queryParams("dia");
-//		viewModel.put("dia", diaString);
-//		if(diaString == null) {
-//			noRecibioFechaPorAhora();
-//		}else {
-//			try {
-//				dia = Integer.parseInt(diaString);
-//				if(!this.validarFecha())
-//					setError(viewModel);
-//			}catch(Exception e){
-//				setError(viewModel);
-//			}
-//		}
-//	}
-//	
-//	
-//	public void noRecibioFechaPorAhora() {
-//		error = true;
-//	}
-//	
-//	public void setError(HashMap<String, Object> viewModel) {
-//		error = true;
-//		viewModel.put("fechaIncorrecta", true);
-//	}
-
 }
