@@ -33,6 +33,7 @@ public class Router {
 		CalendarioController calendarioController = new CalendarioController();
 		SugerenciasPendientesController sugerenciasPendientesController = new SugerenciasPendientesController();
 		SugerenciasController sugerenciasController = new SugerenciasController();
+		EventoController eventoController = new EventoController();
 		
 		Spark.get("/", loginController::show, engine);
 		Spark.post("/", loginController::login, engine);
@@ -42,8 +43,13 @@ public class Router {
 		Spark.post("/sugerencias/show/aceptadas", sugerenciasController::elegirSugerenciaAceptada, engine);
 		Spark.get("/sugerencias/calificar/aceptadas", sugerenciasController::verCalificarSugerencias, engine);
 		Spark.post("/sugerencias/calificar/aceptadas", sugerenciasController::calificarSugerencias, engine);
+		
 		Spark.get("/evento/show", EventoController::mostrarEventos);
-		Spark.get("/evento/alta", EventoController::altaDeEvento);
+		
+		Spark.get("/evento/alta", eventoController::mostrarAltaDeEvento, engine);
+		Spark.post("/evento/alta", eventoController::elegirDescripcionYFrecuencia, engine);
+		
+		
 		Spark.get("/calendario", calendarioController::verCalendario);
 		Spark.post("/calendario", calendarioController::verSugerencia);
 		Spark.get("/sugerenciasPendientes", sugerenciasPendientesController::verSugerencias);
@@ -58,11 +64,11 @@ public class Router {
 		Spark.get("/prendas/eleccionGuardarropa", prendaContoller::prueba,engine);
 		Spark.post("/prendas/eleccionGuardarropa", prendaContoller::pruebaPost,engine);
 		
-		Spark.get("/prendas/cargaDatos", prendaContoller::showCargaDatos,engine);
-		Spark.post("/prendas/cargaDatos", prendaContoller::saveCargaDatos,engine);
-		Spark.after((request, response) -> { 
-			   PerThreadEntityManagers.getEntityManager(); 
-			   PerThreadEntityManagers.closeEntityManager();
-			 });
+//		Spark.get("/prendas/cargaDatos", prendaContoller::showCargaDatos,engine);
+//		Spark.post("/prendas/cargaDatos", prendaContoller::saveCargaDatos,engine);
+//		Spark.after((request, response) -> { 
+//			   PerThreadEntityManagers.getEntityManager(); 
+//			   PerThreadEntityManagers.closeEntityManager();
+//			 });
 	}
 }

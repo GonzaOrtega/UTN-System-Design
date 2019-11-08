@@ -1,38 +1,57 @@
-<h3>Elegir horarios</h3>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+</head>
+<body>
 
-{{#if esAnual}}
-	<p>Ingrese mes</p>
-	<input name='mes' value='{{mes}}'/>
-	<p>Ingrese dia</p>
-	<input name='dia' value='{{dia}}'/>
-{{/if}}
+{{#partial "contenido" }}
 
-{{#if esDiaria}}
-	<p>Ingrese hora</p>
-	<input name='hora' value='{{hora}}'/>
-{{/if}}
+	<form class="clothes-form" method='post' action='/evento/alta/horarios'>
 
-{{#if esMensual}}
-	<p>Ingrese dia</p>
-	<input name='dia' value='{{dia}}'/>
-{{/if}}
+		<h3>Elegir horarios</h3>
 
-{{#if esSemanal}}
-	<p>Ingrese dia de la semana (numero) arrancando lunes =1, etc</p>
-	<input name='dia' value='{{dia}}'/>
-{{/if}}
+		{{#if esAnual}}
+			<p>Ingrese mes</p>
+			<input name='mes' value='{{mes}}'/>
+			<p>Ingrese dia</p>
+			<input name='dia' value='{{dia}}'/>
+		{{/if}}
 
-{{#if esUnicaVez}}
-	<p>Ingrese anio</p>
-	<input name='anio' value='{{anio}}'/>
-	<p>Ingrese mes</p>
-	<input name='mes' value='{{mes}}'/>
-	<p>Ingrese dia</p>
-	<input name='dia' value='{{dia}}'/>
-{{/if}}
+		{{#if esDiaria}}
+			<p>Ingrese hora</p>
+			<input name='hora' value='{{hora}}'/>
+		{{/if}}
 
-<button type='submit'>Finalizar</button>
+		{{#if esMensual}}
+			<p>Ingrese dia</p>
+			<input name='dia' value='{{dia}}'/>
+		{{/if}}
 
-{{#if fechaIncorrecta}}
-	<p>La fecha ingresada no es correcta. Por favor, intente ingresar otra nuevamente</p>
-{{/if}}
+		{{#if esSemanal}}
+			<p>Ingrese dia de la semana (numero) arrancando lunes =1, etc</p>
+			<input name='dia' value='{{dia}}'/>
+		{{/if}}
+
+		{{#if esUnicaVez}}
+			<p>Ingrese anio</p>
+			<input name='anio' value='{{anio}}'/>
+			<p>Ingrese mes</p>
+			<input name='mes' value='{{mes}}'/>
+			<p>Ingrese dia</p>
+			<input name='dia' value='{{dia}}'/>
+		{{/if}}
+
+		<button type='submit'>Finalizar</button>
+
+		{{#if fechaIncorrecta}}
+			<p>La fecha ingresada no es correcta. Por favor, intente ingresar otra nuevamente</p>
+		{{/if}}
+	
+	</form>
+
+{{/partial}}
+
+{{> layout.hbs}}
+
+</body>
+</html>

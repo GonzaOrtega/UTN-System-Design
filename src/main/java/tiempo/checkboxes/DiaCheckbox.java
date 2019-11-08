@@ -7,53 +7,59 @@ import domain.frecuenciasDeEventos.FrecuenciaDiaria;
 import spark.Request;
 
 public class DiaCheckbox implements Tiempo{
-	public Integer hora = 1; // Establezco hora default
-	boolean esDiario = true;
-	boolean error = false;
+	public Integer hora;
 	
-	public FrecuenciaDeEvento obtenerFrecuencia(Request req, HashMap<String, Object> viewModel) {
-		this.vincularWeb(req, viewModel);
-		if(!error) {
-			return new FrecuenciaDiaria(hora);
-		}
-		return null;
+	public String esPeriodico() {
+		return "esDiaria";
 	}
-	
+
 	public boolean verificarTiempo(String tiempo) {
 		return tiempo.equals("Diaria");
 	}
-	
-	public void esPeriodico(HashMap<String, Object> viewModel) {
-		viewModel.put("esDiaria", esDiario);
+
+	public FrecuenciaDeEvento obtenerFrecuencia() {
+		return new FrecuenciaDiaria(hora);
 	}
 	
-	public void vincularWeb(Request req, HashMap<String, Object> viewModel) {
+	public boolean datosIngresadosCorrectamente(Request req) {
 		String horaString = req.queryParams("hora");
-		viewModel.put("hora", horaString);
-		if(horaString == null) {
-			noRecibioFechaPorAhora();
-		}else {
-			try {
-				hora = Integer.parseInt(horaString);
-				if(!this.validarFecha())
-					setError(viewModel);
-			}catch(Exception e){
-				setError(viewModel);
-			}
-		}
+		hora = Integer.parseInt(horaString); // Que sea entero ya esta validado por HTML
+		return validarFecha();
 	}
 	
 	public boolean validarFecha() {
+		return validarHora();
+	}
+	
+	private boolean validarHora() {
 		return hora >=0 && hora <=24;
 	}
 	
-	public void noRecibioFechaPorAhora() {
-		error = true;
-	}
-	
-	public void setError(HashMap<String, Object> viewModel) {
-		error = true;
-		viewModel.put("fechaIncorrecta", true);
-	}
+//	public void vincularWeb(Request req, HashMap<String, Object> viewModel) {
+//		String horaString = req.queryParams("hora");
+//		viewModel.put("hora", horaString);
+//		if(horaString == null) {
+//			noRecibioFechaPorAhora();
+//		}else {
+//			try {
+//				hora = Integer.parseInt(horaString);
+//				if(!this.validarFecha())
+//					setError(viewModel);
+//			}catch(Exception e){
+//				setError(viewModel);
+//			}
+//		}
+//	}
+//	
+//	
+//	public void noRecibioFechaPorAhora() {
+//		error = true;
+//	}
+//	
+//	public void setError(HashMap<String, Object> viewModel) {
+//		error = true;
+//		viewModel.put("fechaIncorrecta", true);
+//	}
+
 	
 }

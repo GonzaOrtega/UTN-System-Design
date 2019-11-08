@@ -6,7 +6,7 @@
 
 {{#partial "contenido" }}
 
-	<form class="clothes-form" method='get' action='/evento/alta'>
+	<form class="clothes-form" method='post' action='/evento/alta'>
 		<h1>Alta de Evento</h1>
 		
 		<h3>Ingresar descripcion</h3>
@@ -21,8 +21,8 @@
 		<button type='submit'>Siguiente</button>
 		<input type="reset"><br>
 		
-		{{#if eligieronDesYFrec}}
-			{{> elegirHorarios.hbs}}
+		{{#if errorAlCargarDatos}}
+			Error: No se cargaron bien los datos!!! Reintentar!!!
 		{{/if}}
 		
 	</form>

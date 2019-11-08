@@ -6,7 +6,9 @@ import domain.frecuenciasDeEventos.FrecuenciaDeEvento;
 import spark.Request;
 
 public interface Tiempo {
+	public String esPeriodico();
 	public boolean verificarTiempo(String tiempo);
-	public void esPeriodico(HashMap<String, Object> viewModel);
-	public FrecuenciaDeEvento obtenerFrecuencia(Request req, HashMap<String, Object> viewModel);
+	public boolean validarFecha();
+	public boolean datosIngresadosCorrectamente(Request req);
+	public FrecuenciaDeEvento obtenerFrecuencia();
 }
