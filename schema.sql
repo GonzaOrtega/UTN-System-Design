@@ -23,7 +23,7 @@
     create table FrecuenciaDeEvento (
         DTYPE varchar(31) not null,
         id bigint not null auto_increment,
-        fechaEvento tinyblob,
+        fechaEvento timestamp,
         hora integer,
         limiteDeProximidad integer,
         diaDelMes integer,

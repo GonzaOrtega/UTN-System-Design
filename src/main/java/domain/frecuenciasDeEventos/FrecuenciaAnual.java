@@ -2,6 +2,9 @@ package domain.frecuenciasDeEventos;
 
 import java.time.*;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +16,8 @@ public class FrecuenciaAnual extends FrecuenciaDeEvento {
 //	long id;
 	int limiteDeProximidad = 30;
 	
-	LocalDateTime fechaEvento;
+	@Column
+	private LocalDateTime fechaEvento;
 	public FrecuenciaAnual() {}
 	public FrecuenciaAnual(int mes, int dia) {
 		fechaEvento = LocalDateTime.of(119, mes, dia, 0, 0, 0);

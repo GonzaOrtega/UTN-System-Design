@@ -1,6 +1,9 @@
 package domain.frecuenciasDeEventos;
 
 import java.time.*;
+
+import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -11,7 +14,8 @@ import domain.enums.TipoFrecuencia;
 public class FrecuenciaUnicaVez extends FrecuenciaDeEvento {
 	static int limiteDeProximidad = 7;
 	
-	LocalDateTime fechaEvento;
+	@Column
+	private LocalDateTime fechaEvento;
 	public FrecuenciaUnicaVez() {}
 	public FrecuenciaUnicaVez(int anio, int mes, int dia) {
 		fechaEvento = LocalDateTime.of(anio, mes, dia, 0, 0, 0);
