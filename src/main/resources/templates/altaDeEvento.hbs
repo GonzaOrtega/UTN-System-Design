@@ -12,11 +12,13 @@
 		<h3>Ingresar descripcion</h3>
 		<input name='Descripcion' value='{{descripcionIngresada}}' required>
 		<h3>Elegir frecuencia</h3>
-		<input type="radio" name="Frecuencia" value="Anual" required> Anual<br>
-		<input type="radio" name="Frecuencia" value="Diaria" required> Diaria<br>
-		<input type="radio" name="Frecuencia" value="Mensual" required> Mensual<br>
-		<input type="radio" name="Frecuencia" value="Semanal" required> Semanal<br>
-		<input type="radio" name="Frecuencia" value="UnicaVez" required> Unica vez<br>
+		<select name="Frecuencia">
+			<option value="Anual" required> Anual</option>
+			<option value="Diaria" required> Diaria</option>
+			<option value="Mensual" required> Mensual</option>
+			<option value="Semanal" required> Semanal</option>
+			<option value="UnicaVez" required> Unica vez</option>
+		</select>
 		
 		<button type='submit'>Siguiente</button>
 		<input type="reset"><br>
