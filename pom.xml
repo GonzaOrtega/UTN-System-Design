@@ -54,7 +54,7 @@
                 </descriptorRefs>
                 <archive>
                     <manifest>
-                        <mainClass>Server</mainClass>
+                        <mainClass>domain.server.Server</mainClass>
                     </manifest>
                 </archive>
             </configuration>
