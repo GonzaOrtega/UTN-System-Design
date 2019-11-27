@@ -1,0 +1,26 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+</head>
+<body>
+
+{{#partial "contenido" }}
+
+	<form class="clothes-form" method='post' action='/eventos/alta/verificacion'>
+	
+	{{#unless fechaIncorrecta}}
+		<p>Se ha ingresado el evento correctamente</p>
+	{{else}}
+		<p>Error al cargar evento. Intente nuevamente<p>
+	{{/unless}}
+	
+	<button type='submit'>Volver</button>
+	
+	</form>
+	
+{{/partial}}
+
+{{> layout.hbs}}
+
+</body>
+</html>
