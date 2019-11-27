@@ -1,52 +1,40 @@
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="/perfil.css" media="screen" />
-</head>
-<body>
+{{#partial "otherHead"}}
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+{{/partial}}
+
 {{#partial "contenido"}}
-
-	<div class="story-page">
-	 <h2> Bienvenide {{nombreUsuario}} </h2>
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+    	 	<div class="well-profile">
+            	<div class="col-sm-12">
+                	<div class="col-xs-12 col-sm-8">
+                    	<h2>Juan</h2>
+                    	<p><strong>Cantidad Maxima de prendas: </strong> 15 </p>
+                    	<p><strong>Tipo de perfil: </strong> GRATUITO </p>
+    	            </div>             
+            	</div>            
+            <div class="col-xs-12 divider text-center">
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong> 2 </strong></h2>                    
+                    <p><small>Guardarropas</small></p>
+                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Ver guardarropas </button>
+                </div>
+                <div class="col-xs-12 col-sm-4 emphasis">
+                    <h2><strong>20k</strong></h2>                    
+                    <p><small>Cantidad de prendas</small></p>
+                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Agregar Prenda </button>
+                </div>
+            </div>
+    	 </div>                 
+		</div>
 	</div>
-	<div class="form">
-	<!--
-	<a href="/sugerencias/show/aceptadas" class="boton_1" action="/sugerencias/show/aceptadas" method="GET">
-	    Ver sugerencias aceptadas
-	</a>
-	-->
-	<form class="profile-form" action="/sugerencias/show/aceptadas" method="GET">
-	    <button>Ver sugerencias aceptadas</button>
-	</form>
-
-
-	<form class="profile-form" action="/eventos/alta" method="GET">
-	    <button>Agendar evento</button>
-	</form>
-
-	<form class="profile-form" action="/calendario" method="GET">
-			<button>Visualizar calendario</button>
-	</form>
-
-	<form class="profile-form" action="/guardarropas/prendas" method="GET">
-			<button>Listas prendas de guardarropas</button>
-	</form>
-
-	<form class="profile-form" action="/prendas/step-1" method="GET">
-			<button>Dar de alta prendas</button>
-	</form>
-
-	<form class="profile-form" action="/guardarropas/show" method="GET">
-			<button>Guardarropas</button>
-	</form>
-	</div>
-	{{#each lista}}
-	<li>{{this}}</li>
-	<tr>
-					<td>{{colorPrimario}}
-	</tr>
-	{{/each}}
+</div>
+</div>
 
 {{/partial}}
 {{>layout.hbs}}
-</body>
-</html>
+
