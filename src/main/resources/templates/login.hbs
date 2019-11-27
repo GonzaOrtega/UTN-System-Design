@@ -1,24 +1,20 @@
-{{#partial "otherHead"}}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/login.css" media="screen" />
 
-<!--link rel="stylesheet" type="text/css" href="/login.css" media="screen" /-->
-{{/partial}}
-
-{{#partial "contenido"}}
-
-<form action="/" method="POST">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="text" name="nombreUsuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese el usuario">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="pass">
-  </div>
-  <button type="submit" class="btn btn-primary">Ingresar</button>
-</form>
-
-{{/partial}}
-{{>layout.hbs}}
+<title>QueMePongo Login</title>
+</head>
+<body>
+	<div class="login-page">
+	  <div class="form">
+	  <h3>Login</h3>
+	    <form class="login-form" action="/" method="POST">
+	      <input type="text" placeholder="Nombre Usuario" name="nombreUsuario"/>
+	      <input type="password" placeholder="Contraseña" name="pass"/>
+	      <input type="submit">
+	    </form>
+	  </div>
+	</div>
 
 </body>
 </html>

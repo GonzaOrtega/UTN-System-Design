@@ -164,18 +164,22 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 	}
 	public ModelAndView showCargaDatos(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
+		viewModel.put("guardarropas", guardarropas);
 		return new ModelAndView(viewModel, "wizardPrenda.hbs");
 	}
 	public  ModelAndView saveCargaDatos(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
-		String idGuardarropa = req.cookie("idGuardarropa");
 		String tipo = req.queryParams("tipoPrenda");
 		String colorP = req.queryParams("colorPrimario");
 		String colorS = req.queryParams("colorSecundario");
 		String material_de_prenda = req.queryParams("tela");
 		String abrigo = req.queryParams("nivelAbrigo");
+		String guardarropaSel = req.queryParams("guardarropaSel");
 		TipoPrenda tipo_de_prenda = TipoPrenda.valueOf(tipo);
 		builder.conTipo(tipo_de_prenda);
 		Color colorPrimario = Color.valueOf(colorP);
@@ -190,7 +194,7 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 		Material material = Material.valueOf(material_de_prenda);
 		builder.conTela(material);
 		builder.conAbrigo(Integer.parseInt(abrigo));
-		int id_guardarropa = Integer.parseInt(idGuardarropa);
+		int id_guardarropa = Integer.parseInt(guardarropaSel);
 		Guardarropa guardarropa = usuarie.buscarGuardarropa(id_guardarropa);
 		Prenda prenda = builder.crearPrenda();
 		
@@ -201,4 +205,3 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 		return null;
 	}
 }
-//kare2222277

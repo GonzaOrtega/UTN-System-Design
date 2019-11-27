@@ -17,10 +17,10 @@
     <div class="main">
 
         <div class="container">
-            <h2>Build your clothe</h2>
+            <h2>Carga de datos para prenda</h2>
             <form method="POST" id="signup-form" class="signup-form" action="/prendas/cargaDatos">
                 <h3>
-                    About
+                    Datos basicos
                 </h3>
                 <fieldset>
                     <div class="form-row">
@@ -130,7 +130,7 @@
                 </fieldset>
 
                 <h3>
-                    Account
+                    Material
                 </h3>
                                 <fieldset>
                     <div class="form-row">
@@ -183,27 +183,15 @@
                 </fieldset>
 
                 <h3>
-                    Address
+                    Guardarropa
                 </h3>
                 <fieldset>
-                    <div class="form-row form-input-flex">
                         <div class="form-input">
-                            <input type="text" name="street_name" id="street_name" placeholder="Street Name" />
-                        </div>
-                        <div class="form-input">
-                            <input type="text" name="street_number" id="street_number" placeholder="Street Number" />
-                        </div>
-                    </div>
-                    <div class="form-row form-input-flex">
-                        <div class="form-input">
-                            <input type="text" name="city" id="city" placeholder="City" />
-                        </div>
-                        <div class="form-input">
-                            <select name="country" id="country">
-                                <option value="">Country</option>
-                                <option value="Viet Nam">Viet Nam</option>
-                                <option value="USA">USA</option>
-                            </select>
+                           	    <select name="guardarropa">
+									{{#each guardarropas}}
+		      						<option value="{{nombre}}">{{nombre}}</option>
+									{{/each}}
+	     						</select>
                             <span class="select-icon"></span>
             
                         </div>
