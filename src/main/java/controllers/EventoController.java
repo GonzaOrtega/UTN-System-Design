@@ -34,19 +34,6 @@ import tiempo.checkboxes.UnicaVezCheckbox;
 public class EventoController  extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	
 	Tiempo fecha = null;
-	
-	public static String mostrarEventos(Request req, Response res) {
-		Map<String, Object> viewModel = new HashMap();
-		
-		// Primero lo pruebo con un solo evento
-		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaUnicaVez(2019,2,16),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
-		
-		viewModel.put("descripcion", eventoConFrecuenciaUnica.getDescripcion());
-		viewModel.put("frecuencia", eventoConFrecuenciaUnica.getFrecuencia().toString());
-		ModelAndView modelAndView = new ModelAndView(viewModel, "mostrarEvento.hbs");
-		
-		return new HandlebarsTemplateEngine().render(modelAndView);
-	}
 
 	public ModelAndView mostrarAltaDeEvento(Request req, Response res) {
 		return new ModelAndView(null, "altaDeEvento.hbs");
@@ -68,7 +55,7 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		HashMap<String, Object> viewModel = new HashMap();
 		
 		viewModel.put(fecha.esPeriodico(), true);
-		viewModel.put("fechaIncorrecta", false);
+//		viewModel.put("fechaIncorrecta", false);
 		
 		return new ModelAndView(viewModel, "elegirHorarios.hbs");
 	}
@@ -76,23 +63,24 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 	public ModelAndView completarFrecuencia(Request req, Response res) {
 		HashMap<String, Object> viewModel = new HashMap();
 		
-		viewModel.put("fechaIncorrecta", false);
 		String descripcion = req.cookie("Descripcion");
 		
 		if(fecha.datosIngresadosCorrectamente(req)) {
 			FrecuenciaDeEvento frecuenciaDeEvento = fecha.obtenerFrecuencia();
 			Evento eventoObtenido = this.armarEvento(descripcion, frecuenciaDeEvento);
 			this.cargarEvento(eventoObtenido, req);
+			viewModel.put("fechaIncorrecta", false);
 		}else {
 			viewModel.put("fechaIncorrecta", true);
-			return new ModelAndView(viewModel, "elegirHorarios.hbs");
 		}
 		
-		res.redirect("/perfil");
-		return null;
+		return new ModelAndView(viewModel, "eventoCargado.hbs");
 	}
 	
-	
+	public ModelAndView mostrarMensajeVerificacion(Request req, Response res) {
+		res.redirect("/");
+		return null;
+	}
 	
 	
 	
