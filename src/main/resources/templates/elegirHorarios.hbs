@@ -7,6 +7,7 @@
 {{#partial "contenido" }}
 
 	<form class="clothes-form" method='post' action='/eventos/alta/horarios'>
+	
 	<div class="form-group">
 		<h3>Elegir horarios</h3>
 	</div>
@@ -22,32 +23,32 @@
 
 	{{#if esDiaria}}
 	<div class="form-group">
-		<h5>Ingrese hora<h5>
+		<h5>Ingrese hora</h5>
 		<input name='hora' class="form-control" value='{{hora}}' type="number" min = "0" max = "23" required>
 	</div>
 	{{/if}}
 
 	{{#if esMensual}}
 	<div class="form-group">
-		<h5>Ingrese dia<<h5>
+		<h5>Ingrese dia</h5>
 		<input name='dia' class="form-control" value='{{dia}}' type="number" min = "1" max = "31" required>
 	</div>
 	{{/if}}
 
 	{{#if esSemanal}}
 	<div class="form-group">
-		<h5>Ingrese dia de la semana (numero) arrancando lunes =1, etc<h5>
+		<h5>Ingrese dia de la semana (numero) arrancando lunes =1, etc</h5>
 		<input name='dia' class="form-control" value='{{dia}}' type="number" min = "1" max = "7" required>
 	</div>
 	{{/if}}
 
 	{{#if esUnicaVez}}
 	<div class="form-group">
-		<h5>Ingrese anio<h5>
+		<h5>Ingrese anio</h5>
 		<input name='anio' class="form-control" value='{{anio}}' type="number" min = "2019" required>
-		<h5>Ingrese mes<h5>
+		<h5>Ingrese mes</h5>
 		<input name='mes' class="form-control" value='{{mes}}' type="number" min = "1" max = "12" required>
-		<h5>Ingrese dia<h5>
+		<h5>Ingrese dia</h5>
 		<input name='dia' class="form-control" value='{{dia}}' type="number" min = "1" max = "31" required>
 	</div>
 	{{/if}}
