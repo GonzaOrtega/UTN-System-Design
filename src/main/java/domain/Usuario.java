@@ -78,7 +78,9 @@ public class Usuario extends SuperClase{
 	public List<Sugerencia> getSugerencias() {
 		return sugerencias;
 	}
-	
+	public int getMaximoPrendas() {
+		return this.maximoDePrendas;
+	}
 	public Set<Guardarropa> getGuardarropas() {
 		return guardarropas;
 	}

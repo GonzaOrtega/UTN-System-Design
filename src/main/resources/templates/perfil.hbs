@@ -15,22 +15,22 @@
     	 	<div class="well-profile">
             	<div class="col-sm-12">
                 	<div class="col-xs-12 col-sm-8">
-                    	<h2>Juan</h2>
-                    	<p><strong>Cantidad Maxima de prendas: </strong> 15 </p>
-                    	<p><strong>Tipo de perfil: </strong> GRATUITO </p>
+                    	<h2>{{nombreUsuario}}</h2>
+                    	<p><strong>Cantidad Maxima de prendas: </strong> {{maxPrendas}} </p>
+                    	<p><strong>Tipo de perfil: </strong> {{tipo}} </p>
     	            </div>             
             	</div>
             	            
             <div class="col-xs-12 divider text-center">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 2 </strong></h2>                    
+                    <h2><strong> {{cantGuardarropas}} </strong></h2>                    
                     <p><small>Guardarropas</small></p>
                     <form action="/prueba/cargaDatos" method="GET">
                  		<input class="btn btn-success btn-block" type="submit" value="Ver guardarropas" />
 					</form>                
 				</div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>20k</strong></h2>                    
+                    <h2><strong>{{cantPrendas}}</strong></h2>                    
                     <p><small>Cantidad de prendas</small></p>
                     <form action="/prendas/cargaDatos" method="GET">
                  		<input class="btn btn-success btn-block" type="submit" value="Agregar prenda" />
