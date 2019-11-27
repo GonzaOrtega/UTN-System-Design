@@ -9,12 +9,17 @@
 	<form class="clothes-form" method='post' action='/eventos/alta/verificacion'>
 	
 	{{#unless fechaIncorrecta}}
-		<p>Se ha ingresado el evento correctamente</p>
+	<div class="alert alert-success" role="alert">
+	  Se ha ingresado el evento correctamente
+	</div>
 	{{else}}
-		<p>Error al cargar evento. Intente nuevamente<p>
+	<div class="alert alert-danger" role="alert">
+	  <p>Error al cargar el evento</p>
+	  <p>Por favor intente nuevamente</p>
+	</div>
 	{{/unless}}
 	
-	<button type='submit'>Volver</button>
+	<button type='submit' class="btn btn-primary">Volver</button>
 	
 	</form>
 	
