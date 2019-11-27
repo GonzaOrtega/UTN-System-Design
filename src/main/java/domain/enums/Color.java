@@ -25,6 +25,7 @@ public enum Color{
 		Purpura,
 		Ciruela,
 		Melocoton,
+		Ninguno,
 		ROJO,
 		NEGRO,
 		BLANCO,
