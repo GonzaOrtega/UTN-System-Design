@@ -58,7 +58,7 @@ public class Router {
 		Spark.get("/prendas/cargaDatos", prendaContoller::showCargaDatos,engine);
 		Spark.post("/prendas/cargaDatos", prendaContoller::saveCargaDatos,engine);
 		
-		Spark.get("/pru", guardarropasController::pru,engine);
+		Spark.get("/guardarropas", guardarropasController::pru,engine);
 		
 		Spark.after((request, response) -> { 
 			   PerThreadEntityManagers.getEntityManager(); 
