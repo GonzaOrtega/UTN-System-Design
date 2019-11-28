@@ -98,7 +98,7 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 		return null;
 	}
 	private int buscarGuardarropaPorNombre(Usuario user,String name) {
-		List<Long> filtro = user.getGuardarropas().stream().filter(g->g.nombre == name).map(h->h.getId()).collect(Collectors.toList());
+		List<Long> filtro = user.getGuardarropas().stream().filter(g->g.nombre.equals(name)).map(h->h.getId()).collect(Collectors.toList());
 		int resultado = filtro.get(0).intValue();
 		return resultado;
 	}
