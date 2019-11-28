@@ -107,9 +107,9 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		EventoController eventoController = new EventoController();
 		
 		// Para la hora de usarlo posta
-//		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-//		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
-//		usuarie.agendarEvento(evento);
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		usuarie.agendarEvento(evento);
 		
 		
 		EntityManager em = entityManager();

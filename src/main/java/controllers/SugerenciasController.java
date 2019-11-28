@@ -46,11 +46,11 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		Map<String, Object> viewModel = new HashMap();
 		
 		// ------------------------------------------------------
-		/*
+		
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
 		List<Sugerencia> listaSugerencia = usuarie.getSugerencias();
- 		*/
+ 		
 		// ---------------------- Hardcodeo ----------------------
 		
 		// Hardcodeo del usuario para db
@@ -58,12 +58,19 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		Usuario usuario = new Usuario(TipoUsuario.PREMIUM, 100, "pepe", "1234");
 		
 		listaCalificaciones = usuario.getCalificaciones();
-		List<Sugerencia> listaSugerencia = listaSugerencia = usuario.getSugerencias();
+//		List<Sugerencia> listaSugerencia = listaSugerencia = usuario.getSugerencias();
 		Sugerencia sugerenciaPosta = generarSugerencia();
 		Sugerencia sugerenciaPosta2 = generarSugerencia2();
 		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
 		listaSugerencia.add(sugerenciaPosta2);
 		listaSugerencia.add(sugerenciaPosta);
+		
+		
+		EntityManager em = entityManager();
+		em.getTransaction().begin();
+		em.persist(sugerenciaPosta);
+		em.persist(sugerenciaPosta2);
+		em.getTransaction().commit();
 		
 //		em.getTransaction().begin();
 //		em.persist(usuario);
@@ -124,7 +131,7 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 	}
 	
 	// Hardcodeo esto para probarlo, luego se hace con las sugerencias del usuario que inicia sesion	
-	public static Sugerencia generarSugerencia() {
+	public Sugerencia generarSugerencia() {
 		Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
 		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
 		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.Negro).conTela(Material.Algodon).crearPrenda();
@@ -136,10 +143,20 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		atuendo.add(camisaCorta);
 		atuendo.add(gorra);
 		atuendo.add(zapatos);
+		
+		EntityManager em = entityManager();
+		em.getTransaction().begin();
+		em.persist(eventoConFrecuenciaUnica);
+		em.persist(camisaCorta);
+		em.persist(zapatos);
+		em.persist(gorra);
+		em.persist(jean);
+		em.getTransaction().commit();
+		
 		return new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 	}
 	
-	public static Sugerencia generarSugerencia2() {
+	public Sugerencia generarSugerencia2() {
 		Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
 		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
 		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.Negro).conTela(Material.Algodon).crearPrenda();
@@ -151,6 +168,16 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		atuendo.add(camisaCorta);
 		atuendo.add(gorra);
 		atuendo.add(zapatos);
+		
+		EntityManager em = entityManager();
+		em.getTransaction().begin();
+		em.persist(eventoConFrecuenciaUnica);
+		em.persist(camisaCorta);
+		em.persist(zapatos);
+		em.persist(gorra);
+		em.persist(jean);
+		em.getTransaction().commit();
+		
 		return new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 	}
 }
