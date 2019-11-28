@@ -41,8 +41,7 @@ public class GuardarropaInformation {
 		this.prendas = setPrendas;
 		listaPrendasView = new ArrayList<Set<Prenda>>();
 		Set<Prenda> set = new HashSet<Prenda>();
-		int i = 0;
-		for(i=0;i<prendas.size();i++) {
+		for(int i=0;i<prendas.size();i++) {
 			if(set.size()<3) {
 				set.add(this.prendas.get(i));
 			}

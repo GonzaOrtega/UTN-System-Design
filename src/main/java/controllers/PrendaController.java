@@ -86,7 +86,8 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 		Material material = Material.valueOf(material_de_prenda);
 		builder.conTela(material);
 		builder.conAbrigo(Integer.parseInt(abrigo));
-		int id_guardarropa = Integer.parseInt(guardarropaSel);
+		
+		int id_guardarropa = buscarGuardarropaPorNombre(usuarie,guardarropaSel);
 		Guardarropa guardarropa = usuarie.buscarGuardarropa(id_guardarropa);
 		Prenda prenda = builder.crearPrenda();
 		
@@ -95,5 +96,10 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 		
 		res.redirect("/perfil");	
 		return null;
+	}
+	private int buscarGuardarropaPorNombre(Usuario user,String name) {
+		List<Long> filtro = user.getGuardarropas().stream().filter(g->g.nombre == name).map(h->h.getId()).collect(Collectors.toList());
+		int resultado = filtro.get(0).intValue();
+		return resultado;
 	}
 }
