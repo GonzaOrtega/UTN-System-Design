@@ -9,16 +9,20 @@
 	<div id = "body">
 		<form method='post' action='/sugerenciasPendientes'>
 		{{#each sugerencias}}
-			<div id = "sugerencia">
-			<h2> Una sugerencia es</h2> 
-			{{#each this.atuendo}}
-				<h3>Prenda {{@index}}</h3>
-				<li>Color primario: {{this.colorPrimario}}</li>
-				<li>Tipo: {{this.tipo}}</li>
-				<li>Tela: {{this.tela}}</li>
-			{{/each}}
-			
-			<input type="radio" name='sugerencia' value='{{@index}}'>Aceptar<br>
+			<div id = "sugerencia"> 
+				<div class="card" style="width: 18rem;">
+  					<div class="card-body">
+    					<h5 class="card-title">Sugerencia </h5>
+    						<p class="card-text">La sugerencia consta de: </p>
+    						{{#each this.atuendo}}
+    						<p class="card-text">
+    						     {{this.tipo}} cuyo principal color es el {{this.colorPrimario}} y la tela es de  {{this.tela}}
+    						     </p>
+    						{{/each}}
+							
+						<input type="radio" name='sugerencia' value='{{@index}}' class="btn btn-primary">Aceptar<br>
+					</div>
+				</div>
 			</div>
 		{{/each}}
 		<div class="boton">
