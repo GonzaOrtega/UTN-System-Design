@@ -11,12 +11,12 @@
 	Sugerencia N: {{@index}}
 	
 	
-	<div class="row row-cols-1 row-cols-md-3">
+<div class="row row-cols-1 row-cols-md-3">
 	
 	{{#each this.atuendo}}
 	<div class="col mb-4">
 	
-	<div class="card">
+	<div class="card border-primary mb-3">
 
 		<div class="card-body">
 		<h5 class="card-title">Atuendo  {{@index}}</h5>
@@ -25,13 +25,6 @@
 		<p class="card-text">Tipo: {{this.tipo}}</p>
 		<p class="card-text">Tela: {{this.tela}}</p>
 		
-		{{!No se por que no me muestra la descripcion del evento}}
-		{{#each this.evento}}
-			<p class="card-text">Evento</p>
-			<h3>Evento</h3>
-			<p class="card-text">Descripcion: {{this.evento.descripcion}}</p>
-		{{/each}}
-		
 		<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
 		</div>
 		
@@ -39,8 +32,17 @@
 		
 	</div>
 	{{/each}}
-	<h3>Estado: </h3> 
-	<p>{{this.estado}}</p>
+		
+		
+	<div class="card border-secondary mb-3">
+
+		<div class="card-body">
+		<h5 class="card-title">Evento</h5>
+		<p class="card-text">Descripcion: {{this.evento.descripcion}}</p>
+		<!-- <p class="card-text">Estado: {{this.estado}}</p> -->
+		</div>
+		
+	</div>
 </div>
 	
 

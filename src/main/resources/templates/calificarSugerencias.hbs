@@ -1,6 +1,6 @@
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" />
+<!-- <link rel="stylesheet" type="text/css" href="/inicioSesionStyle.css" media="screen" /> -->
 </head>
 <body>
 
@@ -8,32 +8,54 @@
 
 	<form class="calificarSugerencias" action="/sugerencias/calificar/aceptadas" method="POST">
 
-		<h1>Calificar sugerencia</h1>
+		<div> <h1>Calificar sugerencia</h1> </div>
 
-		<h1>Categorias</h1>
+		<div><h3>Categorias</h3></div>
 
-		<h3>Superior</h3>
-		<input type="radio" name="Superior" value="BIEN"> Bien<br>
-		<input type="radio" name="Superior" value="FRIO"> Frio<br>
-		<input type="radio" name="Superior" value="CALOR"> Calor<br>
-
-		<h3>Calzado</h3>
-		<input type="radio" name="Calzado" value="BIEN"> Bien<br>
-		<input type="radio" name="Calzado" value="FRIO"> Frio<br>
-		<input type="radio" name="Calzado" value="CALOR"> Calor<br>
-
-		<h3>Inferior</h3>
-		<input type="radio" name="Inferior" value="BIEN"> Bien<br>
-		<input type="radio" name="Inferior" value="FRIO"> Frio<br>
-		<input type="radio" name="Inferior" value="CALOR"> Calor<br>
-
-		<h3>Accesorio</h3>
-		<input type="radio" name="Accesorio" value="BIEN"> Bien<br>
-		<input type="radio" name="Accesorio" value="FRIO"> Frio<br>
-		<input type="radio" name="Accesorio" value="CALOR"> Calor<br>
-
-
-		<button type='submit'>Calificar</button>
+		
+	<div class="container">
+	  <div class="row">
+		<div class="col">
+		<h5>Superior</h5>
+			<select name="Superior" class ="form-control">
+				<option value="BIEN" required> Bien</option>
+				<option value="FRIO" required> Frio</option>
+				<option value="CALOR" required> Calor</option>
+			</select>
+		</div>
+		
+		<div class="col">
+		<h5>Calzado</h5>
+			<select name="Calzado" class ="form-control">
+				<option value="BIEN" required> Bien</option>
+				<option value="FRIO" required> Frio</option>
+				<option value="CALOR" required> Calor</option>
+			</select>
+		</div>
+		
+		<div class="w-100"></div>
+		
+		<div class="col">
+		<h5>Inferior</h5>
+			<select name="Inferior" class ="form-control">
+				<option value="BIEN" required> Bien</option>
+				<option value="FRIO" required> Frio</option>
+				<option value="CALOR" required> Calor</option>
+			</select>
+		</div>
+		
+		<div class="col">
+		<h5>Accesorio</h5>
+			<select name="Accesorio" class ="form-control">
+				<option value="BIEN" required> Bien</option>
+				<option value="FRIO" required> Frio</option>
+				<option value="CALOR" required> Calor</option>
+			</select>
+		</div>
+	  </div>
+	</div>
+	
+	<div><button type='submit' class="btn btn-primary">Calificar</button></div>
 
 {{/partial}}
 
