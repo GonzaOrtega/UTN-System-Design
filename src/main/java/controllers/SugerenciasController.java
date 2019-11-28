@@ -59,18 +59,18 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		
 		listaCalificaciones = usuario.getCalificaciones();
 //		List<Sugerencia> listaSugerencia = listaSugerencia = usuario.getSugerencias();
-		Sugerencia sugerenciaPosta = generarSugerencia();
-		Sugerencia sugerenciaPosta2 = generarSugerencia2();
-		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
-		listaSugerencia.add(sugerenciaPosta2);
-		listaSugerencia.add(sugerenciaPosta);
-		
-		
-		EntityManager em = entityManager();
-		em.getTransaction().begin();
-		em.persist(sugerenciaPosta);
-		em.persist(sugerenciaPosta2);
-		em.getTransaction().commit();
+//		Sugerencia sugerenciaPosta = generarSugerencia();
+//		Sugerencia sugerenciaPosta2 = generarSugerencia2();
+//		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
+//		listaSugerencia.add(sugerenciaPosta2);
+//		listaSugerencia.add(sugerenciaPosta);
+//		
+//		
+//		EntityManager em = entityManager();
+//		em.getTransaction().begin();
+//		em.persist(sugerenciaPosta);
+//		em.persist(sugerenciaPosta2);
+//		em.getTransaction().commit();
 		
 //		em.getTransaction().begin();
 //		em.persist(usuario);
