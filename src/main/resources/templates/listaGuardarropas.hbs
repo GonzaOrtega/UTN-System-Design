@@ -8,14 +8,14 @@
 {{/partial}}
 
 {{#partial "contenido"}}
-
-    <h2>Guardarropa Número 1</h2>
+{{#each guardarropa}}
+    <h2>{{this.nombre}}</h2>
 	  <div class="table-responsive">
   <table class="table">
     <thead>
     </thead>
     <tbody>
-    {{#each listaSets}}
+    {{#each this.listaPrendasView}}
       <tr>
         <th scope="row"></th>
         {{#each this}}
@@ -28,7 +28,6 @@
 			    	  <ul>
 					    <li>Color primario: {{this.colorPrimario}}</li>
 					    <li>Color secundario: {{this.colorSecundario}}</li>
-					    <li>Tipo: {{this.tipo}}</li>
 					    <li>Tela: {{this.tela}}</li>
 					  </ul>
 			    </p>
@@ -38,9 +37,8 @@
 		{{/each}}
       </tr>
 {{/each}}
+  {{/each}}
     </tbody>
   </table>
-</div>
-
-{{/partial}}
+  {{/partial}}
 {{>layout.hbs}}

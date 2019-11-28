@@ -36,12 +36,13 @@ public class GuardarropasController {
 	
 	public ModelAndView pru(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
-		/*RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
-		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
-		*/
+		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+		Usuario usuarie = repo.buscarPorNombre("juan");
+		List<Guardarropa> listaGuard = usuarie.getGuardarropas().stream().collect(Collectors.toList());
+		List<GuardarropaInformation> guardarropas = listaGuard.stream().map(g->convertirInfo(g)).collect(Collectors.toList());
 		List<Set<Prenda>> lista = agregarPrendas();
-		viewModel.put("listaSets", lista);
+		viewModel.put("guardarropa",guardarropas);
+		//viewModel.put("listaSets", lista);
 
 		return new ModelAndView(viewModel,"listaGuardarropas.hbs");
 	}
@@ -63,14 +64,9 @@ public class GuardarropasController {
 		return lista;
 
 	}
-	// Lista desplegable
-	/*
-	public ModelAndView show(Request req, Response res) {
-		Map<String,Object> viewModel = new HashMap<String, Object>();
-		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
-		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
-		viewModel.put("guardarropas", guardarropas);
-	return new ModelAndView(viewModel,"guardarropa2.hbs");
-	}*/
+
+	private GuardarropaInformation convertirInfo(Guardarropa guard) {
+		List<Prenda> listaPrendas = new ArrayList(guard.getPrendas());
+		return new GuardarropaInformation(guard.getNombre(), listaPrendas);
+	}
 }
