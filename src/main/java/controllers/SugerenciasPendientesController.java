@@ -4,6 +4,8 @@ package controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.hibernate.Hibernate;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
@@ -25,6 +27,8 @@ public class SugerenciasPendientesController implements WithGlobalEntityManager,
 			sugerenciaAceptada.setEstado(TipoSugerencias.ACEPTADA);
 			sugerencias.remove(sugerenciaAceptada);
 			sugerencias.forEach(sug->sug.setEstado(TipoSugerencias.RECHAZADA));
+			entityManager().merge(sugerenciaAceptada);
+			sugerencias.forEach(sug->entityManager().merge(sug));
 		});
 		entityManager().close();
 	}
@@ -43,6 +47,7 @@ public class SugerenciasPendientesController implements WithGlobalEntityManager,
 			Sugerencia sugerencia = sugerencias.get(Integer.valueOf(sugerenciaNum));
 			cambiarEstados(sugerencia,sugerencias);
 			res.redirect("/calendario");
+			return null;
 		}
 		res.redirect("/sugerenciasPendientes");
 		return null;

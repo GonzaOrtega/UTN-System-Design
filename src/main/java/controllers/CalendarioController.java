@@ -54,6 +54,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		if(eventoList!=null) {
 		 eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
 		 eventosNoPendientes= eventoList;
+		 if (eventosPendientes!=null)
 		 eventosNoPendientes.removeAll(eventosPendientes);
 		 req.session().attribute("EventosPendientes",eventosPendientes);
 		}else {
@@ -73,7 +74,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		sugerencias.remove(null);
 		if(!sugerencias.stream().anyMatch(sugerencia->sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE)))
 		return null;
-			return eventos.stream().filter(evento->sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento))).collect(Collectors.toList());
+		return eventos.stream().filter(evento->sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento)&&sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE))).collect(Collectors.toList());
 	}
 	
 	private List<Evento> calcularEventos(String fechaString,Usuario usuarie){
@@ -98,11 +99,10 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2019,5,24);
 			Evento evento = new Evento(frecuencia,"Sin descripcion");
 			usuario.agendarEvento(evento);
-			entityManager().persist(frecuencia);
-			entityManager().persist(evento);
-			entityManager().getTransaction().commit();
+			/*entityManager().persist(frecuencia);
+			entityManager().persist(evento);*/
 		});
-		entityManager().close();
+		//entityManager().close();
 	}
 	private void agregarSugerencia(Usuario usuario) {
 		withTransaction(()->{
@@ -117,9 +117,10 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 			atuendo2.add(jean);
 			Sugerencia sugerencia1 = new Sugerencia(atuendo,evento);
 			Sugerencia sugerencia2 = new Sugerencia(atuendo2,evento);
+			usuario.agendarEvento(evento);
 			usuario.agregarSugerencia(sugerencia1);
 			usuario.agregarSugerencia(sugerencia2);
-			usuario.agendarEvento(evento);
+			
 			entityManager().persist(frecuencia);
 			entityManager().persist(evento);
 			entityManager().persist(sugerencia2);
@@ -128,5 +129,6 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 			entityManager().persist(camisaCorta);
 		});
 		entityManager().close();
+		
 	}
 }

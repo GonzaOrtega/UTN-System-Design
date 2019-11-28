@@ -11,7 +11,6 @@ public class Server {
 		Router.instance().configurar();
 		DebugScreen.enableDebugScreen();
 		Spark.init();
-		//Spark.init();
 	}
 	static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
