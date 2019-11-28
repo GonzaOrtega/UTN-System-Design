@@ -9,33 +9,40 @@
 {{#each sugerencias}}
 
 	Sugerencia N: {{@index}}
-
-	{{#each this.atuendo}}
-		
-		<div class="card" style="width: 18rem;">
-
-  <div class="card-body">
-    <h5 class="card-title">Atuendo  {{@index}}</h5>
-    <p class="card-text">Color primario: {{this.colorPrimario}}</p>
-	<p class="card-text">Color secundario: {{this.colorSecundario}}</p>
-	<p class="card-text">Tipo: {{this.tipo}}</p>
-	<p class="card-text">Tela: {{this.tela}}</p>
 	
-	{{!No se por que no me muestra la descripcion del evento}}
+	
+	<div class="row row-cols-1 row-cols-md-3">
+	
+	{{#each this.atuendo}}
+	<div class="col mb-4">
+	
+	<div class="card">
+
+		<div class="card-body">
+		<h5 class="card-title">Atuendo  {{@index}}</h5>
+		<p class="card-text">Color primario: {{this.colorPrimario}}</p>
+		<p class="card-text">Color secundario: {{this.colorSecundario}}</p>
+		<p class="card-text">Tipo: {{this.tipo}}</p>
+		<p class="card-text">Tela: {{this.tela}}</p>
+		
+		{{!No se por que no me muestra la descripcion del evento}}
 		{{#each this.evento}}
 			<p class="card-text">Evento</p>
 			<h3>Evento</h3>
 			<p class="card-text">Descripcion: {{this.evento.descripcion}}</p>
 		{{/each}}
-	
-    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-  </div>
-</div>
 		
-	
-	
+		<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+		</div>
+		
+	</div>
+		
+	</div>
 	{{/each}}
 	<h3>Estado: </h3> {{this.estado}}
+</div>
+	
+
 {{/each}}
 </body>
 
