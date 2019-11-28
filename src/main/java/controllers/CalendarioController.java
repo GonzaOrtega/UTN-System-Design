@@ -74,7 +74,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		sugerencias.remove(null);
 		if(!sugerencias.stream().anyMatch(sugerencia->sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE)))
 		return null;
-			return eventos.stream().filter(evento->sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento))).collect(Collectors.toList());
+			return eventos.stream().filter(evento->sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento)&&sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE))).collect(Collectors.toList());
 	}
 	
 	private List<Evento> calcularEventos(String fechaString,Usuario usuarie){
