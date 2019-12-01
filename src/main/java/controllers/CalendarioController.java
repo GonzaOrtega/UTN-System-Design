@@ -84,7 +84,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		List<Evento> eventos= new ArrayList<Evento>(usuarie.eventos());
 		LocalDateTime fecha = LocalDateTime.of(anioNum,mesNum,diaNum,0,0,0);
 		//agregarEvento(usuarie);
-		//agregarSugerencia(usuarie);
+	agregarSugerencia(usuarie);
 		return eventos.stream()
 				.filter(evento->((evento.getFrecuencia().equals(TipoFrecuencia.Unico)) && sucedeEnEsteDia(fecha,evento)))
 				.collect(Collectors.toList()); 

@@ -41,7 +41,8 @@ public class GuardarropasController {
 		List<Guardarropa> listaGuard = usuarie.getGuardarropas().stream().collect(Collectors.toList());
 		List<GuardarropaInformation> guardarropas = listaGuard.stream().map(g->convertirInfo(g)).collect(Collectors.toList());
 		List<Set<Prenda>> lista = agregarPrendas();
-		viewModel.put("guardarropa",guardarropas);
+		//viewModel.put("guardarropa",guardarropas);
+		viewModel.put("guardarropas", listaGuard);
 		//viewModel.put("listaSets", lista);
 
 		return new ModelAndView(viewModel,"listaGuardarropas.hbs");
