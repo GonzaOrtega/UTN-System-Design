@@ -86,7 +86,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		//agregarEvento(usuarie);
 	agregarSugerencia(usuarie);
 		return eventos.stream()
-				.filter(evento->((evento.getFrecuencia().equals(TipoFrecuencia.Unico)) && sucedeEnEsteDia(fecha,evento)))
+				.filter(evento->((evento.getFrecuencia().equals(TipoFrecuencia.UNICO)) && sucedeEnEsteDia(fecha,evento)))
 				.collect(Collectors.toList()); 
 	}
 	private static boolean sucedeEnEsteDia(LocalDateTime fecha,Evento evento) {

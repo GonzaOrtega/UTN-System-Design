@@ -20,7 +20,7 @@ public class FrecuenciaDeEvento{
 		return TipoFrecuencia.Anual;
 	}
 	public boolean esProximo(LocalDateTime fechaActual) {
-		return false;
+		return false; //metodo sobrescrito en las subclases
 	}
 
 	public boolean sucedeEntreEstasFechas(LocalDateTime fechaComienzo, LocalDateTime fechaFin) {

@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import domain.enums.TipoFrecuencia;
 @Entity
 public class FrecuenciaAnual extends FrecuenciaDeEvento {
-//	@Id @GeneratedValue
-//	long id;
+
 	int limiteDeProximidad = 30;
 	
 	@Column

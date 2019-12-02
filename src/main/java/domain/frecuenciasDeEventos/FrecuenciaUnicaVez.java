@@ -16,17 +16,19 @@ public class FrecuenciaUnicaVez extends FrecuenciaDeEvento {
 	
 	@Column
 	private LocalDateTime fechaEvento;
+	
+	//------Constructores-------
 	public FrecuenciaUnicaVez() {}
 	public FrecuenciaUnicaVez(int anio, int mes, int dia) {
 		fechaEvento = LocalDateTime.of(anio, mes, dia, 0, 0, 0);
 	}
-
 	public FrecuenciaUnicaVez(LocalDateTime fechaEvento) {
 		this.fechaEvento = fechaEvento;
 	}
-
+	//--------------
+	
 	public TipoFrecuencia getFrecuencia() {
-		return TipoFrecuencia.Unico;
+		return TipoFrecuencia.UNICO;
 	}
 
 	public boolean esProximo(LocalDateTime fechaActual) {

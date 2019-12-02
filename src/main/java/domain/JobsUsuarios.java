@@ -8,15 +8,15 @@ public class JobsUsuarios implements Runnable{
 	@Override
 	public void run() {
 		LocalDateTime fechaActual = LocalDateTime.now();
-		RepositorioDeUsuarios.getInstance().notificarAUsuariosAfectadosPorCambioDeClima();
+	//	RepositorioDeUsuarios.getInstance().notificarAUsuariosAfectadosPorCambioDeClima();
 		RepositorioDeUsuarios.getInstance().sugerir(fechaActual);
-		RepositorioDeUsuarios.getInstance().lavarTodaLaRopaSucia();
+	//	RepositorioDeUsuarios.getInstance().lavarTodaLaRopaSucia();
 	}
 	public static void main() {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         Runnable codigoAEjecutar = new JobsUsuarios();
         int retrasoInicial = 0;
-        int periodo = 1;
-        scheduler.scheduleAtFixedRate(codigoAEjecutar, retrasoInicial, periodo, TimeUnit.HOURS);//cambiar a TimeUnit.SECONDS para testear
+        int periodo = 1;//Podria ser 15 para que ejecute cada 15 minutos.
+        scheduler.scheduleAtFixedRate(codigoAEjecutar, retrasoInicial, periodo, TimeUnit.MINUTES);//cambiar a TimeUnit.SECONDS para testear
     }
 }
