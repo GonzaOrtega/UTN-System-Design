@@ -132,7 +132,7 @@ public class Usuario extends SuperClase{
 	}
 	
 	public void agregarGuardarropa(Guardarropa unGuardarropa) {
-		this.validacionSegunTipoUsuario(unGuardarropa.prendas().size()-1); 
+//		this.validacionSegunTipoUsuario(unGuardarropa.prendas().size()-1); 
 		this.guardarropas.add(unGuardarropa);
 	}
 	

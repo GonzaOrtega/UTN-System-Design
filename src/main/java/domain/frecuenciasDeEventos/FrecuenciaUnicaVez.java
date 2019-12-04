@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import domain.enums.TipoFrecuencia;
 @Entity
 public class FrecuenciaUnicaVez extends FrecuenciaDeEvento {
-	static int limiteDeProximidad = 7;
+	static int limiteDeProximidad = 2;
 	
 	@Column
 	private LocalDateTime fechaEvento;

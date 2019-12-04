@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import java.time.*;
 
 public class JobsUsuarios implements Runnable{
+	LocalDateTime fechaTest; 
 	@Override
 	public void run() {
 		LocalDateTime fechaActual = LocalDateTime.now();
@@ -19,4 +20,14 @@ public class JobsUsuarios implements Runnable{
         int periodo = 1;//Podria ser 15 para que ejecute cada 15 minutos.
         scheduler.scheduleAtFixedRate(codigoAEjecutar, retrasoInicial, periodo, TimeUnit.MINUTES);//cambiar a TimeUnit.SECONDS para testear
     }
+	public void runTest() {
+		RepositorioDeUsuarios.getInstance().sugerir(fechaTest);
+	}
+	public LocalDateTime getFechaTest() {
+		return fechaTest;
+	}
+	public void setFechaTest(LocalDateTime fechaTest) {
+		this.fechaTest = fechaTest;
+	}
+	
 }

@@ -20,7 +20,9 @@ public class Guardarropa extends SuperClase{
 	private Set<Prenda> prendas;
 
 	public String nombre;
-	public Guardarropa() {}
+	public Guardarropa() {
+		prendas = new HashSet<Prenda>();
+	}
 	
 	// ------------------ Getters, setters y constructores ------------------
 	public String getNombre() {
@@ -35,6 +37,9 @@ public class Guardarropa extends SuperClase{
 	
 	public Set<Prenda> getPrendas() {
 		return prendas;
+	}
+	public void borrarPrendas() {
+		this.prendas = new HashSet<Prenda>();
 	}
 
 	public Set<Prenda> prendas(){return prendas;}

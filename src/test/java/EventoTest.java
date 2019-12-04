@@ -1,4 +1,6 @@
 import static org.junit.Assert.*;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import domain.apisClima.*;
@@ -9,7 +11,7 @@ import java.time.*;
 
 public class EventoTest {
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,15,"juan32","123");
 	Guardarropa armario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
@@ -38,11 +40,19 @@ public class EventoTest {
 		juan.cargarPrenda(armario, ojotas);
 		juan.cargarPrenda(armario, jean);
 		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
+	}
+	@After
+	public void after(){
+		armario.borrarPrendas();
+		juan = new Usuario(TipoUsuario.PREMIUM,15,"juan32","123");
+		armario = new Guardarropa();
 
 	}
 	
 	@Test
 	public void ProximidadEntreFechasDiferentesCercanasDevuelveVerdadero() {
+		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
+	
 		assertTrue(
 				eventoConFrecuenciaUnica.esProximo(
 						LocalDateTime.of(
