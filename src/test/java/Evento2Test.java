@@ -85,7 +85,7 @@ public class Evento2Test extends AbstractPersistenceTest implements WithGlobalEn
 								LocalTime.now())
 						);
 		job.runTest();
-	//	withTransaction(() -> {	job.runTest(); });
+		
 		Usuario giorno = RepositorioDeUsuarios.getInstance().buscarPorNombre("giornoGiovanna");
 	
 

@@ -1,6 +1,9 @@
 import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import domain.apisClima.*;
@@ -69,6 +72,8 @@ public class GuardarropaTest {
 		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,ojotas,camisaCorta));
 		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
 		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
+		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
+
 
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario,ojotas);
@@ -98,16 +103,19 @@ public class GuardarropaTest {
 	}
 	@Test
 	public void siJuanCalificaFrioEnPantalonesDarleMasAbrigoYCalorEnSuperiorDarleMenosAbrigo() {
-		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(pantalonAbrigo,zapatos,camisaCorta,camperaGucci));
-		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,zapatos,camisaCorta,camperaGucci,buzo));
-		HashSet<Prenda> atuendo3 = new HashSet<Prenda>(Arrays.asList(pantalonAbrigo,zapatos,camisaCorta,camperaGucci,buzo));
+		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(pantalonAbrigo,botas,camisaCorta,camperaGucci));
+		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,botas,camisaCorta,camperaGucci,buzo));
+		HashSet<Prenda> atuendo3 = new HashSet<Prenda>(Arrays.asList(pantalonAbrigo,botas,camisaCorta,camperaGucci,buzo));
 
 		juan.cargarPrenda(armario, pantalonAbrigo);
+		juan.cargarPrenda(armario, botas);
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario, buzo);
 		juan.calificar(Categoria.Inferior,TipoSensaciones.FRIO);
+		
 		juan.calificar(Categoria.Superior,TipoSensaciones.CALOR);
-
+		List<Set<Prenda>> test = armario.pedirAtuendosSegun(APIMockTemplado, juan);
+		int i;
 		assertTrue(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo));
 		assertFalse(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo2));
 		assertFalse(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo3));
