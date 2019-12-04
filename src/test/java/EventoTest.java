@@ -50,19 +50,6 @@ public class EventoTest {
 	}
 	
 	@Test
-	public void ProximidadEntreFechasDiferentesCercanasDevuelveVerdadero() {
-		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
-	
-		assertTrue(
-				eventoConFrecuenciaUnica.esProximo(
-						LocalDateTime.of(
-								LocalDate.of(2019, Month.MAY, 17),
-								LocalTime.now())
-						)
-				);
-	}
-	
-	@Test
 	public void ProximidadEntreFechasDiferentesLajanasDevuelveFalso() {
 		assertFalse(eventoConFrecuenciaUnica.esProximo(LocalDateTime.of(2019, Month.MAY, 16,0,0,0)));
 		assertFalse(eventoConFrecuenciaUnica.esProximo(
