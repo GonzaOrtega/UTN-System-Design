@@ -49,7 +49,6 @@ public class GuardarropaPersistenciaTest extends AbstractPersistenceTest impleme
 		assertTrue(armario.prendas().contains(jean));
 	}
 
-	//TODO: ver por que da 3 y no 2
 	@Test
 	public void siJuanAgregaASuGuardarropasOtroArmarioHabraDosArmariosPersistidos() {
 		Guardarropa otroArmario = new Guardarropa();

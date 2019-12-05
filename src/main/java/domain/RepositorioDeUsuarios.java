@@ -71,5 +71,13 @@ public class RepositorioDeUsuarios implements WithGlobalEntityManager {
 	public void lavarTodaLaRopaSucia() {
 		this.usuarios().forEach(usuario -> usuario.lavarLaRopa());
 	}
+	
+	public void borrarUsuario(Long idBorrar){
+		Usuario aBorrar = this.usuarios().stream()
+		.filter(user->user.getId()== idBorrar)
+		.collect(Collectors.toList())
+		.get(0);
+		entityManager().remove(aBorrar);
+	}
 
 }

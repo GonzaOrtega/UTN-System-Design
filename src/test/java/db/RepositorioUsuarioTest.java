@@ -6,8 +6,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.persistence.Query;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import domain.enums.*;
+import domain.frecuenciasDeEventos.FrecuenciaDiaria;
 import domain.frecuenciasDeEventos.FrecuenciaUnicaVez;
 import domain.*;
 import javax.persistence.EntityManager;
@@ -16,49 +21,48 @@ import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 public class RepositorioUsuarioTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 	EntityManager em = entityManager();
+	Usuario bruno = new Usuario(TipoUsuario.PREMIUM, 25,"buccaratti","123");
+	Usuario giorno = new Usuario(TipoUsuario.GRATUITO, 15,"giovanna","123");
+	Guardarropa soyElGuarda = new Guardarropa();
+	RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
+	Evento evento = new Evento(new FrecuenciaDiaria(0), "Trabajo");
 
+	
+	@Before
+	public void setUp(){
+		giorno.agendarEvento(evento);
+		bruno.agregarGuardarropa(soyElGuarda);
+		withTransaction(()->{ 
+		repo.agregar(bruno);
+			});
+		withTransaction(()->{ 
+			repo.agregar(giorno);
+				});
+	}
+	@After
+	public void borrarUsers() {
+		withTransaction(()->{ 
+			repo.borrarUsuario(bruno.getId());
+				});
+			withTransaction(()->{ 
+				repo.borrarUsuario(giorno.getId());			
+				});
+	}
 	@Test
 	public void testUsuario() throws Exception {
-		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario bruno = new Usuario(TipoUsuario.PREMIUM, 25,"jua12","123");
-		Usuario giorno = new Usuario(TipoUsuario.GRATUITO, 15,"juanes","123");
-		Guardarropa soyElGuarda = new Guardarropa();
-		bruno.agregarGuardarropa(soyElGuarda);
-		em.persist(bruno);
-		em.persist(giorno);
+		repo = RepositorioDeUsuarios.getInstance();
+		
 		HashSet<Usuario> listaUsuariosPersistidos;
 		listaUsuariosPersistidos = (HashSet<Usuario>) repo.usuarios();
 		int cantidadUsuariosPers = listaUsuariosPersistidos.size();
-		int numEsperado = 2;
-		assertEquals(numEsperado,cantidadUsuariosPers);
+		assertEquals(2,cantidadUsuariosPers);
 	}
-	@Test
-	public void segundoTestRepositorio() throws Exception {
-		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario guidoMista = new Usuario(TipoUsuario.GRATUITO, 15,"juan","123");
-		Evento evento1 = new Evento(new FrecuenciaUnicaVez(2019,10,24),"Almorzar en Restaurante.");//"24-05-2019"
-		Evento evento2 = new Evento(new FrecuenciaUnicaVez(2019,10,25),"Entrenar tiro.");
-		Evento evento3 = new Evento(new FrecuenciaUnicaVez(2019,10,25),"Entrenar tiro.");
-		guidoMista.agendarEvento(evento1);
-		guidoMista.agendarEvento(evento2);
-		em.persist(guidoMista);
-		guidoMista.agendarEvento(evento3);
-		Long idNro =guidoMista.getId(); 
-		String id = idNro.toString();
-		guidoMista = null;
-		Usuario bdUser = em.createQuery("from Usuario where id = " +id, Usuario.class).getResultList().get(0);
-		
-		int cantidad = bdUser.eventos().size();
 
-		assertTrue(cantidad == 3);
-	}
 	@Test
 	public void buscarPorNombre(){
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		//Usuario juan =em.find(Usuario.class, new Long(9));
-		Usuario juan = repo.buscarPorNombre("juan");
-		assertTrue(juan.getId()==9);
+		Usuario juan = repo.buscarPorNombre("buccaratti");
+		assertEquals(bruno.getId(),juan.getId() );
 	}
-	//String hql="Select log.userId from Login log where log.username=:username and log.password=:password"
 
 }
