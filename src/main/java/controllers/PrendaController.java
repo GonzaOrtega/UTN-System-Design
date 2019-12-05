@@ -20,20 +20,11 @@ import spark.Request;
 import spark.Response;
 
 public class PrendaController implements WithGlobalEntityManager, TransactionalOps{
-	//EntityManager em = entityManager();
 	PrendaBuilder builder = new PrendaBuilder();
 	
 
-	public ModelAndView mostrarPrendas(Request req, Response res) {
-		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario usuarie = repo.buscarPorNombre(req.queryParams("nombreUsuario"));
-		Map<String, Object> viewModel = new HashMap<String, Object>();
-		List<Guardarropa> guardarropas = usuarie.getGuardarropas().stream().collect(Collectors.toList());
-		return null;
-	}
 	public void cargarPrenda(Prenda prenda,Usuario user,Guardarropa guar) {
     	withTransaction(() -> {
-    		//em.persist(prenda);    		
     		user.cargarPrenda(guar, prenda);
     	}); 		
 	}
@@ -46,12 +37,10 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 		
 		return new ModelAndView(viewModel, "eleccionGuardarropa.hbs");
 	}
-	public  ModelAndView pruebaPost(Request req, Response res) {
-		Map<String,Object> viewModel = new HashMap<String, Object>();
-		
+	public  ModelAndView pruebaPost(Request req, Response res) {		
 		res.cookie("idGuardarropa", req.queryParams("nroGuardarropa"));
-
 		res.redirect("/prendas/cargaDatos");	
+		
 		return null;
 	}
 	public ModelAndView showCargaDatos(Request req, Response res) {
@@ -63,7 +52,6 @@ public class PrendaController implements WithGlobalEntityManager, TransactionalO
 		return new ModelAndView(viewModel, "wizardPrenda.hbs");
 	}
 	public  ModelAndView saveCargaDatos(Request req, Response res) {
-		Map<String,Object> viewModel = new HashMap<String, Object>();
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
 		String tipo = req.queryParams("tipoPrenda");

@@ -28,7 +28,7 @@ public class LoginController {
 		res.redirect("/perfil");
 		}
 		catch(Exception e) {
-			System.out.println("Eror->" + e);
+			System.out.println("Error->" + e);
 			res.redirect("/");
 
 		}
