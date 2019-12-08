@@ -33,6 +33,7 @@ public class Router {
 		SugerenciasPendientesController sugerenciasPendientesController = new SugerenciasPendientesController();
 		SugerenciasController sugerenciasController = new SugerenciasController();
 		EventoController eventoController = new EventoController();
+		Calendario2Controller cal2Controller = new Calendario2Controller();
 		
 		Spark.get("/", loginController::show, engine);
 		Spark.post("/", loginController::login, engine);
@@ -59,6 +60,8 @@ public class Router {
 		Spark.post("/prendas/cargaDatos", prendaContoller::saveCargaDatos,engine);
 		
 		Spark.get("/guardarropas", guardarropasController::pru,engine);
+		
+		Spark.get("/calendar",cal2Controller::test,engine);
 		
 		Spark.after((request, response) -> { 
 			   PerThreadEntityManagers.getEntityManager(); 
