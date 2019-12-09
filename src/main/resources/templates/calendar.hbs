@@ -7,6 +7,16 @@
 		<h1>¡Calendario! 📅</h1>
 	</div>
 	</div>
+	<div>
+		<div class="col-6">
+			<div class="input-group input-group-lg">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-lg">Buscar evento por fecha</span>
+			  </div>
+			  <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+			</div>
+		</div>
+	</div>
 	<div class="container-fluid">
 		<h2>Eventos proximos </h2>
 		<ul class="list-group">
@@ -28,14 +38,6 @@
 			</div>
 			{{/each}}
 		</ul>
-	<div>
-	<div class="col-6">
-		<div class="input-group input-group-lg">
-		  <div class="input-group-prepend">
-		    <span class="input-group-text" id="inputGroup-sizing-lg">Buscar evento por fecha</span>
-		  </div>
-		  <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-		</div>
-	</div>
+
 {{/partial}}
 {{>layout.hbs}}
