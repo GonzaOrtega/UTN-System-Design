@@ -34,6 +34,7 @@ import tiempo.checkboxes.UnicaVezCheckbox;
 public class EventoController  extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	
 	Tiempo fecha = null;
+	boolean todoOk = false;
 
 	public ModelAndView mostrarAltaDeEvento(Request req, Response res) {
 		return new ModelAndView(null, "altaDeEvento.hbs");
@@ -48,14 +49,14 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 		fecha = this.obtenerFecha(frecuencia);
 		res.cookie("Descripcion", descripcion);
 		
-		return this.mostrarOpcionesDeFrecuencia(req, res);
+		res.redirect("/eventos/nuevo/horarios");
+		return null;
 	}
 	
 	public ModelAndView mostrarOpcionesDeFrecuencia(Request req, Response res) {
 		HashMap<String, Object> viewModel = new HashMap();
 		
 		viewModel.put(fecha.esPeriodico(), true);
-//		viewModel.put("fechaIncorrecta", false);
 		
 		return new ModelAndView(viewModel, "elegirHorarios.hbs");
 	}
@@ -69,20 +70,22 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 			FrecuenciaDeEvento frecuenciaDeEvento = fecha.obtenerFrecuencia();
 			Evento eventoObtenido = this.armarEvento(descripcion, frecuenciaDeEvento);
 			this.cargarEvento(eventoObtenido, req);
-			viewModel.put("fechaIncorrecta", false);
-		}else {
-			viewModel.put("fechaIncorrecta", true);
+			todoOk = true;
 		}
-		
-		return new ModelAndView(viewModel, "eventoCargado.hbs");
-	}
-	
-	public ModelAndView mostrarMensajeVerificacion(Request req, Response res) {
-		res.redirect("/");
+		res.redirect("/eventos/nuevo/verificacion");
 		return null;
 	}
 	
+	public ModelAndView mostrarMensajeVerificacion(Request req, Response res) {
+		HashMap<String, Object> viewModel = new HashMap();
+		viewModel.put("fechaIncorrecta", !todoOk);
+		return new ModelAndView(viewModel, "eventoCargado.hbs");
+	}
 	
+	public ModelAndView volverAInicio(Request req, Response res) {
+		res.redirect("/");
+		return null;
+	}
 	
 	
 	/*************** Metodos complementarios ***************/
@@ -106,7 +109,6 @@ public class EventoController  extends AbstractPersistenceTest implements WithGl
 	public void cargarEvento(Evento evento, Request req) {
 		EventoController eventoController = new EventoController();
 		
-		// Para la hora de usarlo posta
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
 		usuarie.agendarEvento(evento);

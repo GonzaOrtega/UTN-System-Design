@@ -45,38 +45,13 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 	public ModelAndView verSugerenciasAceptadas(Request req, Response res) {
 		Map<String, Object> viewModel = new HashMap();
 		
-		// ------------------------------------------------------
-		
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
 		List<Sugerencia> listaSugerencia = usuarie.getSugerencias();
- 		
-		// ---------------------- Hardcodeo ----------------------
-		
-		// Hardcodeo del usuario para db
 		
 		Usuario usuario = new Usuario(TipoUsuario.PREMIUM, 100, "pepe", "1234");
 		
 		listaCalificaciones = usuario.getCalificaciones();
-//		List<Sugerencia> listaSugerencia = listaSugerencia = usuario.getSugerencias();
-//		Sugerencia sugerenciaPosta = generarSugerencia();
-//		Sugerencia sugerenciaPosta2 = generarSugerencia2();
-//		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
-//		listaSugerencia.add(sugerenciaPosta2);
-//		listaSugerencia.add(sugerenciaPosta);
-//		
-//		
-//		EntityManager em = entityManager();
-//		em.getTransaction().begin();
-//		em.persist(sugerenciaPosta);
-//		em.persist(sugerenciaPosta2);
-//		em.getTransaction().commit();
-		
-//		em.getTransaction().begin();
-//		em.persist(usuario);
-//		em.getTransaction().commit();
-		
-		// -------------------------------------------------------
 		
 		Boolean haySugerenciaAceptada = listaSugerencia.stream().anyMatch(sugerencia -> sugerencia.aceptada());
 		viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);
@@ -90,7 +65,7 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		try {
 			listaSugerenciaAceptadas.remove(Integer.parseInt(coord));
 		}catch(Exception e) {
-			res.redirect("/sugerencias/aceptadas/calificar");
+			res.redirect("/sugerencias/aceptadas");
 		}
 		res.redirect("/sugerencias/aceptadas/calificar");
 		return null;
