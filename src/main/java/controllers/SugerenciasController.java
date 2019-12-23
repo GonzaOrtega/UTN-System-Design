@@ -90,9 +90,9 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		try {
 			listaSugerenciaAceptadas.remove(Integer.parseInt(coord));
 		}catch(Exception e) {
-			res.redirect("/sugerencias/show/aceptadas");
+			res.redirect("/sugerencias/aceptadas/calificar");
 		}
-		res.redirect("/sugerencias/calificar/aceptadas");
+		res.redirect("/sugerencias/aceptadas/calificar");
 		return null;
 	}
 	

@@ -33,16 +33,16 @@ public class Router {
 		SugerenciasPendientesController sugerenciasPendientesController = new SugerenciasPendientesController();
 		SugerenciasController sugerenciasController = new SugerenciasController();
 		EventoController eventoController = new EventoController();
-//		Calendario2Controller cal2Controller = new Calendario2Controller();
+		Calendario2Controller cal2Controller = new Calendario2Controller();
 		
 		Spark.get("/", loginController::show, engine);
 		Spark.post("/", loginController::login, engine);
 		Spark.get("/perfil", userController::showProfile,engine);
 		Spark.get("/guardarropas/show", guardarropasController::show,engine);
-		Spark.get("/sugerencias/show/aceptadas", sugerenciasController::verSugerenciasAceptadas, engine);
-		Spark.post("/sugerencias/show/aceptadas", sugerenciasController::elegirSugerenciaAceptada, engine);
-		Spark.get("/sugerencias/calificar/aceptadas", sugerenciasController::verCalificarSugerencias, engine);
-		Spark.post("/sugerencias/calificar/aceptadas", sugerenciasController::calificarSugerencias, engine);
+		Spark.get("/sugerencias/aceptadas", sugerenciasController::verSugerenciasAceptadas, engine);
+		Spark.post("/sugerencias/aceptadas", sugerenciasController::elegirSugerenciaAceptada, engine);
+		Spark.get("/sugerencias/aceptadas/calificar", sugerenciasController::verCalificarSugerencias, engine);
+		Spark.post("/sugerencias/aceptadas/calificar", sugerenciasController::calificarSugerencias, engine);
 		Spark.get("/eventos/nuevo", eventoController::mostrarAltaDeEvento, engine);
 		Spark.post("/eventos/nuevo", eventoController::elegirDescripcionYFrecuencia, engine);
 		Spark.get("/eventos/nuevo/horarios", eventoController::mostrarOpcionesDeFrecuencia, engine);
@@ -61,7 +61,7 @@ public class Router {
 		
 		Spark.get("/guardarropas", guardarropasController::pru,engine);
 		
-//		Spark.get("/calendar",cal2Controller::test,engine);
+		Spark.get("/calendar",cal2Controller::test,engine);
 		
 		Spark.after((request, response) -> { 
 			   PerThreadEntityManagers.getEntityManager(); 
