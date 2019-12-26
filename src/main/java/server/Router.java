@@ -63,6 +63,7 @@ public class Router {
 		Spark.get("/guardarropas", guardarropasController::pru,engine);
 		
 		Spark.get("/calendar",cal2Controller::test,engine);
+		Spark.get("/calendar/busqueda",cal2Controller::busquedaPorFecha,engine);
 		
 		Spark.after((request, response) -> { 
 			   PerThreadEntityManagers.getEntityManager(); 

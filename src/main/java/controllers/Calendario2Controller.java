@@ -9,15 +9,14 @@ import java.util.List;
 import java.util.Set;
 
 import domain.*;
-import domain.RepositorioDeUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 public class Calendario2Controller {
 	public ModelAndView test(Request req, Response res) {
-		String user = "juan";
-		Usuario usuario = RepositorioDeUsuarios.getInstance().buscarPorNombre(user);
+
+		Usuario usuario = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		Set<Evento> listaEventos=usuario.eventosProximos(LocalDateTime.of(
 								LocalDate.now(),
 								LocalTime.now())
@@ -26,6 +25,19 @@ public class Calendario2Controller {
 		viewModel.put("listaEventos",listaEventos);
 		ModelAndView modelAndView = new ModelAndView(viewModel, "calendar.hbs");
 		
+		return modelAndView;
+	}
+	
+	public ModelAndView busquedaPorFecha(Request req,Response res) {
+		Usuario usuario = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
+		//poner fecha y buscar lista de eventos por fecha
+		Set<Evento> listaEventos=usuario.eventosProximos(LocalDateTime.of(
+								LocalDate.now(),
+								LocalTime.now())
+								);
+		HashMap<String, Object> viewModel = new HashMap<>();
+		viewModel.put("listaEventos",listaEventos);
+		ModelAndView modelAndView = new ModelAndView(viewModel, "calendarBusquedaFecha.hbs");
 		return modelAndView;
 	}
 	
