@@ -47,9 +47,15 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
 		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
-		List<Sugerencia> listaSugerencia = usuarie.getSugerencias();
 		
 		Usuario usuario = new Usuario(TipoUsuario.PREMIUM, 100, "pepe", "1234");
+		List<Sugerencia> listaSugerencia = usuario.getSugerencias();
+		
+		Sugerencia sugerenciaPosta = generarSugerencia();
+		Sugerencia sugerenciaPosta2 = generarSugerencia2();
+		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
+		listaSugerencia.add(sugerenciaPosta2);
+		listaSugerencia.add(sugerenciaPosta);
 		
 		listaCalificaciones = usuario.getCalificaciones();
 		
@@ -85,7 +91,7 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 				listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
 			em.getTransaction().commit();
 		}catch(Exception e) {
-			res.redirect("/sugerencias/calificar/aceptadas");
+			res.redirect("/sugerencias/aceptadas/calificar");
 		}
 		res.redirect("/perfil");
 		return null;

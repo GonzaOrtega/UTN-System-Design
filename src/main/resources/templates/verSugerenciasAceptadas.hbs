@@ -2,57 +2,52 @@
 
 {{#if haySugerenciaAceptada}}
 	
-	<form class="mostrarSugerencias" action="/sugerencias/aceptadas" method="POST">
-	<h1>Sugerencias</h1>
+<form class="mostrarSugerencias" action="/sugerencias/aceptadas" method="POST">
+
+<h1>Sugerencias</h1>
 
 {{#each sugerencias}}
 
-	Sugerencia N: {{@index}}
-	
-	
-<div class="row row-cols-2 row-cols-md-3">
-	
-	{{#each this.atuendo}}
-	<div class="col mb-4">
-	
-	<div class="card border-primary mb-3">
-
-		<div class="card-body">
-		<h5 class="card-title">Atuendo  {{@index}}</h5>
-		<p class="card-text">Color primario: {{this.colorPrimario}}</p>
-		<p class="card-text">Color secundario: {{this.colorSecundario}}</p>
-		<p class="card-text">Tipo: {{this.tipo}}</p>
-		<p class="card-text">Tela: {{this.tela}}</p>
+	<div class="row row-cols-2 row-cols-md-2">
 		
-		<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+		{{#each this.atuendo}}
+		<div class="col mb-4">
+		
+		<div class="card border-primary mb-3">
+
+			<div class="card-body">
+			<h5 class="card-title">Atuendo  {{@index}}</h5>
+			<p class="card-text">Color primario: {{this.colorPrimario}}</p>
+			<p class="card-text">Color secundario: {{this.colorSecundario}}</p>
+			<p class="card-text">Tipo: {{this.tipo}}</p>
+			<p class="card-text">Tela: {{this.tela}}</p>
+			
+			<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+			</div>
+			
+		</div>
+			
+		</div>
+		{{/each}}
+			
+			
+		<div class="card border-secondary mb-3">
+
+			<div class="card-body">
+			<h5 class="card-title">Evento</h5>
+			<p class="card-text">Descripcion: {{this.evento.descripcion}}</p>
+			<!-- <p class="card-text">Estado: {{this.estado}}</p> -->
+			</div>
+			
 		</div>
 		
-	</div>
-		
-	</div>
-	{{/each}}
-		
-		
-	<div class="card border-secondary mb-3">
-
-		<div class="card-body">
-		<h5 class="card-title">Evento</h5>
-		<p class="card-text">Descripcion: {{this.evento.descripcion}}</p>
-		<!-- <p class="card-text">Estado: {{this.estado}}</p> -->
-		</div>
-		
-	</div>
+		<button name='nroSugerencia' type='submit' class="btn btn-primary" value='{{@index}}'>Calificar</button>
 	
-	<button name='nroSugerencia' type='submit' class="btn btn-primary" value='{{@index}}'>Calificar</button>
-</div>
-	
+	</div>
 
 {{/each}}
 	
-	<p>Elegir sugerencia</p>
-	
-	
-	</form>
+</form>
 	
 {{else}}
 	<h2> No hay sugerencias aceptadas </h2>
