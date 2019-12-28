@@ -68,11 +68,13 @@ public class Evento extends SuperClase{
 		this.descripcion = descripcion;
 	}
 
-	public SugerenciasListas getSugerenciasListas() { // Es para Arena te tira si te tiro sugerencias, en caso de ser
-														// posibles.
+	public SugerenciasListas getSugerenciasListas() { // Es para Arena te tira si te tiro sugerencias, en caso de ser													// posibles.
 		if (this.esProximo(LocalDateTime.now()) || this.yaSucedio())
 			return SugerenciasListas.YES;
 		else
 			return SugerenciasListas.NO;
+	}
+	public LocalDateTime getFechaweb() { ///WEB
+		return this.cualEsLaFechaProxima(LocalDateTime.now());
 	}
 }

@@ -39,31 +39,35 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 	public String verCalendario(Request req, Response res) {
 		String fecha=req.queryParams("fecha");
 		Boolean hayFecha;
+		Boolean noHayEventos=true;
 		if (fecha!=null) {
 			hayFecha = (fecha.length()!=0);
 		}else {
 			hayFecha = false;
 		}
 		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
-		List<Evento>eventoList = null;
+		List<Evento>eventoList = null;;
 		List<Evento>eventosNoPendientes = null;
 		List<Evento> eventosPendientes = null;
 		eventoList = hayFecha? calcularEventos(fecha,usuarie):null;
 		if(eventoList!=null) {
-		 eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
-		 eventosNoPendientes= eventoList;
-		 if (eventosPendientes!=null)
-		 eventosNoPendientes.removeAll(eventosPendientes);
-		 req.session().attribute("EventosPendientes",eventosPendientes);
+			if(!eventoList.isEmpty()) noHayEventos=false;
+			eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
+			eventosNoPendientes= eventoList;
+			if (eventosPendientes!=null)
+				eventosNoPendientes.removeAll(eventosPendientes);
+			req.session().attribute("EventosPendientes",eventosPendientes);
 		}else {
 			eventosPendientes = null;
 			eventosNoPendientes=null;
 		}
+		
 		HashMap<String, Object> viewModel = new HashMap<>();
 		viewModel.put("eventosPendientes", eventosPendientes);
 		viewModel.put("eventosNoPendientes", eventosNoPendientes);
 		viewModel.put("eventos",eventoList);
 		viewModel.put("hayFecha", hayFecha);
+		viewModel.put("noHayEventos", noHayEventos);
 		ModelAndView modelAndView = new ModelAndView(viewModel, "calendario.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}
@@ -82,7 +86,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		List<Evento> eventos= new ArrayList<Evento>(usuarie.eventos());
 		LocalDateTime fecha = LocalDateTime.of(anioNum,mesNum,diaNum,0,0,0);
 		//agregarEvento(usuarie);
-	//agregarSugerencia(usuarie);
+		//agregarSugerencia(usuarie);
 		return eventos.stream()
 				.filter(evento->((evento.getFrecuencia().equals(TipoFrecuencia.UNICO)) && sucedeEnEsteDia(fecha,evento)))
 				.collect(Collectors.toList()); 
@@ -104,7 +108,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 	}
 	private void agregarSugerencia(Usuario usuario) {
 		withTransaction(()->{
-			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2019,5,24);
+			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2020,1,1);
 			Evento evento = new Evento(frecuencia,"TengoUnaSugerencia");
 			Set<Prenda> atuendo = new HashSet<Prenda>();
 			Set<Prenda> atuendo2 = new HashSet<Prenda>();
