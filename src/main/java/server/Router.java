@@ -49,10 +49,10 @@ public class Router {
 		Spark.post("/eventos/nuevo/horarios", eventoController::completarFrecuencia, engine);
 		Spark.get("/eventos/nuevo/verificacion", eventoController::mostrarMensajeVerificacion, engine);
 		Spark.post("/eventos/nuevo/verificacion", eventoController::volverAInicio, engine);
-		Spark.get("/calendario", calendarioController::verCalendario);
-		Spark.post("/calendario", calendarioController::verSugerencia);
-		Spark.get("/sugerenciasPendientes", sugerenciasPendientesController::verSugerencias);
-		Spark.post("/sugerenciasPendientes", sugerenciasPendientesController::confirmarSugerencia);
+		Spark.get("/eventos", calendarioController::verCalendario);
+		Spark.post("/eventos", calendarioController::verSugerencia);
+		Spark.get("/eventos/:id/sugerencias/pendientes", sugerenciasPendientesController::verSugerencias);
+		Spark.post("/eventos/:id/sugerencias/pendientes", sugerenciasPendientesController::confirmarSugerencia);
 
 		Spark.get("/prendas/eleccionGuardarropa", prendaContoller::prueba,engine);
 		Spark.post("/prendas/eleccionGuardarropa", prendaContoller::pruebaPost,engine);

@@ -46,10 +46,9 @@ public class SugerenciasPendientesController implements WithGlobalEntityManager,
 			List<Sugerencia> sugerencias = req.session().attribute("Sugerencias");
 			Sugerencia sugerencia = sugerencias.get(Integer.valueOf(sugerenciaNum));
 			cambiarEstados(sugerencia,sugerencias);
-			res.redirect("/calendario");
+			res.redirect("/eventos");
 			return null;
 		}
-		res.redirect("/sugerenciasPendientes");
 		return null;
 	}
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,19 +56,19 @@ public class SugerenciasPendientesController implements WithGlobalEntityManager,
 	private boolean esDeEsteEvento(Sugerencia sugerencia,Long idEvento) {
 		return sugerencia.getEvento().getId()==idEvento;
 	}
-	private List<Sugerencia> obtenerSugerencias(Evento evento,Usuario usuario) {
+	private List<Sugerencia> obtenerSugerencias(Long id,Usuario usuario) {
 		List<Sugerencia> sugerencias =  usuario.getSugerencias();
 		sugerencias.remove(null);
-		return sugerencias.stream().filter(sugerencia->esDeEsteEvento(sugerencia,evento.getId())).collect(Collectors.toList());
+		return sugerencias.stream().filter(sugerencia->esDeEsteEvento(sugerencia,id)).collect(Collectors.toList());
 	}
 	public String verSugerencias(Request req, Response res){
-		Evento evento = req.session().attribute("Evento");
-		System.out.println(evento.getId());
+		String id=req.params("id");
 		Usuario usuario = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
-		List<Sugerencia>sugerencias = obtenerSugerencias(evento,usuario);
+		List<Sugerencia>sugerencias = obtenerSugerencias(Long.valueOf(id),usuario);
 		req.session().attribute("Sugerencias", sugerencias);
 		HashMap<String, Object> viewModel = new HashMap<>();
 		viewModel.put("sugerencias", sugerencias);
+		viewModel.put("Evento", id);
 		ModelAndView modelAndView = new ModelAndView(viewModel, "sugerenciasPendientes.hbs");
 		return new HandlebarsTemplateEngine().render(modelAndView);
 	}

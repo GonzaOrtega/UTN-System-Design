@@ -7,7 +7,7 @@
 
 {{#partial "contenido"}}
 	<div id = "body">
-		<form method='post' action='/sugerenciasPendientes'>
+		<form method='post' action='/eventos/{{Evento}}/sugerencias/pendientes'>
 		{{#each sugerencias}}
 			<div id = "sugerencia"> 
 				<div class="card" style="width: 18rem;">
@@ -19,15 +19,12 @@
     						     {{this.tipo}} cuyo principal color es el {{this.colorPrimario}} y la tela es de  {{this.tela}}
     						     </p>
     						{{/each}}
-							
-						<input type="radio" name='sugerencia' value='{{@index}}' class="btn btn-primary">Aceptar<br>
+							<button type="submit" class="btn btn-primary"  name='sugerencia' value='{{@index}}'>Confirmar</button>
 					</div>
 				</div>
 			</div>
 		{{/each}}
-		<div class="boton">
-			<button type="submit">Confirmar</button>
-		</div>
+		
 		</form>
 	</div>
 {{/partial}}
