@@ -33,9 +33,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		List<Evento> eventosPendientes=req.session().attribute("EventosPendientes");
 		req.session().removeAttribute("EventosPendientes");
 		Evento evento = eventosPendientes.get(numEvento);
-		req.session().attribute("Evento",evento);
-		System.out.println(evento);
-		res.redirect("/sugerenciasPendientes");
+		res.redirect("/eventos/"+ evento.getId().toString()+"/sugerencias/pendientes");
 		return null;
 	}
 	public String verCalendario(Request req, Response res) {
@@ -84,7 +82,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		List<Evento> eventos= new ArrayList<Evento>(usuarie.eventos());
 		LocalDateTime fecha = LocalDateTime.of(anioNum,mesNum,diaNum,0,0,0);
 		//agregarEvento(usuarie);
-	agregarSugerencia(usuarie);
+	//agregarSugerencia(usuarie);
 		return eventos.stream()
 				.filter(evento->((evento.getFrecuencia().equals(TipoFrecuencia.UNICO)) && sucedeEnEsteDia(fecha,evento)))
 				.collect(Collectors.toList()); 

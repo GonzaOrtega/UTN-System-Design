@@ -8,7 +8,7 @@
 {{#partial "contenido"}}
 	<div class=calendario>
 	<div class=fecha>
-	<form class="profile-form" action="/calendario" method="GET">
+	<form class="profile-form" action="/eventos" method="GET">
 		<input type="date" name='fecha' value='{{fecha}}'/>
 		<button type='submit'>Eventos!</button>
 	</form>	
@@ -19,8 +19,8 @@
 		{{#if eventosPendientes}}
 			{{#each eventosPendientes}}
 				<li>descripcion: {{this.descripcion}}</li>
-				<form method='post' action='/calendario'>
-					<button type="submit" name='eventoNum' value='{{@index}}'>Confirmar</button>
+				<form method='post' action='/eventos'>
+					<button type="submit" name='eventoNum' value='{{@index}}'>Sugerencias</button>
 				</form>
 			{{/each}}
 		{{/if}}
