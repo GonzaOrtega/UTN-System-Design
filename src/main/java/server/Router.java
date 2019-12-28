@@ -41,8 +41,8 @@ public class Router {
 		Spark.get("/guardarropas/show", guardarropasController::show,engine);
 		Spark.get("/sugerencias/aceptadas", sugerenciasController::verSugerenciasAceptadas, engine);
 		Spark.post("/sugerencias/aceptadas", sugerenciasController::elegirSugerenciaAceptada, engine);
-		Spark.get("/sugerencias/aceptadas/calificar", sugerenciasController::verCalificarSugerencias, engine);
-		Spark.post("/sugerencias/aceptadas/calificar", sugerenciasController::calificarSugerencias, engine);
+		Spark.get("/sugerencias/aceptadas/:coord/calificar", sugerenciasController::verCalificarSugerencias, engine);
+		Spark.post("/sugerencias/aceptadas/:coord/calificar", sugerenciasController::calificarSugerencias, engine);
 		Spark.get("/eventos/nuevo", eventoController::mostrarAltaDeEvento, engine);
 		Spark.post("/eventos/nuevo", eventoController::elegirDescripcionYFrecuencia, engine);
 		Spark.get("/eventos/nuevo/horarios", eventoController::mostrarOpcionesDeFrecuencia, engine);

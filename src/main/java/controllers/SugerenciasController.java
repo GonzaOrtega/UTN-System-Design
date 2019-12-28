@@ -73,15 +73,20 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		}catch(Exception e) {
 			res.redirect("/sugerencias/aceptadas");
 		}
-		res.redirect("/sugerencias/aceptadas/calificar");
+//		req.session().attribute("coord", coord);
+		res.redirect("/sugerencias/aceptadas/"+ coord +"/calificar");
 		return null;
 	}
 	
 	public ModelAndView verCalificarSugerencias(Request req, Response res) {
-		return new ModelAndView(null, "calificarSugerencias.hbs");
+		String coord = req.params("coord");
+		Map<String, Object> viewModel = new HashMap();
+		viewModel.put("coord", coord);
+		return new ModelAndView(viewModel, "calificarSugerencias.hbs");
 	}
 	
 	public ModelAndView calificarSugerencias(Request req, Response res) {
+		String coord = req.params("coord");
 		try {
 			EntityManager em = entityManager();
 			em.getTransaction().begin();
@@ -91,7 +96,7 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 				listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
 			em.getTransaction().commit();
 		}catch(Exception e) {
-			res.redirect("/sugerencias/aceptadas/calificar");
+			res.redirect("/sugerencias/aceptadas/"+coord+"/calificar");
 		}
 		res.redirect("/perfil");
 		return null;
