@@ -1,6 +1,7 @@
 package domain;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -74,7 +75,9 @@ public class Evento extends SuperClase{
 		else
 			return SugerenciasListas.NO;
 	}
-	public LocalDateTime getFechaweb() { ///WEB
-		return this.cualEsLaFechaProxima(LocalDateTime.now());
+	public String getFechaweb() { ///WEB
+		LocalDateTime resp = this.cualEsLaFechaProxima(LocalDateTime.now());
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("'Fecha: ' yyyy'-'M'-'d 'Horario: ' h ':' mm");
+		return resp.format(format);
 	}
 }
