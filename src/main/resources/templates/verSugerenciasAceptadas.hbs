@@ -17,10 +17,14 @@
 
 			<div class="card-body">
 			<h5 class="card-title">Atuendo  {{@index}}</h5>
-			<p class="card-text">Color primario: {{this.colorPrimario}}</p>
-			<p class="card-text">Color secundario: {{this.colorSecundario}}</p>
-			<p class="card-text">Tipo: {{this.tipo}}</p>
-			<p class="card-text">Tela: {{this.tela}}</p>
+			
+			{{this.tipo}} cuyo principal color es el {{this.colorPrimario}} 
+			
+			{{#if this.colorSecundario}}
+				y su color secundario es {{this.colorSecundario}}, 
+			{{/if}}
+			
+			y la tela es de  {{this.tela}}
 			
 			<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
 			</div>
