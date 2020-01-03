@@ -1,10 +1,11 @@
 {{#partial "otherHead"}}
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-
 {{/partial}}
+
+
 
 {{#partial "contenido"}}
 
@@ -16,26 +17,26 @@
                     	<h2>{{nombreUsuario}}</h2>
                     	<p><strong>Cantidad Maxima de prendas: </strong> {{maxPrendas}} </p>
                     	<p><strong>Tipo de perfil: </strong> {{tipo}} </p>
-    	            </div>             
+    	            </div>
             	</div>
-            	            
+
             <div class="col-xs-12 divider text-center">
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> {{cantGuardarropas}} </strong></h2>                    
+                    <h2><strong> {{cantGuardarropas}} </strong></h2>
                     <p><small>Guardarropas</small></p>
                     <form action="/guardarropas" method="GET">
                  		<input class="btn btn-success btn-block" type="submit" value="Ver guardarropas" />
-					</form>                
+					</form>
 				</div>
                 <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>{{cantPrendas}}</strong></h2>                    
+                    <h2><strong>{{cantPrendas}}</strong></h2>
                     <p><small>Cantidad de prendas</small></p>
-                    <form action="/prendas/cargaDatos" method="GET">
+                    <form action="/prenda/nueva" method="GET">
                  		<input class="btn btn-success btn-block" type="submit" value="Agregar prenda" />
 					</form>
                 </div>
             </div>
-    	 </div>                 
+    	 </div>
 		</div>
 	</div>
 </div>
@@ -43,4 +44,3 @@
 
 {{/partial}}
 {{>layout.hbs}}
-

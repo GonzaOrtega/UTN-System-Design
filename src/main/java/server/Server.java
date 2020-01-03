@@ -17,7 +17,7 @@ public class Server {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 9000; //return default port if heroku-port isn't set (i.e. on localhost)
+        return 9004; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 
 }

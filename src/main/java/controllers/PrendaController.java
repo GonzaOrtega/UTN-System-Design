@@ -22,12 +22,20 @@ import spark.Response;
 public class PrendaController implements WithGlobalEntityManager, TransactionalOps{
 	PrendaBuilder builder = new PrendaBuilder();
 	
+	public  ModelAndView show(Request req, Response res) {
+		return new ModelAndView(null, "cargarprenda.hbs");
+	}
 
 	public void cargarPrenda(Prenda prenda,Usuario user,Guardarropa guar) {
     	withTransaction(() -> {
     		user.cargarPrenda(guar, prenda);
     	}); 		
 	}
+	
+	
+// No se si todo lo de abajo funciona, pero tampoco voy a eliminarlo hasta que este segura
+
+	
 	public  ModelAndView prueba(Request req, Response res) {
 		Map<String,Object> viewModel = new HashMap<String, Object>();
 		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();

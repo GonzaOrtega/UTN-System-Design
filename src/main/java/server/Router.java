@@ -53,13 +53,12 @@ public class Router {
 		Spark.post("/eventos", calendarioController::verSugerencia);
 		Spark.get("/eventos/:id/sugerencias/pendientes", sugerenciasPendientesController::verSugerencias);
 		Spark.post("/eventos/:id/sugerencias/pendientes", sugerenciasPendientesController::confirmarSugerencia);
-
 		Spark.get("/prendas/eleccionGuardarropa", prendaContoller::prueba,engine);
 		Spark.post("/prendas/eleccionGuardarropa", prendaContoller::pruebaPost,engine);
-		
+		Spark.get("/prenda/nueva", prendaContoller::show,engine);
 		Spark.get("/prendas/cargaDatos", prendaContoller::showCargaDatos,engine);
-		Spark.post("/prendas/cargaDatos", prendaContoller::saveCargaDatos,engine);
-		
+//		Spark.post("/prendas/cargaDatos", prendaContoller::saveCargaDatos,engine);
+//		
 		Spark.get("/guardarropas", guardarropasController::pru,engine);
 		
 		Spark.get("/calendar",cal2Controller::test,engine);
