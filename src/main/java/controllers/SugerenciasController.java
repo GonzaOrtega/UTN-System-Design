@@ -40,24 +40,30 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class SugerenciasController extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	List<Sugerencia> listaSugerenciaAceptadas;
-	List<Calificacion> listaCalificaciones;
+//	List<Calificacion> listaCalificaciones;
 	
 	public ModelAndView verSugerenciasAceptadas(Request req, Response res) {
 		Map<String, Object> viewModel = new HashMap();
 		
-		RepositorioDeUsuarios repo = RepositorioDeUsuarios.getInstance();
-		Usuario usuarie = repo.buscarPorNombre(req.cookie("nombreUsuario"));
+		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
 		
-		Usuario usuario = new Usuario(TipoUsuario.PREMIUM, 100, "pepe", "1234");
-		List<Sugerencia> listaSugerencia = usuario.getSugerencias();
+//		Usuario usuario = new Usuario(TipoUsuario.PREMIUM, 100, "pepe", "1234");
 		
-		Sugerencia sugerenciaPosta = generarSugerencia();
-		Sugerencia sugerenciaPosta2 = generarSugerencia2();
-		sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
-		listaSugerencia.add(sugerenciaPosta2);
-		listaSugerencia.add(sugerenciaPosta);
 		
-		listaCalificaciones = usuario.getCalificaciones();
+		List<Sugerencia> listaSugerencia = usuarie.getSugerencias();
+		withTransaction(()->{
+			Sugerencia sugerenciaPosta = generarSugerencia();
+			Sugerencia sugerenciaPosta2 = generarSugerencia2();
+			sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
+			usuarie.getSugerencias().add(sugerenciaPosta2);
+			usuarie.getSugerencias().add(sugerenciaPosta);
+			
+//			EntityManager em = entityManager();
+			entityManager().persist(sugerenciaPosta);
+			entityManager().persist(sugerenciaPosta2);
+		});
+		
+//		listaCalificaciones = usuarie.getCalificaciones();
 		
 		Boolean haySugerenciaAceptada = listaSugerencia.stream().anyMatch(sugerencia -> sugerencia.aceptada());
 		viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);
@@ -86,17 +92,21 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 	
 	public ModelAndView calificarSugerencias(Request req, Response res) {
 		String id = req.params("id");
-		try {
-			EntityManager em = entityManager();
-			em.getTransaction().begin();
+//		try {
+//			EntityManager em = entityManager();
+//			em.getTransaction().begin();
+			withTransaction(()->{
+				Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
+				List<Calificacion> listaCalificaciones = usuarie.getCalificaciones();
 				listaCalificaciones.add(this.armarCalificacion("Superior", req));
 				listaCalificaciones.add(this.armarCalificacion("Calzado", req));
 				listaCalificaciones.add(this.armarCalificacion("Inferior", req));
 				listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
-			em.getTransaction().commit();
-		}catch(Exception e) {
-			res.redirect("/sugerencias/aceptadas/"+ id +"/calificar");
-		}
+			});
+//			em.getTransaction().commit();
+//		}catch(Exception e) {
+//			res.redirect("/sugerencias/aceptadas/"+ id +"/calificar");
+//		}
 		res.redirect("/perfil");
 		return null;
 	}
@@ -129,14 +139,14 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		atuendo.add(gorra);
 		atuendo.add(zapatos);
 		
-		EntityManager em = entityManager();
-		em.getTransaction().begin();
-		em.persist(eventoConFrecuenciaUnica);
-		em.persist(camisaCorta);
-		em.persist(zapatos);
-		em.persist(gorra);
-		em.persist(jean);
-		em.getTransaction().commit();
+//		EntityManager em = entityManager();
+//		em.getTransaction().begin();
+		entityManager().persist(eventoConFrecuenciaUnica);
+		entityManager().persist(camisaCorta);
+		entityManager().persist(zapatos);
+		entityManager().persist(gorra);
+		entityManager().persist(jean);
+//		em.getTransaction().commit();
 		
 		return new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 	}
@@ -154,14 +164,14 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		atuendo.add(gorra);
 		atuendo.add(zapatos);
 		
-		EntityManager em = entityManager();
-		em.getTransaction().begin();
-		em.persist(eventoConFrecuenciaUnica);
-		em.persist(camisaCorta);
-		em.persist(zapatos);
-		em.persist(gorra);
-		em.persist(jean);
-		em.getTransaction().commit();
+//		EntityManager em = entityManager();
+//		em.getTransaction().begin();
+		entityManager().persist(eventoConFrecuenciaUnica);
+		entityManager().persist(camisaCorta);
+		entityManager().persist(zapatos);
+		entityManager().persist(gorra);
+		entityManager().persist(jean);
+//		em.getTransaction().commit();
 		
 		return new Sugerencia(atuendo,eventoConFrecuenciaUnica);
 	}
