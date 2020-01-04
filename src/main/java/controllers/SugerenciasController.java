@@ -67,26 +67,25 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 	}
 	
 	public ModelAndView elegirSugerenciaAceptada(Request req, Response res) {
-		String coord = req.queryParams("nroSugerencia");
+		String id = req.queryParams("nroSugerencia");
 		try {
-			listaSugerenciaAceptadas.remove(Integer.parseInt(coord));
+			listaSugerenciaAceptadas.remove(Integer.parseInt(id));
 		}catch(Exception e) {
 			res.redirect("/sugerencias/aceptadas");
 		}
-//		req.session().attribute("coord", coord);
-		res.redirect("/sugerencias/aceptadas/"+ coord +"/calificar");
+		res.redirect("/sugerencias/aceptadas/"+ id +"/calificar");
 		return null;
 	}
 	
 	public ModelAndView verCalificarSugerencias(Request req, Response res) {
-		String coord = req.params("coord");
+		String id = req.params("id");
 		Map<String, Object> viewModel = new HashMap();
-		viewModel.put("coord", coord);
+		viewModel.put("id", id);
 		return new ModelAndView(viewModel, "calificarSugerencias.hbs");
 	}
 	
 	public ModelAndView calificarSugerencias(Request req, Response res) {
-		String coord = req.params("coord");
+		String id = req.params("id");
 		try {
 			EntityManager em = entityManager();
 			em.getTransaction().begin();
@@ -96,7 +95,7 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 				listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
 			em.getTransaction().commit();
 		}catch(Exception e) {
-			res.redirect("/sugerencias/aceptadas/"+coord+"/calificar");
+			res.redirect("/sugerencias/aceptadas/"+ id +"/calificar");
 		}
 		res.redirect("/perfil");
 		return null;
