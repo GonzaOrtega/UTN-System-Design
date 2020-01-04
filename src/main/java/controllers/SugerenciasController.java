@@ -40,34 +40,21 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class SugerenciasController extends AbstractPersistenceTest implements WithGlobalEntityManager{
 	List<Sugerencia> listaSugerenciaAceptadas;
-//	List<Calificacion> listaCalificaciones;
 	
 	public ModelAndView verSugerenciasAceptadas(Request req, Response res) {
 		Map<String, Object> viewModel = new HashMap();
 		
-		Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
-		
-//		Usuario usuario = new Usuario(TipoUsuario.PREMIUM, 100, "pepe", "1234");
-		
+		Usuario usuarie = RepositorioDeUsuarios.getInstance()
+				.buscarPorNombre(req.cookie("nombreUsuario"));
 		
 		List<Sugerencia> listaSugerencia = usuarie.getSugerencias();
-		withTransaction(()->{
-			Sugerencia sugerenciaPosta = generarSugerencia();
-			Sugerencia sugerenciaPosta2 = generarSugerencia2();
-			sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
-			usuarie.getSugerencias().add(sugerenciaPosta2);
-			usuarie.getSugerencias().add(sugerenciaPosta);
-			
-//			EntityManager em = entityManager();
-			entityManager().persist(sugerenciaPosta);
-			entityManager().persist(sugerenciaPosta2);
-		});
+//		casoDeEjemplo(usuarie);
 		
-//		listaCalificaciones = usuarie.getCalificaciones();
-		
-		Boolean haySugerenciaAceptada = listaSugerencia.stream().anyMatch(sugerencia -> sugerencia.aceptada());
+		Boolean haySugerenciaAceptada = listaSugerencia.stream()
+				.anyMatch(sugerencia -> sugerencia.aceptada());
 		viewModel.put("haySugerenciaAceptada", haySugerenciaAceptada);
-		listaSugerenciaAceptadas = listaSugerencia.stream().filter(sugerencia -> sugerencia.aceptada()).collect(Collectors.toList());
+		listaSugerenciaAceptadas = listaSugerencia.stream()
+				.filter(sugerencia -> sugerencia.aceptada()).collect(Collectors.toList());
 		viewModel.put("sugerencias", listaSugerenciaAceptadas);
 		return new ModelAndView(viewModel, "verSugerenciasAceptadas.hbs");
 	}
@@ -92,21 +79,15 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 	
 	public ModelAndView calificarSugerencias(Request req, Response res) {
 		String id = req.params("id");
-//		try {
-//			EntityManager em = entityManager();
-//			em.getTransaction().begin();
-			withTransaction(()->{
-				Usuario usuarie = RepositorioDeUsuarios.getInstance().buscarPorNombre(req.cookie("nombreUsuario"));
-				List<Calificacion> listaCalificaciones = usuarie.getCalificaciones();
-				listaCalificaciones.add(this.armarCalificacion("Superior", req));
-				listaCalificaciones.add(this.armarCalificacion("Calzado", req));
-				listaCalificaciones.add(this.armarCalificacion("Inferior", req));
-				listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
-			});
-//			em.getTransaction().commit();
-//		}catch(Exception e) {
-//			res.redirect("/sugerencias/aceptadas/"+ id +"/calificar");
-//		}
+		withTransaction(()->{
+			Usuario usuarie = RepositorioDeUsuarios.getInstance()
+					.buscarPorNombre(req.cookie("nombreUsuario"));
+			List<Calificacion> listaCalificaciones = usuarie.getCalificaciones();
+			listaCalificaciones.add(this.armarCalificacion("Superior", req));
+			listaCalificaciones.add(this.armarCalificacion("Calzado", req));
+			listaCalificaciones.add(this.armarCalificacion("Inferior", req));
+			listaCalificaciones.add(this.armarCalificacion("Accesorio", req));
+		});
 		res.redirect("/perfil");
 		return null;
 	}
@@ -131,7 +112,7 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
 		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.Negro).conTela(Material.Algodon).crearPrenda();
 		Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.Azul).crearPrenda();
-		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaDiaria(1),"Sin descripcion");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaDiaria(1),"Sin descripcion");
 		
 		Set<Prenda> atuendo = new HashSet<Prenda>();
 		atuendo.add(jean);
@@ -156,7 +137,7 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 		Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.Cuero).conColorPrimario(Color.Amarillo).crearPrenda();
 		Prenda gorra= new PrendaBuilder().conTipo(TipoPrenda.Gorra).conColorPrimario(Color.Negro).conTela(Material.Algodon).crearPrenda();
 		Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.Azul).crearPrenda();
-		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaDiaria(1),"Hola!!");//Fecha "16-02-2019" -> Es decir, un evento finalizado
+		Evento eventoConFrecuenciaUnica = new Evento(new FrecuenciaDiaria(1),"Hola!!");
 		
 		Set<Prenda> atuendo = new HashSet<Prenda>();
 		atuendo.add(jean);
@@ -174,5 +155,19 @@ public class SugerenciasController extends AbstractPersistenceTest implements Wi
 //		em.getTransaction().commit();
 		
 		return new Sugerencia(atuendo,eventoConFrecuenciaUnica);
+	}
+	
+	private void casoDeEjemplo(Usuario usuarie) {
+		withTransaction(()->{
+			Sugerencia sugerenciaPosta = generarSugerencia();
+			Sugerencia sugerenciaPosta2 = generarSugerencia2();
+			sugerenciaPosta.setEstado(TipoSugerencias.ACEPTADA);
+			usuarie.getSugerencias().add(sugerenciaPosta2);
+			usuarie.getSugerencias().add(sugerenciaPosta);
+			
+//			EntityManager em = entityManager();
+			entityManager().persist(sugerenciaPosta);
+			entityManager().persist(sugerenciaPosta2);
+		});
 	}
 }
