@@ -36,6 +36,9 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		res.redirect("/eventos/"+ evento.getId().toString()+"/sugerencias/pendientes");
 		return null;
 	}
+	public LocalDateTime parseameFecha(String fecha) {
+		return LocalDateTime.of( Integer.parseInt(fecha.substring(0,4)), Integer.parseInt(fecha.substring(5,7)), Integer.parseInt(fecha.substring(8,10)), 0, 0);
+	}
 	public String verCalendario(Request req, Response res) {
 		String fecha=req.queryParams("fecha");
 		Boolean hayFecha;
@@ -49,7 +52,7 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		List<Evento>eventoList = null;;
 		List<Evento>eventosNoPendientes = null;
 		List<Evento> eventosPendientes = null;
-		eventoList = hayFecha? calcularEventos(fecha,usuarie):null;
+		eventoList = hayFecha? calcularEventos(parseameFecha(fecha),usuarie):calcularEventos(LocalDateTime.now(),usuarie);
 		if(eventoList!=null) {
 			if(!eventoList.isEmpty()) noHayEventos=false;
 			eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
@@ -79,12 +82,8 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		return eventos.stream().filter(evento->sugerencias.stream().anyMatch(sugerencia->sugerencia.getEvento().equals(evento)&&sugerencia.getEstado().equals(TipoSugerencias.PENDIENTE))).collect(Collectors.toList());
 	}
 	
-	private List<Evento> calcularEventos(String fechaString,Usuario usuarie){
-		int diaNum = Integer.parseInt(fechaString.substring(8,10));
-		int mesNum = Integer.parseInt(fechaString.substring(5,7));
-		int anioNum = Integer.parseInt(fechaString.substring(0,4));
+	private List<Evento> calcularEventos(LocalDateTime fecha,Usuario usuarie){
 		List<Evento> eventos= new ArrayList<Evento>(usuarie.eventos());
-		LocalDateTime fecha = LocalDateTime.of(anioNum,mesNum,diaNum,0,0,0);
 		//agregarEvento(usuarie);
 		//agregarSugerencia(usuarie);
 		return eventos.stream()
@@ -93,12 +92,12 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 	}
 	private static boolean sucedeEnEsteDia(LocalDateTime fecha,Evento evento) {
 		LocalDateTime fechaEvento=evento.cualEsLaFechaProxima(fecha);
-		return fechaEvento.equals(fecha)||(fechaEvento.isAfter(fecha) && fechaEvento.isBefore(fecha.plusDays(1)));
+		return fechaEvento.getYear()== fecha.getYear()&& fechaEvento.getMonth()== fecha.getMonth() && fechaEvento.getDayOfMonth() ==fecha.getDayOfMonth();
 	}
 	//////////////////////////////////////////SETEA_EJEMPLOS///////////////////////////////////////////////////////////////
 	private void agregarEvento(Usuario usuario) {
 		withTransaction(() -> {
-			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2019,5,24);
+			FrecuenciaUnicaVez frecuencia =new FrecuenciaUnicaVez(2020,1,5);
 			Evento evento = new Evento(frecuencia,"Sin descripcion");
 			usuario.agendarEvento(evento);
 			/*entityManager().persist(frecuencia);
