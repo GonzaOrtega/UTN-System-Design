@@ -52,7 +52,24 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 		List<Evento>eventoList = null;;
 		List<Evento>eventosNoPendientes = null;
 		List<Evento> eventosPendientes = null;
-		eventoList = hayFecha? calcularEventos(parseameFecha(fecha),usuarie):calcularEventos(LocalDateTime.now(),usuarie);
+		
+		if(hayFecha) {
+			eventoList=calcularEventos(parseameFecha(fecha),usuarie);
+			System.out.println(fecha);
+		}else {
+			eventoList=calcularEventos(LocalDateTime.now(),usuarie);
+			fecha = String.valueOf(LocalDateTime.now().getYear())+"-";
+			if(String.valueOf(LocalDateTime.now().getMonthValue()).length()<2) {
+				fecha+="0";
+			}
+			fecha+=String.valueOf(LocalDateTime.now().getMonthValue())+"-";
+			if(String.valueOf(LocalDateTime.now().getDayOfMonth()).length()<2) {
+				fecha+="0";
+			}
+			fecha+=String.valueOf(LocalDateTime.now().getDayOfMonth());
+			System.out.println(fecha);
+		}
+		
 		if(eventoList!=null) {
 			if(!eventoList.isEmpty()) noHayEventos=false;
 			eventosPendientes= tieneSugerenciasPendientes(eventoList,usuarie);
@@ -64,11 +81,11 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 			eventosPendientes = null;
 			eventosNoPendientes=null;
 		}
-		
 		HashMap<String, Object> viewModel = new HashMap<>();
 		viewModel.put("eventosPendientes", eventosPendientes);
 		viewModel.put("eventosNoPendientes", eventosNoPendientes);
 		viewModel.put("eventos",eventoList);
+		viewModel.put("fecha",fecha);		
 		viewModel.put("hayFecha", hayFecha);
 		viewModel.put("noHayEventos", noHayEventos);
 		ModelAndView modelAndView = new ModelAndView(viewModel, "calendario.hbs");
