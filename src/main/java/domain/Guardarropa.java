@@ -3,6 +3,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -15,16 +16,17 @@ public class Guardarropa extends SuperClase{
 
 	// ---------------------------- Atributos -------------------------------
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="id_Guardarropa") 
-	private Set<Prenda> prendas;
+	public Set<Prenda> prendas;
 
 	public String nombre;
+	
+	// ------------------ Getters, setters y constructores ------------------
 	public Guardarropa() {
 		prendas = new HashSet<Prenda>();
 	}
 	
-	// ------------------ Getters, setters y constructores ------------------
 	public String getNombre() {
 		return nombre;
 	}
@@ -41,9 +43,7 @@ public class Guardarropa extends SuperClase{
 	public void borrarPrendas() {
 		this.prendas = new HashSet<Prenda>();
 	}
-
-	public Set<Prenda> prendas(){return prendas;}
-
+	
 	// ------------------------------ Metodos -------------------------------
 	
 	public List<Set<Prenda>> pedirAtuendosSegun(ProveedorClima proveedor,Usuario unUser){
@@ -173,7 +173,7 @@ public class Guardarropa extends SuperClase{
 	public int cantidadDePrendasGuardadas() {
 		return this.prendas.size();
 	}
-	public List<Prenda> listPrendas(){
-		return this.prendas.stream().collect(Collectors.toList());
+	public List<String> listPrendas(){
+		return this.getPrendas().stream().map(p->p.prenda()).collect(Collectors.toList());
 	}
 }

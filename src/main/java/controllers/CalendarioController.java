@@ -128,8 +128,8 @@ public class CalendarioController implements WithGlobalEntityManager, Transactio
 			Evento evento = new Evento(frecuencia,"TengoUnaSugerencia");
 			Set<Prenda> atuendo = new HashSet<Prenda>();
 			Set<Prenda> atuendo2 = new HashSet<Prenda>();
-			Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.Jean).conColorPrimario(Color.Azul).crearPrenda();
-			Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.Algodon).conColorPrimario(Color.Rojo).conColorSecundario(Color.Amarillo).crearPrenda();
+			Prenda jean = new PrendaBuilder().conTipo(TipoPrenda.Pantalon).conTela(Material.jean).conColorPrimario(Color.azul).crearPrenda();
+			Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.algodon).conColorPrimario(Color.rojo).conColorSecundario(Color.amarillo).crearPrenda();
 			atuendo.add(jean);
 			atuendo.add(camisaCorta);
 			atuendo2.add(jean);
