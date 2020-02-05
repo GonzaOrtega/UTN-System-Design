@@ -17,7 +17,7 @@ public class GuardarropaTest {
 	ProveedorClima APIDeMentiritas = new MockAPI(21,19,false);
 	ProveedorClima APIDeMentiritasDeInvierno = new MockAPI(10,19,false);
 	ProveedorClima APIMockInvierno = new MockAPI(10,12,false);
-	ProveedorClima APIMockTemplado = new MockAPI(13,16,false);
+	ProveedorClima APIMockTemplado = new MockAPI(16,16,false);
 	Usuario juan = new Usuario(TipoUsuario.PREMIUM, 100,"juan","123");
 	Guardarropa armario = new Guardarropa();
 	Guardarropa otroArmario = new Guardarropa();
@@ -103,7 +103,6 @@ public class GuardarropaTest {
 		juan.cargarPrenda(armario,buzo);
 		juan.calificar(Categoria.Superior,TipoSensaciones.FRIO);
 		juan.calificar(Categoria.Superior,TipoSensaciones.FRIO);
-		juan.calificar(Categoria.Superior,TipoSensaciones.FRIO);
 		
 		assertTrue(armario.pedirAtuendosSegun(APIMockInvierno,juan).contains(atuendo));
 		assertFalse(armario.pedirAtuendosSegun(APIMockInvierno,juan).contains(atuendo2));
@@ -135,30 +134,6 @@ public class GuardarropaTest {
 		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"lara","123");
 		lara.agregarGuardarropa(armario);
 	}
-	@Test
-	public void test() {
-		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(pantalonAbrigo,botas,camisaCorta,camperaGucci));
-		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,botas,camisaCorta,camperaGucci,buzo));
-		HashSet<Prenda> atuendo3 = new HashSet<Prenda>(Arrays.asList(pantalonAbrigo,botas,camisaCorta,camperaGucci,buzo));
 
-		juan.cargarPrenda(armario, pantalonAbrigo);
-		juan.cargarPrenda(armario, botas);
-		juan.cargarPrenda(armario, jean);
-		juan.cargarPrenda(armario, buzo);
-		juan.calificar(Categoria.Inferior,TipoSensaciones.FRIO);
-		
-		juan.calificar(Categoria.Superior,TipoSensaciones.CALOR);
-		List<Set<Prenda>> test = armario.pedirAtuendosSegun(APIMockTemplado, juan);
-		int i;
-
-		System.out.println(armario.pedirAtuendosSegun(APIMockTemplado,juan).stream().
-				map(t->t.stream().map(s->s.getTipo()).collect(Collectors.toList())
-						).collect(Collectors.toSet()));
-		
-		assertTrue(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo));
-		assertFalse(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo2));
-		assertFalse(armario.pedirAtuendosSegun(APIMockTemplado,juan).contains(atuendo3));
-		
-	}
 	
 }

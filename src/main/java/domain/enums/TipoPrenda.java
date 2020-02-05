@@ -6,17 +6,17 @@ import java.util.List;
 public enum TipoPrenda{
 		Remera			(Categoria.Superior,
 						Arrays.asList(Material.algodon,Material.lycra,Material.seda, Material.saten,Material.gamuza,Material.chiffon, Material.poliester,Material.mezclilla),
-						1,
+						0,
 						"Remera"
 						),
 		RemeraMangaCorta(Categoria.Superior,
 						Arrays.asList(Material.algodon,Material.lycra,Material.seda, Material.saten,Material.gamuza,Material.chiffon, Material.poliester,Material.mezclilla),
-						1,
+						0,
 						"Remera manga corta"
 						),
 		RemeraMangaLarga(Categoria.Superior,
 						Arrays.asList(Material.algodon,Material.lycra,Material.seda, Material.saten,Material.gamuza,Material.chiffon, Material.poliester,Material.mezclilla),
-						2,
+						1,
 						"Remera manga larga"
 						),
 		CamisaMangaCorta(Categoria.Superior,
@@ -26,7 +26,7 @@ public enum TipoPrenda{
 						),
 		CamisaMangaLarga(Categoria.Superior,
 						Arrays.asList(Material.algodon,Material.lycra,Material.seda, Material.saten,Material.gamuza, Material.jean,Material.mezclilla,Material.lino),
-						2,
+						1,
 						"Camisa manga larga"
 						),
 		Pantalon		(Categoria.Inferior,
@@ -41,37 +41,37 @@ public enum TipoPrenda{
 					),
 		Short			(Categoria.Inferior,
 						Arrays.asList(Material.jean, Material.spandex,Material.cuero,Material.gabardina,Material.modal,Material.lino,Material.mezclilla),
-						2,
+						1,
 						"Short"
 						),
 		PolleraCorta	(Categoria.Inferior,
 						Arrays.asList(Material.lanilla,Material.jean, Material.cuero,Material.gabardina,Material.spandex),
-						2,
+						1,
 						"Pollera corta"
 						),
 		PolleraLarga	(Categoria.Inferior,
 						Arrays.asList(Material.lanilla,Material.jean, Material.cuero,Material.gabardina,Material.spandex),
-						3,
+						2,
 						"Pollera larga"
 						),
 		Bermuda			(Categoria.Inferior,
 						Arrays.asList(Material.jean, Material.spandex,Material.cuero,Material.gabardina,Material.modal,Material.lino,Material.mezclilla),
-						2,
+						1,
 						"Bermuda"
 						),
 		Calza			(Categoria.Inferior,
 						Arrays.asList(Material.algodon,Material.mezclilla,Material.poliester),
-						2,
+						1,
 						"Calza"
 						),
 		Jardinero		(Categoria.Inferior,
 						Arrays.asList(Material.jean),
-						4,
+						2,
 						"Jardinero"
 						),
 		Zapatos			(Categoria.Calzado,
 						Arrays.asList(Material.cuero),
-						2,
+						3,
 						"Zapatos"
 						),
 		Ojotas			(Categoria.Calzado,
@@ -121,7 +121,7 @@ public enum TipoPrenda{
 						),
 		Campera			(Categoria.Superior,
 						Arrays.asList(Material.algodon,Material.lana,Material.nylon),
-						4,
+						2,
 						"Campera"
 						);
 		//Etc.
