@@ -131,7 +131,9 @@ public class Guardarropa extends SuperClase{
 	private boolean contienePrendasDeCategoria(Set<Prenda> atuendo, Categoria unaCategoria) {
 		Set<Prenda> aux;
 		if (unaCategoria != Categoria.Inferior)
-			return atuendo.stream().anyMatch(prenda->prenda.getTipo().categoria == unaCategoria); 
+			return atuendo.stream().anyMatch(prenda->prenda.getTipo().categoria == unaCategoria) 
+					&& atuendo.stream().filter(t->t.getTipo().categoria == unaCategoria).
+					collect(Collectors.toList()).size() == 1; 
 		
 		aux = atuendo.stream().filter(prenda->prenda.getTipo().
 				categoria == unaCategoria).collect(Collectors.toSet());
@@ -143,11 +145,11 @@ public class Guardarropa extends SuperClase{
 			return 5;
 		if (temperatura < 9)
 			return 4;
-		if (temperatura < 13)
+		if (temperatura <= 13)
 			return 3;
-		if (temperatura < 17)
+		if (temperatura < 19)
 			return 2;
-		if (temperatura < 20)
+		if (temperatura < 23)
 			return 1; 
 		else
 			return -1;

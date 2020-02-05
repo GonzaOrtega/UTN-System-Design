@@ -21,7 +21,7 @@ public enum TipoPrenda{
 						),
 		CamisaMangaCorta(Categoria.Superior,
 						Arrays.asList(Material.algodon,Material.lycra,Material.seda, Material.saten,Material.gamuza, Material.jean,Material.mezclilla,Material.lino),
-						1,
+						0,
 						"Camisa manga corta"
 						),
 		CamisaMangaLarga(Categoria.Superior,
@@ -31,9 +31,14 @@ public enum TipoPrenda{
 						),
 		Pantalon		(Categoria.Inferior,
 						Arrays.asList(Material.jean, Material.spandex,Material.cuero,Material.gabardina,Material.modal,Material.lino,Material.mezclilla),
-						3,
+						2,
 						"Pantalon"
 						),
+		PantalonDeAbrigo(Categoria.Inferior,
+					Arrays.asList(Material.jean, Material.spandex,Material.cuero,Material.gabardina,Material.modal,Material.lino,Material.mezclilla),
+					4,
+					"Pantalon Abrigo"
+					),
 		Short			(Categoria.Inferior,
 						Arrays.asList(Material.jean, Material.spandex,Material.cuero,Material.gabardina,Material.modal,Material.lino,Material.mezclilla),
 						2,
@@ -71,7 +76,7 @@ public enum TipoPrenda{
 						),
 		Ojotas			(Categoria.Calzado,
 						Arrays.asList(Material.cuero,Material.poliester,Material.caucho),
-						1,
+						0,
 						"Ojotas"
 						),
 		Botas			(Categoria.Calzado,
@@ -111,7 +116,7 @@ public enum TipoPrenda{
 						),
 		Buzo			(Categoria.Superior,
 						Arrays.asList(Material.algodon,Material.lana,Material.nylon),
-						4,
+						2,
 						"Buzo"
 						),
 		Campera			(Categoria.Superior,
