@@ -77,7 +77,10 @@ public class Evento2Test extends AbstractPersistenceTest implements WithGlobalEn
 	@Test
 	public void JobdaSugerenciascuandoAcercaElEvento() {
 		juan.agendarEvento(eventoConFrecuenciaUnica);
-		withTransaction(() -> {RepositorioDeUsuarios.getInstance().agregar(juan);});
+		withTransaction(() -> {
+				RepositorioDeUsuarios.getInstance().agregar(juan);
+			}
+		);
 		
 		JobsUsuarios job = new JobsUsuarios();
 		job.setFechaTest(LocalDateTime.of(
@@ -92,14 +95,5 @@ public class Evento2Test extends AbstractPersistenceTest implements WithGlobalEn
 		
 		assertTrue(giorno.getSugerencias().size()==1);
 	}
-/*
- * 
- 		LocalDateTime fecha = LocalDateTime.of(
-				LocalDate.of(2019, Month.DECEMBER, 3),
-				LocalTime.now());
-		juan.eventosProximos(fecha).stream().forEach(evento -> {
-			evento.sugerir(juan);
-			juan.notificarSugerenciasNuevas();
-		});
- */
+
 }

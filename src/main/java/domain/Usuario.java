@@ -120,7 +120,13 @@ public class Usuario extends SuperClase{
 		return this.guardarropas.stream().flatMap(g->g.getPrendas().stream()).collect(Collectors.toList()).size();
 	}
 	
+	public void setMaximoDePrendas(int maximoDePrendas) {
+		this.maximoDePrendas = maximoDePrendas;
+	}
+	
 	// ------------------------------ Metodos -------------------------------
+
+	
 
 	public void validacionSegunTipoUsuario(int cantidadDePrendasDelGuardarropas) {
 		if(tipo == TipoUsuario.GRATUITO && cantidadDePrendasDelGuardarropas >= maximoDePrendas) {

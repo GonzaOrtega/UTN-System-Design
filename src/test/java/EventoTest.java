@@ -39,6 +39,10 @@ public class EventoTest {
 		juan.cargarPrenda(armario, camisaLarga);
 		juan.cargarPrenda(armario, ojotas);
 		juan.cargarPrenda(armario, jean);
+		juan.cargarPrenda(armario, buzo);
+		juan.cargarPrenda(armario, botas);
+		juan.cargarPrenda(armario, camperaGucci);
+		juan.cargarPrenda(armario, pantalonAbrigo);
 		Sugeridor.getInstance().setProveedorDeClima(APIDeMentiritas);
 	}
 	@After

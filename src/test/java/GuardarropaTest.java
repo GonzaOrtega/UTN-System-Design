@@ -32,6 +32,7 @@ public class GuardarropaTest {
 	
 	@Before
 	public void setUp(){
+		juan.setMaximoDePrendas(50);
 		juan.agregarGuardarropa(armario);
 		juan.agregarGuardarropa(otroArmario);
 		juan.cargarPrenda(armario, camisaCorta);
@@ -62,7 +63,6 @@ public class GuardarropaTest {
 	public void siJuanSolicitaSusAtuendosSeObtendranDosConOSinAccesorio() {
 		HashSet<Prenda> atuendo = new HashSet<Prenda>(Arrays.asList(jean,gorra,zapatos,camisaCorta));
 		HashSet<Prenda> atuendo2 = new HashSet<Prenda>(Arrays.asList(jean,zapatos,camisaCorta));
-//		camisaCorta.setEsBase(true);//esto hay que cambiar despues
 		juan.cargarPrenda(armario, jean);
 		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo));
 		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo2));
@@ -74,8 +74,6 @@ public class GuardarropaTest {
 		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
 		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
 		juan.calificar(Categoria.Calzado,TipoSensaciones.FRIO);
-
-
 		juan.cargarPrenda(armario, jean);
 		juan.cargarPrenda(armario,ojotas);
 		assertTrue(armario.pedirAtuendosSegun(APIDeMentiritas,juan).contains(atuendo));

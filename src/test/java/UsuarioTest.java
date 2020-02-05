@@ -30,6 +30,7 @@ public class UsuarioTest {
 	@Before
 	public void setUp(){
 		juan.agregarGuardarropa(armario);
+		juan.setMaximoDePrendas(50);
 		juan.cargarPrenda(armario, camisaCorta);
 		juan.cargarPrenda(armario, zapatos);
 		juan.cargarPrenda(armario, gorra);
@@ -93,7 +94,7 @@ public class UsuarioTest {
 		Sugeridor.getInstance().sugerirPrendasPara(lara);
 	}
 	
-	@Test(expected = SeExcedioElLimiteDeCapacidadDelGuardarropaException.class)
+	@Test(expected = MaximoDePrendasAlcanzadoException.class)
 	public void siSeIntentaCargarMasCantidadDePrendasDeLaPermitidaLanzaException(){
 		Usuario lara = new Usuario(TipoUsuario.GRATUITO,1,"juan","123");
 		lara.agregarGuardarropa(otroArmario);
@@ -148,7 +149,7 @@ public class UsuarioTest {
 		lara.cargarPrenda(armario, camisaDeLara);
 		lara.cargarPrenda(armario, sombrero);
 		lara.cargarPrenda(armario, zapatillas);
-		
+
 		eventoConFrecuenciaUnica.sugerir(lara);
 		Set<Set<Prenda>> atuendosDeLara = lara.getSugerencias().stream().map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toSet());
 
