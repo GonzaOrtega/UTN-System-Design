@@ -69,7 +69,7 @@ public class Evento2Test extends AbstractPersistenceTest implements WithGlobalEn
 		assertTrue(
 				eventoConFrecuenciaUnica.esProximo(
 						LocalDateTime.of(
-								LocalDate.of(2019, Month.DECEMBER, 3),
+								LocalDate.of(2019, Month.DECEMBER, 4),
 								LocalTime.now())
 						)
 				);

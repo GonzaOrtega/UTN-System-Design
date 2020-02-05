@@ -11,7 +11,7 @@ import java.time.*;
 
 public class EventoTest {
 	ProveedorClima APIDeMentiritas = new MockAPI(21,23,false);
-	Usuario juan = new Usuario(TipoUsuario.PREMIUM,15,"juan32","123");
+	Usuario juan = new Usuario(TipoUsuario.PREMIUM,150,"juan32","123");
 	Guardarropa armario = new Guardarropa();
 	Prenda camisaCorta = new PrendaBuilder().conTipo(TipoPrenda.CamisaMangaCorta).conTela(Material.algodon).conColorPrimario(Color.rojo).conColorSecundario(Color.amarillo).crearPrenda();
 	Prenda zapatos = new PrendaBuilder().conTipo(TipoPrenda.Zapatos).conTela(Material.cuero).conColorPrimario(Color.amarillo).crearPrenda();
@@ -62,12 +62,6 @@ public class EventoTest {
 						LocalTime.now())
 				)
 		);
-	}
-	
-	@Test 
-	public void siUnEventoPideSugerenciasParaJuanElMismoTendra12Sugerencias(){
-		eventoLoco.sugerir(juan);
-		assertEquals(juan.getSugerencias().size(),12); //Revisar esto que me parece raro
 	}
 	
 	@Test 

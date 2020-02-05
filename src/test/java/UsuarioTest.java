@@ -62,9 +62,9 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void siJuanCargaUnJeanASuArmarioDeberiaTenerDoceAtuendos() {
+	public void siJuanCargaUnJeanASuArmarioDeberiaTenerOchoAtuendos() {
 		juan.cargarPrenda(armario, jean);
-		assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas,juan).size(), 12);	
+		assertEquals(armario.pedirAtuendosSegun(APIDeMentiritas,juan).size(), 8);	
 	}
 	
 	@Test
@@ -142,7 +142,7 @@ public class UsuarioTest {
 		juan.cargarPrenda(armario, jean);
 		Set<Set<Prenda>> atuendosDeJuan = this.sugerirMasAceptarTodasLasSugerencias(juan, eventoConFrecuenciaUnica);
 		
-		Usuario lara = new Usuario(TipoUsuario.PREMIUM,0,"juan","123");
+		Usuario lara = new Usuario(TipoUsuario.PREMIUM,100,"juan","123");
 		
 		lara.agregarGuardarropa(armario);
 		lara.cargarPrenda(armario, pantalon);
